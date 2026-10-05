@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clasificador de Fibras Musculares</title>
+<style>
+  body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; }
+  h1 { text-align: center; color: #34d399; }
+  .container { max-width: 1100px; margin: auto; position: relative; }
+  .deportistas { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 15px; margin-bottom: 30px; }
+  .card { background: #1e293b; padding: 15px; border-radius: 10px; width: 160px; cursor: grab; text-align: center; border: 2px solid #334155; transition: transform 0.2s; }
+  .card:hover { transform: translateY(-3px); border-color: #34d399; }
+  .card img { font-size: 40px; }
+  .card.dragging { opacity: 0.4; }
+  .fibras { display: flex; justify-content: space-around; gap: 20px; flex-wrap: wrap; }
+  .drop { flex: 1; min-width: 250px; background: #1e293b; padding: 20px; border-radius: 12px; border: 3px dashed #475569; min-height: 200px; }
+  .drop.over { border-color: #34d399; background: #14532d33; }
+  .drop h3 { margin-top: 0; }
+  .tipo1 { border-color: #3b82f6; } .tipo1 h3 { color: #60a5fa; }
+  .tipo2a { border-color: #a855f7; } .tipo2a h3 { color: #c084fc; }
+  .tipo2x { border-color: #ef4444; } .tipo2x h3 { color: #f87171; }
+  .resultado { margin-top: 25px; padding: 15px; background: #1e293b; border-radius: 8px; text-align: center; font-size: 18px; min-height: 50px; }
+  button { background: #34d399; color: #0f172a; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 15px; }
+  
+  .language-selector {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    display: flex;
+    gap: 8px;
+  }
+  .language-selector button {
+    background: rgba(52,211,153,0.15);
+    border: 1px solid rgba(52,211,153,0.4);
+    color: #34d399;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  .language-selector button:hover { background: rgba(52,211,153,0.3); }
+  .language-selector button.active { background: #34d399; color: #0f172a; }
+  
+  @media (max-width: 600px) {
+    .language-selector { position: static; margin-bottom: 15px; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="language-selector">
+    <button class="active" onclick="setLanguage('es', this)">ES</button>
+    <button onclick="setLanguage('ca', this)">CA</button>
+    <button onclick="setLanguage('en', this)">EN</button>
+  </div>
+  <h1 data-i18n="title">🏃 Clasifica a cada deportista según su fibra muscular dominante</h1>
+  <p style="text-align:center; color:#94a3b8;" data-i18n="subtitle">Arrastra cada tarjeta a la fibra correcta y pulsa "Comprobar".</p>
+
+  <div class="deportistas" id="deck"></div>
+
+  <div class="fibras">
+    <div class="drop tipo1" data-fibra="I">
+      <h3 data-i18n="tipo1_title">🔵 Tipo I (Lentas)</h3>
+      <p><small data-i18n="tipo1_desc">Oxidativas · Alta resistencia · Baja fatiga</small></p>
+      <div class="zone"></div>
+    </div>
+    <div class="drop tipo2a" data-fibra="IIa">
+      <h3 data-i18n="tipo2a_title">🟣 Tipo IIa (Rápidas mixtas)</h3>
+      <p><small data-i18n="tipo2a_desc">Oxido-glucolíticas · Resistencia intermedia</small></p>
+      <div class="zone"></div>
+    </div>
+    <div class="drop tipo2x" data-fibra="IIx">
+      <h3 data-i18n="tipo2x_title">🔴 Tipo IIx (Muy rápidas)</h3>
+      <p><small data-i18n="tipo2x_desc">Glucolíticas · Fuerza máxima · Baja resistencia</small></p>
+      <div class="zone"></div>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top:20px;">
+    <button onclick="comprobar()" data-i18n="btn_check">✔ Comprobar</button>
+    <button onclick="location.reload()" data-i18n="btn_reset">🔄 Reiniciar</button>
+  </div>
+  <div class="resultado" id="res"></div>
+</div>
+
+<script>
+let currentLang = 'es';
+
+const translations = {
+  es: {
+    title: "🏃 Clasifica a cada deportista según su fibra muscular dominante",
+    subtitle: 'Arrastra cada tarjeta a la fibra correcta y pulsa "Comprobar".',
+    tipo1_title: "🔵 Tipo I (Lentas)",
+    tipo1_desc: "Oxidativas · Alta resistencia · Baja fatiga",
+    tipo2a_title: "🟣 Tipo IIa (Rápidas mixtas)",
+    tipo2a_desc: "Oxido-glucolíticas · Resistencia intermedia",
+    tipo2x_title: "🔴 Tipo IIx (Muy rápidas)",
+    tipo2x_desc: "Glucolíticas · Fuerza máxima · Baja resistencia",
+    btn_check: "✔ Comprobar",
+    btn_reset: "🔄 Reiniciar",
+    res_perfect: "🎉 ¡Perfecto! Dominas los tipos de fibras.",
+    res_missing: (n) => `Resultado: <b>{aciertos}/{total}</b> correctas. <br><span style="color:#fbbf24;">⚠️ Te faltan ${n} deportistas por clasificar.</span>`,
+    res_partial: "Revisa las tarjetas en rojo.",
+    deportistas: [
+      {nombre:"Maratonista", emoji:"🏃‍♂️", fibra:"I"},
+      {nombre:"Ciclista de fondo", emoji:"🚴", fibra:"I"},
+      {nombre:"Jugador de fútbol", emoji:"⚽", fibra:"IIa"},
+      {nombre:"Nadador 400m", emoji:"🏊", fibra:"IIa"},
+      {nombre:"Esprintador 100m", emoji:"🏃‍♀️", fibra:"IIx"},
+      {nombre:"Halterófilo", emoji:"🏋️", fibra:"IIx"}
+    ]
+  },
+  ca: {
+    title: "🏃 Classifica cada esportista segons la seva fibra muscular dominant",
+    subtitle: 'Arrossega cada targeta a la fibra correcta i prem "Comprovar".',
+    tipo1_title: "🔵 Tipus I (Lentes)",
+    tipo1_desc: "Oxidatives · Alta resistència · Baixa fatiga",
+    tipo2a_title: "🟣 Tipus IIa (Ràpides mixtes)",
+    tipo2a_desc: "Oxido-glucolítiques · Resistència intermèdia",
+    tipo2x_title: "🔴 Tipus IIx (Molt ràpides)",
+    tipo2x_desc: "Glucolítiques · Força màxima · Baixa resistència",
+    btn_check: "✔ Comprovar",
+    btn_reset: "🔄 Reiniciar",
+    res_perfect: "🎉 Perfecte! Domines els tipus de fibres.",
+    res_missing: (n) => `Resultat: <b>{aciertos}/{total}</b> correctes. <br><span style="color:#fbbf24;">⚠️ Et falten ${n} esportistes per classificar.</span>`,
+    res_partial: "Revisa les targetes en vermell.",
+    deportistas: [
+      {nombre:"Maratonià", emoji:"🏃‍♂️", fibra:"I"},
+      {nombre:"Ciclista de fons", emoji:"🚴", fibra:"I"},
+      {nombre:"Jugador de futbol", emoji:"⚽", fibra:"IIa"},
+      {nombre:"Nedador 400m", emoji:"🏊", fibra:"IIa"},
+      {nombre:"Esprintador 100m", emoji:"🏃‍♀️", fibra:"IIx"},
+      {nombre:"Halteròfil", emoji:"🏋️", fibra:"IIx"}
+    ]
+  },
+  en: {
+    title: "🏃 Classify each athlete according to their dominant muscle fiber",
+    subtitle: 'Drag each card to the correct fiber and press "Check".',
+    tipo1_title: "🔵 Type I (Slow)",
+    tipo1_desc: "Oxidative · High endurance · Low fatigue",
+    tipo2a_title: "🟣 Type IIa (Fast mixed)",
+    tipo2a_desc: "Oxidative-glycolytic · Intermediate endurance",
+    tipo2x_title: "🔴 Type IIx (Very fast)",
+    tipo2x_desc: "Glycolytic · Maximum force · Low endurance",
+    btn_check: "✔ Check",
+    btn_reset: "🔄 Reset",
+    res_perfect: "🎉 Perfect! You master the fiber types.",
+    res_missing: (n) => `Result: <b>{aciertos}/{total}</b> correct. <br><span style="color:#fbbf24;">⚠️ You have ${n} athletes left to classify.</span>`,
+    res_partial: "Review the cards in red.",
+    deportistas: [
+      {nombre:"Marathoner", emoji:"🏃‍♂️", fibra:"I"},
+      {nombre:"Long-distance cyclist", emoji:"🚴", fibra:"I"},
+      {nombre:"Soccer player", emoji:"⚽", fibra:"IIa"},
+      {nombre:"400m swimmer", emoji:"🏊", fibra:"IIa"},
+      {nombre:"100m sprinter", emoji:"🏃‍♀️", fibra:"IIx"},
+      {nombre:"Weightlifter", emoji:"🏋️", fibra:"IIx"}
+    ]
+  }
+};
+
+let deportistas = [];
+
+function setLanguage(lang, btn) {
+  currentLang = lang;
+  document.querySelectorAll('.language-selector button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key]) {
+      el.textContent = translations[lang][key];
+    }
+  });
+  
+  document.documentElement.lang = lang;
+  
+  // Re-render cards
+  deportistas = translations[lang].deportistas;
+  renderDeck();
+  document.getElementById('res').innerHTML = '';
+}
+
+function renderDeck() {
+  const deck = document.getElementById('deck');
+  deck.innerHTML = '';
+  deportistas.forEach((d,i) => {
+    const c = document.createElement('div');
+    c.className = 'card';
+    c.draggable = true;
+    c.dataset.fibra = d.fibra;
+    c.dataset.id = i;
+    c.innerHTML = `<div style="font-size:40px;">${d.emoji}</div><b>${d.nombre}</b>`;
+    c.addEventListener('dragstart', e => {
+      c.classList.add('dragging');
+      e.dataTransfer.setData('id', i);
+    });
+    c.addEventListener('dragend', () => c.classList.remove('dragging'));
+    deck.appendChild(c);
+  });
+}
+
+document.querySelectorAll('.drop').forEach(drop => {
+  drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('over'); });
+  drop.addEventListener('dragleave', () => drop.classList.remove('over'));
+  drop.addEventListener('drop', e => {
+    e.preventDefault();
+    drop.classList.remove('over');
+    const id = e.dataTransfer.getData('id');
+    const card = document.querySelector(`.card[data-id="${id}"]`);
+    if (card) drop.querySelector('.zone').appendChild(card);
+  });
+});
+
+function comprobar() {
+  const t = translations[currentLang];
+  let aciertos = 0, total = deportistas.length;
+  document.querySelectorAll('.drop').forEach(drop => {
+    const correcta = drop.dataset.fibra;
+    drop.querySelectorAll('.card').forEach(c => {
+      if (c.dataset.fibra === correcta) {
+        c.style.background = "#14532d"; c.style.borderColor = "#34d399";
+        aciertos++;
+      } else {
+        c.style.background = "#7f1d1d"; c.style.borderColor = "#ef4444";
+      }
+    });
+  });
+  const noClasificados = document.querySelectorAll('#deck .card').length;
+  
+  let msg = '';
+  if (noClasificados > 0) {
+    msg = t.res_missing(noClasificados).replace('{aciertos}', aciertos).replace('{total}', total);
+  } else if (aciertos === total) {
+    msg = `Resultado: <b>${aciertos}/${total}</b> — ${t.res_perfect}`;
+  } else {
+    msg = `Resultado: <b>${aciertos}/${total}</b> — ${t.res_partial}`;
+  }
+  document.getElementById('res').innerHTML = msg;
+}
+
+// Initialize
+setLanguage('es', document.querySelector('.language-selector button'));
+</script>
+</body>
+</html>

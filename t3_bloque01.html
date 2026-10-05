@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Presentación Tema 3 - Bloques Fisiológicos y Biomecánicos</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #e2e8f0;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  .presentacion { width: 100vw; height: 100vh; display: flex; flex-direction: column; }
+  .header {
+    background: rgba(15, 23, 42, 0.8);
+    padding: 12px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #334155;
+    backdrop-filter: blur(10px);
+    z-index: 10;
+  }
+  .titulo-header { color: #38bdf8; font-size: 18px; font-weight: bold; }
+  .header-right { display: flex; align-items: center; gap: 15px; }
+  
+  .language-selector { display: flex; gap: 8px; }
+  .language-selector button {
+    background: rgba(56,189,248,0.15);
+    border: 1px solid rgba(56,189,248,0.4);
+    color: #38bdf8;
+    padding: 4px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.8em;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  .language-selector button:hover { background: rgba(56,189,248,0.3); }
+  .language-selector button.active { background: #38bdf8; color: #0f172a; }
+  
+  .progreso-container { display: flex; align-items: center; gap: 10px; }
+  .progreso-bar { width: 200px; height: 8px; background: #334155; border-radius: 4px; overflow: hidden; }
+  .progreso-fill { height: 100%; background: linear-gradient(90deg, #38bdf8, #a78bfa); transition: width 0.4s; }
+  .contador { color: #94a3b8; font-size: 14px; min-width: 60px; text-align: right; }
+  
+  .slide-container { flex: 1; position: relative; overflow: hidden; }
+  .slide {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    padding: 40px 60px;
+    display: none;
+    overflow-y: auto;
+    animation: fadeIn 0.5s;
+  }
+  .slide.activa { display: flex; flex-direction: column; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+  .slide h1 { font-size: 42px; color: #38bdf8; margin-bottom: 20px; border-bottom: 3px solid #38bdf8; padding-bottom: 10px; }
+  .slide h2 { font-size: 32px; color: #fbbf24; margin-bottom: 20px; }
+  .slide h3 { font-size: 22px; color: #a78bfa; margin: 15px 0 10px; }
+  .slide p { font-size: 17px; line-height: 1.7; margin-bottom: 12px; }
+  .slide ul, .slide ol { margin-left: 25px; margin-bottom: 15px; }
+  .slide li { margin-bottom: 10px; line-height: 1.6; font-size: 16px; }
+  
+  .portada { justify-content: center; align-items: center; text-align: center; background: radial-gradient(circle at center, #1e3a5f 0%, #0f172a 70%); }
+  .portada h1 { font-size: 64px; border: none; background: linear-gradient(90deg, #38bdf8, #a78bfa, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .portada .subtitulo { font-size: 24px; color: #94a3b8; margin-top: 20px; }
+  .portada .emoji-grande { font-size: 100px; margin-bottom: 20px; }
+  
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+  .tarjeta { background: rgba(30, 41, 59, 0.8); padding: 20px; border-radius: 12px; border-left: 5px solid #38bdf8; transition: transform 0.3s; }
+  .tarjeta:hover { transform: translateY(-5px); }
+  .tarjeta.amarillo { border-left-color: #fbbf24; }
+  .tarjeta.rosa { border-left-color: #f472b6; }
+  .tarjeta.verde { border-left-color: #34d399; }
+  .tarjeta.rojo { border-left-color: #ef4444; }
+  .tarjeta.violeta { border-left-color: #a78bfa; }
+  .tarjeta h4 { color: #fbbf24; font-size: 18px; margin-bottom: 10px; }
+  
+  .destacado { background: rgba(251, 191, 36, 0.15); border-left: 5px solid #fbbf24; padding: 15px 20px; border-radius: 8px; margin: 15px 0; font-size: 16px; }
+  .destacado.azul { background: rgba(56, 189, 248, 0.15); border-left-color: #38bdf8; }
+  .destacado.rojo { background: rgba(239, 68, 68, 0.15); border-left-color: #ef4444; }
+  .destacado.verde { background: rgba(52, 211, 153, 0.15); border-left-color: #34d399; }
+  
+  .keyword { display: inline-block; background: #334155; color: #fbbf24; padding: 2px 10px; border-radius: 12px; font-weight: bold; font-size: 14px; margin: 2px; }
+  .keyword.azul { color: #38bdf8; }
+  .keyword.rosa { color: #f472b6; }
+  .keyword.verde { color: #34d399; }
+  .keyword.rojo { color: #ef4444; }
+  
+  table { width: 100%; border-collapse: collapse; margin: 15px 0; background: rgba(30, 41, 59, 0.6); border-radius: 8px; overflow: hidden; }
+  th { background: #334155; color: #fbbf24; padding: 12px; text-align: left; font-size: 15px; }
+  td { padding: 12px; border-top: 1px solid #475569; font-size: 14px; }
+  tr:hover { background: rgba(56, 189, 248, 0.05); }
+  
+  .nav { background: rgba(15, 23, 42, 0.9); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #334155; }
+  .btn { background: #38bdf8; color: #0f172a; border: none; padding: 10px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 15px; transition: all 0.2s; }
+  .btn:hover:not(:disabled) { background: #0ea5e9; transform: translateY(-2px); }
+  .btn:disabled { background: #475569; cursor: not-allowed; opacity: 0.5; }
+  .btn.indice { background: #a78bfa; }
+  .btn.indice:hover { background: #8b5cf6; }
+  
+  .indice-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin-top: 20px; }
+  .indice-item { background: rgba(30, 41, 59, 0.8); padding: 18px; border-radius: 10px; cursor: pointer; border: 2px solid transparent; transition: all 0.3s; }
+  .indice-item:hover { border-color: #38bdf8; transform: translateX(5px); }
+  .indice-item .num { display: inline-block; background: #38bdf8; color: #0f172a; width: 30px; height: 30px; border-radius: 50%; text-align: center; line-height: 30px; font-weight: bold; margin-right: 10px; }
+  
+  .icon-grande { font-size: 60px; text-align: center; margin: 10px 0; }
+  
+  .slide::-webkit-scrollbar { width: 8px; }
+  .slide::-webkit-scrollbar-track { background: #1e293b; }
+  .slide::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+  
+  @media (max-width: 768px) {
+    .slide { padding: 20px; }
+    .slide h1 { font-size: 28px; }
+    .slide h2 { font-size: 22px; }
+    .portada h1 { font-size: 36px; }
+    .language-selector { position: static; }
+  }
+</style>
+</head>
+<body>
+
+<div class="presentacion">
+  <div class="header">
+    <div class="titulo-header" data-i18n="header_title">📚 Tema 3 · Bloques Fisiológicos y Biomecánicos</div>
+    <div class="header-right">
+      <div class="language-selector">
+        <button class="active" onclick="setLanguage('es', this)">ES</button>
+        <button onclick="setLanguage('ca', this)">CA</button>
+        <button onclick="setLanguage('en', this)">EN</button>
+      </div>
+      <div class="progreso-container">
+        <div class="progreso-bar"><div class="progreso-fill" id="progresoFill"></div></div>
+        <div class="contador" id="contador">1 / 25</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-container" id="slideContainer">
+
+    <!-- SLIDE 1: PORTADA -->
+    <div class="slide portada activa">
+      <div class="emoji-grande">🩰🦴💪</div>
+      <h1 data-i18n="s1_title">Bloques Fisiológicos<br>y Biomecánicos</h1>
+      <p class="subtitulo" data-i18n="s1_subtitle">Tema 3 · Aplicado a la Danza</p>
+      <p style="margin-top:30px; color:#64748b;" data-i18n="s1_hint">Usa las flechas ← → del teclado o los botones para navegar</p>
+    </div>
+
+    <!-- SLIDE 2: ÍNDICE -->
+    <div class="slide">
+      <h1 data-i18n="s2_title">🗺️ Mapa del Tema</h1>
+      <p data-i18n="s2_intro">Este tema se organiza en <b>6 bloques</b> interconectados. Haz clic en cualquiera para ir directamente:</p>
+      <div class="indice-grid">
+        <div class="indice-item" onclick="irA(2)"><span class="num">1</span><b data-i18n="s2_i1_title">Mecanismo Contráctil</b><br><small data-i18n="s2_i1_sub">Ca²⁺, ATP y sarcómero</small></div>
+        <div class="indice-item" onclick="irA(6)"><span class="num">2</span><b data-i18n="s2_i2_title">Precauciones del Bailarín</b><br><small data-i18n="s2_i2_sub">7 claves de rendimiento</small></div>
+        <div class="indice-item" onclick="irA(9)"><span class="num">3</span><b data-i18n="s2_i3_title">Función del ATP</b><br><small data-i18n="s2_i3_sub">Ciclo de la miosina</small></div>
+        <div class="indice-item" onclick="irA(12)"><span class="num">4</span><b data-i18n="s2_i4_title">Fatiga en la Variación</b><br><small data-i18n="s2_i4_sub">Efectos moleculares y técnicos</small></div>
+        <div class="indice-item" onclick="irA(16)"><span class="num">5</span><b data-i18n="s2_i5_title">Recuperación</b><br><small data-i18n="s2_i5_sub">ATP, nervioso y cartílago</small></div>
+        <div class="indice-item" onclick="irA(19)"><span class="num">6</span><b data-i18n="s2_i6_title">Hueso y RED-S</b><br><small data-i18n="s2_i6_sub">Nutrientes y síndrome</small></div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: BLOQUE 1 - MECANISMO -->
+    <div class="slide">
+      <h1 data-i18n="s3_title">🧬 Bloque 1 · Mecanismo Contráctil</h1>
+      <div class="icon-grande">🔬</div>
+      <p data-i18n="s3_intro">El <b>sarcómero</b> es la unidad funcional del músculo. Su contracción depende de dos elementos clave:</p>
+      <div class="grid">
+        <div class="tarjeta amarillo">
+          <h4 data-i18n="s3_ca_title">🟡 Calcio (Ca²⁺)</h4>
+          <p data-i18n="s3_ca_text">El <b>interruptor molecular</b>. Desbloquea los sitios activos de la actina.</p>
+        </div>
+        <div class="tarjeta azul">
+          <h4 data-i18n="s3_atp_title">🔵 ATP</h4>
+          <p data-i18n="s3_atp_text">El <b>combustible</b>. Permite el desacoplamiento y rearmado de la miosina.</p>
+        </div>
+      </div>
+      <div class="destacado" data-i18n="s3_key">
+        <b>Sin Ca²⁺</b> no hay inicio · <b>Sin ATP</b> no hay repetición del ciclo
+      </div>
+    </div>
+
+    <!-- SLIDE 4: PAPEL DEL Ca²⁺ -->
+    <div class="slide">
+      <h2 data-i18n="s4_title">🟡 ¿Cómo influye el Ca²⁺ en la contracción?</h2>
+      <ol>
+        <li data-i18n="s4_li1"><b>Desbloqueo de la actina:</b> En reposo, la <span class="keyword">tropomiosina</span> tapa los sitios activos. El Ca²⁺ se une a la <span class="keyword rosa">troponina</span>.</li>
+        <li data-i18n="s4_li2"><b>Formación de puentes cruzados:</b> La troponina desplaza la tropomiosina → las cabezas de <span class="keyword">miosina</span> se anclan a la <span class="keyword rosa">actina</span>.</li>
+        <li data-i18n="s4_li3"><b>Mantenimiento del ciclo:</b> El deslizamiento continúa mientras haya Ca²⁺ y ATP disponibles.</li>
+      </ol>
+      <div class="destacado azul" data-i18n="s4_example">
+        <b>🩰 Ejemplo en danza:</b> Para un <i>relevé</i> o un <i>grand jeté</i>, las motoneuronas liberan un flujo masivo de Ca²⁺ en gemelos y cuádriceps → desbloqueo inmediato de la actina → generación de fuerza para vencer la gravedad.
+      </div>
+    </div>
+
+    <!-- SLIDE 5: FATIGA Y Ca²⁺ -->
+    <div class="slide">
+      <h2 data-i18n="s5_title">⚠️ Fatiga periférica y manejo del calcio</h2>
+      <p data-i18n="s5_intro">Cuando aparece la <b>fatiga periférica</b>, se producen alteraciones en el manejo del Ca²⁺:</p>
+      <ul>
+        <li data-i18n="s5_li1">Disminuye la <b>liberación</b> de Ca²⁺ desde el retículo sarcoplásmico.</li>
+        <li data-i18n="s5_li2">Se ralentiza la <b>recaptación</b> del Ca²⁺.</li>
+        <li data-i18n="s5_li3">Menos sitios activos de la actina quedan expuestos.</li>
+        <li data-i18n="s5_li4">→ <b>Se reduce la capacidad de formar puentes cruzados eficientes.</b></li>
+      </ul>
+      <div class="destacado rojo" data-i18n="s5_result">
+        <b>Resultado en la danza:</b> El bailarín pierde potencia en saltos y precisión en equilibrios, aunque el estímulo nervioso siga presente.
+      </div>
+    </div>
+
+    <!-- SLIDE 6: BLOQUE 2 - PRECAUCIONES -->
+    <div class="slide">
+      <h1 data-i18n="s6_title">🩰 Bloque 2 · Precauciones del Bailarín</h1>
+      <div class="icon-grande">⚕️</div>
+      <p data-i18n="s6_intro">Para optimizar el rendimiento sin comprometer la salud, la fisiología establece <b>7 precauciones esenciales</b>:</p>
+      <div class="grid">
+        <div class="tarjeta verde"><h4 data-i18n="s6_p1_title">1. Energía suficiente</h4><p data-i18n="s6_p1_text">Prevención del RED-S</p></div>
+        <div class="tarjeta verde"><h4 data-i18n="s6_p2_title">2. Nutrición adecuada</h4><p data-i18n="s6_p2_text">Proteínas, Ca²⁺, Vit D</p></div>
+        <div class="tarjeta verde"><h4 data-i18n="s6_p3_title">3. Dosificar carga</h4><p data-i18n="s6_p3_text">Respetar la recuperación</p></div>
+        <div class="tarjeta verde"><h4 data-i18n="s6_p4_title">4. Gestionar fatiga</h4><p data-i18n="s6_p4_text">Central y periférica</p></div>
+        <div class="tarjeta verde"><h4 data-i18n="s6_p5_title">5. Nutrir cartílago</h4><p data-i18n="s6_p5_text">Bombeo carga/descarga</p></div>
+        <div class="tarjeta verde"><h4 data-i18n="s6_p6_title">6. Moderar coactivación</h4><p data-i18n="s6_p6_text">Evitar rigidez</p></div>
+        <div class="tarjeta verde"><h4 data-i18n="s6_p7_title">7. Proteger ligamentos</h4><p data-i18n="s6_p7_text">Rangos articulares seguros</p></div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: PRECAUCIONES 1-3 -->
+    <div class="slide">
+      <h2 data-i18n="s7_title">🛡️ Precauciones 1-3</h2>
+      <div class="tarjeta verde" style="margin-bottom:15px;">
+        <h4 data-i18n="s7_p1_title">1. Disponibilidad energética (RED-S)</h4>
+        <p data-i18n="s7_p1_text">Entrenar muchas horas <b>no garantiza</b> huesos fuertes si no se consume suficiente energía. Un déficit calórico compromete la salud ósea.</p>
+      </div>
+      <div class="tarjeta verde" style="margin-bottom:15px;">
+        <h4 data-i18n="s7_p2_title">2. Aporte nutricional adecuado</h4>
+        <p data-i18n="s7_p2_text">Proteínas (matriz ósea), calcio (reserva mineral) y vitamina D (fijación del calcio) son imprescindibles.</p>
+      </div>
+      <div class="tarjeta verde">
+        <h4 data-i18n="s7_p3_title">3. Dosificar carga y recuperar</h4>
+        <p data-i18n="s7_p3_text">El hueso se adapta a la <b>magnitud, velocidad, dirección y novedad</b> de las cargas. Carga excesiva + poco descanso = <b>acumulación de microdaño</b>.</p>
+      </div>
+    </div>
+
+    <!-- SLIDE 8: PRECAUCIONES 4-7 -->
+    <div class="slide">
+      <h2 data-i18n="s8_title">🛡️ Precauciones 4-7</h2>
+      <div class="tarjeta verde" style="margin-bottom:12px;">
+        <h4 data-i18n="s8_p4_title">4. Gestionar fatiga central y periférica</h4>
+        <p data-i18n="s8_p4_text">La fatiga reduce la activación nerviosa y altera el Ca²⁺. Afecta a la precisión del <i>arabesque</i> o los saltos. El descanso restaura los parámetros de control.</p>
+      </div>
+      <div class="tarjeta verde" style="margin-bottom:12px;">
+        <h4 data-i18n="s8_p5_title">5. Nutrir el cartílago (carga/descarga)</h4>
+        <p data-i18n="s8_p5_text">El cartílago es <b>avascular</b>. La compresión expulsa desechos; la descarga reabsorbe líquido sinovial rico en nutrientes.</p>
+      </div>
+      <div class="tarjeta verde" style="margin-bottom:12px;">
+        <h4 data-i18n="s8_p6_title">6. Moderar la coactivación</h4>
+        <p data-i18n="s8_p6_text">La coactivación agonista-antagonista da estabilidad, pero en exceso → <b>rigidez</b> y mayor gasto energético.</p>
+      </div>
+      <div class="tarjeta verde">
+        <h4 data-i18n="s8_p7_title">7. Proteger ligamentos</h4>
+        <p data-i18n="s8_p7_text">Los ligamentos son guías pasivas. El trabajo técnico debe realizarse dentro de <b>límites articulares seguros</b>.</p>
+      </div>
+    </div>
+
+    <!-- SLIDE 9: BLOQUE 3 - ATP -->
+    <div class="slide">
+      <h1 data-i18n="s9_title">⚡ Bloque 3 · Función del ATP</h1>
+      <div class="icon-grande">🔋</div>
+      <p data-i18n="s9_intro">El <b>trifosfato de adenosina (ATP)</b> cumple <b>3 funciones fundamentales</b> en el ciclo de la miosina:</p>
+      <div class="grid">
+        <div class="tarjeta amarillo">
+          <h4 data-i18n="s9_f1_title">1. Desacoplamiento</h4>
+          <p data-i18n="s9_f1_text">El ATP se une a la cabeza de miosina → se separa de la actina tras el golpe de fuerza.</p>
+        </div>
+        <div class="tarjeta amarillo">
+          <h4 data-i18n="s9_f2_title">2. Rearmado</h4>
+          <p data-i18n="s9_f2_text">La hidrólisis (ATP → ADP + Pi) aporta energía para "cargar" de nuevo la cabeza de miosina.</p>
+        </div>
+        <div class="tarjeta amarillo">
+          <h4 data-i18n="s9_f3_title">3. Repetición del ciclo</h4>
+          <p data-i18n="s9_f3_text">Permite que el ciclo se repita mientras haya Ca²⁺ y ATP disponibles.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 10: ATP EN DANZA -->
+    <div class="slide">
+      <h2 data-i18n="s10_title">🩰 ATP aplicado a la danza</h2>
+      <div class="destacado azul" data-i18n="s10_ex1">
+        <b>Fluidez en secuencias:</b> En <i>relevés</i> continuos o <i>grand allegro</i>, las fibras forman y rompen puentes cruzados a gran velocidad. El ATP constante permite desacoplarse al instante y volver a tomar fuerza.
+      </div>
+      <div class="destacado verde" data-i18n="s10_ex2">
+        <b>Prevención del enganche:</b> Sin ATP, las cabezas de miosina quedan fijas a la actina → rigidez (<i>rigor mortis</i>). Con ATP, el músculo cede y controla el descenso a un <i>demi-plié</i>.
+      </div>
+      <div class="destacado" data-i18n="s10_key">
+        <b>💡 Idea clave:</b> El ATP no solo da energía, también permite la <b>relajación</b>.
+      </div>
+    </div>
+
+    <!-- SLIDE 11: SÍNTESIS CA²⁺ + ATP -->
+    <div class="slide">
+      <h2 data-i18n="s11_title">🔄 Síntesis: Ca²⁺ y ATP trabajando juntos</h2>
+      <table>
+        <tr><th data-i18n="s11_th1">Elemento</th><th data-i18n="s11_th2">Función</th><th data-i18n="s11_th3">Si falta...</th></tr>
+        <tr>
+          <td data-i18n="s11_r1c1"><b>🟡 Ca²⁺</b></td>
+          <td data-i18n="s11_r1c2">Inicia la contracción (desbloquea actina)</td>
+          <td data-i18n="s11_r1c3">No hay formación de puentes cruzados</td>
+        </tr>
+        <tr>
+          <td data-i18n="s11_r2c1"><b>🔵 ATP</b></td>
+          <td data-i18n="s11_r2c2">Desacopla y rearma la miosina</td>
+          <td data-i18n="s11_r2c3">Rigidez (miosina bloqueada en actina)</td>
+        </tr>
+        <tr>
+          <td data-i18n="s11_r3c1"><b>🟡 + 🔵</b></td>
+          <td data-i18n="s11_r3c2">Ciclo completo de deslizamiento</td>
+          <td data-i18n="s11_r3c3">Contracción muscular efectiva</td>
+        </tr>
+      </table>
+      <div class="destacado" data-i18n="s11_key">
+        <b>🎯 Para recordar:</b> El Ca²⁺ <i>abre la puerta</i>, el ATP <i>mantiene el motor en marcha</i>.
+      </div>
+    </div>
+
+    <!-- SLIDE 12: BLOQUE 4 - FATIGA -->
+    <div class="slide">
+      <h1 data-i18n="s12_title">😓 Bloque 4 · Fatiga en la Variación</h1>
+      <div class="icon-grande">🎭</div>
+      <p data-i18n="s12_intro">Durante una variación larga, la <b>fatiga periférica</b> y la <b>caída de ATP</b> afectan a 3 niveles:</p>
+      <div class="grid">
+        <div class="tarjeta rojo">
+          <h4 data-i18n="s12_l1_title">🔬 Molecular</h4>
+          <p data-i18n="s12_l1_text">Fallo en desacoplamiento y dinámica del Ca²⁺</p>
+        </div>
+        <div class="tarjeta rojo">
+          <h4 data-i18n="s12_l2_title">🎯 Fases del movimiento</h4>
+          <p data-i18n="s12_l2_text">Despegue, aterrizaje y postura</p>
+        </div>
+        <div class="tarjeta rojo">
+          <h4 data-i18n="s12_l3_title">🧠 Compensación nerviosa</h4>
+          <p data-i18n="s12_l3_text">Reclutamiento y fallos técnicos</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 13: EFECTOS MOLECULARES -->
+    <div class="slide">
+      <h2 data-i18n="s13_title">🔬 Alteración molecular en el sarcómero</h2>
+      <h3 data-i18n="s13_h1">1. Fallo en desacoplamiento y rearmado</h3>
+      <p data-i18n="s13_p1">Al agotarse el ATP, la miosina no se desprende de la actina ni rearma su cabeza → el ciclo se vuelve <b>lento e ineficiente</b>.</p>
+      <h3 data-i18n="s13_h2">2. Alteración en la dinámica del Ca²⁺</h3>
+      <p data-i18n="s13_p2">La fatiga periférica altera la liberación y recaptación de Ca²⁺ → menos sitios activos expuestos → <b>puentes cruzados ineficientes</b>.</p>
+      <div class="destacado rojo" data-i18n="s13_result">
+        <b>Consecuencia:</b> El sarcómero pierde su capacidad de generar fuerza rápida y sostenida.
+      </div>
+    </div>
+
+    <!-- SLIDE 14: IMPACTO EN FASES -->
+    <div class="slide">
+      <h2 data-i18n="s14_title">🎯 Impacto en las fases del movimiento</h2>
+      <table>
+        <tr><th data-i18n="s14_th1">Fase</th><th data-i18n="s14_th2">Tipo contracción</th><th data-i18n="s14_th3">Efecto de la fatiga</th></tr>
+        <tr>
+          <td data-i18n="s14_r1c1"><b>Despegue</b></td>
+          <td data-i18n="s14_r1c2">Concéntrica (fibras IIa/IIx)</td>
+          <td data-i18n="s14_r1c3">Menos altura en <i>grand allegro</i>, menos velocidad de impulso</td>
+        </tr>
+        <tr>
+          <td data-i18n="s14_r2c1"><b>Aterrizaje</b></td>
+          <td data-i18n="s14_r2c2">Excéntrica (<i>demi-plié</i>)</td>
+          <td data-i18n="s14_r2c3">Dificulta la absorción elástica → sobrecarga articulaciones y tendones</td>
+        </tr>
+        <tr>
+          <td data-i18n="s14_r3c1"><b>Postura</b></td>
+          <td data-i18n="s14_r3c2">Isométrica (<i>arabesque</i>)</td>
+          <td data-i18n="s14_r3c3">Dificulta mantener fuerza sostenida y coactivación adecuada</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- SLIDE 15: COMPENSACIÓN NERVIOSA -->
+    <div class="slide">
+      <h2 data-i18n="s15_title">🧠 Compensación del sistema nervioso</h2>
+      <h3 data-i18n="s15_h1">Intentos de compensación</h3>
+      <ul>
+        <li data-i18n="s15_l1">Reclutamiento de <b>más unidades motoras</b>.</li>
+        <li data-i18n="s15_l2">Ajuste de la <b>frecuencia de descarga</b> de motoneuronas.</li>
+        <li data-i18n="s15_l3">Activación de <b>músculos sinergistas y estabilizadores</b>.</li>
+      </ul>
+      <h3 data-i18n="s15_h2">Si la fatiga persiste...</h3>
+      <div class="destacado rojo" data-i18n="s15_result">
+        Aparecen <b>compensaciones mecánicas</b>: desalineaciones pélvicas, pérdida del <i>turnout</i>, temblores en los apoyos. El rendimiento cae drásticamente.
+      </div>
+    </div>
+
+    <!-- SLIDE 16: BLOQUE 5 - RECUPERACIÓN -->
+    <div class="slide">
+      <h1 data-i18n="s16_title">🔄 Bloque 5 · Recuperación</h1>
+      <div class="icon-grande">💤</div>
+      <p data-i18n="s16_intro">Para restablecer ATP y control nervioso, hay que abordar <b>coordinadamente</b>:</p>
+      <div class="grid">
+        <div class="tarjeta azul">
+          <h4 data-i18n="s16_b1_title">🔬 Recuperación Periférica</h4>
+          <p data-i18n="s16_b1_text">ATP, Ca²⁺, metabolitos musculares</p>
+        </div>
+        <div class="tarjeta violeta">
+          <h4 data-i18n="s16_b2_title">🧠 Recuperación Central</h4>
+          <p data-i18n="s16_b2_text">Control nervioso y propiocepción</p>
+        </div>
+      </div>
+      <p style="margin-top:20px;" data-i18n="s16_extra">+ Estrategias prácticas en la sala de ensayo</p>
+    </div>
+
+    <!-- SLIDE 17: RECUPERACIÓN PERIFÉRICA -->
+    <div class="slide">
+      <h2 data-i18n="s17_title">🔬 Recuperación Periférica</h2>
+      <ul>
+        <li data-i18n="s17_l1"><b>Pausas breves (2-3 min):</b> Permiten resintetizar ATP → miosina se desacopla y rearma.</li>
+        <li data-i18n="s17_l2"><b>Disponibilidad energética:</b> Ingesta adecuada de proteínas, Ca²⁺, Vit D → previene RED-S.</li>
+      </ul>
+      <div class="destacado azul" data-i18n="s17_example">
+        <b>🩰 Ejemplo:</b> En <i>grand allegro</i>, las pausas cortas entre combinaciones restauran el ATP de fibras IIa/IIx → se mantiene la potencia del despegue y la recepción excéntrica en <i>demi-plié</i>.
+      </div>
+    </div>
+
+    <!-- SLIDE 18: RECUPERACIÓN CENTRAL -->
+    <div class="slide">
+      <h2 data-i18n="s18_title">🧠 Recuperación Central</h2>
+      <ul>
+        <li data-i18n="s18_l1"><b>Calma activa:</b> El SNC recupera la capacidad de regular el reclutamiento y frecuencia de descarga.</li>
+        <li data-i18n="s18_l2"><b>Reajuste propioceptivo:</b> Los receptores (husos, OTG, articulares) vuelven a calibrarse.</li>
+      </ul>
+      <div class="destacado" data-i18n="s18_example">
+        <b>🩰 Ejemplo:</b> En equilibrios sobre una pierna, la fatiga central genera <b>coactivación excesiva</b> → rigidez + gasto energético alto. Una pausa permite relajar estabilizadores y recuperar el micro-ajuste fluido.
+      </div>
+    </div>
+
+    <!-- SLIDE 19: ESTRATEGIAS PRÁCTICAS -->
+    <div class="slide">
+      <h2 data-i18n="s19_title">🎯 Estrategias en la sala de ensayo</h2>
+      <div class="tarjeta verde" style="margin-bottom:12px;">
+        <h4 data-i18n="s19_s1_title">🦵 Movilidad suave</h4>
+        <p data-i18n="s19_s1_text">Caminar despacio o movilidad articular en pausas → estimula el <b>bombeo de líquido sinovial</b> → nutre el cartílago avascular.</p>
+      </div>
+      <div class="tarjeta verde" style="margin-bottom:12px;">
+        <h4 data-i18n="s19_s2_title">🛡️ Protección de ligamentos</h4>
+        <p data-i18n="s19_s2_text">Con musculatura fatigada, los ligamentos quedan expuestos. <b>Pausar antes</b> de perder <i>turnout</i> o alineación pélvica.</p>
+      </div>
+      <div class="tarjeta verde">
+        <h4 data-i18n="s19_s3_title">🦴 Dosificación y remodelación ósea</h4>
+        <p data-i18n="s19_s3_text">Carga excesiva + poco descanso → <b>microdaño acumulado</b> en la matriz ósea.</p>
+      </div>
+    </div>
+
+    <!-- SLIDE 20: BLOQUE 6 - HUESO -->
+    <div class="slide">
+      <h1 data-i18n="s20_title">🦴 Bloque 6 · Nutrientes del Hueso</h1>
+      <div class="icon-grande">🥛</div>
+      <h3 data-i18n="s20_h1">Nutrientes esenciales</h3>
+      <div class="grid">
+        <div class="tarjeta amarillo">
+          <h4 data-i18n="s20_n1_title">🥩 Proteínas</h4>
+          <p data-i18n="s20_n1_text">Formación y mantenimiento de la matriz orgánica</p>
+        </div>
+        <div class="tarjeta amarillo">
+          <h4 data-i18n="s20_n2_title">🥛 Calcio</h4>
+          <p data-i18n="s20_n2_text">Reserva mineral · resistencia y rigidez</p>
+        </div>
+        <div class="tarjeta amarillo">
+          <h4 data-i18n="s20_n3_title">☀️ Vitamina D</h4>
+          <p data-i18n="s20_n3_text">Absorción y fijación del calcio</p>
+        </div>
+        <div class="tarjeta amarillo">
+          <h4 data-i18n="s20_n4_title">🔥 Energía suficiente</h4>
+          <p data-i18n="s20_n4_text">Combustible para remodelación ósea</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 21: FACTORES COMPLEMENTARIOS -->
+    <div class="slide">
+      <h2 data-i18n="s21_title">🔗 Factores complementarios</h2>
+      <p data-i18n="s21_intro">La nutrición no actúa sola. Para fijar los nutrientes se requieren:</p>
+      <ol>
+        <li data-i18n="s21_l1"><b>Carga mecánica adecuada y progresiva</b> (impacto controlado, tracción muscular).</li>
+        <li data-i18n="s21_l2"><b>Función hormonal equilibrada</b> (regula Ca²⁺ y células óseas).</li>
+        <li data-i18n="s21_l3"><b>Descanso y recuperación</b> (osteoblastos reparan microdaños).</li>
+        <li data-i18n="s21_l4"><b>Crecimiento y maduración adecuados</b> (etapas del desarrollo).</li>
+      </ol>
+      <div class="destacado" data-i18n="s21_key">
+        <b>🎯 Fórmula del hueso sano:</b><br>
+        Nutrientes + Carga + Hormonas + Descanso = Remodelación efectiva
+      </div>
+    </div>
+
+    <!-- SLIDE 22: RED-S -->
+    <div class="slide">
+      <h1 data-i18n="s22_title">⚠️ El Síndrome RED-S</h1>
+      <p data-i18n="s22_sub"><b>Relative Energy Deficiency in Sport</b> (Deficiencia Energética Relativa en el Deporte)</p>
+      <h3 data-i18n="s22_h1">Causa principal</h3>
+      <p data-i18n="s22_p1">Desequilibrio metabólico: <b>largas jornadas de ensayo + ingesta calórica insuficiente</b>.</p>
+      <div class="destacado rojo" data-i18n="s22_quote">
+        <b>"Entrenar mucho no garantiza tener huesos fuertes"</b> si falta el combustible calórico.
+      </div>
+      <h3 data-i18n="s22_h2">Consecuencias</h3>
+      <ul>
+        <li data-i18n="s22_l1">Se interrumpe la acción de los <b>osteoblastos</b>.</li>
+        <li data-i18n="s22_l2">Acumulación de <b>microdaño</b> → fragilidad.</li>
+        <li data-i18n="s22_l3">Alto riesgo de <b>fracturas por estrés</b>.</li>
+        <li data-i18n="s22_l4">Alteración hormonal.</li>
+      </ul>
+    </div>
+
+    <!-- SLIDE 23: RED-S EN MÚSCULO -->
+    <div class="slide">
+      <h2 data-i18n="s23_title">💪 RED-S en Tejidos Contráctiles (Músculo)</h2>
+      <p data-i18n="s23_intro">Tejido <b>activo y vascularizado</b>. Efectos agudos y directos:</p>
+      <ul>
+        <li data-i18n="s23_l1">Déficit de ATP + alteración del Ca²⁺ → <b>fatiga periférica temprana</b>.</li>
+        <li data-i18n="s23_l2">Miosina no se desacopla eficientemente → ciclo contráctil lento.</li>
+      </ul>
+      <h3 data-i18n="s23_h1">Manifestación en danza</h3>
+      <ul>
+        <li data-i18n="s23_m1"><b>Pérdida de potencia</b> en fibras IIa/IIx → saltos más bajos.</li>
+        <li data-i18n="s23_m2"><b>Deterioro excéntrico</b> → mala amortiguación en <i>demi-plié</i>.</li>
+        <li data-i18n="s23_m3"><b>Compensación nerviosa</b> → coactivación rígida → más gasto energético.</li>
+      </ul>
+      <div class="destacado verde" data-i18n="s23_recovery">
+        <b>Recuperación:</b> Relativamente rápida al restablecer ingesta calórica y descanso.
+      </div>
+    </div>
+
+    <!-- SLIDE 24: RED-S EN TEJIDOS PASIVOS -->
+    <div class="slide">
+      <h2 data-i18n="s24_title">🦴 RED-S en Tejidos Pasivos</h2>
+      <table>
+        <tr><th data-i18n="s24_th1">Tejido</th><th data-i18n="s24_th2">Efecto del RED-S</th><th data-i18n="s24_th3">Consecuencia</th></tr>
+        <tr>
+          <td data-i18n="s24_r1c1"><b>Hueso</b></td>
+          <td data-i18n="s24_r1c2">Frena fase de formación del remodelado</td>
+          <td data-i18n="s24_r1c3">Microdaño acumulado → <b>fracturas por estrés</b></td>
+        </tr>
+        <tr>
+          <td data-i18n="s24_r2c1"><b>Tendón</b></td>
+          <td data-i18n="s24_r2c2">Afecta síntesis de colágeno</td>
+          <td data-i18n="s24_r2c3">Absorbe impactos sin amortiguación muscular → <b>tendinopatías</b></td>
+        </tr>
+        <tr>
+          <td data-i18n="s24_r3c1"><b>Ligamento</b></td>
+          <td data-i18n="s24_r3c2">Articulación entra en "Warning Zone"</td>
+          <td data-i18n="s24_r3c3">Cargas directas a ligamentos → <b>esguinces</b></td>
+        </tr>
+      </table>
+      <div class="destacado rojo" data-i18n="s24_result">
+        <b>⚠️ Impacto silencioso y acumulativo:</b> La remodelación ósea tarda años. El daño estructural requiere <b>meses de recuperación</b> o puede dejar secuelas permanentes.
+      </div>
+    </div>
+
+    <!-- SLIDE 25: RESUMEN FINAL -->
+    <div class="slide">
+      <h1 data-i18n="s25_title">🎯 Resumen Final del Tema</h1>
+      <div class="grid">
+        <div class="tarjeta amarillo">
+          <h4 data-i18n="s25_c1_title">🧬 Contracción</h4>
+          <p data-i18n="s25_c1_text">Ca²⁺ desbloquea · ATP repite</p>
+        </div>
+        <div class="tarjeta azul">
+          <h4 data-i18n="s25_c2_title">🩰 Bailarín</h4>
+          <p data-i18n="s25_c2_text">7 precauciones clave</p>
+        </div>
+        <div class="tarjeta verde">
+          <h4 data-i18n="s25_c3_title">⚡ ATP</h4>
+          <p data-i18n="s25_c3_text">Desacopla + rearma + repite</p>
+        </div>
+        <div class="tarjeta rojo">
+          <h4 data-i18n="s25_c4_title">😓 Fatiga</h4>
+          <p data-i18n="s25_c4_text">Central + Periférica</p>
+        </div>
+        <div class="tarjeta violeta">
+          <h4 data-i18n="s25_c5_title">🔄 Recuperación</h4>
+          <p data-i18n="s25_c5_text">ATP + Nervioso + Cartílago</p>
+        </div>
+        <div class="tarjeta amarillo">
+          <h4 data-i18n="s25_c6_title">🦴 Hueso y RED-S</h4>
+          <p data-i18n="s25_c6_text">Nutrición + Carga + Descanso</p>
+        </div>
+      </div>
+      <div class="destacado" style="margin-top:25px; text-align:center; font-size:18px;" data-i18n="s25_final">
+        <b>💡 Idea global:</b> El cuerpo del bailarín es un sistema integrado.<br>
+        <i>Músculo, hueso, tendón, ligamento, cartílago y sistema nervioso</i> trabajan juntos.<br>
+        <b>Cuidar uno es cuidar todos.</b>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nav">
+    <button class="btn" id="btnAnt" onclick="anterior()" data-i18n="btn_prev">← Anterior</button>
+    <button class="btn indice" onclick="irA(1)" data-i18n="btn_index">🗺️ Índice</button>
+    <button class="btn" id="btnSig" onclick="siguiente()" data-i18n="btn_next">Siguiente →</button>
+  </div>
+</div>
+
+<script>
+let currentLang = 'es';
+
+const translations = {
+  es: {
+    header_title: "📚 Tema 3 · Bloques Fisiológicos y Biomecánicos",
+    btn_prev: "← Anterior", btn_index: "🗺️ Índice", btn_next: "Siguiente →",
+    s1_title: "Bloques Fisiológicos<br>y Biomecánicos",
+    s1_subtitle: "Tema 3 · Aplicado a la Danza",
+    s1_hint: "Usa las flechas ← → del teclado o los botones para navegar",
+    s2_title: "🗺️ Mapa del Tema",
+    s2_intro: "Este tema se organiza en <b>6 bloques</b> interconectados. Haz clic en cualquiera para ir directamente:",
+    s2_i1_title: "Mecanismo Contráctil", s2_i1_sub: "Ca²⁺, ATP y sarcómero",
+    s2_i2_title: "Precauciones del Bailarín", s2_i2_sub: "7 claves de rendimiento",
+    s2_i3_title: "Función del ATP", s2_i3_sub: "Ciclo de la miosina",
+    s2_i4_title: "Fatiga en la Variación", s2_i4_sub: "Efectos moleculares y técnicos",
+    s2_i5_title: "Recuperación", s2_i5_sub: "ATP, nervioso y cartílago",
+    s2_i6_title: "Hueso y RED-S", s2_i6_sub: "Nutrientes y síndrome",
+    s3_title: "🧬 Bloque 1 · Mecanismo Contráctil",
+    s3_intro: "El <b>sarcómero</b> es la unidad funcional del músculo. Su contracción depende de dos elementos clave:",
+    s3_ca_title: "🟡 Calcio (Ca²⁺)",
+    s3_ca_text: "El <b>interruptor molecular</b>. Desbloquea los sitios activos de la actina.",
+    s3_atp_title: "🔵 ATP",
+    s3_atp_text: "El <b>combustible</b>. Permite el desacoplamiento y rearmado de la miosina.",
+    s3_key: "<b>Sin Ca²⁺</b> no hay inicio · <b>Sin ATP</b> no hay repetición del ciclo",
+    s4_title: "🟡 ¿Cómo influye el Ca²⁺ en la contracción?",
+    s4_li1: "<b>Desbloqueo de la actina:</b> En reposo, la <span class='keyword'>tropomiosina</span> tapa los sitios activos. El Ca²⁺ se une a la <span class='keyword rosa'>troponina</span>.",
+    s4_li2: "<b>Formación de puentes cruzados:</b> La troponina desplaza la tropomiosina → las cabezas de <span class='keyword'>miosina</span> se anclan a la <span class='keyword rosa'>actina</span>.",
+    s4_li3: "<b>Mantenimiento del ciclo:</b> El deslizamiento continúa mientras haya Ca²⁺ y ATP disponibles.",
+    s4_example: "<b>🩰 Ejemplo en danza:</b> Para un <i>relevé</i> o un <i>grand jeté</i>, las motoneuronas liberan un flujo masivo de Ca²⁺ en gemelos y cuádriceps → desbloqueo inmediato de la actina → generación de fuerza para vencer la gravedad.",
+    s5_title: "⚠️ Fatiga periférica y manejo del calcio",
+    s5_intro: "Cuando aparece la <b>fatiga periférica</b>, se producen alteraciones en el manejo del Ca²⁺:",
+    s5_li1: "Disminuye la <b>liberación</b> de Ca²⁺ desde el retículo sarcoplásmico.",
+    s5_li2: "Se ralentiza la <b>recaptación</b> del Ca²⁺.",
+    s5_li3: "Menos sitios activos de la actina quedan expuestos.",
+    s5_li4: "→ <b>Se reduce la capacidad de formar puentes cruzados eficientes.</b>",
+    s5_result: "<b>Resultado en la danza:</b> El bailarín pierde potencia en saltos y precisión en equilibrios, aunque el estímulo nervioso siga presente.",
+    s6_title: "🩰 Bloque 2 · Precauciones del Bailarín",
+    s6_intro: "Para optimizar el rendimiento sin comprometer la salud, la fisiología establece <b>7 precauciones esenciales</b>:",
+    s6_p1_title: "1. Energía suficiente", s6_p1_text: "Prevención del RED-S",
+    s6_p2_title: "2. Nutrición adecuada", s6_p2_text: "Proteínas, Ca²⁺, Vit D",
+    s6_p3_title: "3. Dosificar carga", s6_p3_text: "Respetar la recuperación",
+    s6_p4_title: "4. Gestionar fatiga", s6_p4_text: "Central y periférica",
+    s6_p5_title: "5. Nutrir cartílago", s6_p5_text: "Bombeo carga/descarga",
+    s6_p6_title: "6. Moderar coactivación", s6_p6_text: "Evitar rigidez",
+    s6_p7_title: "7. Proteger ligamentos", s6_p7_text: "Rangos articulares seguros",
+    s7_title: "🛡️ Precauciones 1-3",
+    s7_p1_title: "1. Disponibilidad energética (RED-S)",
+    s7_p1_text: "Entrenar muchas horas <b>no garantiza</b> huesos fuertes si no se consume suficiente energía. Un déficit calórico compromete la salud ósea.",
+    s7_p2_title: "2. Aporte nutricional adecuado",
+    s7_p2_text: "Proteínas (matriz ósea), calcio (reserva mineral) y vitamina D (fijación del calcio) son imprescindibles.",
+    s7_p3_title: "3. Dosificar carga y recuperar",
+    s7_p3_text: "El hueso se adapta a la <b>magnitud, velocidad, dirección y novedad</b> de las cargas. Carga excesiva + poco descanso = <b>acumulación de microdaño</b>.",
+    s8_title: "🛡️ Precauciones 4-7",
+    s8_p4_title: "4. Gestionar fatiga central y periférica",
+    s8_p4_text: "La fatiga reduce la activación nerviosa y altera el Ca²⁺. Afecta a la precisión del <i>arabesque</i> o los saltos. El descanso restaura los parámetros de control.",
+    s8_p5_title: "5. Nutrir el cartílago (carga/descarga)",
+    s8_p5_text: "El cartílago es <b>avascular</b>. La compresión expulsa desechos; la descarga reabsorbe líquido sinovial rico en nutrientes.",
+    s8_p6_title: "6. Moderar la coactivación",
+    s8_p6_text: "La coactivación agonista-antagonista da estabilidad, pero en exceso → <b>rigidez</b> y mayor gasto energético.",
+    s8_p7_title: "7. Proteger ligamentos",
+    s8_p7_text: "Los ligamentos son guías pasivas. El trabajo técnico debe realizarse dentro de <b>límites articulares seguros</b>.",
+    s9_title: "⚡ Bloque 3 · Función del ATP",
+    s9_intro: "El <b>trifosfato de adenosina (ATP)</b> cumple <b>3 funciones fundamentales</b> en el ciclo de la miosina:",
+    s9_f1_title: "1. Desacoplamiento", s9_f1_text: "El ATP se une a la cabeza de miosina → se separa de la actina tras el golpe de fuerza.",
+    s9_f2_title: "2. Rearmado", s9_f2_text: "La hidrólisis (ATP → ADP + Pi) aporta energía para 'cargar' de nuevo la cabeza de miosina.",
+    s9_f3_title: "3. Repetición del ciclo", s9_f3_text: "Permite que el ciclo se repita mientras haya Ca²⁺ y ATP disponibles.",
+    s10_title: "🩰 ATP aplicado a la danza",
+    s10_ex1: "<b>Fluidez en secuencias:</b> En <i>relevés</i> continuos o <i>grand allegro</i>, las fibras forman y rompen puentes cruzados a gran velocidad. El ATP constante permite desacoplarse al instante y volver a tomar fuerza.",
+    s10_ex2: "<b>Prevención del enganche:</b> Sin ATP, las cabezas de miosina quedan fijas a la actina → rigidez (<i>rigor mortis</i>). Con ATP, el músculo cede y controla el descenso a un <i>demi-plié</i>.",
+    s10_key: "<b>💡 Idea clave:</b> El ATP no solo da energía, también permite la <b>relajación</b>.",
+    s11_title: "🔄 Síntesis: Ca²⁺ y ATP trabajando juntos",
+    s11_th1: "Elemento", s11_th2: "Función", s11_th3: "Si falta...",
+    s11_r1c1: "<b>🟡 Ca²⁺</b>", s11_r1c2: "Inicia la contracción (desbloquea actina)", s11_r1c3: "No hay formación de puentes cruzados",
+    s11_r2c1: "<b>🔵 ATP</b>", s11_r2c2: "Desacopla y rearma la miosina", s11_r2c3: "Rigidez (miosina bloqueada en actina)",
+    s11_r3c1: "<b>🟡 + 🔵</b>", s11_r3c2: "Ciclo completo de deslizamiento", s11_r3c3: "Contracción muscular efectiva",
+    s11_key: "<b>🎯 Para recordar:</b> El Ca²⁺ <i>abre la puerta</i>, el ATP <i>mantiene el motor en marcha</i>.",
+    s12_title: "😓 Bloque 4 · Fatiga en la Variación",
+    s12_intro: "Durante una variación larga, la <b>fatiga periférica</b> y la <b>caída de ATP</b> afectan a 3 niveles:",
+    s12_l1_title: "🔬 Molecular", s12_l1_text: "Fallo en desacoplamiento y dinámica del Ca²⁺",
+    s12_l2_title: "🎯 Fases del movimiento", s12_l2_text: "Despegue, aterrizaje y postura",
+    s12_l3_title: "🧠 Compensación nerviosa", s12_l3_text: "Reclutamiento y fallos técnicos",
+    s13_title: "🔬 Alteración molecular en el sarcómero",
+    s13_h1: "1. Fallo en desacoplamiento y rearmado",
+    s13_p1: "Al agotarse el ATP, la miosina no se desprende de la actina ni rearma su cabeza → el ciclo se vuelve <b>lento e ineficiente</b>.",
+    s13_h2: "2. Alteración en la dinámica del Ca²⁺",
+    s13_p2: "La fatiga periférica altera la liberación y recaptación de Ca²⁺ → menos sitios activos expuestos → <b>puentes cruzados ineficientes</b>.",
+    s13_result: "<b>Consecuencia:</b> El sarcómero pierde su capacidad de generar fuerza rápida y sostenida.",
+    s14_title: "🎯 Impacto en las fases del movimiento",
+    s14_th1: "Fase", s14_th2: "Tipo contracción", s14_th3: "Efecto de la fatiga",
+    s14_r1c1: "<b>Despegue</b>", s14_r1c2: "Concéntrica (fibras IIa/IIx)", s14_r1c3: "Menos altura en <i>grand allegro</i>, menos velocidad de impulso",
+    s14_r2c1: "<b>Aterrizaje</b>", s14_r2c2: "Excéntrica (<i>demi-plié</i>)", s14_r2c3: "Dificulta la absorción elástica → sobrecarga articulaciones y tendones",
+    s14_r3c1: "<b>Postura</b>", s14_r3c2: "Isométrica (<i>arabesque</i>)", s14_r3c3: "Dificulta mantener fuerza sostenida y coactivación adecuada",
+    s15_title: "🧠 Compensación del sistema nervioso",
+    s15_h1: "Intentos de compensación",
+    s15_l1: "Reclutamiento de <b>más unidades motoras</b>.",
+    s15_l2: "Ajuste de la <b>frecuencia de descarga</b> de motoneuronas.",
+    s15_l3: "Activación de <b>músculos sinergistas y estabilizadores</b>.",
+    s15_h2: "Si la fatiga persiste...",
+    s15_result: "Aparecen <b>compensaciones mecánicas</b>: desalineaciones pélvicas, pérdida del <i>turnout</i>, temblores en los apoyos. El rendimiento cae drásticamente.",
+    s16_title: "🔄 Bloque 5 · Recuperación",
+    s16_intro: "Para restablecer ATP y control nervioso, hay que abordar <b>coordinadamente</b>:",
+    s16_b1_title: "🔬 Recuperación Periférica", s16_b1_text: "ATP, Ca²⁺, metabolitos musculares",
+    s16_b2_title: "🧠 Recuperación Central", s16_b2_text: "Control nervioso y propiocepción",
+    s16_extra: "+ Estrategias prácticas en la sala de ensayo",
+    s17_title: "🔬 Recuperación Periférica",
+    s17_l1: "<b>Pausas breves (2-3 min):</b> Permiten resintetizar ATP → miosina se desacopla y rearma.",
+    s17_l2: "<b>Disponibilidad energética:</b> Ingesta adecuada de proteínas, Ca²⁺, Vit D → previene RED-S.",
+    s17_example: "<b>🩰 Ejemplo:</b> En <i>grand allegro</i>, las pausas cortas entre combinaciones restauran el ATP de fibras IIa/IIx → se mantiene la potencia del despegue y la recepción excéntrica en <i>demi-plié</i>.",
+    s18_title: "🧠 Recuperación Central",
+    s18_l1: "<b>Calma activa:</b> El SNC recupera la capacidad de regular el reclutamiento y frecuencia de descarga.",
+    s18_l2: "<b>Reajuste propioceptivo:</b> Los receptores (husos, OTG, articulares) vuelven a calibrarse.",
+    s18_example: "<b>🩰 Ejemplo:</b> En equilibrios sobre una pierna, la fatiga central genera <b>coactivación excesiva</b> → rigidez + gasto energético alto. Una pausa permite relajar estabilizadores y recuperar el micro-ajuste fluido.",
+    s19_title: "🎯 Estrategias en la sala de ensayo",
+    s19_s1_title: "🦵 Movilidad suave", s19_s1_text: "Caminar despacio o movilidad articular en pausas → estimula el <b>bombeo de líquido sinovial</b> → nutre el cartílago avascular.",
+    s19_s2_title: "🛡️ Protección de ligamentos", s19_s2_text: "Con musculatura fatigada, los ligamentos quedan expuestos. <b>Pausar antes</b> de perder <i>turnout</i> o alineación pélvica.",
+    s19_s3_title: "🦴 Dosificación y remodelación ósea", s19_s3_text: "Carga excesiva + poco descanso → <b>microdaño acumulado</b> en la matriz ósea.",
+    s20_title: "🦴 Bloque 6 · Nutrientes del Hueso",
+    s20_h1: "Nutrientes esenciales",
+    s20_n1_title: "🥩 Proteínas", s20_n1_text: "Formación y mantenimiento de la matriz orgánica",
+    s20_n2_title: "🥛 Calcio", s20_n2_text: "Reserva mineral · resistencia y rigidez",
+    s20_n3_title: "☀️ Vitamina D", s20_n3_text: "Absorción y fijación del calcio",
+    s20_n4_title: "🔥 Energía suficiente", s20_n4_text: "Combustible para remodelación ósea",
+    s21_title: "🔗 Factores complementarios",
+    s21_intro: "La nutrición no actúa sola. Para fijar los nutrientes se requieren:",
+    s21_l1: "<b>Carga mecánica adecuada y progresiva</b> (impacto controlado, tracción muscular).",
+    s21_l2: "<b>Función hormonal equilibrada</b> (regula Ca²⁺ y células óseas).",
+    s21_l3: "<b>Descanso y recuperación</b> (osteoblastos reparan microdaños).",
+    s21_l4: "<b>Crecimiento y maduración adecuados</b> (etapas del desarrollo).",
+    s21_key: "<b>🎯 Fórmula del hueso sano:</b><br>Nutrientes + Carga + Hormonas + Descanso = Remodelación efectiva",
+    s22_title: "⚠️ El Síndrome RED-S",
+    s22_sub: "<b>Relative Energy Deficiency in Sport</b> (Deficiencia Energética Relativa en el Deporte)",
+    s22_h1: "Causa principal",
+    s22_p1: "Desequilibrio metabólico: <b>largas jornadas de ensayo + ingesta calórica insuficiente</b>.",
+    s22_quote: "<b>'Entrenar mucho no garantiza tener huesos fuertes'</b> si falta el combustible calórico.",
+    s22_h2: "Consecuencias",
+    s22_l1: "Se interrumpe la acción de los <b>osteoblastos</b>.",
+    s22_l2: "Acumulación de <b>microdaño</b> → fragilidad.",
+    s22_l3: "Alto riesgo de <b>fracturas por estrés</b>.",
+    s22_l4: "Alteración hormonal.",
+    s23_title: "💪 RED-S en Tejidos Contráctiles (Músculo)",
+    s23_intro: "Tejido <b>activo y vascularizado</b>. Efectos agudos y directos:",
+    s23_l1: "Déficit de ATP + alteración del Ca²⁺ → <b>fatiga periférica temprana</b>.",
+    s23_l2: "Miosina no se desacopla eficientemente → ciclo contráctil lento.",
+    s23_h1: "Manifestación en danza",
+    s23_m1: "<b>Pérdida de potencia</b> en fibras IIa/IIx → saltos más bajos.",
+    s23_m2: "<b>Deterioro excéntrico</b> → mala amortiguación en <i>demi-plié</i>.",
+    s23_m3: "<b>Compensación nerviosa</b> → coactivación rígida → más gasto energético.",
+    s23_recovery: "<b>Recuperación:</b> Relativamente rápida al restablecer ingesta calórica y descanso.",
+    s24_title: "🦴 RED-S en Tejidos Pasivos",
+    s24_th1: "Tejido", s24_th2: "Efecto del RED-S", s24_th3: "Consecuencia",
+    s24_r1c1: "<b>Hueso</b>", s24_r1c2: "Frena fase de formación del remodelado", s24_r1c3: "Microdaño acumulado → <b>fracturas por estrés</b>",
+    s24_r2c1: "<b>Tendón</b>", s24_r2c2: "Afecta síntesis de colágeno", s24_r2c3: "Absorbe impactos sin amortiguación muscular → <b>tendinopatías</b>",
+    s24_r3c1: "<b>Ligamento</b>", s24_r3c2: "Articulación entra en 'Warning Zone'", s24_r3c3: "Cargas directas a ligamentos → <b>esguinces</b>",
+    s24_result: "<b>⚠️ Impacto silencioso y acumulativo:</b> La remodelación ósea tarda años. El daño estructural requiere <b>meses de recuperación</b> o puede dejar secuelas permanentes.",
+    s25_title: "🎯 Resumen Final del Tema",
+    s25_c1_title: "🧬 Contracción", s25_c1_text: "Ca²⁺ desbloquea · ATP repite",
+    s25_c2_title: "🩰 Bailarín", s25_c2_text: "7 precauciones clave",
+    s25_c3_title: "⚡ ATP", s25_c3_text: "Desacopla + rearma + repite",
+    s25_c4_title: "😓 Fatiga", s25_c4_text: "Central + Periférica",
+    s25_c5_title: "🔄 Recuperación", s25_c5_text: "ATP + Nervioso + Cartílago",
+    s25_c6_title: "🦴 Hueso y RED-S", s25_c6_text: "Nutrición + Carga + Descanso",
+    s25_final: "<b>💡 Idea global:</b> El cuerpo del bailarín es un sistema integrado.<br><i>Músculo, hueso, tendón, ligamento, cartílago y sistema nervioso</i> trabajan juntos.<br><b>Cuidar uno es cuidar todos.</b>"
+  },
+  ca: {
+    header_title: "📚 Tema 3 · Blocs Fisiològics i Biomecànics",
+    btn_prev: "← Anterior", btn_index: "🗺️ Índex", btn_next: "Següent →",
+    s1_title: "Blocs Fisiològics<br>i Biomecànics",
+    s1_subtitle: "Tema 3 · Aplicat a la Dansa",
+    s1_hint: "Usa les fletxes ← → del teclat o els botons per navegar",
+    s2_title: "🗺️ Mapa del Tema",
+    s2_intro: "Aquest tema s'organitza en <b>6 blocs</b> interconnectats. Fes clic a qualsevol per anar-hi directament:",
+    s2_i1_title: "Mecanisme Contràctil", s2_i1_sub: "Ca²⁺, ATP i sarcòmer",
+    s2_i2_title: "Precaucions del Ballarí", s2_i2_sub: "7 claus de rendiment",
+    s2_i3_title: "Funció de l'ATP", s2_i3_sub: "Cicle de la miosina",
+    s2_i4_title: "Fatiga en la Variació", s2_i4_sub: "Efectes moleculars i tècnics",
+    s2_i5_title: "Recuperació", s2_i5_sub: "ATP, nerviós i cartílag",
+    s2_i6_title: "Os i RED-S", s2_i6_sub: "Nutrients i síndrome",
+    s3_title: "🧬 Bloc 1 · Mecanisme Contràctil",
+    s3_intro: "El <b>sarcòmer</b> és la unitat funcional del múscul. La seva contracció depèn de dos elements clau:",
+    s3_ca_title: "🟡 Calci (Ca²⁺)",
+    s3_ca_text: "L'<b>interruptor molecular</b>. Desbloqueja els llocs actius de l'actina.",
+    s3_atp_title: "🔵 ATP",
+    s3_atp_text: "El <b>combustible</b>. Permet el desacoblament i rearmat de la miosina.",
+    s3_key: "<b>Sense Ca²⁺</b> no hi ha inici · <b>Sense ATP</b> no hi ha repetició del cicle",
+    s4_title: "🟡 Com influeix el Ca²⁺ en la contracció?",
+    s4_li1: "<b>Desbloqueig de l'actina:</b> En repòs, la <span class='keyword'>tropomiosina</span> tapa els llocs actius. El Ca²⁺ s'uneix a la <span class='keyword rosa'>troponina</span>.",
+    s4_li2: "<b>Formació de ponts creuats:</b> La troponina desplaça la tropomiosina → els caps de <span class='keyword'>miosina</span> s'ancoren a l'<span class='keyword rosa'>actina</span>.",
+    s4_li3: "<b>Manteniment del cicle:</b> El lliscament continua mentre hi hagi Ca²⁺ i ATP disponibles.",
+    s4_example: "<b>🩰 Exemple en dansa:</b> Per a un <i>relevé</i> o un <i>grand jeté</i>, les motoneurones alliberen un flux massiu de Ca²⁺ als bessons i quàdriceps → desbloqueig immediat de l'actina → generació de força per vèncer la gravetat.",
+    s5_title: "⚠️ Fatiga perifèrica i maneig del calci",
+    s5_intro: "Quan apareix la <b>fatiga perifèrica</b>, es produeixen alteracions en el maneig del Ca²⁺:",
+    s5_li1: "Disminueix l'<b>alliberament</b> de Ca²⁺ des del reticle sarcoplasmàtic.",
+    s5_li2: "S'alenteix la <b>recaptació</b> del Ca²⁺.",
+    s5_li3: "Menys llocs actius de l'actina queden exposats.",
+    s5_li4: "→ <b>Es redueix la capacitat de formar ponts creuats eficients.</b>",
+    s5_result: "<b>Resultat en la dansa:</b> El ballarí perd potència en salts i precisió en equilibris, encara que l'estímul nerviós segueixi present.",
+    s6_title: "🩰 Bloc 2 · Precaucions del Ballarí",
+    s6_intro: "Per optimitzar el rendiment sense comprometre la salut, la fisiologia estableix <b>7 precaucions essencials</b>:",
+    s6_p1_title: "1. Energia suficient", s6_p1_text: "Prevenció del RED-S",
+    s6_p2_title: "2. Nutrició adequada", s6_p2_text: "Proteïnes, Ca²⁺, Vit D",
+    s6_p3_title: "3. Dosificar càrrega", s6_p3_text: "Respectar la recuperació",
+    s6_p4_title: "4. Gestionar fatiga", s6_p4_text: "Central i perifèrica",
+    s6_p5_title: "5. Nutrir cartílag", s6_p5_text: "Bombament càrrega/descàrrega",
+    s6_p6_title: "6. Moderar coactivació", s6_p6_text: "Evitar rigidesa",
+    s6_p7_title: "7. Protegir lligaments", s6_p7_text: "Rangs articulars segurs",
+    s7_title: "🛡️ Precaucions 1-3",
+    s7_p1_title: "1. Disponibilitat energètica (RED-S)",
+    s7_p1_text: "Entrenar moltes hores <b>no garanteix</b> ossos forts si no es consumeix prou energia. Un dèficit calòric compromet la salut òssia.",
+    s7_p2_title: "2. Aport nutricional adequat",
+    s7_p2_text: "Proteïnes (matriu òssia), calci (reserva mineral) i vitamina D (fixació del calci) són imprescindibles.",
+    s7_p3_title: "3. Dosificar càrrega i recuperar",
+    s7_p3_text: "L'os s'adapta a la <b>magnitud, velocitat, direcció i novetat</b> de les càrregues. Càrrega excessiva + poc descans = <b>acumulació de microdany</b>.",
+    s8_title: "🛡️ Precaucions 4-7",
+    s8_p4_title: "4. Gestionar fatiga central i perifèrica",
+    s8_p4_text: "La fatiga redueix l'activació nerviosa i altera el Ca²⁺. Afecta la precisió de l'<i>arabesque</i> o els salts. El descans restaura els paràmetres de control.",
+    s8_p5_title: "5. Nutrir el cartílag (càrrega/descàrrega)",
+    s8_p5_text: "El cartílag és <b>avascular</b>. La compressió expulsa residus; la descàrrega reabsorbeix líquid sinovial ric en nutrients.",
+    s8_p6_title: "6. Moderar la coactivació",
+    s8_p6_text: "La coactivació agonista-antagonista dóna estabilitat, però en excés → <b>rigidesa</b> i més cost energètic.",
+    s8_p7_title: "7. Protegir lligaments",
+    s8_p7_text: "Els lligaments són guies passives. El treball tècnic s'ha de fer dins de <b>límits articulars segurs</b>.",
+    s9_title: "⚡ Bloc 3 · Funció de l'ATP",
+    s9_intro: "El <b>trifosfat d'adenosina (ATP)</b> compleix <b>3 funcions fonamentals</b> en el cicle de la miosina:",
+    s9_f1_title: "1. Desacoblament", s9_f1_text: "L'ATP s'uneix al cap de miosina → se separa de l'actina després del cop de força.",
+    s9_f2_title: "2. Rearmat", s9_f2_text: "La hidròlisi (ATP → ADP + Pi) aporta energia per 'carregar' de nou el cap de miosina.",
+    s9_f3_title: "3. Repetició del cicle", s9_f3_text: "Permet que el cicle es repeteixi mentre hi hagi Ca²⁺ i ATP disponibles.",
+    s10_title: "🩰 ATP aplicat a la dansa",
+    s10_ex1: "<b>Fluïdesa en seqüències:</b> En <i>relevés</i> continus o <i>grand allegro</i>, les fibres formen i trenquen ponts creuats a gran velocitat. L'ATP constant permet desacoblar-se a l'instant i tornar a agafar força.",
+    s10_ex2: "<b>Prevenció de l'enganxament:</b> Sense ATP, els caps de miosina queden fixos a l'actina → rigidesa (<i>rigor mortis</i>). Amb ATP, el múscul cedeix i controla el descens a un <i>demi-plié</i>.",
+    s10_key: "<b>💡 Idea clau:</b> L'ATP no només dóna energia, també permet la <b>relaxació</b>.",
+    s11_title: "🔄 Síntesi: Ca²⁺ i ATP treballant junts",
+    s11_th1: "Element", s11_th2: "Funció", s11_th3: "Si falta...",
+    s11_r1c1: "<b>🟡 Ca²⁺</b>", s11_r1c2: "Inicia la contracció (desbloqueja actina)", s11_r1c3: "No hi ha formació de ponts creuats",
+    s11_r2c1: "<b>🔵 ATP</b>", s11_r2c2: "Desacobla i rearma la miosina", s11_r2c3: "Rigidesa (miosina bloquejada en actina)",
+    s11_r3c1: "<b>🟡 + 🔵</b>", s11_r3c2: "Cicle complet de lliscament", s11_r3c3: "Contracció muscular efectiva",
+    s11_key: "<b>🎯 Per recordar:</b> El Ca²⁺ <i>obre la porta</i>, l'ATP <i>manté el motor en marxa</i>.",
+    s12_title: "😓 Bloc 4 · Fatiga en la Variació",
+    s12_intro: "Durant una variació llarga, la <b>fatiga perifèrica</b> i la <b>caiguda d'ATP</b> afecten 3 nivells:",
+    s12_l1_title: "🔬 Molecular", s12_l1_text: "Fallo en desacoblament i dinàmica del Ca²⁺",
+    s12_l2_title: "🎯 Fases del moviment", s12_l2_text: "Enlairament, aterratge i postura",
+    s12_l3_title: "🧠 Compensació nerviosa", s12_l3_text: "Reclutament i errors tècnics",
+    s13_title: "🔬 Alteració molecular en el sarcòmer",
+    s13_h1: "1. Fallo en desacoblament i rearmat",
+    s13_p1: "En esgotar-se l'ATP, la miosina no es desprèn de l'actina ni rearma el seu cap → el cicle es torna <b>lent i ineficient</b>.",
+    s13_h2: "2. Alteració en la dinàmica del Ca²⁺",
+    s13_p2: "La fatiga perifèrica altera l'alliberament i recaptació de Ca²⁺ → menys llocs actius exposats → <b>ponts creuats ineficients</b>.",
+    s13_result: "<b>Conseqüència:</b> El sarcòmer perd la seva capacitat de generar força ràpida i sostinguda.",
+    s14_title: "🎯 Impacte en les fases del moviment",
+    s14_th1: "Fase", s14_th2: "Tipus contracció", s14_th3: "Efecte de la fatiga",
+    s14_r1c1: "<b>Enlairament</b>", s14_r1c2: "Concèntrica (fibres IIa/IIx)", s14_r1c3: "Menys altura en <i>grand allegro</i>, menys velocitat d'impuls",
+    s14_r2c1: "<b>Aterratge</b>", s14_r2c2: "Excèntrica (<i>demi-plié</i>)", s14_r2c3: "Dificulta l'absorció elàstica → sobrecàrrega articulacions i tendons",
+    s14_r3c1: "<b>Postura</b>", s14_r3c2: "Isomètrica (<i>arabesque</i>)", s14_r3c3: "Dificulta mantenir força sostinguda i coactivació adequada",
+    s15_title: "🧠 Compensació del sistema nerviós",
+    s15_h1: "Intents de compensació",
+    s15_l1: "Reclutament de <b>més unitats motores</b>.",
+    s15_l2: "Ajust de la <b>freqüència de descàrrega</b> de motoneurones.",
+    s15_l3: "Activació de <b>músculs sinergistes i estabilitzadors</b>.",
+    s15_h2: "Si la fatiga persisteix...",
+    s15_result: "Apareixen <b>compensacions mecàniques</b>: desalineacions pèlviques, pèrdua del <i>turnout</i>, tremolors en els suports. El rendiment cau dràsticament.",
+    s16_title: "🔄 Bloc 5 · Recuperació",
+    s16_intro: "Per restablir ATP i control nerviós, cal abordar <b>coordinadament</b>:",
+    s16_b1_title: "🔬 Recuperació Perifèrica", s16_b1_text: "ATP, Ca²⁺, metabòlits musculars",
+    s16_b2_title: "🧠 Recuperació Central", s16_b2_text: "Control nerviós i propiocepció",
+    s16_extra: "+ Estratègies pràctiques a la sala d'assaig",
+    s17_title: "🔬 Recuperació Perifèrica",
+    s17_l1: "<b>Pauses breus (2-3 min):</b> Permeten resintetitzar ATP → miosina es desacobla i rearma.",
+    s17_l2: "<b>Disponibilitat energètica:</b> Ingesta adequada de proteïnes, Ca²⁺, Vit D → prevé RED-S.",
+    s17_example: "<b>🩰 Exemple:</b> En <i>grand allegro</i>, les pauses curtes entre combinacions restauren l'ATP de fibres IIa/IIx → es manté la potència de l'enlairament i la recepció excèntrica en <i>demi-plié</i>.",
+    s18_title: "🧠 Recuperació Central",
+    s18_l1: "<b>Calma activa:</b> El SNC recupera la capacitat de regular el reclutament i freqüència de descàrrega.",
+    s18_l2: "<b>Reajustament propioceptiu:</b> Els receptors (fusos, OTG, articulars) tornen a calibrar-se.",
+    s18_example: "<b>🩰 Exemple:</b> En equilibris sobre una cama, la fatiga central genera <b>coactivació excessiva</b> → rigidesa + cost energètic alt. Una pausa permet relaxar estabilitzadors i recuperar el micro-ajust fluid.",
+    s19_title: "🎯 Estratègies a la sala d'assaig",
+    s19_s1_title: "🦵 Mobilitat suau", s19_s1_text: "Caminar a poc a poc o mobilitat articular en pauses → estimula el <b>bombament de líquid sinovial</b> → nodreix el cartílag avascular.",
+    s19_s2_title: "🛡️ Protecció de lligaments", s19_s2_text: "Amb musculatura fatigada, els lligaments queden exposats. <b>Pausar abans</b> de perdre <i>turnout</i> o alineació pèlvica.",
+    s19_s3_title: "🦴 Dosificació i remodelació òssia", s19_s3_text: "Càrrega excessiva + poc descans → <b>microdany acumulat</b> a la matriu òssia.",
+    s20_title: "🦴 Bloc 6 · Nutrients de l'Os",
+    s20_h1: "Nutrients essencials",
+    s20_n1_title: "🥩 Proteïnes", s20_n1_text: "Formació i manteniment de la matriu orgànica",
+    s20_n2_title: "🥛 Calci", s20_n2_text: "Reserva mineral · resistència i rigidesa",
+    s20_n3_title: "☀️ Vitamina D", s20_n3_text: "Absorció i fixació del calci",
+    s20_n4_title: "🔥 Energia suficient", s20_n4_text: "Combustible per a la remodelació òssia",
+    s21_title: "🔗 Factors complementaris",
+    s21_intro: "La nutrició no actua sola. Per fixar els nutrients calen:",
+    s21_l1: "<b>Càrrega mecànica adequada i progressiva</b> (impacte controlat, tracció muscular).",
+    s21_l2: "<b>Funció hormonal equilibrada</b> (regula Ca²⁺ i cèl·lules òssies).",
+    s21_l3: "<b>Descans i recuperació</b> (osteoblasts reparen microdanys).",
+    s21_l4: "<b>Creixement i maduració adequats</b> (etapes del desenvolupament).",
+    s21_key: "<b>🎯 Fórmula de l'os sa:</b><br>Nutrients + Càrrega + Hormones + Descans = Remodelació efectiva",
+    s22_title: "⚠️ La Síndrome RED-S",
+    s22_sub: "<b>Relative Energy Deficiency in Sport</b> (Deficiència Energètica Relativa en l'Esport)",
+    s22_h1: "Causa principal",
+    s22_p1: "Desequilibri metabòlic: <b>llargues jornades d'assaig + ingesta calòrica insuficient</b>.",
+    s22_quote: "<b>'Entrenar molt no garanteix tenir ossos forts'</b> si falta el combustible calòric.",
+    s22_h2: "Conseqüències",
+    s22_l1: "S'interromp l'acció dels <b>osteoblasts</b>.",
+    s22_l2: "Acumulació de <b>microdany</b> → fragilitat.",
+    s22_l3: "Alt risc de <b>fractures per estrès</b>.",
+    s22_l4: "Alteració hormonal.",
+    s23_title: "💪 RED-S en Teixits Contràctils (Múscul)",
+    s23_intro: "Teixit <b>actiu i vascularitzat</b>. Efectes aguts i directes:",
+    s23_l1: "Dèficit d'ATP + alteració del Ca²⁺ → <b>fatiga perifèrica primerenca</b>.",
+    s23_l2: "Miosina no es desacobla eficientment → cicle contràctil lent.",
+    s23_h1: "Manifestació en dansa",
+    s23_m1: "<b>Pèrdua de potència</b> en fibres IIa/IIx → salts més baixos.",
+    s23_m2: "<b>Deteriorament excèntric</b> → mala amortiguació en <i>demi-plié</i>.",
+    s23_m3: "<b>Compensació nerviosa</b> → coactivació rígida → més cost energètic.",
+    s23_recovery: "<b>Recuperació:</b> Relativament ràpida en restablir la ingesta calòrica i el descans.",
+    s24_title: "🦴 RED-S en Teixits Passius",
+    s24_th1: "Teixit", s24_th2: "Efecte del RED-S", s24_th3: "Conseqüència",
+    s24_r1c1: "<b>Os</b>", s24_r1c2: "Frena la fase de formació del remodelat", s24_r1c3: "Microdany acumulat → <b>fractures per estrès</b>",
+    s24_r2c1: "<b>Tendó</b>", s24_r2c2: "Afecta la síntesi de col·lagen", s24_r2c3: "Absorbeix impactes sense amortiguació muscular → <b>tendinopaties</b>",
+    s24_r3c1: "<b>Lligament</b>", s24_r3c2: "L'articulació entra en 'Warning Zone'", s24_r3c3: "Càrregues directes als lligaments → <b>esquinços</b>",
+    s24_result: "<b>⚠️ Impacte silenciós i acumulatiu:</b> La remodelació òssia triga anys. El dany estructural requereix <b>mesos de recuperació</b> o pot deixar seqüeles permanents.",
+    s25_title: "🎯 Resum Final del Tema",
+    s25_c1_title: "🧬 Contracció", s25_c1_text: "Ca²⁺ desbloqueja · ATP repeteix",
+    s25_c2_title: "🩰 Ballarí", s25_c2_text: "7 precaucions clau",
+    s25_c3_title: "⚡ ATP", s25_c3_text: "Desacobla + rearma + repeteix",
+    s25_c4_title: "😓 Fatiga", s25_c4_text: "Central + Perifèrica",
+    s25_c5_title: "🔄 Recuperació", s25_c5_text: "ATP + Nerviós + Cartílag",
+    s25_c6_title: "🦴 Os i RED-S", s25_c6_text: "Nutrició + Càrrega + Descans",
+    s25_final: "<b>💡 Idea global:</b> El cos del ballarí és un sistema integrat.<br><i>Múscul, os, tendó, lligament, cartílag i sistema nerviós</i> treballen junts.<br><b>Cuidar-ne un és cuidar-los tots.</b>"
+  },
+  en: {
+    header_title: "📚 Topic 3 · Physiological and Biomechanical Blocks",
+    btn_prev: "← Previous", btn_index: "🗺️ Index", btn_next: "Next →",
+    s1_title: "Physiological<br>and Biomechanical Blocks",
+    s1_subtitle: "Topic 3 · Applied to Dance",
+    s1_hint: "Use the ← → arrow keys or the buttons to navigate",
+    s2_title: "🗺️ Topic Map",
+    s2_intro: "This topic is organized into <b>6 interconnected blocks</b>. Click any to jump directly:",
+    s2_i1_title: "Contractile Mechanism", s2_i1_sub: "Ca²⁺, ATP and sarcomere",
+    s2_i2_title: "Dancer Precautions", s2_i2_sub: "7 performance keys",
+    s2_i3_title: "ATP Function", s2_i3_sub: "Myosin cycle",
+    s2_i4_title: "Fatigue in the Variation", s2_i4_sub: "Molecular and technical effects",
+    s2_i5_title: "Recovery", s2_i5_sub: "ATP, nervous and cartilage",
+    s2_i6_title: "Bone and RED-S", s2_i6_sub: "Nutrients and syndrome",
+    s3_title: "🧬 Block 1 · Contractile Mechanism",
+    s3_intro: "The <b>sarcomere</b> is the functional unit of muscle. Its contraction depends on two key elements:",
+    s3_ca_title: "🟡 Calcium (Ca²⁺)",
+    s3_ca_text: "The <b>molecular switch</b>. It unlocks actin's active sites.",
+    s3_atp_title: "🔵 ATP",
+    s3_atp_text: "The <b>fuel</b>. It allows myosin to detach and re-arm.",
+    s3_key: "<b>Without Ca²⁺</b> there is no start · <b>Without ATP</b> the cycle cannot repeat",
+    s4_title: "🟡 How does Ca²⁺ influence contraction?",
+    s4_li1: "<b>Actin unblocking:</b> At rest, <span class='keyword'>tropomyosin</span> covers the active sites. Ca²⁺ binds to <span class='keyword rosa'>troponin</span>.",
+    s4_li2: "<b>Cross-bridge formation:</b> Troponin displaces tropomyosin → <span class='keyword'>myosin</span> heads anchor to <span class='keyword rosa'>actin</span>.",
+    s4_li3: "<b>Cycle maintenance:</b> Sliding continues while Ca²⁺ and ATP are available.",
+    s4_example: "<b>🩰 Dance example:</b> For a <i>relevé</i> or <i>grand jeté</i>, motor neurons release a massive flow of Ca²⁺ in the calves and quadriceps → immediate actin unblocking → force generation to overcome gravity.",
+    s5_title: "⚠️ Peripheral fatigue and calcium handling",
+    s5_intro: "When <b>peripheral fatigue</b> appears, calcium handling is altered:",
+    s5_li1: "<b>Release</b> of Ca²⁺ from the sarcoplasmic reticulum decreases.",
+    s5_li2: "Ca²⁺ <b>reuptake</b> slows down.",
+    s5_li3: "Fewer actin active sites remain exposed.",
+    s5_li4: "→ <b>The ability to form efficient cross-bridges is reduced.</b>",
+    s5_result: "<b>Result in dance:</b> The dancer loses jump power and balance precision, even though the nerve stimulus is still present.",
+    s6_title: "🩰 Block 2 · Dancer Precautions",
+    s6_intro: "To optimize performance without compromising health, physiology establishes <b>7 essential precautions</b>:",
+    s6_p1_title: "1. Sufficient energy", s6_p1_text: "RED-S prevention",
+    s6_p2_title: "2. Adequate nutrition", s6_p2_text: "Proteins, Ca²⁺, Vit D",
+    s6_p3_title: "3. Dose the load", s6_p3_text: "Respect recovery",
+    s6_p4_title: "4. Manage fatigue", s6_p4_text: "Central and peripheral",
+    s6_p5_title: "5. Nourish cartilage", s6_p5_text: "Load/unload pumping",
+    s6_p6_title: "6. Moderate coactivation", s6_p6_text: "Avoid stiffness",
+    s6_p7_title: "7. Protect ligaments", s6_p7_text: "Safe joint ranges",
+    s7_title: "🛡️ Precautions 1-3",
+    s7_p1_title: "1. Energy availability (RED-S)",
+    s7_p1_text: "Training many hours <b>does not guarantee</b> strong bones if enough energy is not consumed. A caloric deficit compromises bone health.",
+    s7_p2_title: "2. Adequate nutritional intake",
+    s7_p2_text: "Proteins (bone matrix), calcium (mineral reserve) and vitamin D (calcium fixation) are essential.",
+    s7_p3_title: "3. Dose the load and recover",
+    s7_p3_text: "Bone adapts to the <b>magnitude, speed, direction and novelty</b> of loads. Excessive load + little rest = <b>accumulated microdamage</b>.",
+    s8_title: "🛡️ Precautions 4-7",
+    s8_p4_title: "4. Manage central and peripheral fatigue",
+    s8_p4_text: "Fatigue reduces nerve activation and alters Ca²⁺. It affects the precision of <i>arabesque</i> or jumps. Rest restores control parameters.",
+    s8_p5_title: "5. Nourish cartilage (load/unload)",
+    s8_p5_text: "Cartilage is <b>avascular</b>. Compression expels waste; unloading reabsorbs nutrient-rich synovial fluid.",
+    s8_p6_title: "6. Moderate coactivation",
+    s8_p6_text: "Agonist-antagonist coactivation gives stability, but in excess → <b>stiffness</b> and greater energy expenditure.",
+    s8_p7_title: "7. Protect ligaments",
+    s8_p7_text: "Ligaments are passive guides. Technical work must be performed within <b>safe joint limits</b>.",
+    s9_title: "⚡ Block 3 · ATP Function",
+    s9_intro: "<b>Adenosine triphosphate (ATP)</b> fulfills <b>3 fundamental functions</b> in the myosin cycle:",
+    s9_f1_title: "1. Detachment", s9_f1_text: "ATP binds to the myosin head → it separates from actin after the power stroke.",
+    s9_f2_title: "2. Re-arming", s9_f2_text: "Hydrolysis (ATP → ADP + Pi) provides energy to 're-cock' the myosin head.",
+    s9_f3_title: "3. Cycle repetition", s9_f3_text: "Allows the cycle to repeat as long as Ca²⁺ and ATP are available.",
+    s10_title: "🩰 ATP applied to dance",
+    s10_ex1: "<b>Fluidity in sequences:</b> In continuous <i>relevés</i> or <i>grand allegro</i>, fibers form and break cross-bridges at high speed. Constant ATP allows instant detachment and re-engagement of force.",
+    s10_ex2: "<b>Preventing lock-up:</b> Without ATP, myosin heads stay fixed to actin → stiffness (<i>rigor mortis</i>). With ATP, the muscle yields and controls the descent into a <i>demi-plié</i>.",
+    s10_key: "<b>💡 Key idea:</b> ATP doesn't just provide energy, it also allows <b>relaxation</b>.",
+    s11_title: "🔄 Synthesis: Ca²⁺ and ATP working together",
+    s11_th1: "Element", s11_th2: "Function", s11_th3: "If missing...",
+    s11_r1c1: "<b>🟡 Ca²⁺</b>", s11_r1c2: "Initiates contraction (unblocks actin)", s11_r1c3: "No cross-bridge formation",
+    s11_r2c1: "<b>🔵 ATP</b>", s11_r2c2: "Detaches and re-arms myosin", s11_r2c3: "Stiffness (myosin locked on actin)",
+    s11_r3c1: "<b>🟡 + 🔵</b>", s11_r3c2: "Complete sliding cycle", s11_r3c3: "Effective muscle contraction",
+    s11_key: "<b>🎯 To remember:</b> Ca²⁺ <i>opens the door</i>, ATP <i>keeps the engine running</i>.",
+    s12_title: "😓 Block 4 · Fatigue in the Variation",
+    s12_intro: "During a long variation, <b>peripheral fatigue</b> and <b>ATP drop</b> affect 3 levels:",
+    s12_l1_title: "🔬 Molecular", s12_l1_text: "Detachment failure and Ca²⁺ dynamics",
+    s12_l2_title: "🎯 Movement phases", s12_l2_text: "Take-off, landing and posture",
+    s12_l3_title: "🧠 Nervous compensation", s12_l3_text: "Recruitment and technical errors",
+    s13_title: "🔬 Molecular alteration in the sarcomere",
+    s13_h1: "1. Detachment and re-arming failure",
+    s13_p1: "When ATP is depleted, myosin does not detach from actin nor re-arm its head → the cycle becomes <b>slow and inefficient</b>.",
+    s13_h2: "2. Altered Ca²⁺ dynamics",
+    s13_p2: "Peripheral fatigue alters Ca²⁺ release and reuptake → fewer active sites exposed → <b>inefficient cross-bridges</b>.",
+    s13_result: "<b>Consequence:</b> The sarcomere loses its ability to generate fast and sustained force.",
+    s14_title: "🎯 Impact on movement phases",
+    s14_th1: "Phase", s14_th2: "Contraction type", s14_th3: "Fatigue effect",
+    s14_r1c1: "<b>Take-off</b>", s14_r1c2: "Concentric (IIa/IIx fibers)", s14_r1c3: "Less height in <i>grand allegro</i>, less impulse speed",
+    s14_r2c1: "<b>Landing</b>", s14_r2c2: "Eccentric (<i>demi-plié</i>)", s14_r2c3: "Hinders elastic absorption → overloads joints and tendons",
+    s14_r3c1: "<b>Posture</b>", s14_r3c2: "Isometric (<i>arabesque</i>)", s14_r3c3: "Harder to maintain sustained force and adequate coactivation",
+    s15_title: "🧠 Nervous system compensation",
+    s15_h1: "Compensation attempts",
+    s15_l1: "Recruitment of <b>more motor units</b>.",
+    s15_l2: "Adjustment of motor neuron <b>firing frequency</b>.",
+    s15_l3: "Activation of <b>synergist and stabilizer muscles</b>.",
+    s15_h2: "If fatigue persists...",
+    s15_result: "<b>Mechanical compensations</b> appear: pelvic misalignments, loss of <i>turnout</i>, tremors in supports. Performance drops drastically.",
+    s16_title: "🔄 Block 5 · Recovery",
+    s16_intro: "To restore ATP and nervous control, we must address <b>in a coordinated way</b>:",
+    s16_b1_title: "🔬 Peripheral Recovery", s16_b1_text: "ATP, Ca²⁺, muscle metabolites",
+    s16_b2_title: "🧠 Central Recovery", s16_b2_text: "Nervous control and proprioception",
+    s16_extra: "+ Practical strategies in the rehearsal room",
+    s17_title: "🔬 Peripheral Recovery",
+    s17_l1: "<b>Brief pauses (2-3 min):</b> Allow ATP resynthesis → myosin detaches and re-arms.",
+    s17_l2: "<b>Energy availability:</b> Adequate intake of proteins, Ca²⁺, Vit D → prevents RED-S.",
+    s17_example: "<b>🩰 Example:</b> In <i>grand allegro</i>, short pauses between combinations restore ATP in IIa/IIx fibers → maintains take-off power and eccentric reception in <i>demi-plié</i>.",
+    s18_title: "🧠 Central Recovery",
+    s18_l1: "<b>Active calm:</b> The CNS recovers its ability to regulate recruitment and firing frequency.",
+    s18_l2: "<b>Proprioceptive readjustment:</b> Receptors (spindles, GTO, joint) recalibrate.",
+    s18_example: "<b>🩰 Example:</b> In single-leg balances, central fatigue generates <b>excessive coactivation</b> → stiffness + high energy cost. A pause allows stabilizers to relax and fluid micro-adjustment to return.",
+    s19_title: "🎯 Strategies in the rehearsal room",
+    s19_s1_title: "🦵 Gentle mobility", s19_s1_text: "Slow walking or joint mobility during pauses → stimulates <b>synovial fluid pumping</b> → nourishes avascular cartilage.",
+    s19_s2_title: "🛡️ Ligament protection", s19_s2_text: "With fatigued musculature, ligaments become exposed. <b>Pause before</b> losing <i>turnout</i> or pelvic alignment.",
+    s19_s3_title: "🦴 Load dosing and bone remodeling", s19_s3_text: "Excessive load + little rest → <b>accumulated microdamage</b> in the bone matrix.",
+    s20_title: "🦴 Block 6 · Bone Nutrients",
+    s20_h1: "Essential nutrients",
+    s20_n1_title: "🥩 Proteins", s20_n1_text: "Formation and maintenance of the organic matrix",
+    s20_n2_title: "🥛 Calcium", s20_n2_text: "Mineral reserve · strength and stiffness",
+    s20_n3_title: "☀️ Vitamin D", s20_n3_text: "Calcium absorption and fixation",
+    s20_n4_title: "🔥 Sufficient energy", s20_n4_text: "Fuel for bone remodeling",
+    s21_title: "🔗 Complementary factors",
+    s21_intro: "Nutrition does not act alone. To fix nutrients, the following are required:",
+    s21_l1: "<b>Adequate and progressive mechanical load</b> (controlled impact, muscle traction).",
+    s21_l2: "<b>Balanced hormonal function</b> (regulates Ca²⁺ and bone cells).",
+    s21_l3: "<b>Rest and recovery</b> (osteoblasts repair microdamage).",
+    s21_l4: "<b>Adequate growth and maturation</b> (developmental stages).",
+    s21_key: "<b>🎯 Healthy bone formula:</b><br>Nutrients + Load + Hormones + Rest = Effective remodeling",
+    s22_title: "⚠️ RED-S Syndrome",
+    s22_sub: "<b>Relative Energy Deficiency in Sport</b>",
+    s22_h1: "Main cause",
+    s22_p1: "Metabolic imbalance: <b>long rehearsal days + insufficient caloric intake</b>.",
+    s22_quote: "<b>'Training a lot does not guarantee strong bones'</b> if caloric fuel is missing.",
+    s22_h2: "Consequences",
+    s22_l1: "<b>Osteoblast</b> action is interrupted.",
+    s22_l2: "Accumulation of <b>microdamage</b> → fragility.",
+    s22_l3: "High risk of <b>stress fractures</b>.",
+    s22_l4: "Hormonal alteration.",
+    s23_title: "💪 RED-S in Contractile Tissues (Muscle)",
+    s23_intro: "<b>Active and vascularized</b> tissue. Acute and direct effects:",
+    s23_l1: "ATP deficit + altered Ca²⁺ → <b>early peripheral fatigue</b>.",
+    s23_l2: "Myosin does not detach efficiently → slow contractile cycle.",
+    s23_h1: "Manifestation in dance",
+    s23_m1: "<b>Power loss</b> in IIa/IIx fibers → lower jumps.",
+    s23_m2: "<b>Eccentric deterioration</b> → poor cushioning in <i>demi-plié</i>.",
+    s23_m3: "<b>Nervous compensation</b> → rigid coactivation → more energy expenditure.",
+    s23_recovery: "<b>Recovery:</b> Relatively fast once caloric intake and rest are restored.",
+    s24_title: "🦴 RED-S in Passive Tissues",
+    s24_th1: "Tissue", s24_th2: "RED-S effect", s24_th3: "Consequence",
+    s24_r1c1: "<b>Bone</b>", s24_r1c2: "Slows the formation phase of remodeling", s24_r1c3: "Accumulated microdamage → <b>stress fractures</b>",
+    s24_r2c1: "<b>Tendon</b>", s24_r2c2: "Affects collagen synthesis", s24_r2c3: "Absorbs impacts without muscle cushioning → <b>tendinopathies</b>",
+    s24_r3c1: "<b>Ligament</b>", s24_r3c2: "Joint enters the 'Warning Zone'", s24_r3c3: "Direct loads to ligaments → <b>sprains</b>",
+    s24_result: "<b>⚠️ Silent and cumulative impact:</b> Bone remodeling takes years. Structural damage requires <b>months of recovery</b> or may leave permanent sequelae.",
+    s25_title: "🎯 Final Topic Summary",
+    s25_c1_title: "🧬 Contraction", s25_c1_text: "Ca²⁺ unlocks · ATP repeats",
+    s25_c2_title: "🩰 Dancer", s25_c2_text: "7 key precautions",
+    s25_c3_title: "⚡ ATP", s25_c3_text: "Detaches + re-arms + repeats",
+    s25_c4_title: "😓 Fatigue", s25_c4_text: "Central + Peripheral",
+    s25_c5_title: "🔄 Recovery", s25_c5_text: "ATP + Nervous + Cartilage",
+    s25_c6_title: "🦴 Bone and RED-S", s25_c6_text: "Nutrition + Load + Rest",
+    s25_final: "<b>💡 Global idea:</b> The dancer's body is an integrated system.<br><i>Muscle, bone, tendon, ligament, cartilage and nervous system</i> work together.<br><b>Caring for one is caring for all.</b>"
+  }
+};
+
+let actual = 0;
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+
+function setLanguage(lang, btn) {
+  currentLang = lang;
+  document.querySelectorAll('.language-selector button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key]) {
+      el.innerHTML = translations[lang][key];
+    }
+  });
+  
+  document.documentElement.lang = lang;
+}
+
+function mostrar(n) {
+  slides.forEach(s => s.classList.remove('activa'));
+  slides[n].classList.add('activa');
+  slides[n].scrollTop = 0;
+  document.getElementById('contador').textContent = `${n+1} / ${total}`;
+  document.getElementById('progresoFill').style.width = ((n+1)/total*100) + '%';
+  document.getElementById('btnAnt').disabled = n === 0;
+  document.getElementById('btnSig').disabled = n === total - 1;
+  actual = n;
+}
+
+function siguiente() { if (actual < total - 1) mostrar(actual + 1); }
+function anterior() { if (actual > 0) mostrar(actual - 1); }
+function irA(n) { mostrar(n); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); siguiente(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); anterior(); }
+  if (e.key === 'Home') { e.preventDefault(); mostrar(0); }
+  if (e.key === 'End') { e.preventDefault(); mostrar(total - 1); }
+});
+
+setLanguage('es', document.querySelector('.language-selector button'));
+mostrar(0);
+</script>
+
+</body>
+</html>

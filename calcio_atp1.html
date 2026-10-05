@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Paper del Calci i l'ATP en la Contracció</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  body {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #667eea 100%);
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+    position: relative;
+  }
+  header {
+    background: linear-gradient(90deg, #0f2027, #203a43, #2c5364);
+    color: white;
+    padding: 30px;
+    text-align: center;
+    position: relative;
+  }
+  header h1 { font-size: 2.2em; margin-bottom: 10px; }
+  header p { opacity: 0.9; font-size: 1.1em; }
+  
+  .lang-selector {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+  }
+  .lang-btn {
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.4);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85em;
+    transition: all 0.3s;
+  }
+  .lang-btn:hover { background: rgba(255,255,255,0.3); }
+  .lang-btn.active {
+    background: #fff;
+    color: #0f2027;
+    border-color: #fff;
+  }
+  
+  .nav-tabs {
+    display: flex;
+    background: #f8f9fa;
+    flex-wrap: wrap;
+    border-bottom: 3px solid #dee2e6;
+  }
+  .nav-tabs button {
+    flex: 1;
+    min-width: 160px;
+    padding: 15px 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: 600;
+    color: #666;
+    transition: all 0.3s;
+    border-bottom: 4px solid transparent;
+  }
+  .nav-tabs button:hover { background: #e9ecef; color: #2c5364; }
+  .nav-tabs button.active {
+    color: #2c5364;
+    border-bottom-color: #2c5364;
+    background: white;
+  }
+  
+  .slide { display: none; padding: 35px; min-height: 600px; }
+  .slide.active { display: block; animation: fadeIn 0.5s; }
+  @keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+  
+  .slide h2 { 
+    color: #0f2027; 
+    margin-bottom: 20px; 
+    font-size: 1.8em;
+    border-bottom: 3px solid #2c5364;
+    padding-bottom: 10px;
+  }
+  
+  .animation-stage {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin: 25px 0;
+    align-items: start;
+  }
+  
+  .svg-stage {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+    border: 2px solid #dee2e6;
+    border-radius: 15px;
+    padding: 20px;
+    position: sticky;
+    top: 20px;
+  }
+  
+  .svg-stage h4 {
+    text-align: center;
+    color: #0f2027;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+  }
+  
+  .svg-diagram {
+    width: 100%;
+    height: auto;
+  }
+  
+  .explanation-panel {
+    background: white;
+    border: 2px solid #2c5364;
+    border-radius: 15px;
+    padding: 25px;
+    min-height: 400px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+  
+  .step-indicator {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px dashed #dee2e6;
+  }
+  
+  .step-number {
+    background: linear-gradient(135deg, #2c5364, #203a43);
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3em;
+    font-weight: 700;
+    box-shadow: 0 3px 10px rgba(44,83,100,0.3);
+  }
+  
+  .step-title {
+    flex: 1;
+    margin-left: 15px;
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #0f2027;
+  }
+  
+  .step-content {
+    line-height: 1.8;
+    color: #333;
+    font-size: 1em;
+  }
+  
+  .step-content p {
+    margin-bottom: 12px;
+  }
+  
+  .step-content .highlight-ca {
+    background: linear-gradient(120deg, #ffd700 0%, #ffb700 100%);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    color: #7a4a00;
+  }
+  
+  .step-content .highlight-atp {
+    background: linear-gradient(120deg, #ff6b6b 0%, #ee5a6f 100%);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    color: white;
+  }
+  
+  .step-content .highlight-act {
+    background: linear-gradient(120deg, #74b9ff 0%, #0984e3 100%);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    color: white;
+  }
+  
+  .step-content .highlight-mio {
+    background: linear-gradient(120deg, #a29bfe 0%, #6c5ce7 100%);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    color: white;
+  }
+  
+  .key-box {
+    background: linear-gradient(135deg, #fff9e6 0%, #ffeaa7 100%);
+    border-left: 4px solid #f39c12;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 8px;
+  }
+  
+  .key-box strong {
+    color: #7a4a00;
+  }
+  
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 2px dashed #dee2e6;
+  }
+  
+  .btn {
+    background: linear-gradient(90deg, #2c5364, #203a43);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(44,83,100,0.3);
+  }
+  .btn:hover:not(:disabled) { 
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 16px rgba(44,83,100,0.4); 
+  }
+  .btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .btn-secondary { 
+    background: #6c757d; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  
+  .progress-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 0;
+  }
+  
+  .dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #dee2e6;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .dot.active {
+    background: linear-gradient(135deg, #2c5364, #203a43);
+    transform: scale(1.3);
+  }
+  
+  .dot.visited {
+    background: #74b9ff;
+  }
+  
+  .svg-element {
+    transition: all 0.6s ease-in-out;
+  }
+  
+  .svg-element.dim {
+    opacity: 0.25;
+  }
+  
+  .svg-element.highlight {
+    filter: drop-shadow(0 0 8px currentColor);
+  }
+  
+  .pulse {
+    animation: pulse 1.5s infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  
+  .float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+  
+  .svg-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #dee2e6;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85em;
+    color: #555;
+  }
+  
+  .legend-color {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 1px solid #333;
+  }
+  
+  .activity {
+    background: #fff;
+    border: 2px solid #e4e8ec;
+    border-radius: 15px;
+    padding: 30px;
+  }
+  
+  .activity h3 {
+    color: #2c5364;
+    margin-bottom: 15px;
+    font-size: 1.4em;
+  }
+  
+  .sortable-list { 
+    list-style: none; 
+    max-width: 700px; 
+    margin: 20px auto; 
+  }
+  .sortable-list li {
+    background: linear-gradient(90deg, #fff, #f8f9fa);
+    border: 2px solid #2c5364;
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin: 10px 0;
+    cursor: grab;
+    font-size: 1em;
+    color: #2c3e50;
+    transition: all 0.2s;
+    user-select: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .sortable-list li:hover { 
+    transform: scale(1.02); 
+    box-shadow: 0 4px 12px rgba(44,83,100,0.3); 
+  }
+  .sortable-list li.correct { 
+    background: linear-gradient(90deg, #d4edda, #c3e6cb); 
+    border-color: #28a745; 
+    color: #155724; 
+  }
+  .sortable-list li.incorrect { 
+    background: linear-gradient(90deg, #f8d7da, #f5c6cb); 
+    border-color: #dc3545; 
+    color: #721c24; 
+  }
+  
+  .question-box {
+    background: #f8f9fa;
+    border-left: 5px solid #2c5364;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+  }
+  .question-box p { 
+    font-weight: 600; 
+    margin-bottom: 15px; 
+    font-size: 1.05em;
+    color: #2c3e50;
+  }
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .options label {
+    background: white;
+    border: 2px solid #dee2e6;
+    padding: 14px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+  }
+  .options label:hover { 
+    border-color: #2c5364; 
+    background: #f0f7f9; 
+  }
+  .options input { margin-right: 12px; }
+  .options label.correct { 
+    background: #d4edda; 
+    border-color: #28a745; 
+    color: #155724; 
+  }
+  .options label.incorrect { 
+    background: #f8d7da; 
+    border-color: #dc3545; 
+    color: #721c24; 
+  }
+  
+  .tf-statement {
+    background: #f8f9fa;
+    padding: 18px;
+    margin: 12px 0;
+    border-radius: 10px;
+    border-left: 4px solid #2c5364;
+  }
+  .tf-statement p { 
+    margin-bottom: 12px; 
+    font-size: 1em;
+    color: #2c3e50;
+  }
+  .tf-buttons { display: flex; gap: 12px; }
+  .tf-buttons button {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #dee2e6;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .tf-buttons button:hover { border-color: #2c5364; }
+  .tf-buttons button.selected-correct { 
+    background: #d4edda; 
+    border-color: #28a745; 
+    color: #155724; 
+  }
+  .tf-buttons button.selected-wrong { 
+    background: #f8d7da; 
+    border-color: #dc3545; 
+    color: #721c24; 
+  }
+  .tf-buttons button:disabled { cursor: default; opacity: 0.7; }
+  
+  .feedback {
+    margin-top: 20px;
+    padding: 18px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 600;
+    display: none;
+  }
+  .feedback.show { display: block; animation: fadeIn 0.3s; }
+  .feedback.success { 
+    background: #d4edda; 
+    color: #155724; 
+    border: 2px solid #28a745; 
+  }
+  .feedback.error { 
+    background: #f8d7da; 
+    color: #721c24; 
+    border: 2px solid #dc3545; 
+  }
+  .feedback.info { 
+    background: #d1ecf1; 
+    color: #0c5460; 
+    border: 2px solid #17a2b8; 
+  }
+  
+  .intro-text {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-left: 5px solid #2c5364;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    line-height: 1.7;
+  }
+  
+  .intro-text strong {
+    color: #0f2027;
+  }
+  
+  @media (max-width: 900px) {
+    .animation-stage { grid-template-columns: 1fr; }
+    .svg-stage { position: static; }
+    header h1 { font-size: 1.6em; }
+    .slide { padding: 20px; }
+    .lang-selector { position: static; justify-content: center; margin-top: 15px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="lang-selector">
+      <button class="lang-btn active" onclick="setLang('ca')" id="btn-ca">CAT</button>
+      <button class="lang-btn" onclick="setLang('es')" id="btn-es">ESP</button>
+      <button class="lang-btn" onclick="setLang('en')" id="btn-en">ENG</button>
+    </div>
+    <h1 id="t-header-title">⚡ El Paper del Calci i l'ATP</h1>
+    <p id="t-header-sub">Tema 3 · Múscul Esquelètic · Animació pas a pas de la contracció</p>
+  </header>
+
+  <div class="nav-tabs">
+    <button class="active" onclick="showSlide(0, this)" id="tab0">📚 Animació Interactiva</button>
+    <button onclick="showSlide(1, this)" id="tab1">🎯 Act. 1: Ordenar</button>
+    <button onclick="showSlide(2, this)" id="tab2">❓ Act. 2: Quiz</button>
+    <button onclick="showSlide(3, this)" id="tab3">✅❌ Act. 3: V/F</button>
+  </div>
+
+  <!-- SLIDE 1: ANIMACIÓ INTERACTIVA -->
+  <div class="slide active">
+    <h2 id="t-s1-h2">🎬 La Contracció Pas a Pas</h2>
+    
+    <div class="intro-text" id="t-s1-intro"></div>
+    
+    <div class="progress-dots" id="progressDots"></div>
+    
+    <div class="animation-stage">
+      <div class="svg-stage">
+        <h4 id="t-svg-title">🔬 Esquema de la Unió Actina-Miosina</h4>
+        <svg viewBox="0 0 500 420" class="svg-diagram" id="mainSvg">
+          <g id="reticulum">
+            <rect x="20" y="20" width="460" height="60" fill="#b8d4e3" opacity="0.5" rx="8" stroke="#5a8fa8" stroke-width="2" stroke-dasharray="4,2"/>
+            <text x="250" y="55" text-anchor="middle" font-size="13" fill="#2c5364" font-weight="bold" id="svg-retic">RETICLE SARCOPLASMÀTIC</text>
+          </g>
+          
+          <g id="calciumIons">
+            <circle class="svg-element ca-ion" cx="80" cy="45" r="10" fill="#ffd700" stroke="#b8860b" stroke-width="2"/>
+            <text x="80" y="50" text-anchor="middle" font-size="10" fill="#7a4a00" font-weight="bold">Ca²⁺</text>
+            
+            <circle class="svg-element ca-ion" cx="160" cy="45" r="10" fill="#ffd700" stroke="#b8860b" stroke-width="2"/>
+            <text x="160" y="50" text-anchor="middle" font-size="10" fill="#7a4a00" font-weight="bold">Ca²⁺</text>
+            
+            <circle class="svg-element ca-ion" cx="240" cy="45" r="10" fill="#ffd700" stroke="#b8860b" stroke-width="2"/>
+            <text x="240" y="50" text-anchor="middle" font-size="10" fill="#7a4a00" font-weight="bold">Ca²⁺</text>
+            
+            <circle class="svg-element ca-ion" cx="320" cy="45" r="10" fill="#ffd700" stroke="#b8860b" stroke-width="2"/>
+            <text x="320" y="50" text-anchor="middle" font-size="10" fill="#7a4a00" font-weight="bold">Ca²⁺</text>
+            
+            <circle class="svg-element ca-ion" cx="400" cy="45" r="10" fill="#ffd700" stroke="#b8860b" stroke-width="2"/>
+            <text x="400" y="50" text-anchor="middle" font-size="10" fill="#7a4a00" font-weight="bold">Ca²⁺</text>
+          </g>
+          
+          <g id="actinFilament">
+            <rect x="30" y="280" width="440" height="50" fill="#74b9ff" opacity="0.85" rx="8" stroke="#0984e3" stroke-width="2"/>
+            <text x="250" y="310" text-anchor="middle" font-size="14" fill="white" font-weight="bold" id="svg-actin">FILAMENT PRIM (ACTINA)</text>
+            
+            <g id="activeSites">
+              <circle class="svg-element site" cx="120" cy="280" r="8" fill="#ff6b6b" stroke="#c0392b" stroke-width="2"/>
+              <circle class="svg-element site" cx="250" cy="280" r="8" fill="#ff6b6b" stroke="#c0392b" stroke-width="2"/>
+              <circle class="svg-element site" cx="380" cy="280" r="8" fill="#ff6b6b" stroke="#c0392b" stroke-width="2"/>
+            </g>
+            
+            <g id="tropomyosin">
+              <rect class="svg-element tropo" x="60" y="270" width="180" height="10" fill="#fdcb6e" stroke="#e17055" stroke-width="2" rx="5"/>
+              <rect class="svg-element tropo" x="260" y="270" width="180" height="10" fill="#fdcb6e" stroke="#e17055" stroke-width="2" rx="5"/>
+              <text class="svg-element tropo-label" x="150" y="260" text-anchor="middle" font-size="11" fill="#e17055" font-weight="bold" id="svg-tropo1">TROPOMIOSINA</text>
+              <text class="svg-element tropo-label" x="350" y="260" text-anchor="middle" font-size="11" fill="#e17055" font-weight="bold" id="svg-tropo2">TROPOMIOSINA</text>
+            </g>
+            
+            <g id="troponin">
+              <circle class="svg-element troponin-c" cx="240" cy="275" r="14" fill="#a29bfe" stroke="#6c5ce7" stroke-width="2"/>
+              <text x="240" y="279" text-anchor="middle" font-size="9" fill="white" font-weight="bold">Tn</text>
+              <text class="svg-element troponin-label" x="240" y="355" text-anchor="middle" font-size="11" fill="#6c5ce7" font-weight="bold" id="svg-troponina">TROPONINA</text>
+            </g>
+          </g>
+          
+          <g id="myosinFilament">
+            <rect x="30" y="160" width="440" height="40" fill="#a29bfe" opacity="0.85" rx="8" stroke="#6c5ce7" stroke-width="2"/>
+            <text x="250" y="185" text-anchor="middle" font-size="14" fill="white" font-weight="bold" id="svg-myosin">FILAMENT GRUIXUT (MIOSINA)</text>
+            
+            <g id="myosinHead">
+              <line class="svg-element myo-arm" x1="250" y1="200" x2="250" y2="240" stroke="#6c5ce7" stroke-width="5" stroke-linecap="round"/>
+              <ellipse class="svg-element myo-head" cx="250" cy="250" rx="22" ry="14" fill="#6c5ce7" stroke="#4834d4" stroke-width="2"/>
+              <text x="250" y="254" text-anchor="middle" font-size="10" fill="white" font-weight="bold" id="svg-head">Cap</text>
+              
+              <g id="atpOnHead">
+                <circle class="svg-element atp-mol" cx="285" cy="245" r="11" fill="#ff6b6b" stroke="#c0392b" stroke-width="2"/>
+                <text class="svg-element atp-label" x="285" y="249" text-anchor="middle" font-size="9" fill="white" font-weight="bold">ATP</text>
+              </g>
+            </g>
+          </g>
+          
+          <g id="arrows" opacity="0">
+            <defs>
+              <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#ff6b6b"/>
+              </marker>
+              <marker id="arrowYellow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <polygon points="0 0, 10 3, 0 6" fill="#ffd700"/>
+              </marker>
+            </defs>
+          </g>
+          
+          <g id="stepLabel">
+            <rect x="150" y="385" width="200" height="28" fill="#0f2027" rx="14"/>
+            <text id="stepLabelText" x="250" y="404" text-anchor="middle" font-size="13" fill="white" font-weight="bold">PAS 1: REPÒS</text>
+          </g>
+        </svg>
+        
+        <div class="svg-legend">
+          <div class="legend-item"><div class="legend-color" style="background:#ffd700;"></div><span id="t-leg-ca">Ca²⁺ (Calci)</span></div>
+          <div class="legend-item"><div class="legend-color" style="background:#ff6b6b;"></div><span id="t-leg-atp">ATP</span></div>
+          <div class="legend-item"><div class="legend-color" style="background:#74b9ff;"></div><span id="t-leg-act">Actina</span></div>
+          <div class="legend-item"><div class="legend-color" style="background:#a29bfe;"></div><span id="t-leg-mio">Miosina</span></div>
+          <div class="legend-item"><div class="legend-color" style="background:#fdcb6e;"></div><span id="t-leg-tropo">Tropomiosina</span></div>
+          <div class="legend-item"><div class="legend-color" style="background:#6c5ce7;"></div><span id="t-leg-tropon">Troponina</span></div>
+        </div>
+      </div>
+      
+      <div class="explanation-panel">
+        <div class="step-indicator">
+          <div class="step-number" id="stepNum">1</div>
+          <div class="step-title" id="stepTitle">Estat de Repòs</div>
+        </div>
+        <div class="step-content" id="stepContent"></div>
+        
+        <div class="nav-buttons">
+          <button class="btn btn-secondary" id="prevBtn" onclick="prevStep()">← Anterior</button>
+          <button class="btn" id="nextBtn" onclick="nextStep()">Següent →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: ACTIVITAT 1 -->
+  <div class="slide">
+    <h2 id="t-s2-h2">🎯 Activitat 1 · Ordena els Passos de la Contracció</h2>
+    <div class="intro-text" id="t-s2-intro"></div>
+    
+    <div class="activity">
+      <h3 id="t-s2-h3">📋 Arrossega per ordenar</h3>
+      <ul class="sortable-list" id="sortableList"></ul>
+      <button class="btn" onclick="checkOrder()" id="t-s2-btn1">Comprovar ordre</button>
+      <button class="btn btn-secondary" onclick="resetOrder()" id="t-s2-btn2">Reiniciar</button>
+      <div class="feedback" id="fb1"></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: ACTIVITAT 2 -->
+  <div class="slide">
+    <h2 id="t-s3-h2">❓ Activitat 2 · Quiz: Calci i ATP</h2>
+    <div class="intro-text" id="t-s3-intro"></div>
+    
+    <div class="activity">
+      <h3 id="t-s3-h3">📝 Selecciona la resposta correcta</h3>
+      <div id="quizContainer"></div>
+      <button class="btn" onclick="checkQuiz()" id="t-s3-btn1">Comprovar respostes</button>
+      <button class="btn btn-secondary" onclick="resetQuiz()" id="t-s3-btn2">Reiniciar</button>
+      <div class="feedback" id="fb2"></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: ACTIVITAT 3 -->
+  <div class="slide">
+    <h2 id="t-s4-h2">✅❌ Activitat 3 · Vertader o Fals</h2>
+    <div class="intro-text" id="t-s4-intro"></div>
+    
+    <div class="activity">
+      <h3 id="t-s4-h3">🎯 Avalua cada afirmació</h3>
+      <div id="tfContainer"></div>
+      <button class="btn" onclick="checkTF()" id="t-s4-btn1">Veure resultat</button>
+      <button class="btn btn-secondary" onclick="resetTF()" id="t-s4-btn2">Reiniciar</button>
+      <div class="feedback" id="fb3"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ================= TRADUCCIONS ================= */
+const translations = {
+  ca: {
+    headerTitle: "⚡ El Paper del Calci i l'ATP",
+    headerSub: "Tema 3 · Múscul Esquelètic · Animació pas a pas de la contracció",
+    tabs: ["📚 Animació Interactiva","🎯 Act. 1: Ordenar","❓ Act. 2: Quiz","✅❌ Act. 3: V/F"],
+    
+    s1h2: "🎬 La Contracció Pas a Pas",
+    s1intro: `<strong>Com es contreu un múscul?</strong> La contracció muscular requereix la intervenció coordinada de dos protagonistes clau: el <span class="highlight-ca">CALCI (Ca²⁺)</span>, que actua com a <strong>"interruptor"</strong>, i l'<span class="highlight-atp">ATP</span>, que aporta l'<strong>"energia"</strong>. Prem els botons per veure cada pas a l'animació.`,
+    svgTitle: "🔬 Esquema de la Unió Actina-Miosina",
+    svgRetic: "RETICLE SARCOPLASMÀTIC",
+    svgActin: "FILAMENT PRIM (ACTINA)",
+    svgMyosin: "FILAMENT GRUIXUT (MIOSINA)",
+    svgHead: "Cap",
+    svgTropo: "TROPOMIOSINA",
+    svgTroponina: "TROPONINA",
+    legCa: "Ca²⁺ (Calci)", legAtp: "ATP", legAct: "Actina", legMio: "Miosina",
+    legTropo: "Tropomiosina", legTropon: "Troponina",
+    navPrev: "← Anterior", navNext: "Següent →", navFinal: "✓ Final",
+    
+    steps: [
+      { title: "Estat de Repòs", label: "PAS 1: REPÒS",
+        content: `<p>En un múscul en <strong>repòs</strong>, els llocs actius de l'<span class="highlight-act">actina</span> estan <strong>coberts</strong> per la <span style="background:#fdcb6e;padding:2px 8px;border-radius:4px;font-weight:600;">tropomiosina</span>.</p>
+        <p>La <span class="highlight-mio">miosina</span> té el seu cap en posició "armada", a punt per actuar, però <strong>no es pot unir</strong> a l'actina perquè els llocs estan bloquejats.</p>
+        <div class="key-box"><strong>🔑 Clau:</strong> Sense estímul, el múscul roman relaxat. La concentració de Ca²⁺ al citoplasma és molt baixa (està emmagatzemat al reticle sarcoplasmàtic).</div>` },
+      { title: "Arriba l'estímul nerviós", label: "PAS 2: ESTÍMUL",
+        content: `<p>Un senyal nerviós arriba a la fibra muscular a través de la <strong>unió neuromuscular</strong>. El potencial d'acció es propaga per la membrana i pels <strong>túbuls T</strong>.</p>
+        <p>Aquest senyal provoca l'<strong>obertura dels canals</strong> del reticle sarcoplasmàtic, alliberant <span class="highlight-ca">ions Ca²⁺</span> al citoplasma (sarcoplasma).</p>
+        <div class="key-box"><strong>🔑 Clau:</strong> El Ca²⁺ actua com a <strong>"missatger"</strong>: sense ell, la contracció no pot començar. És l'interruptor que inicia tot el procés.</div>` },
+      { title: "El Ca²⁺ s'uneix a la troponina", label: "PAS 3: UNIÓ Ca²⁺-Tn",
+        content: `<p>Els <span class="highlight-ca">ions Ca²⁺</span> alliberats s'uneixen a la <span class="highlight-mio">troponina C</span>, una de les tres subunitats del complex de troponina que està associada a l'actina.</p>
+        <p>Aquesta unió provoca un <strong>canvi conformacional</strong> (de forma) a la troponina, que actua com un "interruptor molecular".</p>
+        <div class="key-box"><strong>🔑 Clau:</strong> La troponina és el <strong>receptor del Ca²⁺</strong>. Sense Ca²⁺, no hi ha canvi a la troponina i la contracció no pot començar.</div>` },
+      { title: "La tropomiosina es desplaça", label: "PAS 4: DESPLAÇAMENT",
+        content: `<p>El canvi de forma de la troponina "estira" la <span style="background:#fdcb6e;padding:2px 8px;border-radius:4px;font-weight:600;">tropomiosina</span>, que es <strong>desplaça lateralment</strong> deixant al descobert els <strong>llocs actius</strong> de l'actina.</p>
+        <p>Ara els llocs actius (punts vermells) estan <strong>exposats</strong> i disponibles perquè s'hi uneixin els caps de miosina.</p>
+        <div class="key-box"><strong>🔑 Clau:</strong> Aquest és el moment clau: el Ca²⁺ ha "desbloquejat" l'actina. Sense aquest desplaçament, la miosina mai no s'hi podria unir.</div>` },
+      { title: "Formació del pont creuat", label: "PAS 5: PONT CREUAT",
+        content: `<p>El <span class="highlight-mio">cap de miosina</span> (que estava "armat" amb ADP+Pi) s'uneix fermament al lloc actiu de l'<span class="highlight-act">actina</span>, formant l'anomenat <strong>"pont creuat"</strong>.</p>
+        <p>Immediatament després, es produeix el <strong>"cop de força"</strong> (power stroke): el cap de miosina s'inclina, alliberant ADP+Pi, i <strong>estira el filament d'actina</strong>, fent-lo lliscar.</p>
+        <div class="key-box"><strong>🔑 Clau:</strong> Aquest és el moment en què es genera la <strong>força mecànica</strong>. El filament prim llisca sobre el gruixut → el sarcòmer s'escurça → el múscul es contreu.</div>` },
+      { title: "L'ATP permet la desunió", label: "PAS 6: DESUNIÓ (ATP)",
+        content: `<p>Perquè la miosina es <strong>separi</strong> de l'actina, és imprescindible l'arribada d'una <strong>nova molècula d'<span class="highlight-atp">ATP</span></strong> al cap de miosina.</p>
+        <p>L'ATP s'uneix al cap de miosina i provoca la seva <strong>desunió</strong> del filament d'actina. Sense ATP, la miosina queda "enganxada" permanentment a l'actina.</p>
+        <div class="key-box"><strong>🔑 Clau:</strong> L'ATP és necessari per <strong>DESUNIR</strong> la miosina de l'actina. Això explica el <strong>rigor mortis</strong>: després de la mort, sense ATP, els músculs queden rígids perquè els caps de miosina no poden deixar anar l'actina.</div>` },
+      { title: "Recàrrega de la miosina (cicle)", label: "PAS 7: RECÀRREGA",
+        content: `<p>El cap de miosina <strong>hidrolitza l'ATP</strong> (el trenca en ADP + Pi) i utilitza l'energia alliberada per tornar a la seva <strong>posició inicial "armada"</strong>.</p>
+        <p>Aquest procés s'anomena <strong>"recàrrega"</strong> de la miosina. Ara està llesta per unir-se de nou a l'actina (si els llocs segueixen exposats) i repetir el cicle.</p>
+        <div class="key-box"><strong>🔑 Clau:</strong> L'ATP té <strong>dues funcions essencials</strong>:<br>① <strong>Desunir</strong> la miosina de l'actina<br>② <strong>Recarregar</strong> el cap de miosina per al següent cop de força.<br><br>Mentre hi hagi Ca²⁺ i ATP, el cicle es repeteix → el múscul es manté contret.</div>` }
+    ],
+    
+    s2h2: "🎯 Activitat 1 · Ordena els Passos de la Contracció",
+    s2intro: "Col·loca en l'ordre correcte els 7 passos principals del procés de contracció muscular, des de l'estímul inicial fins al cicle complet.",
+    s2h3: "📋 Arrossega per ordenar",
+    s2btn1: "Comprovar ordre", s2btn2: "Reiniciar",
+    stepsData: [
+      { id: 5, text: "Els caps de miosina s'uneixen a l'actina (pont creuat)" },
+      { id: 2, text: "El Ca²⁺ s'uneix a la troponina" },
+      { id: 7, text: "Nou ATP s'uneix a la miosina i el cicle es repeteix" },
+      { id: 1, text: "Arriba l'estímul nerviós al múscul" },
+      { id: 4, text: "Els llocs actius de l'actina queden exposats" },
+      { id: 6, text: "La miosina hidrolitza ATP i es \"recarrega\"" },
+      { id: 3, text: "La tropomiosina es desplaça" }
+    ],
+    fb1success: "🎉 Perfecte! Has ordenat correctament els 7 passos de la contracció muscular.",
+    fb1error: (c) => `Has encertat ${c}/7. Recorda l'ordre: <b>Estímul → Ca²⁺ s'uneix a troponina → Tropomiosina es desplaça → Llocs exposats → Pont creuat → ATP recarrega → Cicle</b>.`,
+    
+    s3h2: "❓ Activitat 2 · Quiz: Calci i ATP",
+    s3intro: "Respon les preguntes següents sobre el paper específic del calci i l'ATP en la contracció muscular.",
+    s3h3: "📝 Selecciona la resposta correcta",
+    s3btn1: "Comprovar respostes", s3btn2: "Reiniciar",
+    quizData: [
+      { q: "Quina és la funció principal del Ca²⁺ en la contracció muscular?",
+        opts: ["Aportar energia a la miosina","Unir-se a la troponina i permetre l'exposició dels llocs actius","Trencar l'ATP en ADP + Pi","Formar els filaments d'actina"], correct: 1 },
+      { q: "On s'emmagatzema el Ca²⁺ a la fibra muscular en estat de repòs?",
+        opts: ["Als mitocondris","Al nucli cel·lular","Al reticle sarcoplasmàtic","A la línia Z"], correct: 2 },
+      { q: "Què passa si no hi ha ATP disponible al múscul?",
+        opts: ["El múscul es relaxa completament","La miosina queda permanentment unida a l'actina (rigor mortis)","El Ca²⁺ surt del reticle automàticament","La troponina es degrada"], correct: 1 },
+      { q: "Quines proteïnes reguladores es troben al filament prim?",
+        opts: ["Miosina i actina","Troponina i tropomiosina","ATP i ADP","Calci i sodi"], correct: 1 },
+      { q: "Quantes funcions compleix l'ATP a la contracció muscular?",
+        opts: ["Una: aportar energia per al cop de força","Dues: desunir la miosina de l'actina I recarregar el cap de miosina","Tres: unir, desunir i recarregar","Cap, l'ATP només serveix per a la relaxació"], correct: 1 },
+      { q: "Quina estructura canvia de forma en unir-se al Ca²⁺?",
+        opts: ["La tropomiosina","L'actina","La troponina","El cap de miosina"], correct: 2 }
+    ],
+    fb2success: (s,t) => `🏆 Excel·lent! ${s}/${t} correctes. Domines el paper del Ca²⁺ i l'ATP.`,
+    fb2info: (s,t) => `Ben fet: ${s}/${t} correctes. Repassa els errors a l'animació.`,
+    fb2error: (s,t) => `Has obtingut ${s}/${t}. Et recomanem tornar a l'animació pas a pas.`,
+    
+    s4h2: "✅❌ Activitat 3 · Vertader o Fals",
+    s4intro: "Llegeix cada afirmació amb atenció i indica si és vertadera o falsa. Compte amb les trampes!",
+    s4h3: "🎯 Avalua cada afirmació",
+    s4btn1: "Veure resultat", s4btn2: "Reiniciar",
+    tfTrue: "Vertader", tfFalse: "Fals",
+    tfData: [
+      { s: "El Ca²⁺ s'allibera del reticle sarcoplasmàtic quan arriba un estímul nerviós.", v: true },
+      { s: "La tropomiosina és la proteïna que s'uneix directament al Ca²⁺.", v: false, exp: "Fals: és la TROPONINA la que s'uneix al Ca²⁺. La tropomiosina és la que es desplaça com a conseqüència." },
+      { s: "Sense ATP, la miosina pot separar-se fàcilment de l'actina.", v: false, exp: "Fals: sense ATP, la miosina queda PERMANENTMENT unida a l'actina (això passa al rigor mortis)." },
+      { s: "L'ATP té dues funcions: desunir la miosina de l'actina I recarregar el cap de miosina.", v: true },
+      { s: "En repòs, els llocs actius de l'actina estan exposats i disponibles.", v: false, exp: "Fals: en repòs, els llocs actius estan COBERTS per la tropomiosina." },
+      { s: "El canvi de forma de la troponina provoca el desplaçament de la tropomiosina.", v: true },
+      { s: "La contracció muscular pot produir-se sense calci.", v: false, exp: "Fals: sense Ca²⁺, la troponina no canvia de forma, la tropomiosina no es desplaça i els llocs actius queden tapats." },
+      { s: "El cop de força de la miosina allibera ADP + Pi.", v: true }
+    ],
+    fb3success: (s,t) => `🏅 Perfecte! ${s}/${t} correctes. Entens perfectament el paper del Ca²⁺ i l'ATP.`,
+    fb3info: (s,t) => `Molt bé: ${s}/${t}. Revisa les explicacions de les fallades.`,
+    fb3error: (s,t) => `Has obtingut ${s}/${t}. Repassa l'animació pas a pas.`
+  },
+  es: {
+    headerTitle: "⚡ El Papel del Calcio y el ATP",
+    headerSub: "Tema 3 · Músculo Esquelético · Animación paso a paso de la contracción",
+    tabs: ["📚 Animación Interactiva","🎯 Act. 1: Ordenar","❓ Act. 2: Quiz","✅❌ Act. 3: V/F"],
+    
+    s1h2: "🎬 La Contracción Paso a Paso",
+    s1intro: `<strong>¿Cómo se contrae un músculo?</strong> La contracción muscular requiere la intervención coordinada de dos protagonistas clave: el <span class="highlight-ca">CALCIO (Ca²⁺)</span>, que actúa como <strong>"interruptor"</strong>, y el <span class="highlight-atp">ATP</span>, que aporta la <strong>"energía"</strong>. Pulsa los botones para ver cada paso en la animación.`,
+    svgTitle: "🔬 Esquema de la Unión Actina-Miosina",
+    svgRetic: "RETÍCULO SARCOPLÁSMICO",
+    svgActin: "FILAMENTO FINO (ACTINA)",
+    svgMyosin: "FILAMENTO GRUESO (MIOSINA)",
+    svgHead: "Cabeza",
+    svgTropo: "TROPOMIOSINA",
+    svgTroponina: "TROPONINA",
+    legCa: "Ca²⁺ (Calcio)", legAtp: "ATP", legAct: "Actina", legMio: "Miosina",
+    legTropo: "Tropomiosina", legTropon: "Troponina",
+    navPrev: "← Anterior", navNext: "Siguiente →", navFinal: "✓ Final",
+    
+    steps: [
+      { title: "Estado de Reposo", label: "PASO 1: REPOSO",
+        content: `<p>En un músculo en <strong>reposo</strong>, los sitios activos de la <span class="highlight-act">actina</span> están <strong>cubiertos</strong> por la <span style="background:#fdcb6e;padding:2px 8px;border-radius:4px;font-weight:600;">tropomiosina</span>.</p>
+        <p>La <span class="highlight-mio">miosina</span> tiene su cabeza en posición "armada", lista para actuar, pero <strong>no puede unirse</strong> a la actina porque los sitios están bloqueados.</p>
+        <div class="key-box"><strong>🔑 Clave:</strong> Sin estímulo, el músculo permanece relajado. La concentración de Ca²⁺ en el citoplasma es muy baja (está almacenado en el retículo sarcoplásmico).</div>` },
+      { title: "Llega el estímulo nervioso", label: "PASO 2: ESTÍMULO",
+        content: `<p>Una señal nerviosa llega a la fibra muscular a través de la <strong>unión neuromuscular</strong>. El potencial de acción se propaga por la membrana y por los <strong>túbulos T</strong>.</p>
+        <p>Esta señal provoca la <strong>apertura de los canales</strong> del retículo sarcoplásmico, liberando <span class="highlight-ca">iones Ca²⁺</span> al citoplasma (sarcoplasma).</p>
+        <div class="key-box"><strong>🔑 Clave:</strong> El Ca²⁺ actúa como <strong>"mensajero"</strong>: sin él, la contracción no puede comenzar. Es el interruptor que inicia todo el proceso.</div>` },
+      { title: "El Ca²⁺ se une a la troponina", label: "PASO 3: UNIÓN Ca²⁺-Tn",
+        content: `<p>Los <span class="highlight-ca">iones Ca²⁺</span> liberados se unen a la <span class="highlight-mio">troponina C</span>, una de las tres subunidades del complejo de troponina que está asociada a la actina.</p>
+        <p>Esta unión provoca un <strong>cambio conformacional</strong> (de forma) en la troponina, que actúa como un "interruptor molecular".</p>
+        <div class="key-box"><strong>🔑 Clave:</strong> La troponina es el <strong>receptor del Ca²⁺</strong>. Sin Ca²⁺, no hay cambio en la troponina y la contracción no puede comenzar.</div>` },
+      { title: "La tropomiosina se desplaza", label: "PASO 4: DESPLAZAMIENTO",
+        content: `<p>El cambio de forma de la troponina "tira" de la <span style="background:#fdcb6e;padding:2px 8px;border-radius:4px;font-weight:600;">tropomiosina</span>, que se <strong>desplaza lateralmente</strong> dejando al descubierto los <strong>sitios activos</strong> de la actina.</p>
+        <p>Ahora los sitios activos (puntos rojos) están <strong>expuestos</strong> y disponibles para que se unan las cabezas de miosina.</p>
+        <div class="key-box"><strong>🔑 Clave:</strong> Este es el momento clave: el Ca²⁺ ha "desbloqueado" la actina. Sin este desplazamiento, la miosina nunca podría unirse.</div>` },
+      { title: "Formación del puente cruzado", label: "PASO 5: PUENTE CRUZADO",
+        content: `<p>La <span class="highlight-mio">cabeza de miosina</span> (que estaba "armada" con ADP+Pi) se une firmemente al sitio activo de la <span class="highlight-act">actina</span>, formando el llamado <strong>"puente cruzado"</strong>.</p>
+        <p>Inmediatamente después, se produce el <strong>"golpe de fuerza"</strong> (power stroke): la cabeza de miosina se inclina, liberando ADP+Pi, y <strong>tira del filamento de actina</strong>, deslizándolo.</p>
+        <div class="key-box"><strong>🔑 Clave:</strong> Este es el momento en que se genera la <strong>fuerza mecánica</strong>. El filamento fino se desliza sobre el grueso → el sarcómero se acorta → el músculo se contrae.</div>` },
+      { title: "El ATP permite la desunión", label: "PASO 6: DESUNIÓN (ATP)",
+        content: `<p>Para que la miosina se <strong>separe</strong> de la actina, es imprescindible la llegada de una <strong>nueva molécula de <span class="highlight-atp">ATP</span></strong> a la cabeza de miosina.</p>
+        <p>El ATP se une a la cabeza de miosina y provoca su <strong>desunión</strong> del filamento de actina. Sin ATP, la miosina queda "enganchada" permanentemente a la actina.</p>
+        <div class="key-box"><strong>🔑 Clave:</strong> El ATP es necesario para <strong>DESUNIR</strong> la miosina de la actina. Esto explica el <strong>rigor mortis</strong>: tras la muerte, sin ATP, los músculos quedan rígidos porque las cabezas de miosina no pueden soltar la actina.</div>` },
+      { title: "Recarga de la miosina (ciclo)", label: "PASO 7: RECARGA",
+        content: `<p>La cabeza de miosina <strong>hidroliza el ATP</strong> (lo rompe en ADP + Pi) y utiliza la energía liberada para volver a su <strong>posición inicial "armada"</strong>.</p>
+        <p>Este proceso se denomina <strong>"recarga"</strong> de la miosina. Ahora está lista para unirse de nuevo a la actina (si los sitios siguen expuestos) y repetir el ciclo.</p>
+        <div class="key-box"><strong>🔑 Clave:</strong> El ATP tiene <strong>dos funciones esenciales</strong>:<br>① <strong>Desunir</strong> la miosina de la actina<br>② <strong>Recargar</strong> la cabeza de miosina para el siguiente golpe de fuerza.<br><br>Mientras haya Ca²⁺ y ATP, el ciclo se repite → el músculo se mantiene contraído.</div>` }
+    ],
+    
+    s2h2: "🎯 Actividad 1 · Ordena los Pasos de la Contracción",
+    s2intro: "Coloca en el orden correcto los 7 pasos principales del proceso de contracción muscular, desde el estímulo inicial hasta el ciclo completo.",
+    s2h3: "📋 Arrastra para ordenar",
+    s2btn1: "Comprobar orden", s2btn2: "Reiniciar",
+    stepsData: [
+      { id: 5, text: "Las cabezas de miosina se unen a la actina (puente cruzado)" },
+      { id: 2, text: "El Ca²⁺ se une a la troponina" },
+      { id: 7, text: "Nuevo ATP se une a la miosina y el ciclo se repite" },
+      { id: 1, text: "Llega el estímulo nervioso al músculo" },
+      { id: 4, text: "Los sitios activos de la actina quedan expuestos" },
+      { id: 6, text: "La miosina hidroliza ATP y se \"recarga\"" },
+      { id: 3, text: "La tropomiosina se desplaza" }
+    ],
+    fb1success: "🎉 ¡Perfecto! Has ordenado correctamente los 7 pasos de la contracción muscular.",
+    fb1error: (c) => `Has acertado ${c}/7. Recuerda el orden: <b>Estímulo → Ca²⁺ se une a troponina → Tropomiosina se desplaza → Sitios expuestos → Puente cruzado → ATP recarga → Ciclo</b>.`,
+    
+    s3h2: "❓ Actividad 2 · Quiz: Calcio y ATP",
+    s3intro: "Responde las siguientes preguntas sobre el papel específico del calcio y el ATP en la contracción muscular.",
+    s3h3: "📝 Selecciona la respuesta correcta",
+    s3btn1: "Comprobar respuestas", s3btn2: "Reiniciar",
+    quizData: [
+      { q: "¿Cuál es la función principal del Ca²⁺ en la contracción muscular?",
+        opts: ["Aportar energía a la miosina","Unirse a la troponina y permitir la exposición de los sitios activos","Romper el ATP en ADP + Pi","Formar los filamentos de actina"], correct: 1 },
+      { q: "¿Dónde se almacena el Ca²⁺ en la fibra muscular en estado de reposo?",
+        opts: ["En las mitocondrias","En el núcleo celular","En el retículo sarcoplásmico","En la línea Z"], correct: 2 },
+      { q: "¿Qué ocurre si no hay ATP disponible en el músculo?",
+        opts: ["El músculo se relaja completamente","La miosina queda permanentemente unida a la actina (rigor mortis)","El Ca²⁺ sale del retículo automáticamente","La troponina se degrada"], correct: 1 },
+      { q: "¿Qué proteínas reguladoras se encuentran en el filamento fino?",
+        opts: ["Miosina y actina","Troponina y tropomiosina","ATP y ADP","Calcio y sodio"], correct: 1 },
+      { q: "¿Cuántas funciones cumple el ATP en la contracción muscular?",
+        opts: ["Una: aportar energía para el golpe de fuerza","Dos: desunir la miosina de la actina Y recargar la cabeza de miosina","Tres: unir, desunir y recargar","Ninguna, el ATP solo sirve para la relajación"], correct: 1 },
+      { q: "¿Qué estructura cambia de forma al unirse al Ca²⁺?",
+        opts: ["La tropomiosina","La actina","La troponina","La cabeza de miosina"], correct: 2 }
+    ],
+    fb2success: (s,t) => `🏆 ¡Excelente! ${s}/${t} correctas. Dominas el papel del Ca²⁺ y el ATP.`,
+    fb2info: (s,t) => `Bien hecho: ${s}/${t} correctas. Repasa los fallos en la animación.`,
+    fb2error: (s,t) => `Has obtenido ${s}/${t}. Te recomendamos volver a la animación paso a paso.`,
+    
+    s4h2: "✅❌ Actividad 3 · Verdadero o Falso",
+    s4intro: "Lee cada afirmación con atención e indica si es verdadera o falsa. ¡Cuidado con las trampas!",
+    s4h3: "🎯 Evalúa cada afirmación",
+    s4btn1: "Ver resultado", s4btn2: "Reiniciar",
+    tfTrue: "Verdadero", tfFalse: "Falso",
+    tfData: [
+      { s: "El Ca²⁺ se libera del retículo sarcoplásmico cuando llega un estímulo nervioso.", v: true },
+      { s: "La tropomiosina es la proteína que se une directamente al Ca²⁺.", v: false, exp: "Falso: es la TROPONINA la que se une al Ca²⁺. La tropomiosina es la que se desplaza como consecuencia." },
+      { s: "Sin ATP, la miosina puede separarse fácilmente de la actina.", v: false, exp: "Falso: sin ATP, la miosina queda PERMANENTEMENTE unida a la actina (esto ocurre en el rigor mortis)." },
+      { s: "El ATP tiene dos funciones: desunir la miosina de la actina Y recargar la cabeza de miosina.", v: true },
+      { s: "En reposo, los sitios activos de la actina están expuestos y disponibles.", v: false, exp: "Falso: en reposo, los sitios activos están CUBIERTOS por la tropomiosina." },
+      { s: "El cambio de forma de la troponina provoca el desplazamiento de la tropomiosina.", v: true },
+      { s: "La contracción muscular puede producirse sin calcio.", v: false, exp: "Falso: sin Ca²⁺, la troponina no cambia de forma, la tropomiosina no se desplaza y los sitios activos permanecen tapados." },
+      { s: "El golpe de fuerza de la miosina libera ADP + Pi.", v: true }
+    ],
+    fb3success: (s,t) => `🏅 ¡Perfecto! ${s}/${t} correctas. Entiendes perfectamente el papel del Ca²⁺ y el ATP.`,
+    fb3info: (s,t) => `Muy bien: ${s}/${t}. Revisa las explicaciones de las falladas.`,
+    fb3error: (s,t) => `Has obtenido ${s}/${t}. Repasa la animación paso a paso.`
+  },
+  en: {
+    headerTitle: "⚡ The Role of Calcium and ATP",
+    headerSub: "Topic 3 · Skeletal Muscle · Step-by-step animation of contraction",
+    tabs: ["📚 Interactive Animation","🎯 Act. 1: Order","❓ Act. 2: Quiz","✅❌ Act. 3: T/F"],
+    
+    s1h2: "🎬 Contraction Step by Step",
+    s1intro: `<strong>How does a muscle contract?</strong> Muscle contraction requires the coordinated action of two key players: <span class="highlight-ca">CALCIUM (Ca²⁺)</span>, which acts as the <strong>"switch"</strong>, and <span class="highlight-atp">ATP</span>, which provides the <strong>"energy"</strong>. Press the buttons to see each step in the animation.`,
+    svgTitle: "🔬 Actin-Myosin Binding Scheme",
+    svgRetic: "SARCOPLASMIC RETICULUM",
+    svgActin: "THIN FILAMENT (ACTIN)",
+    svgMyosin: "THICK FILAMENT (MYOSIN)",
+    svgHead: "Head",
+    svgTropo: "TROPOMYOSIN",
+    svgTroponina: "TROPONIN",
+    legCa: "Ca²⁺ (Calcium)", legAtp: "ATP", legAct: "Actin", legMio: "Myosin",
+    legTropo: "Tropomyosin", legTropon: "Troponin",
+    navPrev: "← Previous", navNext: "Next →", navFinal: "✓ Finish",
+    
+    steps: [
+      { title: "Resting State", label: "STEP 1: REST",
+        content: `<p>In a <strong>resting</strong> muscle, the active sites on <span class="highlight-act">actin</span> are <strong>covered</strong> by <span style="background:#fdcb6e;padding:2px 8px;border-radius:4px;font-weight:600;">tropomyosin</span>.</p>
+        <p>The <span class="highlight-mio">myosin</span> head is in the "armed" position, ready to act, but <strong>cannot bind</strong> to actin because the sites are blocked.</p>
+        <div class="key-box"><strong>🔑 Key:</strong> Without a stimulus, the muscle remains relaxed. The Ca²⁺ concentration in the cytoplasm is very low (it is stored in the sarcoplasmic reticulum).</div>` },
+      { title: "Nerve stimulus arrives", label: "STEP 2: STIMULUS",
+        content: `<p>A nerve signal reaches the muscle fiber through the <strong>neuromuscular junction</strong>. The action potential propagates along the membrane and through the <strong>T-tubules</strong>.</p>
+        <p>This signal causes the <strong>opening of channels</strong> in the sarcoplasmic reticulum, releasing <span class="highlight-ca">Ca²⁺ ions</span> into the cytoplasm (sarcoplasm).</p>
+        <div class="key-box"><strong>🔑 Key:</strong> Ca²⁺ acts as a <strong>"messenger"</strong>: without it, contraction cannot begin. It is the switch that starts the whole process.</div>` },
+      { title: "Ca²⁺ binds to troponin", label: "STEP 3: Ca²⁺-Tn BINDING",
+        content: `<p>The released <span class="highlight-ca">Ca²⁺ ions</span> bind to <span class="highlight-mio">troponin C</span>, one of the three subunits of the troponin complex associated with actin.</p>
+        <p>This binding causes a <strong>conformational change</strong> (shape change) in troponin, which acts as a "molecular switch".</p>
+        <div class="key-box"><strong>🔑 Key:</strong> Troponin is the <strong>Ca²⁺ receptor</strong>. Without Ca²⁺, there is no change in troponin and contraction cannot begin.</div>` },
+      { title: "Tropomyosin moves", label: "STEP 4: DISPLACEMENT",
+        content: `<p>The shape change of troponin "pulls" <span style="background:#fdcb6e;padding:2px 8px;border-radius:4px;font-weight:600;">tropomyosin</span>, which <strong>moves laterally</strong> exposing the <strong>active sites</strong> on actin.</p>
+        <p>Now the active sites (red dots) are <strong>exposed</strong> and available for the myosin heads to bind.</p>
+        <div class="key-box"><strong>🔑 Key:</strong> This is the key moment: Ca²⁺ has "unlocked" actin. Without this displacement, myosin could never bind.</div>` },
+      { title: "Cross-bridge formation", label: "STEP 5: CROSS-BRIDGE",
+        content: `<p>The <span class="highlight-mio">myosin head</span> (which was "armed" with ADP+Pi) binds firmly to the active site on <span class="highlight-act">actin</span>, forming the so-called <strong>"cross-bridge"</strong>.</p>
+        <p>Immediately after, the <strong>"power stroke"</strong> occurs: the myosin head tilts, releasing ADP+Pi, and <strong>pulls the actin filament</strong>, making it slide.</p>
+        <div class="key-box"><strong>🔑 Key:</strong> This is the moment when <strong>mechanical force</strong> is generated. The thin filament slides over the thick one → the sarcomere shortens → the muscle contracts.</div>` },
+      { title: "ATP allows detachment", label: "STEP 6: DETACHMENT (ATP)",
+        content: `<p>For myosin to <strong>separate</strong> from actin, the arrival of a <strong>new molecule of <span class="highlight-atp">ATP</span></strong> to the myosin head is essential.</p>
+        <p>ATP binds to the myosin head and causes its <strong>detachment</strong> from the actin filament. Without ATP, myosin remains permanently "stuck" to actin.</p>
+        <div class="key-box"><strong>🔑 Key:</strong> ATP is necessary to <strong>DETACH</strong> myosin from actin. This explains <strong>rigor mortis</strong>: after death, without ATP, muscles become stiff because myosin heads cannot release actin.</div>` },
+      { title: "Myosin recharge (cycle)", label: "STEP 7: RECHARGE",
+        content: `<p>The myosin head <strong>hydrolyzes ATP</strong> (breaks it into ADP + Pi) and uses the released energy to return to its <strong>initial "armed" position</strong>.</p>
+        <p>This process is called <strong>"recharge"</strong> of myosin. It is now ready to bind actin again (if the sites remain exposed) and repeat the cycle.</p>
+        <div class="key-box"><strong>🔑 Key:</strong> ATP has <strong>two essential functions</strong>:<br>① <strong>Detach</strong> myosin from actin<br>② <strong>Recharge</strong> the myosin head for the next power stroke.<br><br>As long as there is Ca²⁺ and ATP, the cycle repeats → the muscle stays contracted.</div>` }
+    ],
+    
+    s2h2: "🎯 Activity 1 · Order the Steps of Contraction",
+    s2intro: "Place the 7 main steps of the muscle contraction process in the correct order, from the initial stimulus to the complete cycle.",
+    s2h3: "📋 Drag to order",
+    s2btn1: "Check order", s2btn2: "Reset",
+    stepsData: [
+      { id: 5, text: "Myosin heads bind to actin (cross-bridge)" },
+      { id: 2, text: "Ca²⁺ binds to troponin" },
+      { id: 7, text: "New ATP binds to myosin and the cycle repeats" },
+      { id: 1, text: "The nerve stimulus reaches the muscle" },
+      { id: 4, text: "The active sites on actin are exposed" },
+      { id: 6, text: "Myosin hydrolyzes ATP and \"recharges\"" },
+      { id: 3, text: "Tropomyosin moves" }
+    ],
+    fb1success: "🎉 Perfect! You ordered the 7 steps of muscle contraction correctly.",
+    fb1error: (c) => `You got ${c}/7. Remember the order: <b>Stimulus → Ca²⁺ binds troponin → Tropomyosin moves → Sites exposed → Cross-bridge → ATP recharges → Cycle</b>.`,
+    
+    s3h2: "❓ Activity 2 · Quiz: Calcium and ATP",
+    s3intro: "Answer the following questions about the specific role of calcium and ATP in muscle contraction.",
+    s3h3: "📝 Select the correct answer",
+    s3btn1: "Check answers", s3btn2: "Reset",
+    quizData: [
+      { q: "What is the main function of Ca²⁺ in muscle contraction?",
+        opts: ["Provide energy to myosin","Bind to troponin and allow exposure of active sites","Break ATP into ADP + Pi","Form actin filaments"], correct: 1 },
+      { q: "Where is Ca²⁺ stored in the muscle fiber at rest?",
+        opts: ["In the mitochondria","In the cell nucleus","In the sarcoplasmic reticulum","In the Z line"], correct: 2 },
+      { q: "What happens if no ATP is available in the muscle?",
+        opts: ["The muscle relaxes completely","Myosin remains permanently bound to actin (rigor mortis)","Ca²⁺ leaves the reticulum automatically","Troponin degrades"], correct: 1 },
+      { q: "Which regulatory proteins are found on the thin filament?",
+        opts: ["Myosin and actin","Troponin and tropomyosin","ATP and ADP","Calcium and sodium"], correct: 1 },
+      { q: "How many functions does ATP perform in muscle contraction?",
+        opts: ["One: provide energy for the power stroke","Two: detach myosin from actin AND recharge the myosin head","Three: bind, detach and recharge","None, ATP only serves for relaxation"], correct: 1 },
+      { q: "Which structure changes shape when binding to Ca²⁺?",
+        opts: ["Tropomyosin","Actin","Troponin","The myosin head"], correct: 2 }
+    ],
+    fb2success: (s,t) => `🏆 Excellent! ${s}/${t} correct. You master the role of Ca²⁺ and ATP.`,
+    fb2info: (s,t) => `Well done: ${s}/${t} correct. Review your mistakes in the animation.`,
+    fb2error: (s,t) => `You got ${s}/${t}. We recommend going back to the step-by-step animation.`,
+    
+    s4h2: "✅❌ Activity 3 · True or False",
+    s4intro: "Read each statement carefully and indicate whether it is true or false. Watch out for traps!",
+    s4h3: "🎯 Evaluate each statement",
+    s4btn1: "See result", s4btn2: "Reset",
+    tfTrue: "True", tfFalse: "False",
+    tfData: [
+      { s: "Ca²⁺ is released from the sarcoplasmic reticulum when a nerve stimulus arrives.", v: true },
+      { s: "Tropomyosin is the protein that binds directly to Ca²⁺.", v: false, exp: "False: it is TROPONIN that binds Ca²⁺. Tropomyosin is the one that moves as a consequence." },
+      { s: "Without ATP, myosin can easily separate from actin.", v: false, exp: "False: without ATP, myosin remains PERMANENTLY bound to actin (this occurs in rigor mortis)." },
+      { s: "ATP has two functions: detach myosin from actin AND recharge the myosin head.", v: true },
+      { s: "At rest, the active sites on actin are exposed and available.", v: false, exp: "False: at rest, the active sites are COVERED by tropomyosin." },
+      { s: "The shape change of troponin causes the displacement of tropomyosin.", v: true },
+      { s: "Muscle contraction can occur without calcium.", v: false, exp: "False: without Ca²⁺, troponin does not change shape, tropomyosin does not move and the active sites remain covered." },
+      { s: "The power stroke of myosin releases ADP + Pi.", v: true }
+    ],
+    fb3success: (s,t) => `🏅 Perfect! ${s}/${t} correct. You fully understand the role of Ca²⁺ and ATP.`,
+    fb3info: (s,t) => `Well done: ${s}/${t}. Review the explanations for the failed ones.`,
+    fb3error: (s,t) => `You got ${s}/${t}. Review the step-by-step animation.`
+  }
+};
+
+let currentLang = 'ca';
+let currentStep = 0;
+let visitedSteps = new Set([0]);
+let tfAnswers = {};
+
+/* ================= CANVI D'IDIOMA ================= */
+function setLang(lang) {
+  currentLang = lang;
+  const t = translations[lang];
+  
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + lang).classList.add('active');
+  
+  // Header
+  document.getElementById('t-header-title').textContent = t.headerTitle;
+  document.getElementById('t-header-sub').textContent = t.headerSub;
+  
+  // Pestanyes
+  t.tabs.forEach((tab, i) => {
+    document.getElementById('tab' + i).textContent = tab;
+  });
+  
+  // Slide 1
+  document.getElementById('t-s1-h2').textContent = t.s1h2;
+  document.getElementById('t-s1-intro').innerHTML = t.s1intro;
+  document.getElementById('t-svg-title').textContent = t.svgTitle;
+  document.getElementById('svg-retic').textContent = t.svgRetic;
+  document.getElementById('svg-actin').textContent = t.svgActin;
+  document.getElementById('svg-myosin').textContent = t.svgMyosin;
+  document.getElementById('svg-head').textContent = t.svgHead;
+  document.getElementById('svg-tropo1').textContent = t.svgTropo;
+  document.getElementById('svg-tropo2').textContent = t.svgTropo;
+  document.getElementById('svg-troponina').textContent = t.svgTroponina;
+  document.getElementById('t-leg-ca').textContent = t.legCa;
+  document.getElementById('t-leg-atp').textContent = t.legAtp;
+  document.getElementById('t-leg-act').textContent = t.legAct;
+  document.getElementById('t-leg-mio').textContent = t.legMio;
+  document.getElementById('t-leg-tropo').textContent = t.legTropo;
+  document.getElementById('t-leg-tropon').textContent = t.legTropon;
+  
+  // Slide 2
+  document.getElementById('t-s2-h2').textContent = t.s2h2;
+  document.getElementById('t-s2-intro').textContent = t.s2intro;
+  document.getElementById('t-s2-h3').textContent = t.s2h3;
+  document.getElementById('t-s2-btn1').textContent = t.s2btn1;
+  document.getElementById('t-s2-btn2').textContent = t.s2btn2;
+  renderSteps();
+  
+  // Slide 3
+  document.getElementById('t-s3-h2').textContent = t.s3h2;
+  document.getElementById('t-s3-intro').textContent = t.s3intro;
+  document.getElementById('t-s3-h3').textContent = t.s3h3;
+  document.getElementById('t-s3-btn1').textContent = t.s3btn1;
+  document.getElementById('t-s3-btn2').textContent = t.s3btn2;
+  renderQuiz();
+  
+  // Slide 4
+  document.getElementById('t-s4-h2').textContent = t.s4h2;
+  document.getElementById('t-s4-intro').textContent = t.s4intro;
+  document.getElementById('t-s4-h3').textContent = t.s4h3;
+  document.getElementById('t-s4-btn1').textContent = t.s4btn1;
+  document.getElementById('t-s4-btn2').textContent = t.s4btn2;
+  renderTF();
+  
+  // Re-renderitzar el pas actual de l'animació
+  renderStep();
+}
+
+/* ================= NAVEGACIÓ ================= */
+function showSlide(i, btn) {
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.slide')[i].classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ================= ANIMACIÓ PAS A PAS ================= */
+function applyStepVisuals(stepIndex) {
+  const setups = [
+    // Pas 1: Repòs
+    () => {
+      document.querySelectorAll('.ca-ion').forEach(el => {
+        el.setAttribute('cy', '45');
+        el.classList.remove('pulse');
+      });
+      document.querySelectorAll('.ca-ion + text').forEach(el => {
+        el.setAttribute('y', '50');
+      });
+      document.querySelectorAll('.tropo').forEach(el => {
+        el.setAttribute('y', '270');
+        el.style.opacity = '1';
+      });
+      document.querySelectorAll('.tropo-label').forEach(el => el.style.opacity = '1');
+      document.querySelectorAll('.site').forEach(el => { el.style.opacity = '0.3'; el.classList.remove('pulse'); });
+      document.querySelector('.myo-arm').setAttribute('x2', '250');
+      document.querySelector('.myo-arm').setAttribute('y2', '240');
+      document.querySelector('.myo-head').setAttribute('cx', '250');
+      document.querySelector('.myo-head').setAttribute('cy', '250');
+      document.querySelector('.atp-mol').style.opacity = '1';
+      document.querySelector('.atp-label').style.opacity = '1';
+      document.querySelector('.atp-label').textContent = 'ATP';
+      document.querySelector('.atp-mol').classList.remove('pulse');
+      document.querySelector('.troponin-c').setAttribute('fill', '#a29bfe');
+      document.querySelector('.troponin-c').setAttribute('r', '14');
+    },
+    // Pas 2: Estímul
+    () => {
+      applyStepVisuals(0);
+      const positions = [
+        {cx: 80, cy: 120},{cx: 160, cy: 130},{cx: 240, cy: 115},{cx: 320, cy: 125},{cx: 400, cy: 120}
+      ];
+      document.querySelectorAll('.ca-ion').forEach((el, i) => {
+        el.setAttribute('cx', positions[i].cx);
+        el.setAttribute('cy', positions[i].cy);
+        el.classList.add('pulse');
+      });
+      document.querySelectorAll('.ca-ion + text').forEach((el, i) => {
+        el.setAttribute('x', positions[i].cx);
+        el.setAttribute('y', positions[i].cy + 5);
+      });
+    },
+    // Pas 3: Unió Ca-Tn
+    () => {
+      applyStepVisuals(1);
+      const positions = [
+        {cx: 210, cy: 250},{cx: 230, cy: 245},{cx: 250, cy: 248},{cx: 270, cy: 245},{cx: 290, cy: 250}
+      ];
+      document.querySelectorAll('.ca-ion').forEach((el, i) => {
+        el.setAttribute('cx', positions[i].cx);
+        el.setAttribute('cy', positions[i].cy);
+        el.classList.add('pulse');
+      });
+      document.querySelectorAll('.ca-ion + text').forEach((el, i) => {
+        el.setAttribute('x', positions[i].cx);
+        el.setAttribute('y', positions[i].cy + 5);
+      });
+      document.querySelector('.troponin-c').setAttribute('fill', '#ff6b6b');
+      document.querySelector('.troponin-c').setAttribute('r', '16');
+    },
+    // Pas 4: Desplaçament
+    () => {
+      applyStepVisuals(2);
+      document.querySelectorAll('.tropo').forEach(el => el.setAttribute('y', '295'));
+      document.querySelectorAll('.tropo-label').forEach(el => el.style.opacity = '0.4');
+      document.querySelectorAll('.site').forEach(el => { el.style.opacity = '1'; el.classList.add('pulse'); });
+    },
+    // Pas 5: Pont creuat
+    () => {
+      applyStepVisuals(3);
+      document.querySelector('.myo-arm').setAttribute('x2', '270');
+      document.querySelector('.myo-arm').setAttribute('y2', '270');
+      document.querySelector('.myo-head').setAttribute('cx', '275');
+      document.querySelector('.myo-head').setAttribute('cy', '278');
+      document.querySelector('.atp-mol').style.opacity = '0.3';
+      document.querySelector('.atp-label').style.opacity = '0.3';
+      document.querySelector('.atp-label').textContent = 'ADP+Pi';
+    },
+    // Pas 6: Desunió ATP
+    () => {
+      applyStepVisuals(4);
+      document.querySelector('.myo-arm').setAttribute('x2', '250');
+      document.querySelector('.myo-arm').setAttribute('y2', '240');
+      document.querySelector('.myo-head').setAttribute('cx', '250');
+      document.querySelector('.myo-head').setAttribute('cy', '250');
+      document.querySelector('.atp-mol').style.opacity = '1';
+      document.querySelector('.atp-label').style.opacity = '1';
+      document.querySelector('.atp-label').textContent = 'ATP';
+      document.querySelector('.atp-mol').classList.add('pulse');
+    },
+    // Pas 7: Recàrrega
+    () => {
+      applyStepVisuals(5);
+      document.querySelector('.atp-mol').classList.remove('pulse');
+      document.querySelector('.atp-label').textContent = 'ADP+Pi';
+    }
+  ];
+  setups[stepIndex]();
+}
+
+function renderDots() {
+  const t = translations[currentLang];
+  const dotsContainer = document.getElementById('progressDots');
+  dotsContainer.innerHTML = '';
+  t.steps.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'dot';
+    if (i === currentStep) dot.classList.add('active');
+    else if (visitedSteps.has(i)) dot.classList.add('visited');
+    dot.onclick = () => goToStep(i);
+    dotsContainer.appendChild(dot);
+  });
+}
+
+function goToStep(i) {
+  currentStep = i;
+  visitedSteps.add(i);
+  renderStep();
+}
+
+function renderStep() {
+  const t = translations[currentLang];
+  const step = t.steps[currentStep];
+  document.getElementById('stepNum').textContent = currentStep + 1;
+  document.getElementById('stepTitle').textContent = step.title;
+  document.getElementById('stepContent').innerHTML = step.content;
+  document.getElementById('stepLabelText').textContent = step.label;
+  
+  applyStepVisuals(currentStep);
+  
+  document.getElementById('prevBtn').disabled = currentStep === 0;
+  document.getElementById('prevBtn').textContent = t.navPrev;
+  document.getElementById('nextBtn').disabled = currentStep === t.steps.length - 1;
+  document.getElementById('nextBtn').textContent = currentStep === t.steps.length - 1 ? t.navFinal : t.navNext;
+  
+  renderDots();
+}
+
+function nextStep() {
+  const t = translations[currentLang];
+  if (currentStep < t.steps.length - 1) {
+    currentStep++;
+    visitedSteps.add(currentStep);
+    renderStep();
+  }
+}
+
+function prevStep() {
+  if (currentStep > 0) {
+    currentStep--;
+    renderStep();
+  }
+}
+
+/* ================= ACTIVITAT 1: ORDENAR ================= */
+function renderSteps() {
+  const t = translations[currentLang];
+  const list = document.getElementById('sortableList');
+  list.innerHTML = '';
+  const shuffled = [...t.stepsData].sort(() => Math.random() - 0.5);
+  shuffled.forEach(item => {
+    const li = document.createElement('li');
+    li.draggable = true;
+    li.dataset.id = item.id;
+    li.textContent = item.text;
+    
+    li.addEventListener('dragstart', e => { list.draggedItem = li; setTimeout(()=>li.style.opacity='0.4',0); });
+    li.addEventListener('dragend', e => { li.style.opacity='1'; });
+    li.addEventListener('dragover', e => {
+      e.preventDefault();
+      const dragged = list.draggedItem;
+      if (dragged && dragged !== li) {
+        const after = getDragAfter(list, e.clientY);
+        if (!after) list.appendChild(dragged);
+        else list.insertBefore(dragged, after);
+      }
+    });
+    li.addEventListener('click', () => {
+      if (list.querySelector('.clicked')) {
+        const prev = list.querySelector('.clicked');
+        if (prev !== li) {
+          const items = [...list.children];
+          const i1 = items.indexOf(prev), i2 = items.indexOf(li);
+          if (i1 < i2) list.insertBefore(li, prev);
+          else list.insertBefore(prev, li.nextSibling);
+        }
+        prev.classList.remove('clicked');
+      } else {
+        li.classList.add('clicked');
+      }
+    });
+    list.appendChild(li);
+  });
+  document.getElementById('fb1').classList.remove('show');
+}
+
+function getDragAfter(container, y) {
+  const els = [...container.querySelectorAll('li:not([style*="opacity: 0.4"])')];
+  return els.reduce((closest, child) => {
+    const box = child.getBoundingClientRect();
+    const offset = y - box.top - box.height/2;
+    if (offset < 0 && offset > closest.offset) return {offset, element: child};
+    return closest;
+  }, {offset: -Infinity}).element;
+}
+
+function checkOrder() {
+  const t = translations[currentLang];
+  const items = [...document.querySelectorAll('#sortableList li')];
+  let correct = 0;
+  items.forEach((item, idx) => {
+    item.classList.remove('correct','incorrect');
+    if (parseInt(item.dataset.id) === idx + 1) { item.classList.add('correct'); correct++; }
+    else item.classList.add('incorrect');
+  });
+  const fb = document.getElementById('fb1');
+  fb.classList.add('show');
+  if (correct === 7) {
+    fb.className = 'feedback show success';
+    fb.innerHTML = t.fb1success;
+  } else {
+    fb.className = 'feedback show error';
+    fb.innerHTML = t.fb1error(correct);
+  }
+}
+
+function resetOrder() {
+  renderSteps();
+}
+
+/* ================= ACTIVITAT 2: QUIZ ================= */
+function renderQuiz() {
+  const t = translations[currentLang];
+  const cont = document.getElementById('quizContainer');
+  cont.innerHTML = '';
+  t.quizData.forEach((item, qi) => {
+    let html = `<div class="question-box"><p>${qi+1}. ${item.q}</p><div class="options">`;
+    item.opts.forEach((opt, oi) => {
+      html += `<label><input type="radio" name="q${qi}" value="${oi}"> ${opt}</label>`;
+    });
+    html += `</div></div>`;
+    cont.innerHTML += html;
+  });
+  document.getElementById('fb2').classList.remove('show');
+}
+
+function checkQuiz() {
+  const t = translations[currentLang];
+  let score = 0;
+  t.quizData.forEach((item, qi) => {
+    const sel = document.querySelector(`input[name="q${qi}"]:checked`);
+    const labels = document.querySelectorAll(`input[name="q${qi}"]`);
+    labels.forEach(l => l.parentElement.classList.remove('correct','incorrect'));
+    if (sel) {
+      const val = parseInt(sel.value);
+      if (val === item.correct) { sel.parentElement.classList.add('correct'); score++; }
+      else {
+        sel.parentElement.classList.add('incorrect');
+        labels[item.correct].parentElement.classList.add('correct');
+      }
+    } else {
+      labels[item.correct].parentElement.classList.add('correct');
+    }
+  });
+  const fb = document.getElementById('fb2');
+  fb.classList.add('show');
+  if (score === t.quizData.length) { fb.className='feedback show success'; fb.innerHTML=t.fb2success(score, t.quizData.length); }
+  else if (score >= 4) { fb.className='feedback show info'; fb.innerHTML=t.fb2info(score, t.quizData.length); }
+  else { fb.className='feedback show error'; fb.innerHTML=t.fb2error(score, t.quizData.length); }
+}
+
+function resetQuiz() {
+  document.querySelectorAll('#quizContainer input').forEach(i => { i.checked = false; i.parentElement.classList.remove('correct','incorrect'); });
+  document.getElementById('fb2').classList.remove('show');
+}
+
+/* ================= ACTIVITAT 3: V/F ================= */
+function renderTF() {
+  const t = translations[currentLang];
+  const cont = document.getElementById('tfContainer');
+  cont.innerHTML = '';
+  t.tfData.forEach((item, i) => {
+    cont.innerHTML += `
+      <div class="tf-statement" id="tf-${i}">
+        <p>${i+1}. ${item.s}</p>
+        <div class="tf-buttons">
+          <button onclick="selectTF(${i}, true, this)">${t.tfTrue}</button>
+          <button onclick="selectTF(${i}, false, this)">${t.tfFalse}</button>
+        </div>
+        <div class="tf-explanation" id="tfexp-${i}" style="display:none; margin-top:10px; padding:10px; background:#fff3cd; border-left:3px solid #f39c12; border-radius:5px; font-size:0.9em;"></div>
+      </div>`;
+  });
+  tfAnswers = {};
+  document.getElementById('fb3').classList.remove('show');
+}
+
+function selectTF(i, val, btn) {
+  const t = translations[currentLang];
+  tfAnswers[i] = val;
+  const buttons = btn.parentElement.querySelectorAll('button');
+  buttons.forEach(b => { b.classList.remove('selected-correct','selected-wrong'); b.disabled = true; });
+  const correct = t.tfData[i].v;
+  if (val === correct) btn.classList.add('selected-correct');
+  else {
+    btn.classList.add('selected-wrong');
+    buttons.forEach(b => { if ((b.textContent===t.tfTrue && correct) || (b.textContent===t.tfFalse && !correct)) b.classList.add('selected-correct'); });
+  }
+  if (t.tfData[i].exp) {
+    const exp = document.getElementById(`tfexp-${i}`);
+    exp.textContent = t.tfData[i].exp;
+    exp.style.display = 'block';
+  }
+}
+
+function checkTF() {
+  const t = translations[currentLang];
+  let score = 0;
+  t.tfData.forEach((item, i) => {
+    if (tfAnswers[i] === item.v) score++;
+    else if (tfAnswers[i] === undefined) {
+      const buttons = document.querySelectorAll('.tf-statement')[i].querySelectorAll('button');
+      buttons.forEach(b => { b.disabled = true; if ((b.textContent===t.tfTrue && item.v) || (b.textContent===t.tfFalse && !item.v)) b.classList.add('selected-correct'); });
+    }
+  });
+  const fb = document.getElementById('fb3');
+  fb.classList.add('show');
+  if (score === t.tfData.length) { fb.className='feedback show success'; fb.innerHTML=t.fb3success(score, t.tfData.length); }
+  else if (score >= 6) { fb.className='feedback show info'; fb.innerHTML=t.fb3info(score, t.tfData.length); }
+  else { fb.className='feedback show error'; fb.innerHTML=t.fb3error(score, t.tfData.length); }
+}
+
+function resetTF() {
+  renderTF();
+}
+
+/* ================= INICIALITZACIÓ ================= */
+setLang('ca');
+</script>
+</body>
+</html>

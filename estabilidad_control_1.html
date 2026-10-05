@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-translate="pageTitle">Coactivación Muscular en Danza - Estabilidad y Control</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+body {
+background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+min-height: 100vh;
+padding: 20px;
+}
+.container {
+max-width: 1100px;
+margin: 0 auto;
+background: #fff;
+border-radius: 20px;
+box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+overflow: hidden;
+}
+header {
+background: linear-gradient(90deg, #0f2027, #203a43, #2c5364);
+color: white;
+padding: 40px;
+text-align: center;
+position: relative;
+}
+header h1 { font-size: 2.3em; margin-bottom: 10px; }
+header p { opacity: 0.9; font-size: 1.15em; }
+header .subtitle { font-size: 0.95em; opacity: 0.8; margin-top: 8px; font-style: italic; }
+.language-selector {
+position: absolute;
+top: 20px;
+right: 20px;
+display: flex;
+gap: 8px;
+}
+.lang-btn {
+padding: 8px 16px;
+border: 2px solid white;
+background: transparent;
+color: white;
+border-radius: 20px;
+cursor: pointer;
+font-size: 0.9em;
+font-weight: 600;
+transition: all 0.3s;
+}
+.lang-btn:hover { background: rgba(255,255,255,0.2); }
+.lang-btn.active { background: white; color: #2a5298; }
+.nav-tabs {
+display: flex;
+background: #f8f9fa;
+flex-wrap: wrap;
+border-bottom: 3px solid #dee2e6;
+position: sticky;
+top: 0;
+z-index: 100;
+}
+.nav-tabs button {
+flex: 1;
+min-width: 120px;
+padding: 15px 8px;
+background: transparent;
+border: none;
+cursor: pointer;
+font-size: 0.85em;
+font-weight: 600;
+color: #666;
+transition: all 0.3s;
+border-bottom: 4px solid transparent;
+}
+.nav-tabs button:hover { background: #e9ecef; color: #2a5298; }
+.nav-tabs button.active {
+color: #2a5298;
+border-bottom-color: #2a5298;
+background: white;
+}
+.slide { display: none; padding: 30px; min-height: 600px; }
+.slide.active { display: block; animation: fadeIn 0.5s; }
+@keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+.slide h2 {
+color: #0f2027;
+margin-bottom: 20px;
+font-size: 1.7em;
+border-bottom: 3px solid #2a5298;
+padding-bottom: 10px;
+}
+.intro-box {
+background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+border-left: 5px solid #1976d2;
+padding: 25px;
+margin: 20px 0;
+border-radius: 10px;
+line-height: 1.7;
+}
+.intro-box h3 { color: #1565c0; margin-bottom: 12px; font-size: 1.3em; }
+.exercise-card {
+background: white;
+border: 3px solid #2a5298;
+border-radius: 15px;
+padding: 30px;
+margin: 25px 0;
+box-shadow: 0 5px 20px rgba(42,82,152,0.15);
+}
+.exercise-card h3 {
+color: #2a5298;
+font-size: 1.5em;
+margin-bottom: 15px;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.exercise-description {
+background: #f8f9fa;
+padding: 20px;
+border-radius: 10px;
+margin: 15px 0;
+border-left: 4px solid #2a5298;
+line-height: 1.7;
+}
+.coactivation-diagram {
+background: white;
+border: 2px solid #dee2e6;
+border-radius: 10px;
+padding: 20px;
+margin: 20px 0;
+text-align: center;
+}
+.coactivation-diagram svg { max-width: 100%; height: auto; }
+.scenario-box {
+background: linear-gradient(135deg, #fff5e6 0%, #ffe8cc 100%);
+padding: 20px;
+border-radius: 10px;
+margin: 20px 0;
+border: 2px dashed #f39c12;
+}
+.scenario-box h4 { color: #e67e22; margin-bottom: 15px; font-size: 1.2em; }
+.options-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 15px;
+margin: 20px 0;
+}
+.option-card {
+background: white;
+border: 2px solid #dee2e6;
+border-radius: 10px;
+padding: 20px;
+cursor: pointer;
+transition: all 0.3s;
+text-align: center;
+}
+.option-card:hover {
+transform: translateY(-3px);
+box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+border-color: #2a5298;
+}
+.option-card.selected { background: #e3f2fd; border-color: #2a5298; border-width: 3px; }
+.option-card.correct { background: #d4edda; border-color: #28a745; }
+.option-card.incorrect { background: #f8d7da; border-color: #dc3545; }
+.option-card h5 { color: #2a5298; margin-bottom: 10px; font-size: 1.1em; }
+.explanation-field { margin: 20px 0; }
+.explanation-field label {
+display: block;
+font-weight: 600;
+color: #2a5298;
+margin-bottom: 8px;
+}
+.explanation-field textarea {
+width: 100%;
+padding: 15px;
+border: 2px solid #dee2e6;
+border-radius: 10px;
+font-size: 1em;
+resize: vertical;
+min-height: 100px;
+font-family: inherit;
+}
+.explanation-field textarea:focus { outline: none; border-color: #2a5298; }
+.btn {
+background: linear-gradient(90deg, #2a5298, #1e3c72);
+color: white;
+border: none;
+padding: 14px 35px;
+border-radius: 30px;
+font-size: 1.05em;
+font-weight: 600;
+cursor: pointer;
+margin: 10px 5px;
+transition: all 0.3s;
+box-shadow: 0 4px 15px rgba(42,82,152,0.3);
+}
+.btn:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(42,82,152,0.4); }
+.btn-secondary { background: #6c757d; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+.feedback {
+margin-top: 20px;
+padding: 20px;
+border-radius: 10px;
+display: none;
+line-height: 1.7;
+}
+.feedback.show { display: block; animation: fadeIn 0.3s; }
+.feedback.success { background: #d4edda; color: #155724; border: 2px solid #28a745; }
+.feedback.error { background: #f8d7da; color: #721c24; border: 2px solid #dc3545; }
+.key-concept {
+background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+padding: 20px;
+border-radius: 10px;
+margin: 15px 0;
+border-left: 5px solid #9b59b6;
+}
+.key-concept h4 { color: #8e44ad; margin-bottom: 10px; }
+@media (max-width: 768px) {
+header h1 { font-size: 1.7em; }
+.slide { padding: 20px; }
+.exercise-card { padding: 20px; }
+.options-grid { grid-template-columns: 1fr; }
+.language-selector { position: static; margin-top: 15px; justify-content: center; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<div class="language-selector">
+<button class="lang-btn active" onclick="changeLanguage('es')">ES</button>
+<button class="lang-btn" onclick="changeLanguage('ca')">CA</button>
+<button class="lang-btn" onclick="changeLanguage('en')">EN</button>
+</div>
+<h1 data-translate="mainTitle">💪 Coactivación Muscular en Danza</h1>
+<p data-translate="mainSubtitle">10 Ejercicios para Estabilidad y Control</p>
+<div class="subtitle" data-translate="mainTagline">Aprende, practica y reflexiona sobre el trabajo muscular coordinado</div>
+</header>
+<div class="nav-tabs">
+<button class="active" onclick="showSlide(0, this)" data-translate="navIntro">📚 Introducción</button>
+<button onclick="showSlide(1, this)" data-translate="nav1">1. Plancha</button>
+<button onclick="showSlide(2, this)" data-translate="nav2">2. Relevé</button>
+<button onclick="showSlide(3, this)" data-translate="nav3">3. Arabesque</button>
+<button onclick="showSlide(4, this)" data-translate="nav4">4. Sentadilla</button>
+<button onclick="showSlide(5, this)" data-translate="nav5">5. Plié</button>
+<button onclick="showSlide(6, this)" data-translate="nav6">6. Equilibrio</button>
+<button onclick="showSlide(7, this)" data-translate="nav7">7. Puente</button>
+<button onclick="showSlide(8, this)" data-translate="nav8">8. Battement</button>
+<button onclick="showSlide(9, this)" data-translate="nav9">9. Giros</button>
+<button onclick="showSlide(10, this)" data-translate="nav10">10. Saltos</button>
+<button onclick="showSlide(11, this)" data-translate="navSummary">📊 Resumen</button>
+</div>
+
+<!-- SLIDE 1: INTRODUCCIÓN -->
+<div class="slide active">
+<h2 data-translate="slide1Title">¿Qué es la Coactivación Muscular?</h2>
+<div class="intro-box">
+<h3 data-translate="slide1DefTitle">Definición</h3>
+<p data-translate="slide1DefText">La <strong>coactivación</strong> (o co-contracción) es la <strong>activación simultánea de músculos agonistas y antagonistas</strong> alrededor de una articulación. A diferencia del movimiento normal donde uno se contrae y el otro se relaja, en la coactivación <strong>ambos trabajan juntos</strong> para proporcionar <strong>estabilidad y control</strong>.</p>
+</div>
+<div class="key-concept">
+<h4 data-translate="slide1WhyTitle">🔑 ¿Por qué es importante en danza?</h4>
+<ul style="margin-left: 25px; line-height: 1.8;">
+<li><strong data-translate="slide1Why1Title">Estabilidad articular:</strong> <span data-translate="slide1Why1Text">Protege las articulaciones en posiciones estáticas</span></li>
+<li><strong data-translate="slide1Why2Title">Control del movimiento:</strong> <span data-translate="slide1Why2Text">Permite movimientos precisos y controlados</span></li>
+<li><strong data-translate="slide1Why3Title">Prevención de lesiones:</strong> <span data-translate="slide1Why3Text">Evita hiperextensiones y movimientos bruscos</span></li>
+<li><strong data-translate="slide1Why4Title">Equilibrio:</strong> <span data-translate="slide1Why4Text">Esencial para mantener posiciones difíciles</span></li>
+<li><strong data-translate="slide1Why5Title">Calidad del gesto:</strong> <span data-translate="slide1Why5Text">Proporciona fluidez y elegancia al movimiento</span></li>
+</ul>
+</div>
+<div class="coactivation-diagram">
+<h4 data-translate="slide1DiagramTitle">📐 Esquema de Coactivación</h4>
+<svg viewBox="0 0 700 350">
+<text x="350" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#2a5298" data-translate="slide1SvgTitle">Coactivación vs. Movimiento Normal</text>
+<g transform="translate(50, 60)">
+<rect x="0" y="0" width="280" height="130" fill="#f8f9fa" stroke="#dee2e6" stroke-width="2" rx="10"/>
+<text x="140" y="25" text-anchor="middle" font-size="14" font-weight="bold" fill="#2c3e50" data-translate="slide1SvgNormal">MOVIMIENTO NORMAL</text>
+<rect x="30" y="40" width="80" height="50" fill="#e74c3c" opacity="0.8" rx="5"/>
+<text x="70" y="70" text-anchor="middle" font-size="10" fill="white" font-weight="bold">BÍCEPS</text>
+<text x="70" y="85" text-anchor="middle" font-size="9" fill="white" data-translate="svgActive">Activo ✓</text>
+<rect x="170" y="40" width="80" height="50" fill="#3498db" opacity="0.3" rx="5"/>
+<text x="210" y="70" text-anchor="middle" font-size="10" fill="#2980b9" font-weight="bold">TRÍCEPS</text>
+<text x="210" y="85" text-anchor="middle" font-size="9" fill="#2980b9" data-translate="svgRelaxed">Relajado ✗</text>
+<text x="140" y="115" text-anchor="middle" font-size="10" fill="#7f8c8d" data-translate="slide1SvgNormalDesc">Uno trabaja, otro descansa</text>
+</g>
+<g transform="translate(370, 60)">
+<rect x="0" y="0" width="280" height="130" fill="#e3f2fd" stroke="#2a5298" stroke-width="3" rx="10"/>
+<text x="140" y="25" text-anchor="middle" font-size="14" font-weight="bold" fill="#2a5298" data-translate="slide1SvgCoactivation">COACTIVACIÓN</text>
+<rect x="30" y="40" width="80" height="50" fill="#e74c3c" opacity="0.9" rx="5"/>
+<text x="70" y="70" text-anchor="middle" font-size="10" fill="white" font-weight="bold">BÍCEPS</text>
+<text x="70" y="85" text-anchor="middle" font-size="9" fill="white" data-translate="svgActive">Activo ✓</text>
+<rect x="170" y="40" width="80" height="50" fill="#3498db" opacity="0.9" rx="5"/>
+<text x="210" y="70" text-anchor="middle" font-size="10" fill="white" font-weight="bold">TRÍCEPS</text>
+<text x="210" y="85" text-anchor="middle" font-size="9" fill="white" data-translate="svgActive">Activo ✓</text>
+<text x="140" y="115" text-anchor="middle" font-size="10" fill="#2a5298" font-weight="bold" data-translate="slide1SvgCoactivationDesc">¡Ambos trabajan!</text>
+</g>
+<line x1="340" y1="125" x2="360" y2="125" stroke="#7f8c8d" stroke-width="2" marker-end="url(#arrow)"/>
+<g transform="translate(150, 220)">
+<rect x="0" y="0" width="400" height="100" fill="#fff5e6" stroke="#f39c12" stroke-width="2" rx="10"/>
+<text x="200" y="25" text-anchor="middle" font-size="14" font-weight="bold" fill="#e67e22" data-translate="slide1SvgBenefits">BENEFICIOS DE LA COACTIVACIÓN</text>
+<text x="100" y="50" text-anchor="middle" font-size="11" fill="#7f8c8d">🏛️ <tspan data-translate="svgBenefit1">Estabilidad</tspan></text>
+<text x="200" y="50" text-anchor="middle" font-size="11" fill="#7f8c8d">🎯 <tspan data-translate="svgBenefit2">Precisión</tspan></text>
+<text x="300" y="50" text-anchor="middle" font-size="11" fill="#7f8c8d">🛡️ <tspan data-translate="svgBenefit3">Protección</tspan></text>
+<text x="200" y="75" text-anchor="middle" font-size="11" fill="#7f8c8d">⚖️ <tspan data-translate="svgBenefit4">Control postural</tspan></text>
+<text x="200" y="90" text-anchor="middle" font-size="10" fill="#95a5a6" data-translate="svgBenefit5">Esencial en danza clásica y contemporánea</text>
+</g>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+<polygon points="0 0, 10 3, 0 6" fill="#7f8c8d"/>
+</marker>
+</defs>
+</svg>
+</div>
+<div class="intro-box" style="background: linear-gradient(135deg, #e8f8f5 0%, #d5f5e3 100%); border-left-color: #1abc9c;">
+<h3 data-translate="slide1HowTitle">🎭 Cómo usar este recurso</h3>
+<p data-translate="slide1HowText">Cada ejercicio presenta:</p>
+<ol style="margin-left: 25px; line-height: 1.8;">
+<li><strong data-translate="slide1How1">Una situación</strong> <span data-translate="slide1How1Text">de danza específica</span></li>
+<li><strong data-translate="slide1How2">Opciones de respuesta</strong> <span data-translate="slide1How2Text">sobre qué músculos trabajan</span></li>
+<li><strong data-translate="slide1How3">Un campo</strong> <span data-translate="slide1How3Text">para que expliques tu razonamiento</span></li>
+<li><strong data-translate="slide1How4">Retroalimentación</strong> <span data-translate="slide1How4Text">que confirma o corrige tu elección</span></li>
+</ol>
+<p style="margin-top: 10px;"><strong data-translate="slide1HowGoal">Objetivo:</strong> <span data-translate="slide1HowGoalText">No solo elegir la respuesta correcta, sino <strong>comprender el porqué</strong> de la coactivación en cada caso.</span></p>
+</div>
+</div>
+
+<!-- SLIDE 2: PLANCHA -->
+<div class="slide">
+<h2 data-translate="slide2Title">1️⃣ Ejercicio: Plancha (Core Stability)</h2>
+<div class="exercise-card">
+<h3><span class="emoji">📋</span> <span data-translate="situationLabel">Situación</span></h3>
+<div class="exercise-description">
+<p data-translate="slide2Desc">Estás manteniendo una <strong>plancha frontal</strong> durante 30 segundos. Tu cuerpo forma una línea recta desde la cabeza hasta los talones. No hay movimiento aparente, pero sientes tensión en múltiples zonas.</p>
+</div>
+<div class="coactivation-diagram">
+<h4 data-translate="slide2DiagramTitle">Músculos implicados</h4>
+<svg viewBox="0 0 600 250">
+<rect x="150" y="80" width="300" height="40" fill="#f5d5cb" stroke="#d4a59a" stroke-width="2" rx="5"/>
+<text x="300" y="105" text-anchor="middle" font-size="11" fill="#7f8c8d" data-translate="slide2SvgBody">Cuerpo en línea</text>
+<rect x="180" y="120" width="20" height="60" fill="#f5d5cb" stroke="#d4a59a" stroke-width="2" rx="3"/>
+<rect x="400" y="120" width="20" height="60" fill="#f5d5cb" stroke="#d4a59a" stroke-width="2" rx="3"/>
+<rect x="250" y="85" width="100" height="30" fill="#e74c3c" opacity="0.7"/>
+<text x="300" y="105" text-anchor="middle" font-size="9" fill="white" font-weight="bold">ABDOMEN</text>
+<rect x="250" y="50" width="100" height="30" fill="#3498db" opacity="0.7"/>
+<text x="300" y="70" text-anchor="middle" font-size="9" fill="white" font-weight="bold">ESPALDA</text>
+<text x="300" y="200" text-anchor="middle" font-size="11" fill="#2a5298" font-weight="bold" data-translate="slide2SvgBoth">Ambos grupos trabajan simultáneamente</text>
+<text x="300" y="220" text-anchor="middle" font-size="10" fill="#7f8c8d" data-translate="slide2SvgCoactivation">Coactivación anterior-posterior</text>
+</svg>
+</div>
+<div class="scenario-box">
+<h4 data-translate="slide2Question">🤔 Pregunta: ¿Qué ocurre a nivel muscular?</h4>
+<div class="options-grid" id="options1">
+<div class="option-card" onclick="selectOption(1, 0, false)">
+<h5 data-translate="optA">Opción A</h5>
+<p data-translate="slide2OptAText">Solo el abdomen se contrae. La espalda está relajada.</p>
+</div>
+<div class="option-card" onclick="selectOption(1, 1, true)">
+<h5 data-translate="optB">Opción B</h5>
+<p data-translate="slide2OptBText">Abdomen y espalda se contraen simultáneamente (coactivación).</p>
+</div>
+<div class="option-card" onclick="selectOption(1, 2, false)">
+<h5 data-translate="optC">Opción C</h5>
+<p data-translate="slide2OptCText">Solo la espalda trabaja para mantener la postura.</p>
+</div>
+</div>
+<div class="explanation-field">
+<label for="explanation1" data-translate="explainLabel">💭 Explica por qué elegiste esta opción:</label>
+<textarea id="explanation1" data-translate-placeholder="slide2ExplainPlaceholder" placeholder="Describe qué músculos crees que trabajan y por qué es necesaria la coactivación en este ejercicio..."></textarea>
+</div>
+<button class="btn" onclick="checkAnswer(1)" data-translate="verifyBtn">Verificar respuesta</button>
+<button class="btn btn-secondary" onclick="resetExercise(1)" data-translate="resetBtn">Reiniciar</button>
+<div class="feedback" id="feedback1"></div>
+</div>
+</div>
+<div class="key-concept">
+<h4 data-translate="slide2ConceptTitle">🎯 Concepto clave: Estabilidad del core</h4>
+<p data-translate="slide2ConceptText">En la plancha, los <strong>músculos abdominales</strong> (recto, oblicuos, transverso) y los <strong>extensores de la espalda</strong> (erectores espinales, multífidos) trabajan juntos para:</p>
+<ul style="margin-left: 25px; line-height: 1.8; margin-top: 10px;">
+<li data-translate="slide2Concept1">Mantener la columna en posición neutra</li>
+<li data-translate="slide2Concept2">Evitar que la cadera caiga (lordosis excesiva)</li>
+<li data-translate="slide2Concept3">Prevenir que la cadera suba demasiado (cifosis)</li>
+<li data-translate="slide2Concept4">Crear una "faja" natural que protege la columna</li>
+</ul>
+</div>
+</div>
+
+<!-- SLIDE 3: RELEVÉ -->
+<div class="slide">
+<h2 data-translate="slide3Title">2️⃣ Ejercicio: Relevé (Elevación sobre puntas)</h2>
+<div class="exercise-card">
+<h3><span class="emoji">🩰</span> <span data-translate="situationLabel">Situación</span></h3>
+<div class="exercise-description">
+<p data-translate="slide3Desc">Te elevas sobre las <strong>puntas de los pies</strong> (relevé) y mantienes la posición durante 10 segundos. Sientes trabajo en pantorrillas pero también en otras zonas.</p>
+</div>
+<div class="coactivation-diagram">
+<h4 data-translate="slide3DiagramTitle">📐 Coactivación en tobillo</h4>
+<svg viewBox="0 0 600 280">
+<rect x="250" y="50" width="100" height="180" fill="#f5d5cb" stroke="#d4a59a" stroke-width="2" rx="5"/>
+<text x="300" y="145" text-anchor="middle" font-size="10" fill="#7f8c8d" data-translate="svgLeg">Pierna</text>
+<path d="M 260 80 Q 240 130 260 180 L 300 180 Q 320 130 300 80 Z" fill="#e74c3c" opacity="0.8"/>
+<text x="280" y="135" text-anchor="middle" font-size="9" fill="white" font-weight="bold" data-translate="svgCalves">GEMELOS</text>
+<path d="M 300 80 Q 340 130 340 180 L 300 180 Z" fill="#3498db" opacity="0.7"/>
+<text x="320" y="135" text-anchor="middle" font-size="8" fill="white" data-translate="svgTibAnt">TIBIAL ANT.</text>
+<ellipse cx="300" cy="240" rx="50" ry="25" fill="#f5d5cb" stroke="#d4a59a" stroke-width="2"/>
+<text x="300" y="245" text-anchor="middle" font-size="9" fill="#7f8c8d" data-translate="svgFoot">Pie</text>
+<line x1="280" y1="200" x2="280" y2="230" stroke="#e74c3c" stroke-width="3" marker-end="url(#arrowRed)"/>
+<line x1="320" y1="200" x2="320" y2="230" stroke="#3498db" stroke-width="3" marker-end="url(#arrowBlue)"/>
+<text x="300" y="270" text-anchor="middle" font-size="10" fill="#2a5298" font-weight="bold" data-translate="slide3SvgBoth">Ambos estabilizan el tobillo</text>
+<defs>
+<marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+<polygon points="0 0, 10 3, 0 6" fill="#e74c3c"/>
+</marker>
+<marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+<polygon points="0 0, 10 3, 0 6" fill="#3498db"/>
+</marker>
+</defs>
+</svg>
+</div>
+<div class="scenario-box">
+<h4 data-translate="slide3Question">🤔 Pregunta: ¿Qué músculos del tobillo trabajan?</h4>
+<div class="options-grid" id="options2">
+<div class="option-card" onclick="selectOption(2, 0, false)">
+<h5 data-translate="optA">Opción A</h5>
+<p data-translate="slide3OptAText">Solo gemelos y sóleo (flexores plantares).</p>
+</div>
+<div class="option-card" onclick="selectOption(2, 1, true)">
+<h5 data-translate="optB">Opción B</h5>
+<p data-translate="slide3OptBText">Gemelos + tibial anterior (coactivación para estabilidad).</p>
+</div>
+<div class="option-card" onclick="selectOption(2, 2, false)">
+<h5 data-translate="optC">Opción C</h5>
+<p data-translate="slide3OptCText">Solo los músculos laterales (peroneos).</p>
+</div>
+</div>
+<div class="explanation-field">
+<label for="explanation2" data-translate="explainLabel">💭 Explica por qué elegiste esta opción:</label>
+<textarea id="explanation2" data-translate-placeholder="slide3ExplainPlaceholder" placeholder="Describe la función del tibial anterior durante el relevé y por qué es necesaria la coactivación..."></textarea>
+</div>
+<button class="btn" onclick="checkAnswer(2)" data-translate="verifyBtn">Verificar respuesta</button>
+<button class="btn btn-secondary" onclick="resetExercise(2)" data-translate="resetBtn">Reiniciar</button>
+<div class="feedback" id="feedback2"></div>
+</div>
+</div>
+<div class="key-concept">
+<h4 data-translate="slide3ConceptTitle">🎯 Concepto clave: Estabilidad del tobillo</h4>
+<p data-translate="slide3ConceptText">Aunque el movimiento principal es de <strong>flexión plantar</strong> (gemelos), el <strong>tibial anterior</strong> (flexor dorsal) se activa ligeramente para:</p>
+<ul style="margin-left: 25px; line-height: 1.8; margin-top: 10px;">
+<li data-translate="slide3Concept1">Evitar la hiperextensión del tobillo</li>
+<li data-translate="slide3Concept2">Mantener el equilibrio anteroposterior</li>
+<li data-translate="slide3Concept3">Controlar la altura del relevé</li>
+<li data-translate="slide3Concept4">Proteger contra esguinces</li>
+</ul>
+</div>
+</div>
+
+<!-- SLIDE 4: ARABESQUE -->
+<div class="slide">
+<h2 data-translate="slide4Title">3️⃣ Ejercicio: Arabesque (Extensión de cadera)</h2>
+<div class="exercise-card">
+<h3><span class="emoji">🦵</span> <span data-translate="situationLabel">Situación</span></h3>
+<div class="exercise-description">
+<p data-translate="slide4Desc">Mantienes un <strong>arabesque</strong>: una pierna extendida hacia atrás a 90°, tronco inclinado hacia adelante, brazos extendidos. Posición estática durante 15 segundos.</p>
+</div>
+<div class="scenario-box">
+<h4 data-translate="slide4Question">🤔 Pregunta: ¿Qué ocurre en la cadera de la pierna elevada?</h4>
+<div class="options-grid" id="options3">
+<div class="option-card" onclick="selectOption(3, 0, false)">
+<h5 data-translate="optA">Opción A</h5>
+<p data-translate="slide4OptAText">Solo glúteos e isquiotibiales trabajan. El psoas está relajado.</p>
+</div>
+<div class="option-card" onclick="selectOption(3, 1, true)">
+<h5 data-translate="optB">Opción B</h5>
+<p data-translate="slide4OptBText">Glúteos + psoas trabajan juntos (coactivación) para estabilizar.</p>
+</div>
+<div class="option-card" onclick="selectOption(3, 2, false)">
+<h5 data-translate="optC">Opción C</h5>
+<p data-translate="slide4OptCText">Solo el psoas trabaja para mantener la pierna arriba.</p>
+</div>
+</div>
+<div class="explanation-field">
+<label for="explanation3" data-translate="explainLabel">💭 Explica por qué elegiste esta opción:</label>
+<textarea id="explanation3" data-translate-placeholder="slide4ExplainPlaceholder" placeholder="Reflexiona sobre por qué el psoas (flexor de cadera) podría activarse cuando la pierna está en extensión..."></textarea>
+</div>
+<button class="btn" onclick="checkAnswer(3)" data-translate="verifyBtn">Verificar respuesta</button>
+<button class="btn btn-secondary" onclick="resetExercise(3)" data-translate="resetBtn">Reiniciar</button>
+<div class="feedback" id="feedback3"></div>
+</div>
+</div>
+<div class="key-concept">
+<h4 data-translate="slide4ConceptTitle">🎯 Concepto clave: Coactivación en extensión</h4>
+<p data-translate="slide4ConceptText">En el arabesque, aunque los <strong>extensores de cadera</strong> (glúteos, isquiotibiales) son los principales, el <strong>psoas-ilíaco</strong> (flexor) se coactiva para:</p>
+<ul style="margin-left: 25px; line-height: 1.8; margin-top: 10px;">
+<li data-translate="slide4Concept1">Evitar la hiperextensión de la cadera</li>
+<li data-translate="slide4Concept2">Mantener la altura controlada de la pierna</li>
+<li data-translate="slide4Concept3">Estabilizar la articulación coxofemoral</li>
+<li data-translate="slide4Concept4">Permitir ajustes finos de posición</li>
+</ul>
+</div>
+</div>
+
+<!-- SLIDE 5: SENTADILLA -->
+<div class="slide">
+<h2 data-translate="slide5Title">4️⃣ Ejercicio: Sentadilla (Squat)</h2>
+<div class="exercise-card">
+<h3><span class="emoji">🦵</span> <span data-translate="situationLabel">Situación</span></h3>
+<div class="exercise-description">
+<p data-translate="slide5Desc">Realizas una <strong>sentadilla lenta y controlada</strong>, bajando en 4 segundos y subiendo en 4 segundos. Mantienes la espalda recta y las rodillas alineadas.</p>
+</div>
+<div class="scenario-box">
+<h4 data-translate="slide5Question">🤔 Pregunta: ¿Qué ocurre en la rodilla durante la bajada (fase excéntrica)?</h4>
+<div class="options-grid" id="options4">
+<div class="option-card" onclick="selectOption(4, 0, true)">
+<h5 data-translate="optA">Opción A</h5>
+<p data-translate="slide5OptAText">Cuádriceps (excéntrico) + isquiotibiales (coactivación estabilizadora).</p>
+</div>
+<div class="option-card" onclick="selectOption(4, 1, false)">
+<h5 data-translate="optB">Opción B</h5>
+<p data-translate="slide5OptBText">Solo los isquiotibiales trabajan para frenar la bajada.</p>
+</div>
+<div class="option-card" onclick="selectOption(4, 2, false)">
+<h5 data-translate="optC">Opción C</h5>
+<p data-translate="slide5OptCText">Solo el cuádriceps se alarga pasivamente sin activación.</p>
+</div>
+</div>
+<div class="explanation-field">
+<label for="explanation4" data-translate="explainLabel">💭 Explica por qué elegiste esta opción:</label>
+<textarea id="explanation4" data-translate-placeholder="slide5ExplainPlaceholder" placeholder="Describe el papel del cuádriceps en fase excéntrica y por qué los isquiotibiales también se activan..."></textarea>
+</div>
+<button class="btn" onclick="checkAnswer(4)" data-translate="verifyBtn">Verificar respuesta</button>
+<button class="btn btn-secondary" onclick="resetExercise(4)" data-translate="resetBtn">Reiniciar</button>
+<div class="feedback" id="feedback4"></div>
+</div>
+</div>
+<div class="key-concept">
+<h4 data-translate="slide5ConceptTitle">🎯 Concepto clave: Protección de la rodilla</h4>
+<p data-translate="slide5ConceptText">Durante la bajada de la sentadilla:</p>
+<ul style="margin-left: 25px; line-height: 1.8; margin-top: 10px;">
+<li data-translate="slide5Concept1"><strong>Cuádriceps:</strong> Trabaja excéntricamente para controlar la flexión de rodilla</li>
+<li data-translate="slide5Concept2"><strong>Isquiotibiales:</strong> Se coactivan para estabilizar la rodilla y proteger el LCA</li>
+<li data-translate="slide5Concept3">Esta coactivación <strong>previene el desplazamiento anterior de la tibia</strong></li>
+<li data-translate="slide5Concept4">Es fundamental en danza para aterrizajes de saltos</li>
+</ul>
+</div>
+</div>
+
+<!-- SLIDE 6: PLIÉ -->
+<div class="slide">
+<h2 data-translate="slide6Title">5️⃣ Ejercicio: Plié (Flexión de rodilla en danza)</h2>
+<div class="exercise-card">
+<h3><span class="emoji">🩰</span> <span data-translate="situationLabel">Situación</span></h3>
+<div class="exercise-description">
+<p data-translate="slide6Desc">Ejecutas un <strong>grand plié</strong> en primera posición: bajada lenta y controlada, rodillas hacia afuera, talones en el suelo (hasta donde sea posible), subida controlada.</p>
+</div>
+<div class="scenario-box">
+<h4 data-translate="slide6Question">🤔 Pregunta: ¿Qué músculos coactivan para proteger la rodilla en plié?</h4>
+<div class="options-grid" id="options5">
+<div class="option-card" onclick="selectOption(5, 0, false)">
+<h5 data-translate="optA">Opción A</h5>
+<p data-translate="slide6OptAText">Solo cuádriceps y gemelos.</p>
+</div>
+<div class="option-card" onclick="selectOption(5, 1, true)">
+<h5 data-translate="optB">Opción B</h5>
+<p data-translate="slide6OptBText">Cuádriceps + isquiotibiales + aductores (coactivación triple).</p>
+</div>
+<div class="option-card" onclick="selectOption(5, 2, false)">
+<h5 data-translate="optC">Opción C</h5>
+<p data-translate="slide6OptCText">Solo los aductores para mantener la rotación externa.</p>
+</div>
+</div>
+<div class="explanation-field">
+<label for="explanation5" data-translate="explainLabel">💭 Explica por qué elegiste esta opción:</label>
+<textarea id="explanation5" data-translate-placeholder="slide6ExplainPlaceholder" placeholder="Considera la rotación externa de cadera y la necesidad de estabilidad en múltiples planos..."></textarea>
+</div>
+<button class="btn" onclick="checkAnswer(5)" data-translate="verifyBtn">Verificar respuesta</button>
+<button class="btn btn-secondary" onclick="resetExercise(5)" data-translate="resetBtn">Reiniciar</button>
+<div class="feedback" id="feedback5"></div>
+</div>
+</div>
+<div class="key-concept">
+<h4 data-translate="slide6ConceptTitle">🎯 Concepto clave: Estabilidad multiplanar</h4>
+<p data-translate="slide6ConceptText">En el plié con rotación externa:</p>
+<ul style="margin-left: 25px; line-height: 1.8; margin-top: 10px;">
+<li data-translate="slide6Concept1"><strong>Cuádriceps:</strong> Controla la flexión de rodilla</li>
+<li data-translate="slide6Concept2"><strong>Isquiotibiales:</strong> Estabilizan la rodilla y cadera</li>
+<li data-translate="slide6Concept3"><strong>Aductores:</strong> Mantienen la rotación externa y estabilizan la cadera</li>
+<li data-translate="slide6Concept4">La coactivación de estos tres grupos crea una <strong>estabilidad en 3 planos</strong></li>
+</ul>
+</div>
+</div>
+
+<!-- SLIDE 7: EQUILIBRIO -->
+<div class="slide">
+<h2 data-translate="slide7Title">6️⃣ Ejercicio: Equilibrio monopodal</h2>
+<div class="exercise-card">
+<h3><span class="emoji">⚖️</span> <span data-translate="situationLabel">Situación</span></h3>
+<div class="exercise-description">
+<p data-translate="slide7Desc">Te mantienes sobre <strong>una sola pierna</strong> durante 30 segundos con los ojos cerrados. La pierna libre está en passé (rodilla hacia afuera, pie en rodilla de apoyo).</p>
+</div>
+<div class="scenario-box">
+<h4 data-translate="slide7Question">🤔 Pregunta: ¿Qué ocurre en el tobillo de la pierna de apoyo?</h4>
+<div class="options-grid" id="options6">
+<div class="option-card" onclick="selectOption(6, 0, false)">
+<h5 data-translate="optA">Opción A</h5>
+<p data-translate="slide7OptAText">Los músculos del tobillo están relajados; el equilibrio depende solo de la vista.</p>
+</div>
+<div class="option-card" onclick="selectOption(6, 1, true)">
+<h5 data-translate="optB">Opción B</h5>
+<p data-translate="slide7OptBText">Múltiples músculos del tobillo coactivan constantemente (ajustes posturales).</p>
+</div>
+<div class="option-card" onclick="selectOption(6, 2, false)">
+<h5 data-translate="optC">Opción C</h5>
+<p data-translate="slide7OptCText">Solo los gemelos trabajan para mantenerse de pie.</p>
+</div>
+</div>
+<div class="explanation-field">
+<label for="explanation6" data-translate="explainLabel">💭 Explica por qué elegiste esta opción:</label>
+<textarea id="explanation6" data-translate-placeholder="slide7ExplainPlaceholder" placeholder="Piensa en cómo se mantiene el equilibrio sin referencia visual y qué músculos hacen micro-ajustes..."></textarea>
+</div>
+<button class="btn" onclick="checkAnswer(6)" data-translate="verifyBtn">Verificar respuesta</button>
+<button class="btn btn-secondary" onclick="resetExercise(6)" data-translate="resetBtn">Reiniciar</button>
+<div class="feedback" id="feedback6"></div>
+</div>
+</div>
+<div class="key-concept">
+<h4 data-translate="slide7ConceptTitle">🎯 Concepto clave: Coactivación refleja</h4>
+<p data-translate="slide7ConceptText">En equilibrio monopodal:</p>
+<ul style="margin-left: 25px; line-height: 1.8; margin-top: 10px;">
+<li data-translate="slide7Concept1"><strong>Músculos del tobillo:</strong> Tibial anterior, gemelos, peroneos coactivan constantemente</li>
+<li data-translate="slide7Concept2">Realizan <strong>micro-ajustes</strong> (oscilaciones de 5-10 Hz) para mantener el centro de gravedad</li>
+<li data-translate="slide7Concept3">Sin visión, la <strong>propiocepción</strong> es crucial</li>
+<li data-translate="slide7Concept4">La coactivación es <strong>automática y refleja</strong>, no consciente</li>
+</ul>
+</div>
+</div>
+
+<!-- SLIDE 8: PUENTE -->
+<div class="slide">
+<h2 data-translate="slide8Title">7️⃣ Ejercicio: Puente de glúteos</h2>
+<div class="exercise-card">
+<h3><span class="emoji">🍑</span> <span data-translate="situationLabel">Situación</span></h3>
+<div class="exercise-description">
+<p data-translate="slide8Desc">Tumbado boca arriba con rodillas flexionadas, elevas la cadera hasta formar una línea recta hombros-rodillas. Mantienes 5 segundos arriba y bajas lentamente.</p>
+</div>
+<div class="scenario-box">
+<h4 data-translate="slide8Question">🤔 Pregunta: ¿Qué ocurre en la zona lumbar durante el puente?</h4>
+<div class="options-grid" id="options7">
+<div class="option-card" onclick="selectOption(7, 0, false)">
+<h5 data-translate="optA">Opción A</h5>
+<p data-translate="slide8OptAText">La espalda está totalmente relajada; solo trabajan glúteos.</p>
+</div>
+<div class="option-card" onclick="selectOption(7, 1, true)">
+<h5 data-translate="optB">Opción B</h5>
+<p data-translate="slide8OptBText">Glúteos + abdominales + lumbares coactivan para estabilizar la pelvis.</p>
+</div>
+<div class="option-card" onclick="selectOption(7, 2, false)">
+<h5 data-translate="optC">Opción C</h5>
+<p data-translate="slide8OptCText">Solo los erectores espinales trabajan para arquear la espalda.</p>
+</div>
+</div>
+<div class="explanation-field">
+<label for="explanation7" data-translate="explainLabel">💭 Explica por qué elegiste esta opción:</label>
+<textarea id="explanation7" data-translate-placeholder="slide8ExplainPlaceholder" placeholder="Considera la posición de la pelvis y qué músculos evitan la hiperlordosis..."></textarea>
+</div>
+<button class="btn" onclick="checkAnswer(7)" data-translate="verifyBtn">Verificar respuesta</button>
+<button class="btn btn-secondary" onclick="resetExercise(7)" data-translate="resetBtn">Reiniciar</button>
+<div class="feedback" id="feedback7"></div>
+</div>
+</div>
+<div class="key-concept">
+<h4 data-translate="slide8ConceptTitle">🎯 Concepto clave: Control pélvico</h4>
+<p data-translate="slide8ConceptText">En el puente:</p>
+<ul style="margin-left: 25px; line-height: 1.8; margin-top: 10px;">
+<li data-translate="slide8Concept1"><strong>Glúteos:</strong> Extienden la cadera (movimiento principal)</li>
+<li data-translate="slide8Concept2"><strong>Abdominales:</strong> Evitan la anteversión pélvica excesiva (hiperlordosis)</li>
+<li data-translate="slide8Concept3"><strong>Lumbares:</strong> Estabilizan la columna</li>
+<li data-translate="slide8Concept4">Esta coactivación <strong>anterior-posterior</strong> mantiene la pelvis en posición neutra</li>
+<li data-translate="slide8Concept5">Esencial en danza para movimientos de cadera controlados</li>
+</ul>
+</div>
+</div>
+
+<!-- SLIDE 9: BATTEMENT -->
+<div class="slide">
+<h2 data-translate="slide9Title">8️⃣ Ejercicio: Battement contrôlé</h2>
+<div class="exercise-card">
+<h3><span class="emoji">🦵</span> <span data-translate="situationLabel">Situación</span></h3>
+<div class="exercise-description">
+<p data-translate="slide9Desc">De pie, elevas la pierna lateralmente a 45° (à la seconde) y la bajas <strong>muy lentamente</strong> (8 segundos). Control total del movimiento.</p>
+</div>
+<div class="scenario-box">
+<h4 data-translate="slide9Question">🤔 Pregunta: ¿Qué músculos trabajan durante la bajada lenta?</h4>
+<div class="options-grid" id="options8">
+<div class="option-card" onclick="selectOption(8, 0, false)">
+<h5 data-translate="optA">Opción A</h5>
+<p data-translate="slide9OptAText">Solo los aductores frenan la pierna pasivamente.</p>
+</div>
+<div class="option-card" onclick="selectOption(8, 1, true)">
+<h5 data-translate="optB">Opción B</h5>
+<p data-translate="slide9OptBText">Abductores (excéntrico) + aductores (coactivación estabilizadora).</p>
+</div>
+<div class="option-card" onclick="selectOption(8, 2, false)">
+<h5 data-translate="optC">Opción C</h5>
+<p data-translate="slide9OptCText">La gravedad hace todo el trabajo; los músculos están relajados.</p>
+</div>
+</div>
+<div class="explanation-field">
+<label for="explanation8" data-translate="explainLabel">💭 Explica por qué elegiste esta opción:</label>
+<textarea id="explanation8" data-translate-placeholder="slide9ExplainPlaceholder" placeholder="Reflexiona sobre qué músculos elevan la pierna y cómo controlan la bajada..."></textarea>
+</div>
+<button class="btn" onclick="checkAnswer(8)" data-translate="verifyBtn">Verificar respuesta</button>
+<button class="btn btn-secondary" onclick="resetExercise(8)" data-translate="resetBtn">Reiniciar</button>
+<div class="feedback" id="feedback8"></div>
+</div>
+</div>
+<div class="key-concept">
+<h4 data-translate="slide9ConceptTitle">🎯 Concepto clave: Control excéntrico</h4>
+<p data-translate="slide9ConceptText">En el battement contrôlé:</p>
+<ul style="margin-left: 25px; line-height: 1.8; margin-top: 10px;">
+<li data-translate="slide9Concept1"><strong>Abductores:</strong> Trabajan excéntricamente para frenar la bajada</li>
+<li data-translate="slide9Concept2"><strong>Aductores:</strong> Se coactivan para estabilizar la cadera en el plano frontal</li>
+<li data-translate="slide9Concept3">Esta coactivación crea un <strong>freno controlado</strong> que evita que la pierna caiga</li>
+<li data-translate="slide9Concept4">El control excéntrico es <strong>más difícil</strong> que el concéntrico</li>
+</ul>
+</div>
+</div>
+
+<!-- SLIDE 10: GIROS -->
+<div class="slide">
+<h2 data-translate="slide10Title">9️⃣ Ejercicio: Piruetas (Giros)</h2>
+<div class="exercise-card">
+<h3><span class="emoji">🌀</span> <span data-translate="situationLabel">Situación</span></h3>
+<div class="exercise-description">
+<p data-translate="slide10Desc">Ejecutas una <strong>pirueta</strong> en relevé: preparación, impulso, giro sobre una pierna con la otra en passé, y final en posición fija.</p>
+</div>
+<div class="scenario-box">
+<h4 data-translate="slide10Question">🤔 Pregunta: ¿Qué ocurre durante el giro en términos de coactivación?</h4>
+<div class="options-grid" id="options9">
+<div class="option-card" onclick="selectOption(9, 0, true)">
+<h5 data-translate="optA">Opción A</h5>
+<p data-translate="slide10OptAText">Core completo (abdomen + espalda) + músculos de la pierna de apoyo coactivan.</p>
+</div>
+<div class="option-card" onclick="selectOption(9, 1, false)">
+<h5 data-translate="optB">Opción B</h5>
+<p data-translate="slide10OptBText">Solo los músculos rotadores trabajan; el core está relajado.</p>
+</div>
+<div class="option-card" onclick="selectOption(9, 2, false)">
+<h5 data-translate="optC">Opción C</h5>
+<p data-translate="slide10OptCText">La inercia hace todo; los músculos no necesitan trabajar durante el giro.</p>
+</div>
+</div>
+<div class="explanation-field">
+<label for="explanation9" data-translate="explainLabel">💭 Explica por qué elegiste esta opción:</label>
+<textarea id="explanation9" data-translate-placeholder="slide10ExplainPlaceholder" placeholder="Considera la necesidad de mantener el eje vertical y la estabilidad durante la rotación..."></textarea>
+</div>
+<button class="btn" onclick="checkAnswer(9)" data-translate="verifyBtn">Verificar respuesta</button>
+<button class="btn btn-secondary" onclick="resetExercise(9)" data-translate="resetBtn">Reiniciar</button>
+<div class="feedback" id="feedback9"></div>
+</div>
+</div>
+<div class="key-concept">
+<h4 data-translate="slide10ConceptTitle">🎯 Concepto clave: Estabilidad rotacional</h4>
+<p data-translate="slide10ConceptText">Durante la pirueta:</p>
+<ul style="margin-left: 25px; line-height: 1.8; margin-top: 10px;">
+<li data-translate="slide10Concept1"><strong>Core completo:</strong> Coactivación 360° (recto, oblicuos, transverso, lumbares, multífidos)</li>
+<li data-translate="slide10Concept2"><strong>Función:</strong> Mantener el <strong>eje vertical</strong> durante la rotación</li>
+<li data-translate="slide10Concept3"><strong>Pierna de apoyo:</strong> Cuádriceps + isquiotibiales + gemelos coactivan para estabilidad</li>
+<li data-translate="slide10Concept4">Sin esta coactivación, el bailarín <strong>se desestabiliza</strong> y cae</li>
+<li data-translate="slide10Concept5">La coactivación del core es <strong>isométrica</strong> (sin cambio de longitud)</li>
+</ul>
+</div>
+</div>
+
+<!-- SLIDE 11: SALTOS -->
+<div class="slide">
+<h2 data-translate="slide11Title">🔟 Ejercicio: Aterrizaje de saltos</h2>
+<div class="exercise-card">
+<h3><span class="emoji">🦘</span> <span data-translate="situationLabel">Situación</span></h3>
+<div class="exercise-description">
+<p data-translate="slide11Desc">Realizas un <strong>grand jeté</strong> y aterrizas suavemente en plié profundo. El aterrizaje debe ser silencioso y controlado.</p>
+</div>
+<div class="scenario-box">
+<h4 data-translate="slide11Question">🤔 Pregunta: ¿Qué ocurre en las rodillas durante el aterrizaje?</h4>
+<div class="options-grid" id="options10">
+<div class="option-card" onclick="selectOption(10, 0, false)">
+<h5 data-translate="optA">Opción A</h5>
+<p data-translate="slide11OptAText">Las piernas absorben el impacto pasivamente; los músculos están relajados.</p>
+</div>
+<div class="option-card" onclick="selectOption(10, 1, true)">
+<h5 data-translate="optB">Opción B</h5>
+<p data-translate="slide11OptBText">Cuádriceps + isquiotibiales + gemelos coactivan excéntricamente para frenar.</p>
+</div>
+<div class="option-card" onclick="selectOption(10, 2, false)">
+<h5 data-translate="optC">Opción C</h5>
+<p data-translate="slide11OptCText">Solo los gemelos trabajan para amortiguar.</p>
+</div>
+</div>
+<div class="explanation-field">
+<label for="explanation10" data-translate="explainLabel">💭 Explica por qué elegiste esta opción:</label>
+<textarea id="explanation10" data-translate-placeholder="slide11ExplainPlaceholder" placeholder="Piensa en cómo se absorbe el impacto y qué músculos protegen las articulaciones..."></textarea>
+</div>
+<button class="btn" onclick="checkAnswer(10)" data-translate="verifyBtn">Verificar respuesta</button>
+<button class="btn btn-secondary" onclick="resetExercise(10)" data-translate="resetBtn">Reiniciar</button>
+<div class="feedback" id="feedback10"></div>
+</div>
+</div>
+<div class="key-concept">
+<h4 data-translate="slide11ConceptTitle">🎯 Concepto clave: Absorción de impacto</h4>
+<p data-translate="slide11ConceptText">En el aterrizaje:</p>
+<ul style="margin-left: 25px; line-height: 1.8; margin-top: 10px;">
+<li data-translate="slide11Concept1"><strong>Cuádriceps:</strong> Excéntrico para controlar la flexión de rodilla</li>
+<li data-translate="slide11Concept2"><strong>Isquiotibiales:</strong> Coactivación para proteger el LCA</li>
+<li data-translate="slide11Concept3"><strong>Gemelos/sóleo:</strong> Excéntrico para controlar el tobillo</li>
+<li data-translate="slide11Concept4"><strong>Glúteos:</strong> Excéntrico para controlar la cadera</li>
+<li data-translate="slide11Concept5">Esta <strong>coactivación global</strong> distribuye las fuerzas (hasta 8x el peso corporal)</li>
+<li data-translate="slide11Concept6">Sin coactivación: <strong>lesiones</strong> de rodilla, tobillo o cadera</li>
+</ul>
+</div>
+</div>
+
+<!-- SLIDE 12: RESUMEN -->
+<div class="slide">
+<h2 data-translate="slide12Title">📊 Resumen: Coactivación en Danza</h2>
+<div class="intro-box">
+<h3 data-translate="slide12IntroTitle">🎯 Conceptos clave aprendidos</h3>
+<p data-translate="slide12IntroText">Has explorado 10 situaciones diferentes donde la coactivación muscular es esencial para la estabilidad y el control en danza.</p>
+</div>
+<div class="exercise-card">
+<h3><span class="emoji">📋</span> <span data-translate="slide12Principles">Principios fundamentales</span></h3>
+<div class="options-grid">
+<div class="option-card">
+<h5 data-translate="slide12P1Title">1. Estabilidad articular</h5>
+<p data-translate="slide12P1Text">La coactivación protege las articulaciones en posiciones estáticas y dinámicas.</p>
+</div>
+<div class="option-card">
+<h5 data-translate="slide12P2Title">2. Control del movimiento</h5>
+<p data-translate="slide12P2Text">Permite movimientos precisos, especialmente en fases excéntricas (bajadas).</p>
+</div>
+<div class="option-card">
+<h5 data-translate="slide12P3Title">3. Prevención de lesiones</h5>
+<p data-translate="slide12P3Text">Evita hiperextensiones y controla las fuerzas de impacto.</p>
+</div>
+<div class="option-card">
+<h5 data-translate="slide12P4Title">4. Equilibrio</h5>
+<p data-translate="slide12P4Text">Micro-ajustes constantes mediante coactivación refleja.</p>
+</div>
+<div class="option-card">
+<h5 data-translate="slide12P5Title">5. Calidad del gesto</h5>
+<p data-translate="slide12P5Text">Proporciona fluidez, elegancia y control en la ejecución.</p>
+</div>
+<div class="option-card">
+<h5 data-translate="slide12P6Title">6. Multiplanaridad</h5>
+<p data-translate="slide12P6Text">La coactivación trabaja en los 3 planos del movimiento.</p>
+</div>
+</div>
+</div>
+<div class="key-concept">
+<h4 data-translate="slide12AppTitle">🎭 Aplicación en tu entrenamiento</h4>
+<ul style="margin-left: 25px; line-height: 1.8;">
+<li><strong data-translate="slide12App1Title">Consciencia:</strong> <span data-translate="slide12App1Text">Presta atención a qué músculos trabajan en cada ejercicio</span></li>
+<li><strong data-translate="slide12App2Title">Control:</strong> <span data-translate="slide12App2Text">Prioriza la calidad del movimiento sobre la cantidad</span></li>
+<li><strong data-translate="slide12App3Title">Progresión:</strong> <span data-translate="slide12App3Text">Comienza con coactivación consciente, luego se vuelve automática</span></li>
+<li><strong data-translate="slide12App4Title">Prevención:</strong> <span data-translate="slide12App4Text">La coactivación adecuada previene lesiones a largo plazo</span></li>
+<li><strong data-translate="slide12App5Title">Integración:</strong> <span data-translate="slide12App5Text">Combina ejercicios de fuerza, equilibrio y control</span></li>
+</ul>
+</div>
+<div class="intro-box" style="background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); border-left-color: #28a745;">
+<h3 data-translate="slide12CompleteTitle">✅ ¡Completado!</h3>
+<p data-translate="slide12CompleteText">Has revisado los 10 ejercicios de coactivación muscular. Ahora debes:</p>
+<ol style="margin-left: 25px; line-height: 1.8; margin-top: 10px;">
+<li data-translate="slide12Step1">Practicar estos ejercicios en el estudio</li>
+<li data-translate="slide12Step2">Prestar atención a las sensaciones de coactivación</li>
+<li data-translate="slide12Step3">Aplicar estos conceptos en tu técnica de danza diaria</li>
+<li data-translate="slide12Step4">Observar cómo mejora tu estabilidad y control</li>
+</ol>
+</div>
+</div>
+</div>
+
+<script>
+// ============ SISTEMA DE TRADUCCIONES ============
+const translations = {
+es: {
+pageTitle: "Coactivación Muscular en Danza - Estabilidad y Control",
+mainTitle: "💪 Coactivación Muscular en Danza",
+mainSubtitle: "10 Ejercicios para Estabilidad y Control",
+mainTagline: "Aprende, practica y reflexiona sobre el trabajo muscular coordinado",
+navIntro: "📚 Introducción", nav1: "1. Plancha", nav2: "2. Relevé", nav3: "3. Arabesque",
+nav4: "4. Sentadilla", nav5: "5. Plié", nav6: "6. Equilibrio", nav7: "7. Puente",
+nav8: "8. Battement", nav9: "9. Giros", nav10: "10. Saltos", navSummary: "📊 Resumen",
+slide1Title: "¿Qué es la Coactivación Muscular?",
+slide1DefTitle: "Definición",
+slide1DefText: 'La <strong>coactivación</strong> (o co-contracción) es la <strong>activación simultánea de músculos agonistas y antagonistas</strong> alrededor de una articulación. A diferencia del movimiento normal donde uno se contrae y el otro se relaja, en la coactivación <strong>ambos trabajan juntos</strong> para proporcionar <strong>estabilidad y control</strong>.',
+slide1WhyTitle: "🔑 ¿Por qué es importante en danza?",
+slide1Why1Title: "Estabilidad articular:", slide1Why1Text: "Protege las articulaciones en posiciones estáticas",
+slide1Why2Title: "Control del movimiento:", slide1Why2Text: "Permite movimientos precisos y controlados",
+slide1Why3Title: "Prevención de lesiones:", slide1Why3Text: "Evita hiperextensiones y movimientos bruscos",
+slide1Why4Title: "Equilibrio:", slide1Why4Text: "Esencial para mantener posiciones difíciles",
+slide1Why5Title: "Calidad del gesto:", slide1Why5Text: "Proporciona fluidez y elegancia al movimiento",
+slide1DiagramTitle: "📐 Esquema de Coactivación",
+slide1SvgTitle: "Coactivación vs. Movimiento Normal",
+slide1SvgNormal: "MOVIMIENTO NORMAL",
+svgActive: "Activo ✓", svgRelaxed: "Relajado ✗",
+slide1SvgNormalDesc: "Uno trabaja, otro descansa",
+slide1SvgCoactivation: "COACTIVACIÓN",
+slide1SvgCoactivationDesc: "¡Ambos trabajan!",
+slide1SvgBenefits: "BENEFICIOS DE LA COACTIVACIÓN",
+svgBenefit1: "Estabilidad", svgBenefit2: "Precisión", svgBenefit3: "Protección", svgBenefit4: "Control postural",
+svgBenefit5: "Esencial en danza clásica y contemporánea",
+slide1HowTitle: "🎭 Cómo usar este recurso",
+slide1HowText: "Cada ejercicio presenta:",
+slide1How1: "Una situación", slide1How1Text: "de danza específica",
+slide1How2: "Opciones de respuesta", slide1How2Text: "sobre qué músculos trabajan",
+slide1How3: "Un campo", slide1How3Text: "para que expliques tu razonamiento",
+slide1How4: "Retroalimentación", slide1How4Text: "que confirma o corrige tu elección",
+slide1HowGoal: "Objetivo:", slide1HowGoalText: 'No solo elegir la respuesta correcta, sino <strong>comprender el porqué</strong> de la coactivación en cada caso.',
+situationLabel: "Situación",
+optA: "Opción A", optB: "Opción B", optC: "Opción C",
+verifyBtn: "Verificar respuesta", resetBtn: "Reiniciar",
+explainLabel: "💭 Explica por qué elegiste esta opción:",
+// Slide 2 - Plancha
+slide2Title: "1️⃣ Ejercicio: Plancha (Core Stability)",
+slide2Desc: 'Estás manteniendo una <strong>plancha frontal</strong> durante 30 segundos. Tu cuerpo forma una línea recta desde la cabeza hasta los talones. No hay movimiento aparente, pero sientes tensión en múltiples zonas.',
+slide2DiagramTitle: "Músculos implicados",
+slide2SvgBody: "Cuerpo en línea", slide2SvgBoth: "Ambos grupos trabajan simultáneamente",
+slide2SvgCoactivation: "Coactivación anterior-posterior",
+slide2Question: "🤔 Pregunta: ¿Qué ocurre a nivel muscular?",
+slide2OptAText: "Solo el abdomen se contrae. La espalda está relajada.",
+slide2OptBText: "Abdomen y espalda se contraen simultáneamente (coactivación).",
+slide2OptCText: "Solo la espalda trabaja para mantener la postura.",
+slide2ExplainPlaceholder: "Describe qué músculos crees que trabajan y por qué es necesaria la coactivación en este ejercicio...",
+slide2ConceptTitle: "🎯 Concepto clave: Estabilidad del core",
+slide2ConceptText: 'En la plancha, los <strong>músculos abdominales</strong> (recto, oblicuos, transverso) y los <strong>extensores de la espalda</strong> (erectores espinales, multífidos) trabajan juntos para:',
+slide2Concept1: "Mantener la columna en posición neutra",
+slide2Concept2: "Evitar que la cadera caiga (lordosis excesiva)",
+slide2Concept3: "Prevenir que la cadera suba demasiado (cifosis)",
+slide2Concept4: 'Crear una "faja" natural que protege la columna',
+// Slide 3 - Relevé
+slide3Title: "2️⃣ Ejercicio: Relevé (Elevación sobre puntas)",
+slide3Desc: 'Te elevas sobre las <strong>puntas de los pies</strong> (relevé) y mantienes la posición durante 10 segundos. Sientes trabajo en pantorrillas pero también en otras zonas.',
+slide3DiagramTitle: "📐 Coactivación en tobillo",
+svgLeg: "Pierna", svgCalves: "GEMELOS", svgTibAnt: "TIBIAL ANT.", svgFoot: "Pie",
+slide3SvgBoth: "Ambos estabilizan el tobillo",
+slide3Question: "🤔 Pregunta: ¿Qué músculos del tobillo trabajan?",
+slide3OptAText: "Solo gemelos y sóleo (flexores plantares).",
+slide3OptBText: "Gemelos + tibial anterior (coactivación para estabilidad).",
+slide3OptCText: "Solo los músculos laterales (peroneos).",
+slide3ExplainPlaceholder: "Describe la función del tibial anterior durante el relevé y por qué es necesaria la coactivación...",
+slide3ConceptTitle: "🎯 Concepto clave: Estabilidad del tobillo",
+slide3ConceptText: 'Aunque el movimiento principal es de <strong>flexión plantar</strong> (gemelos), el <strong>tibial anterior</strong> (flexor dorsal) se activa ligeramente para:',
+slide3Concept1: "Evitar la hiperextensión del tobillo",
+slide3Concept2: "Mantener el equilibrio anteroposterior",
+slide3Concept3: "Controlar la altura del relevé",
+slide3Concept4: "Proteger contra esguinces",
+// Slide 4 - Arabesque
+slide4Title: "3️⃣ Ejercicio: Arabesque (Extensión de cadera)",
+slide4Desc: 'Mantienes un <strong>arabesque</strong>: una pierna extendida hacia atrás a 90°, tronco inclinado hacia adelante, brazos extendidos. Posición estática durante 15 segundos.',
+slide4Question: "🤔 Pregunta: ¿Qué ocurre en la cadera de la pierna elevada?",
+slide4OptAText: "Solo glúteos e isquiotibiales trabajan. El psoas está relajado.",
+slide4OptBText: "Glúteos + psoas trabajan juntos (coactivación) para estabilizar.",
+slide4OptCText: "Solo el psoas trabaja para mantener la pierna arriba.",
+slide4ExplainPlaceholder: "Reflexiona sobre por qué el psoas (flexor de cadera) podría activarse cuando la pierna está en extensión...",
+slide4ConceptTitle: "🎯 Concepto clave: Coactivación en extensión",
+slide4ConceptText: 'En el arabesque, aunque los <strong>extensores de cadera</strong> (glúteos, isquiotibiales) son los principales, el <strong>psoas-ilíaco</strong> (flexor) se coactiva para:',
+slide4Concept1: "Evitar la hiperextensión de la cadera",
+slide4Concept2: "Mantener la altura controlada de la pierna",
+slide4Concept3: "Estabilizar la articulación coxofemoral",
+slide4Concept4: "Permitir ajustes finos de posición",
+// Slide 5 - Sentadilla
+slide5Title: "4️⃣ Ejercicio: Sentadilla (Squat)",
+slide5Desc: 'Realizas una <strong>sentadilla lenta y controlada</strong>, bajando en 4 segundos y subiendo en 4 segundos. Mantienes la espalda recta y las rodillas alineadas.',
+slide5Question: "🤔 Pregunta: ¿Qué ocurre en la rodilla durante la bajada (fase excéntrica)?",
+slide5OptAText: "Cuádriceps (excéntrico) + isquiotibiales (coactivación estabilizadora).",
+slide5OptBText: "Solo los isquiotibiales trabajan para frenar la bajada.",
+slide5OptCText: "Solo el cuádriceps se alarga pasivamente sin activación.",
+slide5ExplainPlaceholder: "Describe el papel del cuádriceps en fase excéntrica y por qué los isquiotibiales también se activan...",
+slide5ConceptTitle: "🎯 Concepto clave: Protección de la rodilla",
+slide5ConceptText: "Durante la bajada de la sentadilla:",
+slide5Concept1: "<strong>Cuádriceps:</strong> Trabaja excéntricamente para controlar la flexión de rodilla",
+slide5Concept2: "<strong>Isquiotibiales:</strong> Se coactivan para estabilizar la rodilla y proteger el LCA",
+slide5Concept3: "Esta coactivación <strong>previene el desplazamiento anterior de la tibia</strong>",
+slide5Concept4: "Es fundamental en danza para aterrizajes de saltos",
+// Slide 6 - Plié
+slide6Title: "5️⃣ Ejercicio: Plié (Flexión de rodilla en danza)",
+slide6Desc: 'Ejecutas un <strong>grand plié</strong> en primera posición: bajada lenta y controlada, rodillas hacia afuera, talones en el suelo (hasta donde sea posible), subida controlada.',
+slide6Question: "🤔 Pregunta: ¿Qué músculos coactivan para proteger la rodilla en plié?",
+slide6OptAText: "Solo cuádriceps y gemelos.",
+slide6OptBText: "Cuádriceps + isquiotibiales + aductores (coactivación triple).",
+slide6OptCText: "Solo los aductores para mantener la rotación externa.",
+slide6ExplainPlaceholder: "Considera la rotación externa de cadera y la necesidad de estabilidad en múltiples planos...",
+slide6ConceptTitle: "🎯 Concepto clave: Estabilidad multiplanar",
+slide6ConceptText: "En el plié con rotación externa:",
+slide6Concept1: "<strong>Cuádriceps:</strong> Controla la flexión de rodilla",
+slide6Concept2: "<strong>Isquiotibiales:</strong> Estabilizan la rodilla y cadera",
+slide6Concept3: "<strong>Aductores:</strong> Mantienen la rotación externa y estabilizan la cadera",
+slide6Concept4: "La coactivación de estos tres grupos crea una <strong>estabilidad en 3 planos</strong>",
+// Slide 7 - Equilibrio
+slide7Title: "6️⃣ Ejercicio: Equilibrio monopodal",
+slide7Desc: 'Te mantienes sobre <strong>una sola pierna</strong> durante 30 segundos con los ojos cerrados. La pierna libre está en passé (rodilla hacia afuera, pie en rodilla de apoyo).',
+slide7Question: "🤔 Pregunta: ¿Qué ocurre en el tobillo de la pierna de apoyo?",
+slide7OptAText: "Los músculos del tobillo están relajados; el equilibrio depende solo de la vista.",
+slide7OptBText: "Múltiples músculos del tobillo coactivan constantemente (ajustes posturales).",
+slide7OptCText: "Solo los gemelos trabajan para mantenerse de pie.",
+slide7ExplainPlaceholder: "Piensa en cómo se mantiene el equilibrio sin referencia visual y qué músculos hacen micro-ajustes...",
+slide7ConceptTitle: "🎯 Concepto clave: Coactivación refleja",
+slide7ConceptText: "En equilibrio monopodal:",
+slide7Concept1: "<strong>Músculos del tobillo:</strong> Tibial anterior, gemelos, peroneos coactivan constantemente",
+slide7Concept2: "Realizan <strong>micro-ajustes</strong> (oscilaciones de 5-10 Hz) para mantener el centro de gravedad",
+slide7Concept3: "Sin visión, la <strong>propiocepción</strong> es crucial",
+slide7Concept4: "La coactivación es <strong>automática y refleja</strong>, no consciente",
+// Slide 8 - Puente
+slide8Title: "7️⃣ Ejercicio: Puente de glúteos",
+slide8Desc: 'Tumbado boca arriba con rodillas flexionadas, elevas la cadera hasta formar una línea recta hombros-rodillas. Mantienes 5 segundos arriba y bajas lentamente.',
+slide8Question: "🤔 Pregunta: ¿Qué ocurre en la zona lumbar durante el puente?",
+slide8OptAText: "La espalda está totalmente relajada; solo trabajan glúteos.",
+slide8OptBText: "Glúteos + abdominales + lumbares coactivan para estabilizar la pelvis.",
+slide8OptCText: "Solo los erectores espinales trabajan para arquear la espalda.",
+slide8ExplainPlaceholder: "Considera la posición de la pelvis y qué músculos evitan la hiperlordosis...",
+slide8ConceptTitle: "🎯 Concepto clave: Control pélvico",
+slide8ConceptText: "En el puente:",
+slide8Concept1: "<strong>Glúteos:</strong> Extienden la cadera (movimiento principal)",
+slide8Concept2: "<strong>Abdominales:</strong> Evitan la anteversión pélvica excesiva (hiperlordosis)",
+slide8Concept3: "<strong>Lumbares:</strong> Estabilizan la columna",
+slide8Concept4: "Esta coactivación <strong>anterior-posterior</strong> mantiene la pelvis en posición neutra",
+slide8Concept5: "Esencial en danza para movimientos de cadera controlados",
+// Slide 9 - Battement
+slide9Title: "8️⃣ Ejercicio: Battement contrôlé",
+slide9Desc: 'De pie, elevas la pierna lateralmente a 45° (à la seconde) y la bajas <strong>muy lentamente</strong> (8 segundos). Control total del movimiento.',
+slide9Question: "🤔 Pregunta: ¿Qué músculos trabajan durante la bajada lenta?",
+slide9OptAText: "Solo los aductores frenan la pierna pasivamente.",
+slide9OptBText: "Abductores (excéntrico) + aductores (coactivación estabilizadora).",
+slide9OptCText: "La gravedad hace todo el trabajo; los músculos están relajados.",
+slide9ExplainPlaceholder: "Reflexiona sobre qué músculos elevan la pierna y cómo controlan la bajada...",
+slide9ConceptTitle: "🎯 Concepto clave: Control excéntrico",
+slide9ConceptText: "En el battement contrôlé:",
+slide9Concept1: "<strong>Abductores:</strong> Trabajan excéntricamente para frenar la bajada",
+slide9Concept2: "<strong>Aductores:</strong> Se coactivan para estabilizar la cadera en el plano frontal",
+slide9Concept3: "Esta coactivación crea un <strong>freno controlado</strong> que evita que la pierna caiga",
+slide9Concept4: "El control excéntrico es <strong>más difícil</strong> que el concéntrico",
+// Slide 10 - Giros
+slide10Title: "9️⃣ Ejercicio: Piruetas (Giros)",
+slide10Desc: 'Ejecutas una <strong>pirueta</strong> en relevé: preparación, impulso, giro sobre una pierna con la otra en passé, y final en posición fija.',
+slide10Question: "🤔 Pregunta: ¿Qué ocurre durante el giro en términos de coactivación?",
+slide10OptAText: "Core completo (abdomen + espalda) + músculos de la pierna de apoyo coactivan.",
+slide10OptBText: "Solo los músculos rotadores trabajan; el core está relajado.",
+slide10OptCText: "La inercia hace todo; los músculos no necesitan trabajar durante el giro.",
+slide10ExplainPlaceholder: "Considera la necesidad de mantener el eje vertical y la estabilidad durante la rotación...",
+slide10ConceptTitle: "🎯 Concepto clave: Estabilidad rotacional",
+slide10ConceptText: "Durante la pirueta:",
+slide10Concept1: "<strong>Core completo:</strong> Coactivación 360° (recto, oblicuos, transverso, lumbares, multífidos)",
+slide10Concept2: "<strong>Función:</strong> Mantener el <strong>eje vertical</strong> durante la rotación",
+slide10Concept3: "<strong>Pierna de apoyo:</strong> Cuádriceps + isquiotibiales + gemelos coactivan para estabilidad",
+slide10Concept4: "Sin esta coactivación, el bailarín <strong>se desestabiliza</strong> y cae",
+slide10Concept5: "La coactivación del core es <strong>isométrica</strong> (sin cambio de longitud)",
+// Slide 11 - Saltos
+slide11Title: "🔟 Ejercicio: Aterrizaje de saltos",
+slide11Desc: 'Realizas un <strong>grand jeté</strong> y aterrizas suavemente en plié profundo. El aterrizaje debe ser silencioso y controlado.',
+slide11Question: "🤔 Pregunta: ¿Qué ocurre en las rodillas durante el aterrizaje?",
+slide11OptAText: "Las piernas absorben el impacto pasivamente; los músculos están relajados.",
+slide11OptBText: "Cuádriceps + isquiotibiales + gemelos coactivan excéntricamente para frenar.",
+slide11OptCText: "Solo los gemelos trabajan para amortiguar.",
+slide11ExplainPlaceholder: "Piensa en cómo se absorbe el impacto y qué músculos protegen las articulaciones...",
+slide11ConceptTitle: "🎯 Concepto clave: Absorción de impacto",
+slide11ConceptText: "En el aterrizaje:",
+slide11Concept1: "<strong>Cuádriceps:</strong> Excéntrico para controlar la flexión de rodilla",
+slide11Concept2: "<strong>Isquiotibiales:</strong> Coactivación para proteger el LCA",
+slide11Concept3: "<strong>Gemelos/sóleo:</strong> Excéntrico para controlar el tobillo",
+slide11Concept4: "<strong>Glúteos:</strong> Excéntrico para controlar la cadera",
+slide11Concept5: "Esta <strong>coactivación global</strong> distribuye las fuerzas (hasta 8x el peso corporal)",
+slide11Concept6: "Sin coactivación: <strong>lesiones</strong> de rodilla, tobillo o cadera",
+// Slide 12 - Resumen
+slide12Title: "📊 Resumen: Coactivación en Danza",
+slide12IntroTitle: "🎯 Conceptos clave aprendidos",
+slide12IntroText: "Has explorado 10 situaciones diferentes donde la coactivación muscular es esencial para la estabilidad y el control en danza.",
+slide12Principles: "Principios fundamentales",
+slide12P1Title: "1. Estabilidad articular", slide12P1Text: "La coactivación protege las articulaciones en posiciones estáticas y dinámicas.",
+slide12P2Title: "2. Control del movimiento", slide12P2Text: "Permite movimientos precisos, especialmente en fases excéntricas (bajadas).",
+slide12P3Title: "3. Prevención de lesiones", slide12P3Text: "Evita hiperextensiones y controla las fuerzas de impacto.",
+slide12P4Title: "4. Equilibrio", slide12P4Text: "Micro-ajustes constantes mediante coactivación refleja.",
+slide12P5Title: "5. Calidad del gesto", slide12P5Text: "Proporciona fluidez, elegancia y control en la ejecución.",
+slide12P6Title: "6. Multiplanaridad", slide12P6Text: "La coactivación trabaja en los 3 planos del movimiento.",
+slide12AppTitle: "🎭 Aplicación en tu entrenamiento",
+slide12App1Title: "Consciencia:", slide12App1Text: "Presta atención a qué músculos trabajan en cada ejercicio",
+slide12App2Title: "Control:", slide12App2Text: "Prioriza la calidad del movimiento sobre la cantidad",
+slide12App3Title: "Progresión:", slide12App3Text: "Comienza con coactivación consciente, luego se vuelve automática",
+slide12App4Title: "Prevención:", slide12App4Text: "La coactivación adecuada previene lesiones a largo plazo",
+slide12App5Title: "Integración:", slide12App5Text: "Combina ejercicios de fuerza, equilibrio y control",
+slide12CompleteTitle: "✅ ¡Completado!",
+slide12CompleteText: "Has revisado los 10 ejercicios de coactivación muscular. Ahora debes:",
+slide12Step1: "Practicar estos ejercicios en el estudio",
+slide12Step2: "Prestar atención a las sensaciones de coactivación",
+slide12Step3: "Aplicar estos conceptos en tu técnica de danza diaria",
+slide12Step4: "Observar cómo mejora tu estabilidad y control",
+// Feedbacks
+alertSelect: "Por favor, selecciona una opción primero.",
+feedbackCorrect1: `<strong>¡Correcto!</strong> En la plancha, abdomen y espalda trabajan juntos (coactivación) para mantener la columna estable. <strong>La coactivación crea una "faja" natural</strong> que protege la columna.`,
+feedbackCorrect2: `<strong>¡Exacto!</strong> Aunque el movimiento principal es de los gemelos, el tibial anterior se coactiva para <strong>estabilizar el tobillo</strong> y evitar la hiperextensión.`,
+feedbackCorrect3: `<strong>¡Muy bien!</strong> En el arabesque, el psoas se coactiva para <strong>evitar la hiperextensión</strong> y mantener un control fino de la altura.`,
+feedbackCorrect4: `<strong>¡Correcto!</strong> Los isquiotibiales se coactivan para <strong>proteger el LCA</strong> evitando el desplazamiento anterior de la tibia.`,
+feedbackCorrect5: `<strong>¡Excelente!</strong> Esta <strong>coactivación triple</strong> permite un plié seguro y controlado en múltiples planos.`,
+feedbackCorrect6: `<strong>¡Perfecto!</strong> Los músculos del tobillo realizan <strong>micro-ajustes constantes</strong> (coactivación refleja) para mantener el centro de gravedad.`,
+feedbackCorrect7: `<strong>¡Correcto!</strong> Los abdominales se coactivan para <strong>evitar la hiperlordosis</strong>. Esta coactivación anterior-posterior mantiene la pelvis neutra.`,
+feedbackCorrect8: `<strong>¡Muy bien!</strong> Los aductores se coactivan para <strong>estabilizar la cadera</strong> en el plano frontal.`,
+feedbackCorrect9: `<strong>¡Exacto!</strong> El core completo coactiva isométricamente para <strong>mantener el eje vertical</strong> durante la rotación.`,
+feedbackCorrect10: `<strong>¡Correcto!</strong> La coactivación global <strong>absorbe el impacto</strong> y protege las articulaciones.`,
+feedbackIncorrect1: `<strong>Casi...</strong> <strong>Ambos deben trabajar juntos</strong> para crear estabilidad. Revisa el diagrama y reflexiona.`,
+feedbackIncorrect2: `<strong>Reflexiona...</strong> El tibial anterior actúa como <strong>contrapeso</strong> para mantener la estabilidad.`,
+feedbackIncorrect3: `<strong>Piensa en esto...</strong> El psoas actúa como <strong>freno</strong> y estabilizador.`,
+feedbackIncorrect4: `<strong>Considera...</strong> Los isquiotibiales actúan como "freno posterior" para <strong>proteger el LCA</strong>.`,
+feedbackIncorrect5: `<strong>Analiza...</strong> Los aductores <strong>estabilizan la cadera</strong>. Sin su coactivación, la rodilla colapsaría.`,
+feedbackIncorrect6: `<strong>Observa...</strong> Sin visión, la <strong>propiocepción</strong> es la única fuente de información para el equilibrio.`,
+feedbackIncorrect7: `<strong>Reflexiona...</strong> Los abdominales actúan como <strong>contrapeso</strong> para mantener la pelvis neutra.`,
+feedbackIncorrect8: `<strong>Piensa...</strong> Los aductores coactivan para <strong>estabilizar lateralmente</strong>.`,
+feedbackIncorrect9: `<strong>Considera...</strong> El core debe coactivar <strong>isométricamente</strong> para crear un "cilindro" estable.`,
+feedbackIncorrect10: `<strong>Reflexiona...</strong> La coactivación excéntrica <strong>absorbe y distribuye</strong> las fuerzas.`,
+},
+ca: {
+pageTitle: "Coactivació Muscular en Dansa - Estabilitat i Control",
+mainTitle: "💪 Coactivació Muscular en Dansa",
+mainSubtitle: "10 Exercicis per a l'Estabilitat i el Control",
+mainTagline: "Aprèn, practica i reflexiona sobre el treball muscular coordinat",
+navIntro: "📚 Introducció", nav1: "1. Planxa", nav2: "2. Relevé", nav3: "3. Arabesque",
+nav4: "4. Gatzoneta", nav5: "5. Plié", nav6: "6. Equilibri", nav7: "7. Pont",
+nav8: "8. Battement", nav9: "9. Girs", nav10: "10. Salts", navSummary: "📊 Resum",
+slide1Title: "Què és la Coactivació Muscular?",
+slide1DefTitle: "Definició",
+slide1DefText: 'La <strong>coactivació</strong> (o co-contractació) és l\'<strong>activació simultània de músculs agonistes i antagonistes</strong> al voltant d\'una articulació. A diferència del moviment normal on un es contreu i l\'altre es relaxa, en la coactivació <strong>ambdós treballen junts</strong> per proporcionar <strong>estabilitat i control</strong>.',
+slide1WhyTitle: "🔑 Per què és important en dansa?",
+slide1Why1Title: "Estabilitat articular:", slide1Why1Text: "Protegeix les articulacions en posicions estàtiques",
+slide1Why2Title: "Control del moviment:", slide1Why2Text: "Permet moviments precisos i controlats",
+slide1Why3Title: "Prevenció de lesions:", slide1Why3Text: "Evita hiperextensions i moviments bruscos",
+slide1Why4Title: "Equilibri:", slide1Why4Text: "Essencial per mantenir posicions difícils",
+slide1Why5Title: "Qualitat del gest:", slide1Why5Text: "Proporciona fluïdesa i elegància al moviment",
+slide1DiagramTitle: "📐 Esquema de Coactivació",
+slide1SvgTitle: "Coactivació vs. Moviment Normal",
+slide1SvgNormal: "MOVIMENT NORMAL",
+svgActive: "Actiu ✓", svgRelaxed: "Relaxat ✗",
+slide1SvgNormalDesc: "Un treballa, l'altre descansa",
+slide1SvgCoactivation: "COACTIVACIÓ",
+slide1SvgCoactivationDesc: "Tots dos treballen!",
+slide1SvgBenefits: "BENEFICIS DE LA COACTIVACIÓ",
+svgBenefit1: "Estabilitat", svgBenefit2: "Precisió", svgBenefit3: "Protecció", svgBenefit4: "Control postural",
+svgBenefit5: "Essencial en dansa clàssica i contemporània",
+slide1HowTitle: "🎭 Com utilitzar aquest recurs",
+slide1HowText: "Cada exercici presenta:",
+slide1How1: "Una situació", slide1How1Text: "de dansa específica",
+slide1How2: "Opcions de resposta", slide1How2Text: "sobre quins músculs treballen",
+slide1How3: "Un camp", slide1How3Text: "perquè expliquis el teu raonament",
+slide1How4: "Retroalimentació", slide1How4Text: "que confirma o corregeix la teva elecció",
+slide1HowGoal: "Objectiu:", slide1HowGoalText: 'No només triar la resposta correcta, sinó <strong>comprendre el perquè</strong> de la coactivació en cada cas.',
+situationLabel: "Situació",
+optA: "Opció A", optB: "Opció B", optC: "Opció C",
+verifyBtn: "Verificar resposta", resetBtn: "Reiniciar",
+explainLabel: "💭 Explica per què has triat aquesta opció:",
+slide2Title: "1️⃣ Exercici: Planxa (Core Stability)",
+slide2Desc: 'Estàs mantenint una <strong>planxa frontal</strong> durant 30 segons. El teu cos forma una línia recta des del cap fins als talons. No hi ha moviment aparent, però sents tensió en múltiples zones.',
+slide2DiagramTitle: "Músculs implicats",
+slide2SvgBody: "Cos en línia", slide2SvgBoth: "Tots dos grups treballen simultàniament",
+slide2SvgCoactivation: "Coactivació anterior-posterior",
+slide2Question: "🤔 Pregunta: Què passa a nivell muscular?",
+slide2OptAText: "Només l'abdomen es contreu. L'esquena està relaxada.",
+slide2OptBText: "Abdomen i esquena es contreuen simultàniament (coactivació).",
+slide2OptCText: "Només l'esquena treballa per mantenir la postura.",
+slide2ExplainPlaceholder: "Descriu quins músculs creus que treballen i per què és necessària la coactivació en aquest exercici...",
+slide2ConceptTitle: "🎯 Concepte clau: Estabilitat del core",
+slide2ConceptText: 'A la planxa, els <strong>músculs abdominals</strong> (recte, oblics, transvers) i els <strong>extensors de l\'esquena</strong> (erectors espinals, multífids) treballen junts per:',
+slide2Concept1: "Mantenir la columna en posició neutra",
+slide2Concept2: "Evitar que el maluc caigui (lordosi excessiva)",
+slide2Concept3: "Prevenir que el maluc pugi massa (cifosi)",
+slide2Concept4: 'Crear una "faixa" natural que protegeix la columna',
+slide3Title: "2️⃣ Exercici: Relevé (Elevació sobre puntes)",
+slide3Desc: 'T\'eleves sobre les <strong>puntes dels peus</strong> (relevé) i mantens la posició durant 10 segons. Sents treball a les panxelles però també en altres zones.',
+slide3DiagramTitle: "📐 Coactivació al turmell",
+svgLeg: "Cama", svgCalves: "BESSONS", svgTibAnt: "TIBIAL ANT.", svgFoot: "Peu",
+slide3SvgBoth: "Tots dos estabilitzen el turmell",
+slide3Question: "🤔 Pregunta: Quins músculs del turmell treballen?",
+slide3OptAText: "Només bessons i soli (flexors plantars).",
+slide3OptBText: "Bessons + tibial anterior (coactivació per estabilitat).",
+slide3OptCText: "Només els músculs laterals (peronis).",
+slide3ExplainPlaceholder: "Descriu la funció del tibial anterior durant el relevé i per què és necessària la coactivació...",
+slide3ConceptTitle: "🎯 Concepte clau: Estabilitat del turmell",
+slide3ConceptText: 'Tot i que el moviment principal és de <strong>flexió plantar</strong> (bessons), el <strong>tibial anterior</strong> (flexor dorsal) s\'activa lleugerament per:',
+slide3Concept1: "Evitar la hiperextensió del turmell",
+slide3Concept2: "Mantenir l'equilibri anteroposterior",
+slide3Concept3: "Controlar l'alçada del relevé",
+slide3Concept4: "Protegir contra torçades",
+slide4Title: "3️⃣ Exercici: Arabesque (Extensió de maluc)",
+slide4Desc: 'Mantens un <strong>arabesque</strong>: una cama estesa cap enrere a 90°, tronc inclinat cap endavant, braços estesos. Posició estàtica durant 15 segons.',
+slide4Question: "🤔 Pregunta: Què passa al maluc de la cama elevada?",
+slide4OptAText: "Només glutis i isquiotibials treballen. El psoas està relaxat.",
+slide4OptBText: "Glutis + psoas treballen junts (coactivació) per estabilitzar.",
+slide4OptCText: "Només el psoas treballa per mantenir la cama amunt.",
+slide4ExplainPlaceholder: "Reflexiona sobre per què el psoas (flexor de maluc) podria activar-se quan la cama està en extensió...",
+slide4ConceptTitle: "🎯 Concepte clau: Coactivació en extensió",
+slide4ConceptText: 'A l\'arabesque, tot i que els <strong>extensors de maluc</strong> (glutis, isquiotibials) són els principals, el <strong>psoas-ilíac</strong> (flexor) es coactiva per:',
+slide4Concept1: "Evitar la hiperextensió del maluc",
+slide4Concept2: "Mantenir l'alçada controlada de la cama",
+slide4Concept3: "Estabilitzar l'articulació coxofemoral",
+slide4Concept4: "Permetre ajustos fins de posició",
+slide5Title: "4️⃣ Exercici: Gatzoneta (Squat)",
+slide5Desc: 'Realitzes una <strong>gatzoneta lenta i controlada</strong>, baixant en 4 segons i pujant en 4 segons. Mantens l\'esquena recta i els genolls alineats.',
+slide5Question: "🤔 Pregunta: Què passa al genoll durant la baixada (fase excèntrica)?",
+slide5OptAText: "Quàdriceps (excèntric) + isquiotibials (coactivació estabilitzadora).",
+slide5OptBText: "Només els isquiotibials treballen per frenar la baixada.",
+slide5OptCText: "Només el quàdriceps s'allarga passivament sense activació.",
+slide5ExplainPlaceholder: "Descriu el paper del quàdriceps en fase excèntrica i per què els isquiotibials també s'activen...",
+slide5ConceptTitle: "🎯 Concepte clau: Protecció del genoll",
+slide5ConceptText: "Durant la baixada de la gatzoneta:",
+slide5Concept1: "<strong>Quàdriceps:</strong> Treballa excèntricament per controlar la flexió de genoll",
+slide5Concept2: "<strong>Isquiotibials:</strong> Es coactiven per estabilitzar el genoll i protegir el LCA",
+slide5Concept3: "Aquesta coactivació <strong>prevé el desplaçament anterior de la tíbia</strong>",
+slide5Concept4: "És fonamental en dansa per a aterratges de salts",
+slide6Title: "5️⃣ Exercici: Plié (Flexió de genoll en dansa)",
+slide6Desc: 'Executes un <strong>grand plié</strong> en primera posició: baixada lenta i controlada, genolls cap enfora, talons a terra (fins on sigui possible), pujada controlada.',
+slide6Question: "🤔 Pregunta: Quins músculs coactiven per protegir el genoll en plié?",
+slide6OptAText: "Només quàdriceps i bessons.",
+slide6OptBText: "Quàdriceps + isquiotibials + adductors (coactivació triple).",
+slide6OptCText: "Només els adductors per mantenir la rotació externa.",
+slide6ExplainPlaceholder: "Considera la rotació externa de maluc i la necessitat d'estabilitat en múltiples plans...",
+slide6ConceptTitle: "🎯 Concepte clau: Estabilitat multiplanar",
+slide6ConceptText: "En el plié amb rotació externa:",
+slide6Concept1: "<strong>Quàdriceps:</strong> Controla la flexió de genoll",
+slide6Concept2: "<strong>Isquiotibials:</strong> Estabilitzen el genoll i maluc",
+slide6Concept3: "<strong>Adductors:</strong> Mantenen la rotació externa i estabilitzen el maluc",
+slide6Concept4: "La coactivació d'aquests tres grups crea una <strong>estabilitat en 3 plans</strong>",
+slide7Title: "6️⃣ Exercici: Equilibri monopodal",
+slide7Desc: 'Et mantens sobre <strong>una sola cama</strong> durant 30 segons amb els ulls tancats. La cama lliure està en passé (genoll cap enfora, peu al genoll de suport).',
+slide7Question: "🤔 Pregunta: Què passa al turmell de la cama de suport?",
+slide7OptAText: "Els músculs del turmell estan relaxats; l'equilibri depèn només de la vista.",
+slide7OptBText: "Múltiples músculs del turmell coactiven constantment (ajustos posturals).",
+slide7OptCText: "Només els bessons treballen per mantenir-se dret.",
+slide7ExplainPlaceholder: "Pensa en com es manté l'equilibri sense referència visual i quins músculs fan micro-ajustos...",
+slide7ConceptTitle: "🎯 Concepte clau: Coactivació reflexa",
+slide7ConceptText: "En equilibri monopodal:",
+slide7Concept1: "<strong>Músculs del turmell:</strong> Tibial anterior, bessons, peronis coactiven constantment",
+slide7Concept2: "Realitzen <strong>micro-ajustos</strong> (oscil·lacions de 5-10 Hz) per mantenir el centre de gravetat",
+slide7Concept3: "Sense visió, la <strong>propiocepció</strong> és crucial",
+slide7Concept4: "La coactivació és <strong>automàtica i reflexa</strong>, no conscient",
+slide8Title: "7️⃣ Exercici: Pont de glutis",
+slide8Desc: 'Estirat boca amunt amb genolls flexionats, eleves el maluc fins a formar una línia recta espatlles-genolls. Mantens 5 segons a dalt i baixes lentament.',
+slide8Question: "🤔 Pregunta: Què passa a la zona lumbar durant el pont?",
+slide8OptAText: "L'esquena està totalment relaxada; només treballen els glutis.",
+slide8OptBText: "Glutis + abdominals + lumbars coactiven per estabilitzar la pelvis.",
+slide8OptCText: "Només els erectors espinals treballen per arquejar l'esquena.",
+slide8ExplainPlaceholder: "Considera la posició de la pelvis i quins músculs eviten la hiperlordosi...",
+slide8ConceptTitle: "🎯 Concepte clau: Control pèlvic",
+slide8ConceptText: "En el pont:",
+slide8Concept1: "<strong>Glutis:</strong> Estenen el maluc (moviment principal)",
+slide8Concept2: "<strong>Abdominals:</strong> Eviten l'anterversió pèlvica excessiva (hiperlordosi)",
+slide8Concept3: "<strong>Lumbars:</strong> Estabilitzen la columna",
+slide8Concept4: "Aquesta coactivació <strong>anterior-posterior</strong> manté la pelvis en posició neutra",
+slide8Concept5: "Essencial en dansa per a moviments de maluc controlats",
+slide9Title: "8️⃣ Exercici: Battement contrôlé",
+slide9Desc: 'Dret, eleves la cama lateralment a 45° (à la seconde) i la baixes <strong>molt lentament</strong> (8 segons). Control total del moviment.',
+slide9Question: "🤔 Pregunta: Quins músculs treballen durant la baixada lenta?",
+slide9OptAText: "Només els adductors frenen la cama passivament.",
+slide9OptBText: "Abductors (excèntric) + adductors (coactivació estabilitzadora).",
+slide9OptCText: "La gravetat fa tota la feina; els músculs estan relaxats.",
+slide9ExplainPlaceholder: "Reflexiona sobre quins músculs eleven la cama i com controlen la baixada...",
+slide9ConceptTitle: "🎯 Concepte clau: Control excèntric",
+slide9ConceptText: "En el battement contrôlé:",
+slide9Concept1: "<strong>Abductors:</strong> Treballen excèntricament per frenar la baixada",
+slide9Concept2: "<strong>Adductors:</strong> Es coactiven per estabilitzar el maluc en el pla frontal",
+slide9Concept3: "Aquesta coactivació crea un <strong>fre controlat</strong> que evita que la cama caigui",
+slide9Concept4: "El control excèntric és <strong>més difícil</strong> que el concèntric",
+slide10Title: "9️⃣ Exercici: Piruetes (Girs)",
+slide10Desc: 'Executes una <strong>pirueta</strong> en relevé: preparació, impuls, gir sobre una cama amb l\'altra en passé, i final en posició fixa.',
+slide10Question: "🤔 Pregunta: Què passa durant el gir en termes de coactivació?",
+slide10OptAText: "Core complet (abdomen + esquena) + músculs de la cama de suport coactiven.",
+slide10OptBText: "Només els músculs rotadors treballen; el core està relaxat.",
+slide10OptCText: "La inèrcia ho fa tot; els músculs no necessiten treballar durant el gir.",
+slide10ExplainPlaceholder: "Considera la necessitat de mantenir l'eix vertical i l'estabilitat durant la rotació...",
+slide10ConceptTitle: "🎯 Concepte clau: Estabilitat rotacional",
+slide10ConceptText: "Durant la pirueta:",
+slide10Concept1: "<strong>Core complet:</strong> Coactivació 360° (recte, oblics, transvers, lumbars, multífids)",
+slide10Concept2: "<strong>Funció:</strong> Mantenir l'<strong>eix vertical</strong> durant la rotació",
+slide10Concept3: "<strong>Cama de suport:</strong> Quàdriceps + isquiotibials + bessons coactiven per estabilitat",
+slide10Concept4: "Sense aquesta coactivació, el ballarí <strong>es desestabilitza</strong> i cau",
+slide10Concept5: "La coactivació del core és <strong>isomètrica</strong> (sense canvi de longitud)",
+slide11Title: "🔟 Exercici: Aterratge de salts",
+slide11Desc: 'Realitzes un <strong>grand jeté</strong> i aterrizas suaument en plié profund. L\'aterratge ha de ser silenciós i controlat.',
+slide11Question: "🤔 Pregunta: Què passa als genolls durant l'aterratge?",
+slide11OptAText: "Les cames absorbeixen l'impacte passivament; els músculs estan relaxats.",
+slide11OptBText: "Quàdriceps + isquiotibials + bessons coactiven excèntricament per frenar.",
+slide11OptCText: "Només els bessons treballen per esmorteir.",
+slide11ExplainPlaceholder: "Pensa en com s'absorbeix l'impacte i quins músculs protegeixen les articulacions...",
+slide11ConceptTitle: "🎯 Concepte clau: Absorció d'impacte",
+slide11ConceptText: "En l'aterratge:",
+slide11Concept1: "<strong>Quàdriceps:</strong> Excèntric per controlar la flexió de genoll",
+slide11Concept2: "<strong>Isquiotibials:</strong> Coactivació per protegir el LCA",
+slide11Concept3: "<strong>Bessons/soli:</strong> Excèntric per controlar el turmell",
+slide11Concept4: "<strong>Glutis:</strong> Excèntric per controlar el maluc",
+slide11Concept5: "Aquesta <strong>coactivació global</strong> distribueix les forces (fins a 8x el pes corporal)",
+slide11Concept6: "Sense coactivació: <strong>lesions</strong> de genoll, turmell o maluc",
+slide12Title: "📊 Resum: Coactivació en Dansa",
+slide12IntroTitle: "🎯 Conceptes clau apresos",
+slide12IntroText: "Has explorat 10 situacions diferents on la coactivació muscular és essencial per a l'estabilitat i el control en dansa.",
+slide12Principles: "Principis fonamentals",
+slide12P1Title: "1. Estabilitat articular", slide12P1Text: "La coactivació protegeix les articulacions en posicions estàtiques i dinàmiques.",
+slide12P2Title: "2. Control del moviment", slide12P2Text: "Permet moviments precisos, especialment en fases excèntriques (baixades).",
+slide12P3Title: "3. Prevenció de lesions", slide12P3Text: "Evita hiperextensions i controla les forces d'impacte.",
+slide12P4Title: "4. Equilibri", slide12P4Text: "Micro-ajustos constants mitjançant coactivació reflexa.",
+slide12P5Title: "5. Qualitat del gest", slide12P5Text: "Proporciona fluïdesa, elegància i control en l'execució.",
+slide12P6Title: "6. Multiplanaritat", slide12P6Text: "La coactivació treballa en els 3 plans del moviment.",
+slide12AppTitle: "🎭 Aplicació al teu entrenament",
+slide12App1Title: "Consciència:", slide12App1Text: "Para atenció a quins músculs treballen en cada exercici",
+slide12App2Title: "Control:", slide12App2Text: "Prioritza la qualitat del moviment sobre la quantitat",
+slide12App3Title: "Progressió:", slide12App3Text: "Comença amb coactivació conscient, després esdevé automàtica",
+slide12App4Title: "Prevenció:", slide12App4Text: "La coactivació adequada prevé lesions a llarg termini",
+slide12App5Title: "Integració:", slide12App5Text: "Combina exercicis de força, equilibri i control",
+slide12CompleteTitle: "✅ Completat!",
+slide12CompleteText: "Has revisat els 10 exercicis de coactivació muscular. Ara has de:",
+slide12Step1: "Practicar aquests exercicis a l'estudi",
+slide12Step2: "Parar atenció a les sensacions de coactivació",
+slide12Step3: "Aplicar aquests conceptes en la teva tècnica de dansa diària",
+slide12Step4: "Observar com millora la teva estabilitat i control",
+alertSelect: "Si us plau, selecciona una opció primer.",
+feedbackCorrect1: `<strong>Correcte!</strong> A la planxa, abdomen i esquena treballen junts (coactivació) per mantenir la columna estable. <strong>La coactivació crea una "faixa" natural</strong> que protegeix la columna.`,
+feedbackCorrect2: `<strong>Exacte!</strong> Tot i que el moviment principal és dels bessons, el tibial anterior es coactiva per <strong>estabilitzar el turmell</strong> i evitar la hiperextensió.`,
+feedbackCorrect3: `<strong>Molt bé!</strong> A l'arabesque, el psoas es coactiva per <strong>evitar la hiperextensió</strong> i mantenir un control fi de l'alçada.`,
+feedbackCorrect4: `<strong>Correcte!</strong> Els isquiotibials es coactiven per <strong>protegir el LCA</strong> evitant el desplaçament anterior de la tíbia.`,
+feedbackCorrect5: `<strong>Excel·lent!</strong> Aquesta <strong>coactivació triple</strong> permet un plié segur i controlat en múltiples plans.`,
+feedbackCorrect6: `<strong>Perfecte!</strong> Els músculs del turmell realitzen <strong>micro-ajustos constants</strong> (coactivació reflexa) per mantenir el centre de gravetat.`,
+feedbackCorrect7: `<strong>Correcte!</strong> Els abdominals es coactiven per <strong>evitar la hiperlordosi</strong>. Aquesta coactivació anterior-posterior manté la pelvis neutra.`,
+feedbackCorrect8: `<strong>Molt bé!</strong> Els adductors es coactiven per <strong>estabilitzar el maluc</strong> en el pla frontal.`,
+feedbackCorrect9: `<strong>Exacte!</strong> El core complet coactiva isomètricament per <strong>mantenir l'eix vertical</strong> durant la rotació.`,
+feedbackCorrect10: `<strong>Correcte!</strong> La coactivació global <strong>absorbeix l'impacte</strong> i protegeix les articulacions.`,
+feedbackIncorrect1: `<strong>Gairebé...</strong> <strong>Ambdós han de treballar junts</strong> per crear estabilitat. Revisa el diagrama i reflexiona.`,
+feedbackIncorrect2: `<strong>Reflexiona...</strong> El tibial anterior actua com a <strong>contrapès</strong> per mantenir l'estabilitat.`,
+feedbackIncorrect3: `<strong>Pensa en això...</strong> El psoas actua com a <strong>fre</strong> i estabilitzador.`,
+feedbackIncorrect4: `<strong>Considera...</strong> Els isquiotibials actuen com a "fre posterior" per <strong>protegir el LCA</strong>.`,
+feedbackIncorrect5: `<strong>Analitza...</strong> Els adductors <strong>estabilitzen el maluc</strong>. Sense la seva coactivació, el genoll col·lapsaria.`,
+feedbackIncorrect6: `<strong>Observa...</strong> Sense visió, la <strong>propiocepció</strong> és l'única font d'informació per a l'equilibri.`,
+feedbackIncorrect7: `<strong>Reflexiona...</strong> Els abdominals actuen com a <strong>contrapès</strong> per mantenir la pelvis neutra.`,
+feedbackIncorrect8: `<strong>Pensa...</strong> Els adductors coactiven per <strong>estabilitzar lateralment</strong>.`,
+feedbackIncorrect9: `<strong>Considera...</strong> El core ha de coactivar <strong>isomètricament</strong> per crear un "cilindre" estable.`,
+feedbackIncorrect10: `<strong>Reflexiona...</strong> La coactivació excèntrica <strong>absorbeix i distribueix</strong> les forces.`,
+},
+en: {
+pageTitle: "Muscle Coactivation in Dance - Stability and Control",
+mainTitle: "💪 Muscle Coactivation in Dance",
+mainSubtitle: "10 Exercises for Stability and Control",
+mainTagline: "Learn, practice and reflect on coordinated muscle work",
+navIntro: "📚 Introduction", nav1: "1. Plank", nav2: "2. Relevé", nav3: "3. Arabesque",
+nav4: "4. Squat", nav5: "5. Plié", nav6: "6. Balance", nav7: "7. Bridge",
+nav8: "8. Battement", nav9: "9. Turns", nav10: "10. Jumps", navSummary: "📊 Summary",
+slide1Title: "What is Muscle Coactivation?",
+slide1DefTitle: "Definition",
+slide1DefText: '<strong>Coactivation</strong> (or co-contraction) is the <strong>simultaneous activation of agonist and antagonist muscles</strong> around a joint. Unlike normal movement where one contracts and the other relaxes, in coactivation <strong>both work together</strong> to provide <strong>stability and control</strong>.',
+slide1WhyTitle: "🔑 Why is it important in dance?",
+slide1Why1Title: "Joint stability:", slide1Why1Text: "Protects joints in static positions",
+slide1Why2Title: "Movement control:", slide1Why2Text: "Allows precise and controlled movements",
+slide1Why3Title: "Injury prevention:", slide1Why3Text: "Prevents hyperextensions and jerky movements",
+slide1Why4Title: "Balance:", slide1Why4Text: "Essential for maintaining difficult positions",
+slide1Why5Title: "Movement quality:", slide1Why5Text: "Provides fluidity and elegance to movement",
+slide1DiagramTitle: "📐 Coactivation Diagram",
+slide1SvgTitle: "Coactivation vs. Normal Movement",
+slide1SvgNormal: "NORMAL MOVEMENT",
+svgActive: "Active ✓", svgRelaxed: "Relaxed ✗",
+slide1SvgNormalDesc: "One works, the other rests",
+slide1SvgCoactivation: "COACTIVATION",
+slide1SvgCoactivationDesc: "Both work!",
+slide1SvgBenefits: "BENEFITS OF COACTIVATION",
+svgBenefit1: "Stability", svgBenefit2: "Precision", svgBenefit3: "Protection", svgBenefit4: "Postural control",
+svgBenefit5: "Essential in classical and contemporary dance",
+slide1HowTitle: "🎭 How to use this resource",
+slide1HowText: "Each exercise presents:",
+slide1How1: "A situation", slide1How1Text: "specific to dance",
+slide1How2: "Answer options", slide1How2Text: "about which muscles work",
+slide1How3: "A field", slide1How3Text: "for you to explain your reasoning",
+slide1How4: "Feedback", slide1How4Text: "that confirms or corrects your choice",
+slide1HowGoal: "Objective:", slide1HowGoalText: 'Not only to choose the correct answer, but to <strong>understand the why</strong> of coactivation in each case.',
+situationLabel: "Situation",
+optA: "Option A", optB: "Option B", optC: "Option C",
+verifyBtn: "Verify answer", resetBtn: "Reset",
+explainLabel: "💭 Explain why you chose this option:",
+slide2Title: "1️⃣ Exercise: Plank (Core Stability)",
+slide2Desc: 'You are holding a <strong>front plank</strong> for 30 seconds. Your body forms a straight line from head to heels. There is no apparent movement, but you feel tension in multiple areas.',
+slide2DiagramTitle: "Muscles involved",
+slide2SvgBody: "Body in line", slide2SvgBoth: "Both groups work simultaneously",
+slide2SvgCoactivation: "Anterior-posterior coactivation",
+slide2Question: "🤔 Question: What happens at the muscular level?",
+slide2OptAText: "Only the abdomen contracts. The back is relaxed.",
+slide2OptBText: "Abdomen and back contract simultaneously (coactivation).",
+slide2OptCText: "Only the back works to maintain posture.",
+slide2ExplainPlaceholder: "Describe which muscles you think are working and why coactivation is necessary in this exercise...",
+slide2ConceptTitle: "🎯 Key concept: Core stability",
+slide2ConceptText: 'In the plank, the <strong>abdominal muscles</strong> (rectus, obliques, transverse) and the <strong>back extensors</strong> (erector spinae, multifidus) work together to:',
+slide2Concept1: "Keep the spine in neutral position",
+slide2Concept2: "Prevent the hips from dropping (excessive lordosis)",
+slide2Concept3: "Prevent the hips from rising too much (kyphosis)",
+slide2Concept4: 'Create a natural "girdle" that protects the spine',
+slide3Title: "2️⃣ Exercise: Relevé (Rise on toes)",
+slide3Desc: 'You rise on the <strong>balls of your feet</strong> (relevé) and hold the position for 10 seconds. You feel work in the calves but also in other areas.',
+slide3DiagramTitle: "📐 Coactivation at the ankle",
+svgLeg: "Leg", svgCalves: "CALVES", svgTibAnt: "ANT. TIBIALIS", svgFoot: "Foot",
+slide3SvgBoth: "Both stabilize the ankle",
+slide3Question: "🤔 Question: Which ankle muscles work?",
+slide3OptAText: "Only calves and soleus (plantar flexors).",
+slide3OptBText: "Calves + anterior tibialis (coactivation for stability).",
+slide3OptCText: "Only the lateral muscles (peroneals).",
+slide3ExplainPlaceholder: "Describe the function of the anterior tibialis during relevé and why coactivation is necessary...",
+slide3ConceptTitle: "🎯 Key concept: Ankle stability",
+slide3ConceptText: 'Although the main movement is <strong>plantar flexion</strong> (calves), the <strong>anterior tibialis</strong> (dorsiflexor) activates slightly to:',
+slide3Concept1: "Prevent ankle hyperextension",
+slide3Concept2: "Maintain anteroposterior balance",
+slide3Concept3: "Control the height of the relevé",
+slide3Concept4: "Protect against sprains",
+slide4Title: "3️⃣ Exercise: Arabesque (Hip extension)",
+slide4Desc: 'You hold an <strong>arabesque</strong>: one leg extended backwards at 90°, torso tilted forward, arms extended. Static position for 15 seconds.',
+slide4Question: "🤔 Question: What happens at the hip of the raised leg?",
+slide4OptAText: "Only glutes and hamstrings work. The psoas is relaxed.",
+slide4OptBText: "Glutes + psoas work together (coactivation) to stabilize.",
+slide4OptCText: "Only the psoas works to keep the leg up.",
+slide4ExplainPlaceholder: "Reflect on why the psoas (hip flexor) might activate when the leg is in extension...",
+slide4ConceptTitle: "🎯 Key concept: Coactivation in extension",
+slide4ConceptText: 'In the arabesque, although the <strong>hip extensors</strong> (glutes, hamstrings) are the main ones, the <strong>iliopsoas</strong> (flexor) coactivates to:',
+slide4Concept1: "Prevent hip hyperextension",
+slide4Concept2: "Maintain controlled leg height",
+slide4Concept3: "Stabilize the hip joint",
+slide4Concept4: "Allow fine position adjustments",
+slide5Title: "4️⃣ Exercise: Squat",
+slide5Desc: 'You perform a <strong>slow and controlled squat</strong>, lowering in 4 seconds and rising in 4 seconds. You keep your back straight and knees aligned.',
+slide5Question: "🤔 Question: What happens at the knee during the lowering (eccentric phase)?",
+slide5OptAText: "Quadriceps (eccentric) + hamstrings (stabilizing coactivation).",
+slide5OptBText: "Only the hamstrings work to brake the lowering.",
+slide5OptCText: "Only the quadriceps lengthen passively without activation.",
+slide5ExplainPlaceholder: "Describe the role of the quadriceps in the eccentric phase and why the hamstrings also activate...",
+slide5ConceptTitle: "🎯 Key concept: Knee protection",
+slide5ConceptText: "During the squat lowering:",
+slide5Concept1: "<strong>Quadriceps:</strong> Works eccentrically to control knee flexion",
+slide5Concept2: "<strong>Hamstrings:</strong> Coactivate to stabilize the knee and protect the ACL",
+slide5Concept3: "This coactivation <strong>prevents anterior displacement of the tibia</strong>",
+slide5Concept4: "It is fundamental in dance for jump landings",
+slide6Title: "5️⃣ Exercise: Plié (Knee flexion in dance)",
+slide6Desc: 'You execute a <strong>grand plié</strong> in first position: slow and controlled lowering, knees outward, heels on the floor (as far as possible), controlled rise.',
+slide6Question: "🤔 Question: Which muscles coactivate to protect the knee in plié?",
+slide6OptAText: "Only quadriceps and calves.",
+slide6OptBText: "Quadriceps + hamstrings + adductors (triple coactivation).",
+slide6OptCText: "Only the adductors to maintain external rotation.",
+slide6ExplainPlaceholder: "Consider the external rotation of the hip and the need for stability in multiple planes...",
+slide6ConceptTitle: "🎯 Key concept: Multiplanar stability",
+slide6ConceptText: "In the plié with external rotation:",
+slide6Concept1: "<strong>Quadriceps:</strong> Controls knee flexion",
+slide6Concept2: "<strong>Hamstrings:</strong> Stabilize the knee and hip",
+slide6Concept3: "<strong>Adductors:</strong> Maintain external rotation and stabilize the hip",
+slide6Concept4: "The coactivation of these three groups creates <strong>stability in 3 planes</strong>",
+slide7Title: "6️⃣ Exercise: Single-leg balance",
+slide7Desc: 'You stand on <strong>one leg</strong> for 30 seconds with eyes closed. The free leg is in passé (knee outward, foot on supporting knee).',
+slide7Question: "🤔 Question: What happens at the ankle of the supporting leg?",
+slide7OptAText: "The ankle muscles are relaxed; balance depends only on sight.",
+slide7OptBText: "Multiple ankle muscles coactivate constantly (postural adjustments).",
+slide7OptCText: "Only the calves work to stand.",
+slide7ExplainPlaceholder: "Think about how balance is maintained without visual reference and which muscles make micro-adjustments...",
+slide7ConceptTitle: "🎯 Key concept: Reflex coactivation",
+slide7ConceptText: "In single-leg balance:",
+slide7Concept1: "<strong>Ankle muscles:</strong> Anterior tibialis, calves, peroneals coactivate constantly",
+slide7Concept2: "They make <strong>micro-adjustments</strong> (5-10 Hz oscillations) to maintain the center of gravity",
+slide7Concept3: "Without vision, <strong>proprioception</strong> is crucial",
+slide7Concept4: "Coactivation is <strong>automatic and reflexive</strong>, not conscious",
+slide8Title: "7️⃣ Exercise: Glute bridge",
+slide8Desc: 'Lying on your back with knees bent, you raise your hips to form a straight line shoulders-knees. You hold 5 seconds up and lower slowly.',
+slide8Question: "🤔 Question: What happens in the lumbar area during the bridge?",
+slide8OptAText: "The back is completely relaxed; only glutes work.",
+slide8OptBText: "Glutes + abdominals + lumbar coactivate to stabilize the pelvis.",
+slide8OptCText: "Only the erector spinae work to arch the back.",
+slide8ExplainPlaceholder: "Consider the position of the pelvis and which muscles prevent hyperlordosis...",
+slide8ConceptTitle: "🎯 Key concept: Pelvic control",
+slide8ConceptText: "In the bridge:",
+slide8Concept1: "<strong>Glutes:</strong> Extend the hip (main movement)",
+slide8Concept2: "<strong>Abdominals:</strong> Prevent excessive anterior pelvic tilt (hyperlordosis)",
+slide8Concept3: "<strong>Lumbar:</strong> Stabilize the spine",
+slide8Concept4: "This <strong>anterior-posterior</strong> coactivation keeps the pelvis in neutral position",
+slide8Concept5: "Essential in dance for controlled hip movements",
+slide9Title: "8️⃣ Exercise: Battement contrôlé",
+slide9Desc: 'Standing, you raise your leg laterally to 45° (à la seconde) and lower it <strong>very slowly</strong> (8 seconds). Total control of the movement.',
+slide9Question: "🤔 Question: Which muscles work during the slow lowering?",
+slide9OptAText: "Only the adductors brake the leg passively.",
+slide9OptBText: "Abductors (eccentric) + adductors (stabilizing coactivation).",
+slide9OptCText: "Gravity does all the work; the muscles are relaxed.",
+slide9ExplainPlaceholder: "Reflect on which muscles raise the leg and how they control the lowering...",
+slide9ConceptTitle: "🎯 Key concept: Eccentric control",
+slide9ConceptText: "In the battement contrôlé:",
+slide9Concept1: "<strong>Abductors:</strong> Work eccentrically to brake the lowering",
+slide9Concept2: "<strong>Adductors:</strong> Coactivate to stabilize the hip in the frontal plane",
+slide9Concept3: "This coactivation creates a <strong>controlled brake</strong> that prevents the leg from falling",
+slide9Concept4: "Eccentric control is <strong>more difficult</strong> than concentric",
+slide10Title: "9️⃣ Exercise: Pirouettes (Turns)",
+slide10Desc: 'You execute a <strong>pirouette</strong> in relevé: preparation, impulse, turn on one leg with the other in passé, and finish in fixed position.',
+slide10Question: "🤔 Question: What happens during the turn in terms of coactivation?",
+slide10OptAText: "Complete core (abdomen + back) + supporting leg muscles coactivate.",
+slide10OptBText: "Only the rotator muscles work; the core is relaxed.",
+slide10OptCText: "Inertia does everything; muscles don't need to work during the turn.",
+slide10ExplainPlaceholder: "Consider the need to maintain the vertical axis and stability during rotation...",
+slide10ConceptTitle: "🎯 Key concept: Rotational stability",
+slide10ConceptText: "During the pirouette:",
+slide10Concept1: "<strong>Complete core:</strong> 360° coactivation (rectus, obliques, transverse, lumbar, multifidus)",
+slide10Concept2: "<strong>Function:</strong> Maintain the <strong>vertical axis</strong> during rotation",
+slide10Concept3: "<strong>Supporting leg:</strong> Quadriceps + hamstrings + calves coactivate for stability",
+slide10Concept4: "Without this coactivation, the dancer <strong>becomes unstable</strong> and falls",
+slide10Concept5: "Core coactivation is <strong>isometric</strong> (no length change)",
+slide11Title: "🔟 Exercise: Jump landing",
+slide11Desc: 'You perform a <strong>grand jeté</strong> and land softly in deep plié. The landing should be silent and controlled.',
+slide11Question: "🤔 Question: What happens at the knees during landing?",
+slide11OptAText: "The legs absorb the impact passively; the muscles are relaxed.",
+slide11OptBText: "Quadriceps + hamstrings + calves coactivate eccentrically to brake.",
+slide11OptCText: "Only the calves work to cushion.",
+slide11ExplainPlaceholder: "Think about how impact is absorbed and which muscles protect the joints...",
+slide11ConceptTitle: "🎯 Key concept: Impact absorption",
+slide11ConceptText: "In landing:",
+slide11Concept1: "<strong>Quadriceps:</strong> Eccentric to control knee flexion",
+slide11Concept2: "<strong>Hamstrings:</strong> Coactivation to protect the ACL",
+slide11Concept3: "<strong>Calves/soleus:</strong> Eccentric to control the ankle",
+slide11Concept4: "<strong>Glutes:</strong> Eccentric to control the hip",
+slide11Concept5: "This <strong>global coactivation</strong> distributes forces (up to 8x body weight)",
+slide11Concept6: "Without coactivation: <strong>injuries</strong> to knee, ankle or hip",
+slide12Title: "📊 Summary: Coactivation in Dance",
+slide12IntroTitle: "🎯 Key concepts learned",
+slide12IntroText: "You have explored 10 different situations where muscle coactivation is essential for stability and control in dance.",
+slide12Principles: "Fundamental principles",
+slide12P1Title: "1. Joint stability", slide12P1Text: "Coactivation protects joints in static and dynamic positions.",
+slide12P2Title: "2. Movement control", slide12P2Text: "Allows precise movements, especially in eccentric phases (lowerings).",
+slide12P3Title: "3. Injury prevention", slide12P3Text: "Prevents hyperextensions and controls impact forces.",
+slide12P4Title: "4. Balance", slide12P4Text: "Constant micro-adjustments through reflex coactivation.",
+slide12P5Title: "5. Movement quality", slide12P5Text: "Provides fluidity, elegance and control in execution.",
+slide12P6Title: "6. Multiplanarity", slide12P6Text: "Coactivation works in the 3 planes of movement.",
+slide12AppTitle: "🎭 Application in your training",
+slide12App1Title: "Awareness:", slide12App1Text: "Pay attention to which muscles work in each exercise",
+slide12App2Title: "Control:", slide12App2Text: "Prioritize movement quality over quantity",
+slide12App3Title: "Progression:", slide12App3Text: "Start with conscious coactivation, then it becomes automatic",
+slide12App4Title: "Prevention:", slide12App4Text: "Proper coactivation prevents long-term injuries",
+slide12App5Title: "Integration:", slide12App5Text: "Combine strength, balance and control exercises",
+slide12CompleteTitle: "✅ Completed!",
+slide12CompleteText: "You have reviewed the 10 muscle coactivation exercises. Now you must:",
+slide12Step1: "Practice these exercises in the studio",
+slide12Step2: "Pay attention to coactivation sensations",
+slide12Step3: "Apply these concepts in your daily dance technique",
+slide12Step4: "Observe how your stability and control improve",
+alertSelect: "Please select an option first.",
+feedbackCorrect1: `<strong>Correct!</strong> In the plank, abdomen and back work together (coactivation) to keep the spine stable. <strong>Coactivation creates a natural "girdle"</strong> that protects the spine.`,
+feedbackCorrect2: `<strong>Exactly!</strong> Although the main movement is from the calves, the anterior tibialis coactivates to <strong>stabilize the ankle</strong> and prevent hyperextension.`,
+feedbackCorrect3: `<strong>Very good!</strong> In the arabesque, the psoas coactivates to <strong>prevent hyperextension</strong> and maintain fine height control.`,
+feedbackCorrect4: `<strong>Correct!</strong> Hamstrings coactivate to <strong>protect the ACL</strong> by preventing anterior displacement of the tibia.`,
+feedbackCorrect5: `<strong>Excellent!</strong> This <strong>triple coactivation</strong> allows a safe and controlled plié in multiple planes.`,
+feedbackCorrect6: `<strong>Perfect!</strong> Ankle muscles make <strong>constant micro-adjustments</strong> (reflex coactivation) to maintain the center of gravity.`,
+feedbackCorrect7: `<strong>Correct!</strong> Abdominals coactivate to <strong>prevent hyperlordosis</strong>. This anterior-posterior coactivation keeps the pelvis neutral.`,
+feedbackCorrect8: `<strong>Very good!</strong> Adductors coactivate to <strong>stabilize the hip</strong> in the frontal plane.`,
+feedbackCorrect9: `<strong>Exactly!</strong> The complete core coactivates isometrically to <strong>maintain the vertical axis</strong> during rotation.`,
+feedbackCorrect10: `<strong>Correct!</strong> Global coactivation <strong>absorbs the impact</strong> and protects the joints.`,
+feedbackIncorrect1: `<strong>Almost...</strong> <strong>Both must work together</strong> to create stability. Review the diagram and reflect.`,
+feedbackIncorrect2: `<strong>Reflect...</strong> The anterior tibialis acts as a <strong>counterweight</strong> to maintain stability.`,
+feedbackIncorrect3: `<strong>Think about this...</strong> The psoas acts as a <strong>brake</strong> and stabilizer.`,
+feedbackIncorrect4: `<strong>Consider...</strong> Hamstrings act as a "posterior brake" to <strong>protect the ACL</strong>.`,
+feedbackIncorrect5: `<strong>Analyze...</strong> Adductors <strong>stabilize the hip</strong>. Without their coactivation, the knee would collapse.`,
+feedbackIncorrect6: `<strong>Observe...</strong> Without vision, <strong>proprioception</strong> is the only source of information for balance.`,
+feedbackIncorrect7: `<strong>Reflect...</strong> Abdominals act as a <strong>counterweight</strong> to keep the pelvis neutral.`,
+feedbackIncorrect8: `<strong>Think...</strong> Adductors coactivate to <strong>stabilize laterally</strong>.`,
+feedbackIncorrect9: `<strong>Consider...</strong> The core must coactivate <strong>isometrically</strong> to create a stable "cylinder".`,
+feedbackIncorrect10: `<strong>Reflect...</strong> Eccentric coactivation <strong>absorbs and distributes</strong> forces.`,
+}
+};
+
+let currentLang = 'es';
+
+function changeLanguage(lang) {
+currentLang = lang;
+document.documentElement.lang = lang;
+// Actualizar botons d'idioma
+document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+document.querySelector(`.lang-btn[onclick="changeLanguage('${lang}')"]`).classList.add('active');
+// Traduir tots els elements amb data-translate
+document.querySelectorAll('[data-translate]').forEach(el => {
+const key = el.getAttribute('data-translate');
+if (translations[lang][key]) {
+el.innerHTML = translations[lang][key];
+}
+});
+// Traduir placeholders
+document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
+const key = el.getAttribute('data-translate-placeholder');
+if (translations[lang][key]) {
+el.placeholder = translations[lang][key];
+}
+});
+}
+
+// ============ FUNCIONS D'EXERCICIS ============
+const exerciseState = {};
+
+function showSlide(i, btn) {
+document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+document.querySelectorAll('.slide')[i].classList.add('active');
+btn.classList.add('active');
+window.scrollTo(0, 0);
+}
+
+function selectOption(exerciseNum, optionIndex, isCorrect) {
+const options = document.querySelectorAll(`#options${exerciseNum} .option-card`);
+options.forEach(opt => opt.classList.remove('selected', 'correct', 'incorrect'));
+options[optionIndex].classList.add('selected');
+exerciseState[exerciseNum] = { selected: optionIndex, isCorrect: isCorrect, checked: false };
+}
+
+function checkAnswer(exerciseNum) {
+if (!exerciseState[exerciseNum] || exerciseState[exerciseNum].selected === undefined) {
+alert(translations[currentLang].alertSelect);
+return;
+}
+const state = exerciseState[exerciseNum];
+const feedback = document.getElementById(`feedback${exerciseNum}`);
+const options = document.querySelectorAll(`#options${exerciseNum} .option-card`);
+options.forEach((opt, idx) => {
+if (idx === state.selected) {
+opt.classList.add(state.isCorrect ? 'correct' : 'incorrect');
+}
+});
+feedback.classList.remove('show');
+setTimeout(() => {
+feedback.classList.add('show');
+if (state.isCorrect) {
+feedback.className = 'feedback show success';
+feedback.innerHTML = translations[currentLang][`feedbackCorrect${exerciseNum}`];
+} else {
+feedback.className = 'feedback show error';
+feedback.innerHTML = translations[currentLang][`feedbackIncorrect${exerciseNum}`];
+}
+}, 100);
+state.checked = true;
+}
+
+function resetExercise(exerciseNum) {
+const options = document.querySelectorAll(`#options${exerciseNum} .option-card`);
+options.forEach(opt => opt.classList.remove('selected', 'correct', 'incorrect'));
+const textarea = document.getElementById(`explanation${exerciseNum}`);
+if (textarea) textarea.value = '';
+const feedback = document.getElementById(`feedback${exerciseNum}`);
+feedback.classList.remove('show');
+delete exerciseState[exerciseNum];
+}
+</script>
+</body>
+</html>

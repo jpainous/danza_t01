@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de Recursos - Sistema Musculoesquelético I</title>
+<style>
+:root { --primary: #667eea; --secondary: #764ba2; --bg: #f4f6f9; --text: #2d3748; --card-bg: #ffffff; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.6; color: var(--text); background: var(--bg); margin: 0; padding: 0; }
+.container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+header {
+background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+color: white;
+padding: 40px 20px;
+text-align: center;
+border-radius: 0 0 20px 20px;
+margin-bottom: 30px;
+box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+position: relative;
+}
+header h1 { margin: 0; font-size: 2.2em; }
+header p { margin: 10px 0 0; opacity: 0.9; font-size: 1.1em; }
+
+/* Selector d'idioma */
+.lang-selector {
+position: absolute;
+top: 15px;
+right: 20px;
+display: flex;
+gap: 6px;
+background: rgba(255,255,255,0.15);
+padding: 6px;
+border-radius: 25px;
+backdrop-filter: blur(10px);
+}
+.lang-btn {
+background: transparent;
+border: 2px solid transparent;
+color: white;
+padding: 6px 14px;
+border-radius: 20px;
+cursor: pointer;
+font-size: 0.85em;
+font-weight: 600;
+transition: all 0.3s;
+}
+.lang-btn:hover { background: rgba(255,255,255,0.2); }
+.lang-btn.active {
+background: white;
+color: #1e3c72;
+border-color: white;
+}
+
+.section { background: var(--card-bg); border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-left: 5px solid var(--primary); }
+.section h2 { color: var(--primary); margin-top: 0; font-size: 1.4em; border-bottom: 2px solid #edf2f7; padding-bottom: 10px; }
+.section p { color: #4a5568; margin-bottom: 15px; }
+table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #edf2f7; }
+th { background-color: #edf2f7; color: #4a5568; font-weight: 600; font-size: 0.95em; }
+tr:hover { background-color: #f7fafc; }
+a.resource-link { color: var(--primary); text-decoration: none; font-weight: 600; word-break: break-all; transition: color 0.2s; }
+a.resource-link:hover { color: var(--secondary); text-decoration: underline; }
+.tag { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.75em; font-weight: bold; color: white; margin-right: 5px; }
+.tag.key { background-color: #38a169; }
+.tag.case { background-color: #dd6b20; }
+.tag.anat { background-color: #3182ce; }
+footer { text-align: center; padding: 30px; color: #718096; font-size: 0.9em; }
+
+@media (max-width: 768px) {
+header h1 { font-size: 1.6em; }
+.lang-selector { position: static; margin: 0 auto 15px auto; justify-content: center; }
+th, td { padding: 8px 10px; font-size: 0.9em; }
+}
+</style>
+</head>
+<body>
+<header>
+<div class="lang-selector">
+<button class="lang-btn active" onclick="setLanguage('es', this)">🇪🇸 ES</button>
+<button class="lang-btn" onclick="setLanguage('ca', this)">🏴 CA</button>
+<button class="lang-btn" onclick="setLanguage('en', this)">🇬🇧 EN</button>
+</div>
+<h1 data-i18n="main_title">🩰 Guía de Recursos Interactivos</h1>
+<p data-i18n="main_subtitle">Sistema Musculoesquelético I · Fisiología · Curso 2026-2027 · Dra. Cèlia Painous</p>
+</header>
+<div class="container">
+
+<div class="section">
+<h2 data-i18n="sec1_title">📐 Diapositivas 1-2: Niveles de Organización</h2>
+<p data-i18n="sec1_desc">Introducción a la jerarquía estructural del cuerpo humano, desde la célula hasta el organismo.</p>
+<table>
+<tr><th data-i18n="th_resource">Recurso</th><th data-i18n="th_justification">Justificación</th></tr>
+<tr>
+<td><span class="tag anat" data-i18n="tag_anat">Anatomía</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_00_A.html" target="_blank">esqueleto_00_A.html</a></td>
+<td data-i18n="sec1_r1_just">Visión general del sistema y jerarquía estructural.</td>
+</tr>
+<tr>
+<td><span class="tag anat" data-i18n="tag_anat">Anatomía</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_00_B.html" target="_blank">esqueleto_00_B.html</a></td>
+<td data-i18n="sec1_r2_just">Integración de las estructuras en el cuerpo.</td>
+</tr>
+</table>
+</div>
+
+<div class="section">
+<h2 data-i18n="sec2_title">💧 Diapositivas 3-7: Homeostasis y Regulación</h2>
+<p data-i18n="sec2_desc">Líquidos corporales, rangos homeostáticos, sistemas nervioso/endocrino y retroalimentación.</p>
+<table>
+<tr><th data-i18n="th_resource">Recurso</th><th data-i18n="th_justification">Justificación</th></tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/homeostasis_movimiento.html" target="_blank">homeostasis_movimiento.html</a></td>
+<td data-i18n="sec2_r1_just">Explica LIC/LEC, rangos normales y mecanismos de regulación.</td>
+</tr>
+<tr>
+<td><span class="tag case" data-i18n="tag_case">📝 Casos</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_A.html" target="_blank">casos_practicos02_A.html</a></td>
+<td data-i18n="sec2_r2_just">Bloque 1: 10 casos prácticos aplicados a situaciones de danza.</td>
+</tr>
+</table>
+</div>
+
+<div class="section">
+<h2 data-i18n="sec3_title">🔬 Diapositivas 8-11 y 17-22: Estructura Muscular y Sarcómero</h2>
+<p data-i18n="sec3_desc">Tipos de músculo, fibra muscular, miofibrillas, sarcómero y dinámica de bandas.</p>
+<table>
+<tr><th data-i18n="th_resource">Recurso</th><th data-i18n="th_justification">Justificación</th></tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/actividades_sarcomero.html" target="_blank">actividades_sarcomero.html</a></td>
+<td data-i18n="sec3_r1_just">Interactivo para identificar bandas A, I, líneas Z y zona H.</td>
+</tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></td>
+<td data-i18n="sec3_r2_just">Explica la jerarquía miofilamentos → sarcómero → miofibrilla.</td>
+</tr>
+<tr>
+<td><span class="tag case" data-i18n="tag_case">📝 Casos</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_A.html" target="_blank">casos_practicos02_A.html</a></td>
+<td data-i18n="sec3_r3_just">Bloque 2: Casos sobre la dinámica de las bandas durante el acortamiento.</td>
+</tr>
+</table>
+</div>
+
+<div class="section">
+<h2 data-i18n="sec4_title">⚡ Diapositivas 12 y 23-25: La Unidad Motora</h2>
+<p data-i18n="sec4_desc">Motoneurona, reclutamiento y principio de Henneman.</p>
+<table>
+<tr><th data-i18n="th_resource">Recurso</th><th data-i18n="th_justification">Justificación</th></tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/unidad_motora.html" target="_blank">unidad_motora.html</a></td>
+<td data-i18n="sec4_r1_just">Explica la unidad motora, reclutamiento y principio de tamaño.</td>
+</tr>
+<tr>
+<td><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/trabajo_musculos.html" target="_blank">trabajo_musculos.html</a></td>
+<td data-i18n="sec4_r2_just">Muestra cómo las unidades motoras trabajan coordinadamente.</td>
+</tr>
+</table>
+</div>
+
+<div class="section">
+<h2 data-i18n="sec5_title">🔄 Diapositivas 13-15 y 34-41: Calcio, ATP y Ciclo de Contracción</h2>
+<p data-i18n="sec5_desc">Acoplamiento excitación-contracción, ciclo de la miosina, rigor mortis y rampas.</p>
+<table>
+<tr><th data-i18n="th_resource">Recurso</th><th data-i18n="th_justification">Justificación</th></tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp.html" target="_blank">calcio_atp.html</a></td>
+<td data-i18n="sec5_r1_just">Detalla el papel del Ca²⁺ y el ATP en el ciclo de contracción.</td>
+</tr>
+<tr>
+<td><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp1.html" target="_blank">calcio_atp1.html</a></td>
+<td data-i18n="sec5_r2_just">Refuerza el mecanismo molecular de la troponina/tropomiosina.</td>
+</tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/contraccion_muscular.html" target="_blank">contraccion_muscular.html</a></td>
+<td data-i18n="sec5_r3_just">Resume visualmente los 6 pasos de la contracción.</td>
+</tr>
+</table>
+</div>
+
+<div class="section">
+<h2 data-i18n="sec6_title">💃 Diapositivas 16 y 42-50: Tipos de Contracción y Práctica de Danza</h2>
+<p data-i18n="sec6_desc">Contracción concéntrica, isométrica y excéntrica aplicadas al Grand Jeté, Plancha y Arabesque.</p>
+<table>
+<tr><th data-i18n="th_resource">Recurso</th><th data-i18n="th_justification">Justificación</th></tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control_1.html" target="_blank">estabilidad_control_1.html</a></td>
+<td data-i18n="sec6_r1_just">Ejemplos aplicados específicamente al relevé y plié.</td>
+</tr>
+<tr>
+<td><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control_2.html" target="_blank">estabilidad_control_2.html</a></td>
+<td data-i18n="sec6_r2_just">Profundiza en la fase excéntrica de amortiguación.</td>
+</tr>
+<tr>
+<td><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/musculos_tr_equipo.html" target="_blank">musculos_tr_equipo.html</a></td>
+<td data-i18n="sec6_r3_just">Explica la coactivación y el trabajo en equipo (agonistas/antagonistas).</td>
+</tr>
+<tr>
+<td><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/planos_movimiento.html" target="_blank">planos_movimiento.html</a></td>
+<td data-i18n="sec6_r4_just">Complemento ideal para analizar la secuencia de danza final.</td>
+</tr>
+</table>
+</div>
+
+</div>
+<footer>
+<p data-i18n="footer_text">🩰 Fisiología aplicada a la Danza · Dra. Cèlia Painous · Curso 2026-2027</p>
+</footer>
+
+<script>
+// ==================== SISTEMA DE TRADUCCIONS ====================
+const translations = {
+es: {
+main_title: "🩰 Guía de Recursos Interactivos",
+main_subtitle: "Sistema Musculoesquelético I · Fisiología · Curso 2026-2027 · Dra. Cèlia Painous",
+th_resource: "Recurso",
+th_justification: "Justificación",
+tag_key: "⭐ Clave",
+tag_case: "📝 Casos",
+tag_anat: "Anatomía",
+sec1_title: "📐 Diapositivas 1-2: Niveles de Organización",
+sec1_desc: "Introducción a la jerarquía estructural del cuerpo humano, desde la célula hasta el organismo.",
+sec1_r1_just: "Visión general del sistema y jerarquía estructural.",
+sec1_r2_just: "Integración de las estructuras en el cuerpo.",
+sec2_title: "💧 Diapositivas 3-7: Homeostasis y Regulación",
+sec2_desc: "Líquidos corporales, rangos homeostáticos, sistemas nervioso/endocrino y retroalimentación.",
+sec2_r1_just: "Explica LIC/LEC, rangos normales y mecanismos de regulación.",
+sec2_r2_just: "Bloque 1: 10 casos prácticos aplicados a situaciones de danza.",
+sec3_title: "🔬 Diapositivas 8-11 y 17-22: Estructura Muscular y Sarcómero",
+sec3_desc: "Tipos de músculo, fibra muscular, miofibrillas, sarcómero y dinámica de bandas.",
+sec3_r1_just: "Interactivo para identificar bandas A, I, líneas Z y zona H.",
+sec3_r2_just: "Explica la jerarquía miofilamentos → sarcómero → miofibrilla.",
+sec3_r3_just: "Bloque 2: Casos sobre la dinámica de las bandas durante el acortamiento.",
+sec4_title: "⚡ Diapositivas 12 y 23-25: La Unidad Motora",
+sec4_desc: "Motoneurona, reclutamiento y principio de Henneman.",
+sec4_r1_just: "Explica la unidad motora, reclutamiento y principio de tamaño.",
+sec4_r2_just: "Muestra cómo las unidades motoras trabajan coordinadamente.",
+sec5_title: "🔄 Diapositivas 13-15 y 34-41: Calcio, ATP y Ciclo de Contracción",
+sec5_desc: "Acoplamiento excitación-contracción, ciclo de la miosina, rigor mortis y rampas.",
+sec5_r1_just: "Detalla el papel del Ca²⁺ y el ATP en el ciclo de contracción.",
+sec5_r2_just: "Refuerza el mecanismo molecular de la troponina/tropomiosina.",
+sec5_r3_just: "Resume visualmente los 6 pasos de la contracción.",
+sec6_title: "💃 Diapositivas 16 y 42-50: Tipos de Contracción y Práctica de Danza",
+sec6_desc: "Contracción concéntrica, isométrica y excéntrica aplicadas al Grand Jeté, Plancha y Arabesque.",
+sec6_r1_just: "Ejemplos aplicados específicamente al relevé y plié.",
+sec6_r2_just: "Profundiza en la fase excéntrica de amortiguación.",
+sec6_r3_just: "Explica la coactivación y el trabajo en equipo (agonistas/antagonistas).",
+sec6_r4_just: "Complemento ideal para analizar la secuencia de danza final.",
+footer_text: "🩰 Fisiología aplicada a la Danza · Dra. Cèlia Painous · Curso 2026-2027"
+},
+ca: {
+main_title: "🩰 Guia de Recursos Interactius",
+main_subtitle: "Sistema Musculoesquelètic I · Fisiologia · Curs 2026-2027 · Dra. Cèlia Painous",
+th_resource: "Recurs",
+th_justification: "Justificació",
+tag_key: "⭐ Clau",
+tag_case: "📝 Casos",
+tag_anat: "Anatomia",
+sec1_title: "📐 Diapositives 1-2: Nivells d'Organització",
+sec1_desc: "Introducció a la jerarquia estructural del cos humà, des de la cèl·lula fins a l'organisme.",
+sec1_r1_just: "Visió general del sistema i jerarquia estructural.",
+sec1_r2_just: "Integració de les estructures al cos.",
+sec2_title: "💧 Diapositives 3-7: Homeòstasi i Regulació",
+sec2_desc: "Líquids corporals, rangs homeostàtics, sistemes nerviós/endocrí i retroalimentació.",
+sec2_r1_just: "Explica LIC/LEC, rangs normals i mecanismes de regulació.",
+sec2_r2_just: "Bloc 1: 10 casos pràctics aplicats a situacions de dansa.",
+sec3_title: "🔬 Diapositives 8-11 i 17-22: Estructura Muscular i Sarcòmer",
+sec3_desc: "Tipus de múscul, fibra muscular, miofibril·les, sarcòmer i dinàmica de bandes.",
+sec3_r1_just: "Interactiu per identificar bandes A, I, línies Z i zona H.",
+sec3_r2_just: "Explica la jerarquia miofilaments → sarcòmer → miofibril·la.",
+sec3_r3_just: "Bloc 2: Casos sobre la dinàmica de les bandes durant l'escurçament.",
+sec4_title: "⚡ Diapositives 12 i 23-25: La Unitat Motora",
+sec4_desc: "Motoneurona, reclutament i principi de Henneman.",
+sec4_r1_just: "Explica la unitat motora, reclutament i principi de mida.",
+sec4_r2_just: "Mostra com les unitats motores treballen coordinadament.",
+sec5_title: "🔄 Diapositives 13-15 i 34-41: Calci, ATP i Cicle de Contracció",
+sec5_desc: "Acoblament excitació-contracció, cicle de la miosina, rigor mortis i rampes.",
+sec5_r1_just: "Detalla el paper del Ca²⁺ i l'ATP al cicle de contracció.",
+sec5_r2_just: "Reforça el mecanisme molecular de la troponina/tropomiosina.",
+sec5_r3_just: "Resumeix visualment els 6 passos de la contracció.",
+sec6_title: "💃 Diapositives 16 i 42-50: Tipus de Contracció i Pràctica de Dansa",
+sec6_desc: "Contracció concèntrica, isomètrica i excèntrica aplicades al Grand Jeté, Plancha i Arabesque.",
+sec6_r1_just: "Exemples aplicats específicament al relevé i plié.",
+sec6_r2_just: "Aprofundeix en la fase excèntrica d'amortiguació.",
+sec6_r3_just: "Explica la coactivació i el treball en equip (agonistes/antagonistes).",
+sec6_r4_just: "Complement ideal per analitzar la seqüència de dansa final.",
+footer_text: "🩰 Fisiologia aplicada a la Dansa · Dra. Cèlia Painous · Curs 2026-2027"
+},
+en: {
+main_title: "🩰 Interactive Resources Guide",
+main_subtitle: "Musculoskeletal System I · Physiology · Course 2026-2027 · Dr. Cèlia Painous",
+th_resource: "Resource",
+th_justification: "Justification",
+tag_key: "⭐ Key",
+tag_case: "📝 Cases",
+tag_anat: "Anatomy",
+sec1_title: "📐 Slides 1-2: Levels of Organization",
+sec1_desc: "Introduction to the structural hierarchy of the human body, from cell to organism.",
+sec1_r1_just: "General overview of the system and structural hierarchy.",
+sec1_r2_just: "Integration of structures in the body.",
+sec2_title: "💧 Slides 3-7: Homeostasis and Regulation",
+sec2_desc: "Body fluids, homeostatic ranges, nervous/endocrine systems and feedback.",
+sec2_r1_just: "Explains ICF/ECF, normal ranges and regulation mechanisms.",
+sec2_r2_just: "Block 1: 10 practical cases applied to dance situations.",
+sec3_title: "🔬 Slides 8-11 and 17-22: Muscle Structure and Sarcomere",
+sec3_desc: "Muscle types, muscle fiber, myofibrils, sarcomere and band dynamics.",
+sec3_r1_just: "Interactive to identify A bands, I bands, Z lines and H zone.",
+sec3_r2_just: "Explains the hierarchy myofilaments → sarcomere → myofibril.",
+sec3_r3_just: "Block 2: Cases about band dynamics during shortening.",
+sec4_title: "⚡ Slides 12 and 23-25: The Motor Unit",
+sec4_desc: "Motor neuron, recruitment and Henneman's principle.",
+sec4_r1_just: "Explains the motor unit, recruitment and size principle.",
+sec4_r2_just: "Shows how motor units work in a coordinated way.",
+sec5_title: "🔄 Slides 13-15 and 34-41: Calcium, ATP and Contraction Cycle",
+sec5_desc: "Excitation-contraction coupling, myosin cycle, rigor mortis and ramps.",
+sec5_r1_just: "Details the role of Ca²⁺ and ATP in the contraction cycle.",
+sec5_r2_just: "Reinforces the molecular mechanism of troponin/tropomyosin.",
+sec5_r3_just: "Visually summarizes the 6 steps of contraction.",
+sec6_title: "💃 Slides 16 and 42-50: Types of Contraction and Dance Practice",
+sec6_desc: "Concentric, isometric and eccentric contraction applied to Grand Jeté, Plancha and Arabesque.",
+sec6_r1_just: "Examples specifically applied to relevé and plié.",
+sec6_r2_just: "Deepens into the eccentric damping phase.",
+sec6_r3_just: "Explains co-activation and teamwork (agonists/antagonists).",
+sec6_r4_just: "Ideal complement to analyze the final dance sequence.",
+footer_text: "🩰 Physiology applied to Dance · Dr. Cèlia Painous · Course 2026-2027"
+}
+};
+
+let currentLang = 'es';
+
+function setLanguage(lang, btn) {
+currentLang = lang;
+document.documentElement.lang = lang;
+// Actualitza botons d'idioma
+document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+if (btn) btn.classList.add('active');
+else document.querySelector(`.lang-btn[onclick*="'${lang}'"]`).classList.add('active');
+
+// Actualitza tots els elements amb data-i18n
+document.querySelectorAll('[data-i18n]').forEach(el => {
+const key = el.getAttribute('data-i18n');
+if (translations[lang] && translations[lang][key]) {
+el.innerHTML = translations[lang][key];
+}
+});
+}
+</script>
+</body>
+</html>

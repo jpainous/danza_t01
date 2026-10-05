@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ Reflexiu - Nutrició, Hidratació i Prevenció de Lesions</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #e2e8f0;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  .presentacion { width: 100vw; height: 100vh; display: flex; flex-direction: column; }
+  .header {
+    background: rgba(15, 23, 42, 0.8);
+    padding: 12px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #334155;
+    backdrop-filter: blur(10px);
+    z-index: 10;
+  }
+  .titulo-header { color: #f59e0b; font-size: 18px; font-weight: bold; }
+  .header-right { display: flex; align-items: center; gap: 15px; }
+  
+  .language-selector { display: flex; gap: 8px; }
+  .language-selector button {
+    background: rgba(245,158,11,0.15);
+    border: 1px solid rgba(245,158,11,0.4);
+    color: #f59e0b;
+    padding: 4px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.8em;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  .language-selector button:hover { background: rgba(245,158,11,0.3); }
+  .language-selector button.active { background: #f59e0b; color: #0f172a; }
+  
+  .progreso-container { display: flex; align-items: center; gap: 10px; }
+  .progreso-bar { width: 200px; height: 8px; background: #334155; border-radius: 4px; overflow: hidden; }
+  .progreso-fill { height: 100%; background: linear-gradient(90deg, #f59e0b, #ef4444); transition: width 0.4s; }
+  .contador { color: #94a3b8; font-size: 14px; min-width: 60px; text-align: right; }
+  
+  .slide-container { flex: 1; position: relative; overflow: hidden; }
+  .slide {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    padding: 30px 50px;
+    display: none;
+    overflow-y: auto;
+    animation: fadeIn 0.5s;
+  }
+  .slide.activa { display: flex; flex-direction: column; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .slide h1 { font-size: 36px; color: #f59e0b; margin-bottom: 15px; border-bottom: 3px solid #f59e0b; padding-bottom: 10px; }
+  .slide h2 { font-size: 26px; color: #fbbf24; margin-bottom: 15px; }
+  .slide p { font-size: 16px; line-height: 1.7; margin-bottom: 12px; }
+  .slide ul, .slide ol { margin-left: 25px; margin-bottom: 15px; }
+  .slide li { margin-bottom: 10px; line-height: 1.6; font-size: 15px; }
+  
+  .portada { justify-content: center; align-items: center; text-align: center; background: radial-gradient(circle at center, #422006 0%, #0f172a 70%); }
+  .portada h1 { font-size: 54px; border: none; background: linear-gradient(90deg, #f59e0b, #ef4444, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .portada .subtitulo { font-size: 22px; color: #94a3b8; margin-top: 20px; }
+  .portada .emoji-grande { font-size: 100px; margin-bottom: 20px; }
+  
+  .pregunta-box { background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%); padding: 25px 30px; border-radius: 16px; border: 3px solid #38bdf8; margin-bottom: 20px; position: relative; box-shadow: 0 4px 20px rgba(56, 189, 248, 0.2); }
+  .pregunta-box .num { position: absolute; top: -20px; left: 20px; background: #f59e0b; color: #0f172a; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; border: 3px solid #0f172a; }
+  .pregunta-box .tema { color: #38bdf8; font-size: 13px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; display: block; }
+  .pregunta-box .texto { font-size: 22px; font-weight: 600; color: #f1f5f9; line-height: 1.4; margin-top: 10px; }
+  
+  .reflexion-box { background: rgba(251, 191, 36, 0.1); border: 2px dashed #fbbf24; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+  .reflexion-box h3 { color: #fbbf24; margin-bottom: 10px; font-size: 18px; }
+  .reflexion-box p { color: #cbd5e1; font-size: 14px; margin-bottom: 12px; }
+  .reflexion-box textarea { width: 100%; min-height: 80px; background: #0f172a; border: 1px solid #475569; border-radius: 8px; color: #e2e8f0; padding: 12px; font-family: inherit; font-size: 14px; resize: vertical; }
+  .reflexion-box textarea:focus { outline: none; border-color: #fbbf24; }
+  
+  .btn-revelar { background: linear-gradient(90deg, #10b981, #34d399); color: #0f172a; border: none; padding: 14px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px; margin: 10px auto; display: block; transition: all 0.3s; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); }
+  .btn-revelar:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5); }
+  
+  .respuesta-box { background: rgba(16, 185, 129, 0.08); border: 2px solid #10b981; border-radius: 12px; padding: 25px; margin-top: 15px; display: none; animation: slideDown 0.5s; }
+  .respuesta-box.visible { display: block; }
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+  .respuesta-box h3 { color: #34d399; margin-bottom: 15px; font-size: 20px; }
+  .respuesta-box .keyword { display: inline-block; background: #334155; color: #fbbf24; padding: 2px 10px; border-radius: 12px; font-weight: bold; font-size: 13px; margin: 2px; }
+  .respuesta-box .keyword.azul { color: #38bdf8; }
+  .respuesta-box .keyword.rojo { color: #ef4444; }
+  .respuesta-box .keyword.verde { color: #34d399; }
+  .respuesta-box .keyword.rosa { color: #f472b6; }
+  .respuesta-box .ejemplo { background: rgba(56, 189, 248, 0.1); border-left: 4px solid #38bdf8; padding: 12px 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; }
+  .respuesta-box .alerta { background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444; padding: 12px 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; }
+  
+  .indice-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 20px; }
+  .indice-item { background: rgba(30, 41, 59, 0.8); padding: 18px; border-radius: 10px; cursor: pointer; border: 2px solid transparent; transition: all 0.3s; border-left: 4px solid #f59e0b; }
+  .indice-item:hover { border-color: #f59e0b; transform: translateX(5px); }
+  .indice-item .num { display: inline-block; background: #f59e0b; color: #0f172a; width: 30px; height: 30px; border-radius: 50%; text-align: center; line-height: 30px; font-weight: bold; margin-right: 10px; }
+  .indice-item .cat { font-size: 11px; color: #38bdf8; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 5px; }
+  
+  .nav { background: rgba(15, 23, 42, 0.9); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #334155; }
+  .btn { background: #f59e0b; color: #0f172a; border: none; padding: 10px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 15px; transition: all 0.2s; }
+  .btn:hover:not(:disabled) { background: #d97706; transform: translateY(-2px); }
+  .btn:disabled { background: #475569; cursor: not-allowed; opacity: 0.5; }
+  .btn.indice { background: #38bdf8; }
+  .btn.indice:hover { background: #0ea5e9; }
+  
+  .slide::-webkit-scrollbar { width: 8px; }
+  .slide::-webkit-scrollbar-track { background: #1e293b; }
+  .slide::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+  
+  .sintesis-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 20px; }
+  .sintesis-card { background: rgba(30, 41, 59, 0.8); padding: 18px; border-radius: 12px; border-top: 4px solid #f59e0b; }
+  .sintesis-card h4 { color: #fbbf24; margin-bottom: 10px; font-size: 16px; }
+  .sintesis-card p { font-size: 14px; color: #cbd5e1; }
+  
+  @media (max-width: 768px) {
+    .slide { padding: 20px; }
+    .slide h1 { font-size: 26px; }
+    .pregunta-box .texto { font-size: 18px; }
+    .portada h1 { font-size: 34px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="presentacion">
+  <div class="header">
+    <div class="titulo-header" data-i18n="header_title">❓ FAQ Reflexiu · Nutrició, Hidratació i Prevenció</div>
+    <div class="header-right">
+      <div class="language-selector">
+        <button onclick="setLanguage('es', this)">ES</button>
+        <button class="active" onclick="setLanguage('ca', this)">CA</button>
+        <button onclick="setLanguage('en', this)">EN</button>
+      </div>
+      <div class="progreso-container">
+        <div class="progreso-bar"><div class="progreso-fill" id="progresoFill"></div></div>
+        <div class="contador" id="contador">1 / 12</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-container" id="slideContainer">
+
+    <!-- SLIDE 1: PORTADA -->
+    <div class="slide portada activa">
+      <div class="emoji-grande">❓🩰💭</div>
+      <h1 data-i18n="s1_title">Preguntes per<br>Reflexionar</h1>
+      <p class="subtitulo" data-i18n="s1_subtitle">Nutrició · Hidratació · Prevenció de Lesions</p>
+      <p style="margin-top:30px; color:#94a3b8; max-width:600px;" data-i18n="s1_text">
+        Aquesta presentació et convida a <b>pensar abans de respondre</b>.<br>
+        A cada diapositiva trobaràs una pregunta: primer reflexiona i escriu la teva hipòtesi, després revela la resposta científica.
+      </p>
+      <p style="margin-top:20px; color:#64748b; font-size:14px;" data-i18n="s1_hint">Usa les fletxes ← → del teclat o els botons per navegar</p>
+    </div>
+
+    <!-- SLIDE 2: ÍNDEX -->
+    <div class="slide">
+      <h1 data-i18n="s2_title">🗺️ Les 10 Preguntes Clau</h1>
+      <p data-i18n="s2_intro">Fes clic en qualsevol per anar-hi directament. Recorda: <b>pensa primer, després mira la resposta</b>.</p>
+      <div class="indice-grid">
+        <div class="indice-item" onclick="irA(2)"><span class="num">1</span><span class="cat" data-i18n="s2_c1_cat">RED-S</span><span data-i18n="s2_c1_text">Per què entrenar molt no garanteix ossos forts?</span></div>
+        <div class="indice-item" onclick="irA(3)"><span class="num">2</span><span class="cat" data-i18n="s2_c2_cat">Hidratació</span><span data-i18n="s2_c2_text">Per què apareixen rampes i com ajuden els electròlits?</span></div>
+        <div class="indice-item" onclick="irA(4)"><span class="num">3</span><span class="cat" data-i18n="s2_c3_cat">ATP</span><span data-i18n="s2_c3_text">Per què la falta d'ATP provoca rigidesa?</span></div>
+        <div class="indice-item" onclick="irA(5)"><span class="num">4</span><span class="cat" data-i18n="s2_c4_cat">Cartílag</span><span data-i18n="s2_c4_text">Com es nodreixen les articulacions sense vasos sanguinis?</span></div>
+        <div class="indice-item" onclick="irA(6)"><span class="num">5</span><span class="cat" data-i18n="s2_c5_cat">Lligaments</span><span data-i18n="s2_c5_text">Què és la "Warning Zone" i per què augmenta el risc d'esguinços?</span></div>
+        <div class="indice-item" onclick="irA(7)"><span class="num">6</span><span class="cat" data-i18n="s2_c6_cat">Control nerviós</span><span data-i18n="s2_c6_text">Com gradua el SN la força entre un micro-ajust i un salt?</span></div>
+        <div class="indice-item" onclick="irA(8)"><span class="num">7</span><span class="cat" data-i18n="s2_c7_cat">Biomecànica</span><span data-i18n="s2_c7_text">Per què el demi-plié ha de tenir profunditat intermèdia?</span></div>
+        <div class="indice-item" onclick="irA(9)"><span class="num">8</span><span class="cat" data-i18n="s2_c8_cat">Fatiga</span><span data-i18n="s2_c8_text">Diferència entre fatiga central i perifèrica?</span></div>
+        <div class="indice-item" onclick="irA(10)"><span class="num">9</span><span class="cat" data-i18n="s2_c9_cat">Coactivació</span><span data-i18n="s2_c9_text">Quan la coactivació és perjudicial?</span></div>
+        <div class="indice-item" onclick="irA(11)"><span class="num">10</span><span class="cat" data-i18n="s2_c10_cat">Homeòstasi</span><span data-i18n="s2_c10_text">Com reacciona l'organisme davant l'augment de temperatura i CO₂?</span></div>
+      </div>
+    </div>
+
+    <!-- PREGUNTA 1 -->
+    <div class="slide">
+      <div class="pregunta-box">
+        <div class="num">1</div>
+        <span class="tema" data-i18n="q1_tema">🦴 RED-S i Salut Òssia</span>
+        <div class="texto" data-i18n="q1_texto">Per què entrenar molt NO és suficient per tenir ossos forts si la dieta és insuficient?</div>
+      </div>
+      <div class="reflexion-box">
+        <h3 data-i18n="reflexion_title">💭 La teva hipòtesi</h3>
+        <p data-i18n="q1_prompt">Abans de mirar la resposta, escriu què penses que passa al cos d'un ballarí que entrena moltes hores però menja poc:</p>
+        <textarea data-i18n-placeholder="reflexion_placeholder" placeholder="Escriu aquí la teva reflexió..."></textarea>
+      </div>
+      <button class="btn-revelar" onclick="revelar(this)" data-i18n="btn_reveal">🔍 Revelar resposta científica</button>
+      <div class="respuesta-box">
+        <h3 data-i18n="answer_title">📚 Resposta</h3>
+        <div data-i18n="q1_answer"></div>
+      </div>
+    </div>
+
+    <!-- PREGUNTA 2 -->
+    <div class="slide">
+      <div class="pregunta-box">
+        <div class="num">2</div>
+        <span class="tema" data-i18n="q2_tema">💧 Hidratació i Rampes</span>
+        <div class="texto" data-i18n="q2_texto">Per què apareixen les rampes musculars i com ajuda la hidratació amb electròlits?</div>
+      </div>
+      <div class="reflexion-box">
+        <h3 data-i18n="reflexion_title">💭 La teva hipòtesi</h3>
+        <p data-i18n="q2_prompt">Què creus que passa a nivell cel·lular quan un múscul es contreu de forma involuntària i dolorosa?</p>
+        <textarea data-i18n-placeholder="reflexion_placeholder" placeholder="Escriu aquí la teva reflexió..."></textarea>
+      </div>
+      <button class="btn-revelar" onclick="revelar(this)" data-i18n="btn_reveal">🔍 Revelar resposta científica</button>
+      <div class="respuesta-box">
+        <h3 data-i18n="answer_title">📚 Resposta</h3>
+        <div data-i18n="q2_answer"></div>
+      </div>
+    </div>
+
+    <!-- PREGUNTA 3 -->
+    <div class="slide">
+      <div class="pregunta-box">
+        <div class="num">3</div>
+        <span class="tema" data-i18n="q3_tema">⚡ ATP i Rigidesa</span>
+        <div class="texto" data-i18n="q3_texto">Per què la falta d'ATP provoca rigidesa muscular al final de l'assaig?</div>
+      </div>
+      <div class="reflexion-box">
+        <h3 data-i18n="reflexion_title">💭 La teva hipòtesi</h3>
+        <p data-i18n="q3_prompt">L'ATP és "energia". Però... per què la falta d'energia provoca rigidesa en lloc de debilitat?</p>
+        <textarea data-i18n-placeholder="reflexion_placeholder" placeholder="Escriu aquí la teva reflexió..."></textarea>
+      </div>
+      <button class="btn-revelar" onclick="revelar(this)" data-i18n="btn_reveal">🔍 Revelar resposta científica</button>
+      <div class="respuesta-box">
+        <h3 data-i18n="answer_title">📚 Resposta</h3>
+        <div data-i18n="q3_answer"></div>
+      </div>
+    </div>
+
+    <!-- PREGUNTA 4 -->
+    <div class="slide">
+      <div class="pregunta-box">
+        <div class="num">4</div>
+        <span class="tema" data-i18n="q4_tema">🦵 Nutrició del Cartílag</span>
+        <div class="texto" data-i18n="q4_texto">Com es nodreixen les articulacions si el cartílag no té vasos sanguinis?</div>
+      </div>
+      <div class="reflexion-box">
+        <h3 data-i18n="reflexion_title">💭 La teva hipòtesi</h3>
+        <p data-i18n="q4_prompt">Si el cartílag no rep sang, d'on treu els nutrients? Com creus que arriba l'aliment a les cèl·lules?</p>
+        <textarea data-i18n-placeholder="reflexion_placeholder" placeholder="Escriu aquí la teva reflexió..."></textarea>
+      </div>
+      <button class="btn-revelar" onclick="revelar(this)" data-i18n="btn_reveal">🔍 Revelar resposta científica</button>
+      <div class="respuesta-box">
+        <h3 data-i18n="answer_title">📚 Resposta</h3>
+        <div data-i18n="q4_answer"></div>
+      </div>
+    </div>
+
+    <!-- PREGUNTA 5 -->
+    <div class="slide">
+      <div class="pregunta-box">
+        <div class="num">5</div>
+        <span class="tema" data-i18n="q5_tema">🛡️ Lligaments i Warning Zone</span>
+        <div class="texto" data-i18n="q5_texto">Què és la "Warning Zone" i per què la fatiga augmenta el risc d'esguinços?</div>
+      </div>
+      <div class="reflexion-box">
+        <h3 data-i18n="reflexion_title">💭 La teva hipòtesi</h3>
+        <p data-i18n="q5_prompt">Quan els músculs es cansen, què passa amb les forces d'impacte? Qui les absorbeix llavors?</p>
+        <textarea data-i18n-placeholder="reflexion_placeholder" placeholder="Escriu aquí la teva reflexió..."></textarea>
+      </div>
+      <button class="btn-revelar" onclick="revelar(this)" data-i18n="btn_reveal">🔍 Revelar resposta científica</button>
+      <div class="respuesta-box">
+        <h3 data-i18n="answer_title">📚 Resposta</h3>
+        <div data-i18n="q5_answer"></div>
+      </div>
+    </div>
+
+    <!-- PREGUNTA 6 -->
+    <div class="slide">
+      <div class="pregunta-box">
+        <div class="num">6</div>
+        <span class="tema" data-i18n="q6_tema">🧠 Control Nerviós de la Força</span>
+        <div class="texto" data-i18n="q6_texto">Com gradua el sistema nerviós la força muscular entre un micro-ajust postural i un salt explosiu?</div>
+      </div>
+      <div class="reflexion-box">
+        <h3 data-i18n="reflexion_title">💭 La teva hipòtesi</h3>
+        <p data-i18n="q6_prompt">Quins mecanismes creus que fa servir el cervell per passar d'un moviment molt subtil a un de molt potent?</p>
+        <textarea data-i18n-placeholder="reflexion_placeholder" placeholder="Escriu aquí la teva reflexió..."></textarea>
+      </div>
+      <button class="btn-revelar" onclick="revelar(this)" data-i18n="btn_reveal">🔍 Revelar resposta científica</button>
+      <div class="respuesta-box">
+        <h3 data-i18n="answer_title">📚 Resposta</h3>
+        <div data-i18n="q6_answer"></div>
+      </div>
+    </div>
+
+    <!-- PREGUNTA 7 -->
+    <div class="slide">
+      <div class="pregunta-box">
+        <div class="num">7</div>
+        <span class="tema" data-i18n="q7_tema">🎯 Demi-Plié i Longitud-Tensió</span>
+        <div class="texto" data-i18n="q7_texto">Per què el demi-plié previ a un salt ha de tenir una profunditat intermèdia segons la fisiologia?</div>
+      </div>
+      <div class="reflexion-box">
+        <h3 data-i18n="reflexion_title">💭 La teva hipòtesi</h3>
+        <p data-i18n="q7_prompt">Si com més profund és el plié més s'estira el múscul... per què no és millor fer-lo molt profund per guanyar més força?</p>
+        <textarea data-i18n-placeholder="reflexion_placeholder" placeholder="Escriu aquí la teva reflexió..."></textarea>
+      </div>
+      <button class="btn-revelar" onclick="revelar(this)" data-i18n="btn_reveal">🔍 Revelar resposta científica</button>
+      <div class="respuesta-box">
+        <h3 data-i18n="answer_title">📚 Resposta</h3>
+        <div data-i18n="q7_answer"></div>
+      </div>
+    </div>
+
+    <!-- PREGUNTA 8 -->
+    <div class="slide">
+      <div class="pregunta-box">
+        <div class="num">8</div>
+        <span class="tema" data-i18n="q8_tema">😓 Tipus de Fatiga</span>
+        <div class="texto" data-i18n="q8_texto">Quina diferència hi ha entre la fatiga central i la fatiga perifèrica durant un assaig o funció?</div>
+      </div>
+      <div class="reflexion-box">
+        <h3 data-i18n="reflexion_title">💭 La teva hipòtesi</h3>
+        <p data-i18n="q8_prompt">La fatiga pot originar-se al cervell o al múscul. Quines conseqüències creus que té cadascuna?</p>
+        <textarea data-i18n-placeholder="reflexion_placeholder" placeholder="Escriu aquí la teva reflexió..."></textarea>
+      </div>
+      <button class="btn-revelar" onclick="revelar(this)" data-i18n="btn_reveal">🔍 Revelar resposta científica</button>
+      <div class="respuesta-box">
+        <h3 data-i18n="answer_title">📚 Resposta</h3>
+        <div data-i18n="q8_answer"></div>
+      </div>
+    </div>
+
+    <!-- PREGUNTA 9 -->
+    <div class="slide">
+      <div class="pregunta-box">
+        <div class="num">9</div>
+        <span class="tema" data-i18n="q9_tema">⚖️ Coactivació Muscular</span>
+        <div class="texto" data-i18n="q9_texto">Per què la coactivació muscular és clau per al control postural i quan resulta perjudicial?</div>
+      </div>
+      <div class="reflexion-box">
+        <h3 data-i18n="reflexion_title">💭 La teva hipòtesi</h3>
+        <p data-i18n="q9_prompt">Si la coactivació és la contracció simultània d'agonistes i antagonistes... quin avantatge té i quin inconvenient?</p>
+        <textarea data-i18n-placeholder="reflexion_placeholder" placeholder="Escriu aquí la teva reflexió..."></textarea>
+      </div>
+      <button class="btn-revelar" onclick="revelar(this)" data-i18n="btn_reveal">🔍 Revelar resposta científica</button>
+      <div class="respuesta-box">
+        <h3 data-i18n="answer_title">📚 Resposta</h3>
+        <div data-i18n="q9_answer"></div>
+      </div>
+    </div>
+
+    <!-- PREGUNTA 10 -->
+    <div class="slide">
+      <div class="pregunta-box">
+        <div class="num">10</div>
+        <span class="tema" data-i18n="q10_tema">🌡️ Homeòstasi i Termoregulació</span>
+        <div class="texto" data-i18n="q10_texto">Com reacciona l'organisme per restaurar l'homeòstasi davant l'augment de temperatura i CO₂ en un assaig intens?</div>
+      </div>
+      <div class="reflexion-box">
+        <h3 data-i18n="reflexion_title">💭 La teva hipòtesi</h3>
+        <p data-i18n="q10_prompt">Quan el cos s'escalfa i acumula CO₂, quins mecanismes s'activen per refredar-lo i eliminar el gas?</p>
+        <textarea data-i18n-placeholder="reflexion_placeholder" placeholder="Escriu aquí la teva reflexió..."></textarea>
+      </div>
+      <button class="btn-revelar" onclick="revelar(this)" data-i18n="btn_reveal">🔍 Revelar resposta científica</button>
+      <div class="respuesta-box">
+        <h3 data-i18n="answer_title">📚 Resposta</h3>
+        <div data-i18n="q10_answer"></div>
+      </div>
+    </div>
+
+    <!-- SLIDE FINAL: SÍNTESI -->
+    <div class="slide">
+      <h1 data-i18n="sintesi_title">🎯 Síntesi: Els 5 Grans Principis</h1>
+      <p data-i18n="sintesi_intro">Les 10 preguntes es redueixen a <b>5 idees clau</b> que has de dominar:</p>
+      <div class="sintesis-grid">
+        <div class="sintesis-card">
+          <h4 data-i18n="sin1_title">🔋 1. L'energia ho condiciona tot</h4>
+          <p data-i18n="sin1_text">Sense disponibilitat energètica adequada, ni l'os es remodela, ni el múscul es contrau eficientment (RED-S).</p>
+        </div>
+        <div class="sintesis-card">
+          <h4 data-i18n="sin2_title">💧 2. L'homeòstasi és dinàmica</h4>
+          <p data-i18n="sin2_text">El cos constantment ajusta temperatura, pH, electròlits i gasos mitjançant retroalimentació negativa.</p>
+        </div>
+        <div class="sintesis-card">
+          <h4 data-i18n="sin3_title">⚡ 3. ATP = llibertat de moviment</h4>
+          <p data-i18n="sin3_text">No només dóna energia: permet el desacoblatge. Sense ATP, hi ha rigidesa (encara que hi hagi Ca²⁺).</p>
+        </div>
+        <div class="sintesis-card">
+          <h4 data-i18n="sin4_title">🧠 4. El control nerviós gradua la força</h4>
+          <p data-i18n="sin4_text">Reclutament per tamany + freqüència de descàrrega = des de micro-ajustos fins a salts explosius.</p>
+        </div>
+        <div class="sintesis-card">
+          <h4 data-i18n="sin5_title">🛡️ 5. La fatiga és un senyal d'alarma</h4>
+          <p data-i18n="sin5_text">Central (al cervell) i perifèrica (al múscul). Ignorar-la → compensacions → lesions (Warning Zone).</p>
+        </div>
+      </div>
+      <div style="background:rgba(251, 191, 36, 0.15); border-left:5px solid #fbbf24; padding:20px; border-radius:8px; margin-top:25px; text-align:center;">
+        <b style="font-size:18px; color:#fbbf24;" data-i18n="final_title">💡 Missatge final:</b>
+        <p style="margin-top:10px; font-size:16px;" data-i18n="final_text">El cos del ballarí és un <b>sistema integrat</b>. Cada decisió (nutrició, hidratació, descans, dosificació de càrrega) afecta tots els nivells: molecular, muscular, articular i nerviós.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nav">
+    <button class="btn" id="btnAnt" onclick="anterior()" data-i18n="btn_prev">← Anterior</button>
+    <button class="btn indice" onclick="irA(1)" data-i18n="btn_index">🗺️ Índex</button>
+    <button class="btn" id="btnSig" onclick="siguiente()" data-i18n="btn_next">Següent →</button>
+  </div>
+</div>
+
+<script>
+let currentLang = 'ca';
+
+const translations = {
+  ca: {
+    header_title: "❓ FAQ Reflexiu · Nutrició, Hidratació i Prevenció",
+    btn_prev: "← Anterior", btn_index: "🗺️ Índex", btn_next: "Següent →",
+    s1_title: "Preguntes per<br>Reflexionar",
+    s1_subtitle: "Nutrició · Hidratació · Prevenció de Lesions",
+    s1_text: "Aquesta presentació et convida a <b>pensar abans de respondre</b>.<br>A cada diapositiva trobaràs una pregunta: primer reflexiona i escriu la teva hipòtesi, després revela la resposta científica.",
+    s1_hint: "Usa les fletxes ← → del teclat o els botons per navegar",
+    s2_title: "🗺️ Les 10 Preguntes Clau",
+    s2_intro: "Fes clic en qualsevol per anar-hi directament. Recorda: <b>pensa primer, després mira la resposta</b>.",
+    s2_c1_cat: "RED-S", s2_c1_text: "Per què entrenar molt no garanteix ossos forts?",
+    s2_c2_cat: "Hidratació", s2_c2_text: "Per què apareixen rampes i com ajuden els electròlits?",
+    s2_c3_cat: "ATP", s2_c3_text: "Per què la falta d'ATP provoca rigidesa?",
+    s2_c4_cat: "Cartílag", s2_c4_text: "Com es nodreixen les articulacions sense vasos sanguinis?",
+    s2_c5_cat: "Lligaments", s2_c5_text: "Què és la 'Warning Zone' i per què augmenta el risc d'esguinços?",
+    s2_c6_cat: "Control nerviós", s2_c6_text: "Com gradua el SN la força entre un micro-ajust i un salt?",
+    s2_c7_cat: "Biomecànica", s2_c7_text: "Per què el demi-plié ha de tenir profunditat intermèdia?",
+    s2_c8_cat: "Fatiga", s2_c8_text: "Diferència entre fatiga central i perifèrica?",
+    s2_c9_cat: "Coactivació", s2_c9_text: "Quan la coactivació és perjudicial?",
+    s2_c10_cat: "Homeòstasi", s2_c10_text: "Com reacciona l'organisme davant l'augment de temperatura i CO₂?",
+    reflexion_title: "💭 La teva hipòtesi",
+    reflexion_placeholder: "Escriu aquí la teva reflexió...",
+    btn_reveal: "🔍 Revelar resposta científica",
+    btn_hide: "🙈 Amagar resposta",
+    answer_title: "📚 Resposta",
+    q1_tema: "🦴 RED-S i Salut Òssia",
+    q1_texto: "Per què entrenar molt NO és suficient per tenir ossos forts si la dieta és insuficient?",
+    q1_prompt: "Abans de mirar la resposta, escriu què penses que passa al cos d'un ballarí que entrena moltes hores però menja poc:",
+    q1_answer: "<p>Entrenar dur <b>no garanteix</b> una bona densitat òssia si la <span class='keyword azul'>disponibilitat energètica</span> és insuficient (síndrome <span class='keyword rojo'>RED-S</span>).</p><p>Quan un ballarí no consumeix l'energia necessària:</p><ul><li>S'altera la <b>funció hormonal</b>.</li><li>S'interromp el treball dels <span class='keyword verde'>osteoblasts</span> (cèl·lules que dipositen la nova matriu òssia o <span class='keyword'>osteoide</span>).</li><li>La reparació dels microdanys causats pels salts no compensa l'impacte rebut.</li></ul><div class='alerta'><b>⚠️ Conseqüència:</b> Acumulació de microdany → <b>fractures per estrès</b>.</div><p><b>Nutrients imprescindibles:</b> energia suficient, proteïnes, calci i vitamina D.</p>",
+    q2_tema: "💧 Hidratació i Rampes",
+    q2_texto: "Per què apareixen les rampes musculars i com ajuda la hidratació amb electròlits?",
+    q2_prompt: "Què creus que passa a nivell cel·lular quan un múscul es contreu de forma involuntària i dolorosa?",
+    q2_answer: "<p>Una <b>rampa muscular</b> és una contracció involuntària, brusca i dolorosa provocada per l'augment d'excitabilitat de la <span class='keyword azul'>motoneurona α</span>, que genera descàrregues elèctriques repetitives mantingudes.</p><p><b>Factors que la disparen:</b></p><ul><li>Exercici intens</li><li>Calor i deshidratació</li><li>Pèrdua d'<span class='keyword rosa'>electròlits</span> essencials: Na⁺, K⁺, Mg²⁺</li></ul><div class='ejemplo'><b>💡 Solució:</b> Beure aigua amb electròlits de forma fraccionada durant l'assaig → reponeix els minerals perduts al <span class='keyword'>líquid extracel·lular (LEC)</span> → restableix l'<b>homeòstasi</b> → prevé espasmes.</div>",
+    q3_tema: "⚡ ATP i Rigidesa",
+    q3_texto: "Per què la falta d'ATP provoca rigidesa muscular al final de l'assaig?",
+    q3_prompt: "L'ATP és 'energia'. Però... per què la falta d'energia provoca rigidesa en lloc de debilitat?",
+    q3_answer: "<p>L'<span class='keyword azul'>ATP</span> és indispensable perquè la <b>miosina es desacobli i se separi de l'actina</b> al finalitzar cada cicle de contracció.</p><p>Durant assajos prolongats:</p><ul><li>La <span class='keyword rojo'>fatiga perifèrica</span> esgota les reserves energètiques.</li><li>S'interromp el maneig del <span class='keyword rosa'>Ca²⁺</span>.</li><li>Al reduir-se l'ATP, les <b>caps de miosina triguen a deixar l'actina</b>.</li></ul><div class='alerta'><b>⚠️ Conseqüència:</b> Dificulta la <b>amortiguació excèntrica</b> → incrementa la rigidesa i pesadesa muscular.</div><div class='ejemplo'><b>💡 Curiositat:</b> Aquest és el mateix mecanisme del <i>rigor mortis</i>: sense ATP, la miosina queda 'enganxada' a l'actina.</div>",
+    q4_tema: "🦵 Nutrició del Cartílag",
+    q4_texto: "Com es nodreixen les articulacions si el cartílag no té vasos sanguinis?",
+    q4_prompt: "Si el cartílag no rep sang, d'on treu els nutrients? Com creus que arriba l'aliment a les cèl·lules?",
+    q4_answer: "<p>El <span class='keyword verde'>cartílag articular</span> és un teixit <b>avascular</b>: no rep sang directament. La seva nutrició depèn del <span class='keyword azul'>líquid sinovial</span> mitjançant un mecanisme de <b>bombeig mecànic per pressió</b>.</p><p>El cicle funciona així:</p><ul><li><b>Fase de càrrega</b> (compressió en suport o salt): el cartílag <b>expulsa aigua i metabòlits de rebuig</b>.</li><li><b>Fase de descàrrega</b> (en reduir la pressió): el líquid sinovial torna a entrar <b>carregat de nutrients</b>.</li></ul><div class='ejemplo'><b>💡 Aplicació pràctica:</b> Fer moviments suaus en descàrrega durant les pauses estimula la nutrició articular sense desgastar l'estructura.</div>",
+    q5_tema: "🛡️ Lligaments i Warning Zone",
+    q5_texto: "Què és la 'Warning Zone' i per què la fatiga augmenta el risc d'esguinços?",
+    q5_prompt: "Quan els músculs es cansen, què passa amb les forces d'impacte? Qui les absorbeix llavors?",
+    q5_answer: "<p>Els <span class='keyword verde'>lligaments</span> són bandes de teixit connectiu que uneixen os amb os per aportar <b>estabilitat mecànica passiva</b> i mantenir l'articulació dins de rangs de moviment segurs.</p><p>Quan la <b>fatiga muscular</b> disminueix la capacitat de contenció i frenat actiu:</p><ul><li>Les forces d'impacte deixen de dissipar-se al múscul.</li><li>Es traslladen <b>directament als lligaments</b>.</li><li>L'articulació es desplaça cap als seus límits de mobilitat passiva.</li></ul><div class='alerta'><b>⚠️ Warning Zone:</b> Aquesta zona de risc exposa les bandes connectives a sobreestiraments, distensions o <b>esguinços</b>.</div>",
+    q6_tema: "🧠 Control Nerviós de la Força",
+    q6_texto: "Com gradua el sistema nerviós la força muscular entre un micro-ajust postural i un salt explosiu?",
+    q6_prompt: "Quins mecanismes creus que fa servir el cervell per passar d'un moviment molt subtil a un de molt potent?",
+    q6_answer: "<p>El sistema nerviós gradua la força de <b>dues formes principals</b>:</p><h4 style='color:#fbbf24; margin:15px 0 10px;'>1a. Reclutament d'unitats motores (Principi del Tamany)</h4><p>Les unitats motores s'activen automàticament de <b>menor a major tamany</b>:</p><ul><li><span class='keyword azul'>Fibres Tipus I</span> (petites, lentes, resistents) → per a correccions posturals fines o equilibri.</li><li><span class='keyword rojo'>Fibres Tipus IIx</span> (grans, ràpides, potents) → per al despreniment d'un <i>grand jeté</i>.</li></ul><h4 style='color:#fbbf24; margin:15px 0 10px;'>1b. Augment de la freqüència de descàrrega</h4><p>La motoneurona envia impulsos nerviosos més freqüents (<span class='keyword rosa'>sumació temporal</span>) per incrementar progressivament la tensió generada.</p>",
+    q7_tema: "🎯 Demi-Plié i Longitud-Tensió",
+    q7_texto: "Per què el demi-plié previ a un salt ha de tenir una profunditat intermèdia segons la fisiologia?",
+    q7_prompt: "Si com més profund és el plié més s'estira el múscul... per què no és millor fer-lo molt profund per guanyar més força?",
+    q7_answer: "<p>La capacitat del múscul per generar força activa depèn de la seva <span class='keyword azul'>longitud inicial</span> abans de la contracció (relació <b>longitud-tensió</b>).</p><p>A una <b>longitud intermèdia</b>, el solapament entre els filaments d'<span class='keyword rosa'>actina</span> i <span class='keyword'>miosina</span> dins del sarcòmer és <b>òptim</b>, permetent la màxima formació de ponts creuats.</p><div class='alerta'><b>⚠️ Als extrems:</b><ul style='margin-top:8px;'><li>Plié massa <b>profund</b> → múscul massa estirat → solapament ineficient.</li><li>Plié massa <b>superficial</b> → múscul massa acurtat → solapament ineficient.</li></ul>En tots dos casos, la força generada per al salt <b>disminueix</b>.</div>",
+    q8_tema: "😓 Tipus de Fatiga",
+    q8_texto: "Quina diferència hi ha entre la fatiga central i la fatiga perifèrica durant un assaig o funció?",
+    q8_prompt: "La fatiga pot originar-se al cervell o al múscul. Quines conseqüències creus que té cadascuna?",
+    q8_answer: "<div style='display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:10px;'><div style='background:rgba(139, 92, 246, 0.15); padding:15px; border-radius:8px; border-left:4px solid #8b5cf6;'><h4 style='color:#a78bfa;'>🧠 Fatiga CENTRAL</h4><p style='font-size:14px;'>Es produeix al <b>sistema nerviós central</b>.</p><p style='font-size:14px;'><b>Efecte:</b> Disminució de l'activació nerviosa.</p><p style='font-size:14px;'><b>Conseqüència:</b> Redueix la <b>precisió, coordinació i control motor fi</b>.</p></div><div style='background:rgba(239, 68, 68, 0.15); padding:15px; border-radius:8px; border-left:4px solid #ef4444;'><h4 style='color:#f87171;'>💪 Fatiga PERIFÈRICA</h4><p style='font-size:14px;'>Es produeix al <b>pròpi múscul</b>.</p><p style='font-size:14px;'><b>Efecte:</b> Esgotament de substrats (ATP), acumulació de metabòlits, alteració del <span class='keyword rosa'>Ca²⁺</span>.</p><p style='font-size:14px;'><b>Conseqüència:</b> Redueix directament la <b>capacitat mecànica</b> de generar força.</p></div></div>",
+    q9_tema: "⚖️ Coactivació Muscular",
+    q9_texto: "Per què la coactivació muscular és clau per al control postural i quan resulta perjudicial?",
+    q9_prompt: "Si la coactivació és la contracció simultània d'agonistes i antagonistes... quin avantatge té i quin inconvenient?",
+    q9_answer: "<p>La <span class='keyword verde'>coactivació</span> és la contracció simultània dels músculs agonistes i antagonistes al voltant d'una articulació.</p><div style='display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:15px;'><div style='background:rgba(16, 185, 129, 0.15); padding:15px; border-radius:8px;'><h4 style='color:#34d399;'>✅ Quan és BENEFICIOSA</h4><p style='font-size:14px;'>A la dansa, la seva funció principal és aportar <b>estabilitat articular</b> i permetre <b>micro-ajustos fluids</b> en equilibris o aterratges exigents.</p></div><div style='background:rgba(239, 68, 68, 0.15); padding:15px; border-radius:8px;'><h4 style='color:#f87171;'>❌ Quan és PERJUDICIAL</h4><p style='font-size:14px;'>Si es torna <b>excessiva</b> (per fatiga o estrès):</p><ul style='font-size:14px; margin-top:8px;'><li>Genera <b>rigidesa articular</b>.</li><li>Incrementa el <b>gast energètic</b>.</li><li>Accelerar l'esgotament.</li></ul></div></div>",
+    q10_tema: "🌡️ Homeòstasi i Termoregulació",
+    q10_texto: "Com reacciona l'organisme per restaurar l'homeòstasi davant l'augment de temperatura i CO₂ en un assaig intens?",
+    q10_prompt: "Quan el cos s'escalfa i acumula CO₂, quins mecanismes s'activen per refredar-lo i eliminar el gas?",
+    q10_answer: "<p>Durant l'esforç físic, el <span class='keyword azul'>medi intern (LEC)</span> trenca el seu equilibri dinàmic o <span class='keyword verde'>homeòstasi</span>. El cos activa bucles de <b>retroalimentació negativa</b> per contrarestar les desviacions:</p><div style='display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:15px;'><div style='background:rgba(239, 68, 68, 0.15); padding:15px; border-radius:8px;'><h4 style='color:#f87171;'>🌡️ Temperatura</h4><p style='font-size:14px;'>Els <b>termoreceptors</b> detecten l'ascens tèrmic → informen l'<b>hipotàlem</b> → desencadenen:</p><ul style='font-size:14px; margin-top:8px;'><li><span class='keyword rojo'>Vasodilatació</span></li><li><span class='keyword rosa'>Sudoració</span></li></ul><p style='font-size:14px; margin-top:8px;'>→ Dissipen calor.</p></div><div style='background:rgba(56, 189, 248, 0.15); padding:15px; border-radius:8px;'><h4 style='color:#38bdf8;'>💨 CO₂ i O₂</h4><p style='font-size:14px;'>Els <b>quimioreceptors</b> detecten l'augment de CO₂ i la caiguda d'O₂ → envien senyals al <b>centre respiratori del bulb raquidi</b> → augmenten:</p><ul style='font-size:14px; margin-top:8px;'><li><span class='keyword azul'>Freqüència respiratòria</span></li><li><span class='keyword azul'>Gast cardíac</span></li></ul><p style='font-size:14px; margin-top:8px;'>→ Eliminen CO₂ i restauren O₂.</p></div></div>",
+    sintesi_title: "🎯 Síntesi: Els 5 Grans Principis",
+    sintesi_intro: "Les 10 preguntes es redueixen a <b>5 idees clau</b> que has de dominar:",
+    sin1_title: "🔋 1. L'energia ho condiciona tot",
+    sin1_text: "Sense disponibilitat energètica adequada, ni l'os es remodela, ni el múscul es contrau eficientment (RED-S).",
+    sin2_title: "💧 2. L'homeòstasi és dinàmica",
+    sin2_text: "El cos constantment ajusta temperatura, pH, electròlits i gasos mitjançant retroalimentació negativa.",
+    sin3_title: "⚡ 3. ATP = llibertat de moviment",
+    sin3_text: "No només dóna energia: permet el desacoblatge. Sense ATP, hi ha rigidesa (encara que hi hagi Ca²⁺).",
+    sin4_title: "🧠 4. El control nerviós gradua la força",
+    sin4_text: "Reclutament per tamany + freqüència de descàrrega = des de micro-ajustos fins a salts explosius.",
+    sin5_title: "🛡️ 5. La fatiga és un senyal d'alarma",
+    sin5_text: "Central (al cervell) i perifèrica (al múscul). Ignorar-la → compensacions → lesions (Warning Zone).",
+    final_title: "💡 Missatge final:",
+    final_text: "El cos del ballarí és un <b>sistema integrat</b>. Cada decisió (nutrició, hidratació, descans, dosificació de càrrega) afecta tots els nivells: molecular, muscular, articular i nerviós."
+  },
+  es: {
+    header_title: "❓ FAQ Reflexivo · Nutrición, Hidratación y Prevención",
+    btn_prev: "← Anterior", btn_index: "🗺️ Índice", btn_next: "Siguiente →",
+    s1_title: "Preguntas para<br>Reflexionar",
+    s1_subtitle: "Nutrición · Hidratación · Prevención de Lesiones",
+    s1_text: "Esta presentación te invita a <b>pensar antes de responder</b>.<br>En cada diapositiva encontrarás una pregunta: primero reflexiona y escribe tu hipótesis, después revela la respuesta científica.",
+    s1_hint: "Usa las flechas ← → del teclado o los botones para navegar",
+    s2_title: "🗺️ Las 10 Preguntas Clave",
+    s2_intro: "Haz clic en cualquiera para ir directamente. Recuerda: <b>piensa primero, después mira la respuesta</b>.",
+    s2_c1_cat: "RED-S", s2_c1_text: "¿Por qué entrenar mucho no garantiza huesos fuertes?",
+    s2_c2_cat: "Hidratación", s2_c2_text: "¿Por qué aparecen calambres y cómo ayudan los electrolitos?",
+    s2_c3_cat: "ATP", s2_c3_text: "¿Por qué la falta de ATP provoca rigidez?",
+    s2_c4_cat: "Cartílago", s2_c4_text: "¿Cómo se nutren las articulaciones sin vasos sanguíneos?",
+    s2_c5_cat: "Ligamentos", s2_c5_text: "¿Qué es la 'Warning Zone' y por qué aumenta el riesgo de esguinces?",
+    s2_c6_cat: "Control nervioso", s2_c6_text: "¿Cómo gradúa el SN la fuerza entre un micro-ajuste y un salto?",
+    s2_c7_cat: "Biomecánica", s2_c7_text: "¿Por qué el demi-plié debe tener profundidad intermedia?",
+    s2_c8_cat: "Fatiga", s2_c8_text: "¿Diferencia entre fatiga central y periférica?",
+    s2_c9_cat: "Coactivación", s2_c9_text: "¿Cuándo la coactivación es perjudicial?",
+    s2_c10_cat: "Homeostasis", s2_c10_text: "¿Cómo reacciona el organismo ante el aumento de temperatura y CO₂?",
+    reflexion_title: "💭 Tu hipótesis",
+    reflexion_placeholder: "Escribe aquí tu reflexión...",
+    btn_reveal: "🔍 Revelar respuesta científica",
+    btn_hide: "🙈 Ocultar respuesta",
+    answer_title: "📚 Respuesta",
+    q1_tema: "🦴 RED-S y Salud Ósea",
+    q1_texto: "¿Por qué entrenar mucho NO es suficiente para tener huesos fuertes si la dieta es insuficiente?",
+    q1_prompt: "Antes de mirar la respuesta, escribe qué crees que pasa en el cuerpo de un bailarín que entrena muchas horas pero come poco:",
+    q1_answer: "<p>Entrenar duro <b>no garantiza</b> una buena densidad ósea si la <span class='keyword azul'>disponibilidad energética</span> es insuficiente (síndrome <span class='keyword rojo'>RED-S</span>).</p><p>Cuando un bailarín no consume la energía necesaria:</p><ul><li>Se altera la <b>función hormonal</b>.</li><li>Se interrumpe el trabajo de los <span class='keyword verde'>osteoblastos</span> (células que depositan la nueva matriz ósea u <span class='keyword'>osteoide</span>).</li><li>La reparación de los microdaños causados por los saltos no compensa el impacto recibido.</li></ul><div class='alerta'><b>⚠️ Consecuencia:</b> Acumulación de microdaño → <b>fracturas por estrés</b>.</div><p><b>Nutrientes imprescindibles:</b> energía suficiente, proteínas, calcio y vitamina D.</p>",
+    q2_tema: "💧 Hidratación y Calambres",
+    q2_texto: "¿Por qué aparecen los calambres musculares y cómo ayuda la hidratación con electrolitos?",
+    q2_prompt: "¿Qué crees que pasa a nivel celular cuando un músculo se contrae de forma involuntaria y dolorosa?",
+    q2_answer: "<p>Un <b>calambre muscular</b> es una contracción involuntaria, brusca y dolorosa provocada por el aumento de excitabilidad de la <span class='keyword azul'>motoneurona α</span>, que genera descargas eléctricas repetitivas mantenidas.</p><p><b>Factores que lo desencadenan:</b></p><ul><li>Ejercicio intenso</li><li>Calor y deshidratación</li><li>Pérdida de <span class='keyword rosa'>electrolitos</span> esenciales: Na⁺, K⁺, Mg²⁺</li></ul><div class='ejemplo'><b>💡 Solución:</b> Beber agua con electrolitos de forma fraccionada durante el ensayo → repone los minerales perdidos en el <span class='keyword'>líquido extracelular (LEC)</span> → restablece la <b>homeostasis</b> → previene espasmos.</div>",
+    q3_tema: "⚡ ATP y Rigidez",
+    q3_texto: "¿Por qué la falta de ATP provoca rigidez muscular al final del ensayo?",
+    q3_prompt: "El ATP es 'energía'. Pero... ¿por qué la falta de energía provoca rigidez en lugar de debilidad?",
+    q3_answer: "<p>El <span class='keyword azul'>ATP</span> es indispensable para que la <b>miosina se desacople y se separe de la actina</b> al finalizar cada ciclo de contracción.</p><p>Durante ensayos prolongados:</p><ul><li>La <span class='keyword rojo'>fatiga periférica</span> agota las reservas energéticas.</li><li>Se interrumpe el manejo del <span class='keyword rosa'>Ca²⁺</span>.</li><li>Al reducirse el ATP, las <b>cabezas de miosina tardan en dejar la actina</b>.</li></ul><div class='alerta'><b>⚠️ Consecuencia:</b> Dificulta la <b>amortiguación excéntrica</b> → incrementa la rigidez y pesadez muscular.</div><div class='ejemplo'><b>💡 Curiosidad:</b> Este es el mismo mecanismo del <i>rigor mortis</i>: sin ATP, la miosina queda 'enganchada' a la actina.</div>",
+    q4_tema: "🦵 Nutrición del Cartílago",
+    q4_texto: "¿Cómo se nutren las articulaciones si el cartílago no tiene vasos sanguíneos?",
+    q4_prompt: "Si el cartílago no recibe sangre, ¿de dónde saca los nutrientes? ¿Cómo crees que llega el alimento a las células?",
+    q4_answer: "<p>El <span class='keyword verde'>cartílago articular</span> es un tejido <b>avascular</b>: no recibe sangre directamente. Su nutrición depende del <span class='keyword azul'>líquido sinovial</span> mediante un mecanismo de <b>bombeo mecánico por presión</b>.</p><p>El ciclo funciona así:</p><ul><li><b>Fase de carga</b> (compresión en apoyo o salto): el cartílago <b>expulsa agua y metabolitos de desecho</b>.</li><li><b>Fase de descarga</b> (al reducir la presión): el líquido sinovial vuelve a entrar <b>cargado de nutrientes</b>.</li></ul><div class='ejemplo'><b>💡 Aplicación práctica:</b> Hacer movimientos suaves en descarga durante las pausas estimula la nutrición articular sin desgastar la estructura.</div>",
+    q5_tema: "🛡️ Ligamentos y Warning Zone",
+    q5_texto: "¿Qué es la 'Warning Zone' y por qué la fatiga aumenta el riesgo de esguinces?",
+    q5_prompt: "Cuando los músculos se cansan, ¿qué pasa con las fuerzas de impacto? ¿Quién las absorbe entonces?",
+    q5_answer: "<p>Los <span class='keyword verde'>ligamentos</span> son bandas de tejido conectivo que unen hueso con hueso para aportar <b>estabilidad mecánica pasiva</b> y mantener la articulación dentro de rangos de movimiento seguros.</p><p>Cuando la <b>fatiga muscular</b> disminuye la capacidad de contención y frenado activo:</p><ul><li>Las fuerzas de impacto dejan de disiparse en el músculo.</li><li>Se trasladan <b>directamente a los ligamentos</b>.</li><li>La articulación se desplaza hacia sus límites de movilidad pasiva.</li></ul><div class='alerta'><b>⚠️ Warning Zone:</b> Esta zona de riesgo expone las bandas conectivas a sobreestiramientos, distensiones o <b>esguinces</b>.</div>",
+    q6_tema: "🧠 Control Nervioso de la Fuerza",
+    q6_texto: "¿Cómo gradúa el sistema nervioso la fuerza muscular entre un micro-ajuste postural y un salto explosivo?",
+    q6_prompt: "¿Qué mecanismos crees que usa el cerebro para pasar de un movimiento muy sutil a uno muy potente?",
+    q6_answer: "<p>El sistema nervioso gradúa la fuerza de <b>dos formas principales</b>:</p><h4 style='color:#fbbf24; margin:15px 0 10px;'>1a. Reclutamiento de unidades motoras (Principio del Tamaño)</h4><p>Las unidades motoras se activan automáticamente de <b>menor a mayor tamaño</b>:</p><ul><li><span class='keyword azul'>Fibras Tipo I</span> (pequeñas, lentas, resistentes) → para correcciones posturales finas o equilibrio.</li><li><span class='keyword rojo'>Fibras Tipo IIx</span> (grandes, rápidas, potentes) → para el despegue de un <i>grand jeté</i>.</li></ul><h4 style='color:#fbbf24; margin:15px 0 10px;'>1b. Aumento de la frecuencia de descarga</h4><p>La motoneurona envía impulsos nerviosos más frecuentes (<span class='keyword rosa'>sumación temporal</span>) para incrementar progresivamente la tensión generada.</p>",
+    q7_tema: "🎯 Demi-Plié y Longitud-Tensión",
+    q7_texto: "¿Por qué el demi-plié previo a un salto debe tener una profundidad intermedia según la fisiología?",
+    q7_prompt: "Si cuanto más profundo es el plié más se estira el músculo... ¿por qué no es mejor hacerlo muy profundo para ganar más fuerza?",
+    q7_answer: "<p>La capacidad del músculo para generar fuerza activa depende de su <span class='keyword azul'>longitud inicial</span> antes de la contracción (relación <b>longitud-tensión</b>).</p><p>A una <b>longitud intermedia</b>, el solapamiento entre los filamentos de <span class='keyword rosa'>actina</span> y <span class='keyword'>miosina</span> dentro del sarcómero es <b>óptimo</b>, permitiendo la máxima formación de puentes cruzados.</p><div class='alerta'><b>⚠️ En los extremos:</b><ul style='margin-top:8px;'><li>Plié demasiado <b>profundo</b> → músculo demasiado estirado → solapamiento ineficiente.</li><li>Plié demasiado <b>superficial</b> → músculo demasiado acortado → solapamiento ineficiente.</li></ul>En ambos casos, la fuerza generada para el salto <b>disminuye</b>.</div>",
+    q8_tema: "😓 Tipos de Fatiga",
+    q8_texto: "¿Qué diferencia hay entre la fatiga central y la fatiga periférica durante un ensayo o función?",
+    q8_prompt: "La fatiga puede originarse en el cerebro o en el músculo. ¿Qué consecuencias crees que tiene cada una?",
+    q8_answer: "<div style='display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:10px;'><div style='background:rgba(139, 92, 246, 0.15); padding:15px; border-radius:8px; border-left:4px solid #8b5cf6;'><h4 style='color:#a78bfa;'>🧠 Fatiga CENTRAL</h4><p style='font-size:14px;'>Se produce en el <b>sistema nervioso central</b>.</p><p style='font-size:14px;'><b>Efecto:</b> Disminución de la activación nerviosa.</p><p style='font-size:14px;'><b>Consecuencia:</b> Reduce la <b>precisión, coordinación y control motor fino</b>.</p></div><div style='background:rgba(239, 68, 68, 0.15); padding:15px; border-radius:8px; border-left:4px solid #ef4444;'><h4 style='color:#f87171;'>💪 Fatiga PERIFÉRICA</h4><p style='font-size:14px;'>Se produce en el <b>propio músculo</b>.</p><p style='font-size:14px;'><b>Efecto:</b> Agotamiento de sustratos (ATP), acumulación de metabolitos, alteración del <span class='keyword rosa'>Ca²⁺</span>.</p><p style='font-size:14px;'><b>Consecuencia:</b> Reduce directamente la <b>capacidad mecánica</b> de generar fuerza.</p></div></div>",
+    q9_tema: "⚖️ Coactivación Muscular",
+    q9_texto: "¿Por qué la coactivación muscular es clave para el control postural y cuándo resulta perjudicial?",
+    q9_prompt: "Si la coactivación es la contracción simultánea de agonistas y antagonistas... ¿qué ventaja tiene y qué inconveniente?",
+    q9_answer: "<p>La <span class='keyword verde'>coactivación</span> es la contracción simultánea de los músculos agonistas y antagonistas alrededor de una articulación.</p><div style='display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:15px;'><div style='background:rgba(16, 185, 129, 0.15); padding:15px; border-radius:8px;'><h4 style='color:#34d399;'>✅ Cuándo es BENEFICIOSA</h4><p style='font-size:14px;'>En la danza, su función principal es aportar <b>estabilidad articular</b> y permitir <b>micro-ajustes fluidos</b> en equilibrios o aterrizajes exigentes.</p></div><div style='background:rgba(239, 68, 68, 0.15); padding:15px; border-radius:8px;'><h4 style='color:#f87171;'>❌ Cuándo es PERJUDICIAL</h4><p style='font-size:14px;'>Si se vuelve <b>excesiva</b> (por fatiga o estrés):</p><ul style='font-size:14px; margin-top:8px;'><li>Genera <b>rigidez articular</b>.</li><li>Incrementa el <b>gasto energético</b>.</li><li>Acelera el agotamiento.</li></ul></div></div>",
+    q10_tema: "🌡️ Homeostasis y Termorregulación",
+    q10_texto: "¿Cómo reacciona el organismo para restaurar la homeostasis ante el aumento de temperatura y CO₂ en un ensayo intenso?",
+    q10_prompt: "Cuando el cuerpo se calienta y acumula CO₂, ¿qué mecanismos se activan para enfriarlo y eliminar el gas?",
+    q10_answer: "<p>Durante el esfuerzo físico, el <span class='keyword azul'>medio interno (LEC)</span> rompe su equilibrio dinámico u <span class='keyword verde'>homeostasis</span>. El cuerpo activa bucles de <b>retroalimentación negativa</b> para contrarrestar las desviaciones:</p><div style='display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:15px;'><div style='background:rgba(239, 68, 68, 0.15); padding:15px; border-radius:8px;'><h4 style='color:#f87171;'>🌡️ Temperatura</h4><p style='font-size:14px;'>Los <b>termorreceptores</b> detectan el ascenso térmico → informan al <b>hipotálamo</b> → desencadenan:</p><ul style='font-size:14px; margin-top:8px;'><li><span class='keyword rojo'>Vasodilatación</span></li><li><span class='keyword rosa'>Sudoración</span></li></ul><p style='font-size:14px; margin-top:8px;'>→ Disipan calor.</p></div><div style='background:rgba(56, 189, 248, 0.15); padding:15px; border-radius:8px;'><h4 style='color:#38bdf8;'>💨 CO₂ y O₂</h4><p style='font-size:14px;'>Los <b>quimiorreceptores</b> detectan el aumento de CO₂ y la caída de O₂ → envían señales al <b>centro respiratorio del bulbo raquídeo</b> → aumentan:</p><ul style='font-size:14px; margin-top:8px;'><li><span class='keyword azul'>Frecuencia respiratoria</span></li><li><span class='keyword azul'>Gasto cardíaco</span></li></ul><p style='font-size:14px; margin-top:8px;'>→ Eliminan CO₂ y restauran O₂.</p></div></div>",
+    sintesi_title: "🎯 Síntesis: Los 5 Grandes Principios",
+    sintesi_intro: "Las 10 preguntas se reducen a <b>5 ideas clave</b> que debes dominar:",
+    sin1_title: "🔋 1. La energía lo condiciona todo",
+    sin1_text: "Sin disponibilidad energética adecuada, ni el hueso se remodela, ni el músculo se contrae eficientemente (RED-S).",
+    sin2_title: "💧 2. La homeostasis es dinámica",
+    sin2_text: "El cuerpo constantemente ajusta temperatura, pH, electrolitos y gases mediante retroalimentación negativa.",
+    sin3_title: "⚡ 3. ATP = libertad de movimiento",
+    sin3_text: "No solo da energía: permite el desacoplamiento. Sin ATP, hay rigidez (aunque haya Ca²⁺).",
+    sin4_title: "🧠 4. El control nervioso gradúa la fuerza",
+    sin4_text: "Reclutamiento por tamaño + frecuencia de descarga = desde micro-ajustes hasta saltos explosivos.",
+    sin5_title: "🛡️ 5. La fatiga es una señal de alarma",
+    sin5_text: "Central (en el cerebro) y periférica (en el músculo). Ignorarla → compensaciones → lesiones (Warning Zone).",
+    final_title: "💡 Mensaje final:",
+    final_text: "El cuerpo del bailarín es un <b>sistema integrado</b>. Cada decisión (nutrición, hidratación, descanso, dosificación de carga) afecta a todos los niveles: molecular, muscular, articular y nervioso."
+  },
+  en: {
+    header_title: "❓ Reflective FAQ · Nutrition, Hydration and Injury Prevention",
+    btn_prev: "← Previous", btn_index: "🗺️ Index", btn_next: "Next →",
+    s1_title: "Questions to<br>Reflect On",
+    s1_subtitle: "Nutrition · Hydration · Injury Prevention",
+    s1_text: "This presentation invites you to <b>think before answering</b>.<br>On each slide you'll find a question: first reflect and write your hypothesis, then reveal the scientific answer.",
+    s1_hint: "Use the ← → arrow keys or the buttons to navigate",
+    s2_title: "🗺️ The 10 Key Questions",
+    s2_intro: "Click any to jump directly. Remember: <b>think first, then look at the answer</b>.",
+    s2_c1_cat: "RED-S", s2_c1_text: "Why doesn't training a lot guarantee strong bones?",
+    s2_c2_cat: "Hydration", s2_c2_text: "Why do cramps appear and how do electrolytes help?",
+    s2_c3_cat: "ATP", s2_c3_text: "Why does lack of ATP cause stiffness?",
+    s2_c4_cat: "Cartilage", s2_c4_text: "How are joints nourished without blood vessels?",
+    s2_c5_cat: "Ligaments", s2_c5_text: "What is the 'Warning Zone' and why does it increase sprain risk?",
+    s2_c6_cat: "Nervous control", s2_c6_text: "How does the NS grade force from a micro-adjustment to a jump?",
+    s2_c7_cat: "Biomechanics", s2_c7_text: "Why should demi-plié have intermediate depth?",
+    s2_c8_cat: "Fatigue", s2_c8_text: "Difference between central and peripheral fatigue?",
+    s2_c9_cat: "Coactivation", s2_c9_text: "When is coactivation harmful?",
+    s2_c10_cat: "Homeostasis", s2_c10_text: "How does the body react to increased temperature and CO₂?",
+    reflexion_title: "💭 Your hypothesis",
+    reflexion_placeholder: "Write your reflection here...",
+    btn_reveal: "🔍 Reveal scientific answer",
+    btn_hide: "🙈 Hide answer",
+    answer_title: "📚 Answer",
+    q1_tema: "🦴 RED-S and Bone Health",
+    q1_texto: "Why is training a lot NOT enough to have strong bones if the diet is insufficient?",
+    q1_prompt: "Before looking at the answer, write what you think happens in the body of a dancer who trains many hours but eats little:",
+    q1_answer: "<p>Training hard <b>does not guarantee</b> good bone density if <span class='keyword azul'>energy availability</span> is insufficient (<span class='keyword rojo'>RED-S</span> syndrome).</p><p>When a dancer doesn't consume the necessary energy:</p><ul><li><b>Hormonal function</b> is altered.</li><li>The work of <span class='keyword verde'>osteoblasts</span> (cells that deposit the new bone matrix or <span class='keyword'>osteoid</span>) is interrupted.</li><li>Repair of microdamage caused by jumps doesn't compensate for the impact received.</li></ul><div class='alerta'><b>⚠️ Consequence:</b> Accumulated microdamage → <b>stress fractures</b>.</div><p><b>Essential nutrients:</b> sufficient energy, proteins, calcium and vitamin D.</p>",
+    q2_tema: "💧 Hydration and Cramps",
+    q2_texto: "Why do muscle cramps appear and how does hydration with electrolytes help?",
+    q2_prompt: "What do you think happens at the cellular level when a muscle contracts involuntarily and painfully?",
+    q2_answer: "<p>A <b>muscle cramp</b> is an involuntary, sudden and painful contraction caused by increased excitability of the <span class='keyword azul'>α motor neuron</span>, which generates sustained repetitive electrical discharges.</p><p><b>Triggering factors:</b></p><ul><li>Intense exercise</li><li>Heat and dehydration</li><li>Loss of essential <span class='keyword rosa'>electrolytes</span>: Na⁺, K⁺, Mg²⁺</li></ul><div class='ejemplo'><b>💡 Solution:</b> Drink water with electrolytes in small amounts during rehearsal → replenishes minerals lost in the <span class='keyword'>extracellular fluid (ECF)</span> → restores <b>homeostasis</b> → prevents spasms.</div>",
+    q3_tema: "⚡ ATP and Stiffness",
+    q3_texto: "Why does lack of ATP cause muscle stiffness at the end of rehearsal?",
+    q3_prompt: "ATP is 'energy'. But... why does lack of energy cause stiffness instead of weakness?",
+    q3_answer: "<p><span class='keyword azul'>ATP</span> is essential for <b>myosin to detach and separate from actin</b> at the end of each contraction cycle.</p><p>During prolonged rehearsals:</p><ul><li><span class='keyword rojo'>Peripheral fatigue</span> depletes energy reserves.</li><li><span class='keyword rosa'>Ca²⁺</span> handling is interrupted.</li><li>As ATP decreases, <b>myosin heads take longer to leave actin</b>.</li></ul><div class='alerta'><b>⚠️ Consequence:</b> Hinders <b>eccentric cushioning</b> → increases muscle stiffness and heaviness.</div><div class='ejemplo'><b>💡 Curiosity:</b> This is the same mechanism as <i>rigor mortis</i>: without ATP, myosin stays 'stuck' to actin.</div>",
+    q4_tema: "🦵 Cartilage Nutrition",
+    q4_texto: "How are joints nourished if cartilage has no blood vessels?",
+    q4_prompt: "If cartilage doesn't receive blood, where does it get nutrients? How do you think food reaches the cells?",
+    q4_answer: "<p><span class='keyword verde'>Articular cartilage</span> is <b>avascular</b> tissue: it doesn't receive blood directly. Its nutrition depends on <span class='keyword azul'>synovial fluid</span> through a <b>mechanical pressure pumping</b> mechanism.</p><p>The cycle works like this:</p><ul><li><b>Loading phase</b> (compression in support or jump): cartilage <b>expels water and waste metabolites</b>.</li><li><b>Unloading phase</b> (as pressure reduces): synovial fluid re-enters <b>loaded with nutrients</b>.</li></ul><div class='ejemplo'><b>💡 Practical application:</b> Gentle unloading movements during pauses stimulate joint nutrition without wearing down the structure.</div>",
+    q5_tema: "🛡️ Ligaments and Warning Zone",
+    q5_texto: "What is the 'Warning Zone' and why does fatigue increase sprain risk?",
+    q5_prompt: "When muscles get tired, what happens to impact forces? Who absorbs them then?",
+    q5_answer: "<p><span class='keyword verde'>Ligaments</span> are bands of connective tissue that join bone to bone to provide <b>passive mechanical stability</b> and keep the joint within safe range of motion.</p><p>When <b>muscle fatigue</b> reduces active containment and braking capacity:</p><ul><li>Impact forces stop dissipating in the muscle.</li><li>They transfer <b>directly to the ligaments</b>.</li><li>The joint moves toward its passive mobility limits.</li></ul><div class='alerta'><b>⚠️ Warning Zone:</b> This risk zone exposes connective bands to overstretching, strains or <b>sprains</b>.</div>",
+    q6_tema: "🧠 Nervous Control of Force",
+    q6_texto: "How does the nervous system grade muscle force between a postural micro-adjustment and an explosive jump?",
+    q6_prompt: "What mechanisms do you think the brain uses to go from a very subtle movement to a very powerful one?",
+    q6_answer: "<p>The nervous system grades force in <b>two main ways</b>:</p><h4 style='color:#fbbf24; margin:15px 0 10px;'>1a. Motor unit recruitment (Size Principle)</h4><p>Motor units activate automatically from <b>smallest to largest</b>:</p><ul><li><span class='keyword azul'>Type I fibers</span> (small, slow, resistant) → for fine postural corrections or balance.</li><li><span class='keyword rojo'>Type IIx fibers</span> (large, fast, powerful) → for the take-off of a <i>grand jeté</i>.</li></ul><h4 style='color:#fbbf24; margin:15px 0 10px;'>1b. Increased firing frequency</h4><p>The motor neuron sends more frequent nerve impulses (<span class='keyword rosa'>temporal summation</span>) to progressively increase the tension generated.</p>",
+    q7_tema: "🎯 Demi-Plié and Length-Tension",
+    q7_texto: "Why should the demi-plié before a jump have an intermediate depth according to physiology?",
+    q7_prompt: "If the deeper the plié the more the muscle stretches... why isn't it better to make it very deep to gain more force?",
+    q7_answer: "<p>The muscle's ability to generate active force depends on its <span class='keyword azul'>initial length</span> before contraction (<b>length-tension</b> relationship).</p><p>At an <b>intermediate length</b>, the overlap between <span class='keyword rosa'>actin</span> and <span class='keyword'>myosin</span> filaments within the sarcomere is <b>optimal</b>, allowing maximum cross-bridge formation.</p><div class='alerta'><b>⚠️ At the extremes:</b><ul style='margin-top:8px;'><li>Plié too <b>deep</b> → muscle too stretched → inefficient overlap.</li><li>Plié too <b>shallow</b> → muscle too shortened → inefficient overlap.</li></ul>In both cases, the force generated for the jump <b>decreases</b>.</div>",
+    q8_tema: "😓 Types of Fatigue",
+    q8_texto: "What is the difference between central and peripheral fatigue during rehearsal or performance?",
+    q8_prompt: "Fatigue can originate in the brain or the muscle. What consequences do you think each has?",
+    q8_answer: "<div style='display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:10px;'><div style='background:rgba(139, 92, 246, 0.15); padding:15px; border-radius:8px; border-left:4px solid #8b5cf6;'><h4 style='color:#a78bfa;'>🧠 CENTRAL fatigue</h4><p style='font-size:14px;'>Occurs in the <b>central nervous system</b>.</p><p style='font-size:14px;'><b>Effect:</b> Decreased nerve activation.</p><p style='font-size:14px;'><b>Consequence:</b> Reduces <b>precision, coordination and fine motor control</b>.</p></div><div style='background:rgba(239, 68, 68, 0.15); padding:15px; border-radius:8px; border-left:4px solid #ef4444;'><h4 style='color:#f87171;'>💪 PERIPHERAL fatigue</h4><p style='font-size:14px;'>Occurs in the <b>muscle itself</b>.</p><p style='font-size:14px;'><b>Effect:</b> Substrate depletion (ATP), metabolite accumulation, altered <span class='keyword rosa'>Ca²⁺</span>.</p><p style='font-size:14px;'><b>Consequence:</b> Directly reduces the <b>mechanical capacity</b> to generate force.</p></div></div>",
+    q9_tema: "⚖️ Muscle Coactivation",
+    q9_texto: "Why is muscle coactivation key for postural control and when does it become harmful?",
+    q9_prompt: "If coactivation is the simultaneous contraction of agonists and antagonists... what advantage does it have and what drawback?",
+    q9_answer: "<p><span class='keyword verde'>Coactivation</span> is the simultaneous contraction of agonist and antagonist muscles around a joint.</p><div style='display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:15px;'><div style='background:rgba(16, 185, 129, 0.15); padding:15px; border-radius:8px;'><h4 style='color:#34d399;'>✅ When it's BENEFICIAL</h4><p style='font-size:14px;'>In dance, its main function is to provide <b>joint stability</b> and allow <b>fluid micro-adjustments</b> in demanding balances or landings.</p></div><div style='background:rgba(239, 68, 68, 0.15); padding:15px; border-radius:8px;'><h4 style='color:#f87171;'>❌ When it's HARMFUL</h4><p style='font-size:14px;'>If it becomes <b>excessive</b> (from fatigue or stress):</p><ul style='font-size:14px; margin-top:8px;'><li>Generates <b>joint stiffness</b>.</li><li>Increases <b>energy expenditure</b>.</li><li>Accelerates exhaustion.</li></ul></div></div>",
+    q10_tema: "🌡️ Homeostasis and Thermoregulation",
+    q10_texto: "How does the body react to restore homeostasis faced with increased temperature and CO₂ during intense rehearsal?",
+    q10_prompt: "When the body heats up and accumulates CO₂, what mechanisms activate to cool it and eliminate the gas?",
+    q10_answer: "<p>During physical effort, the <span class='keyword azul'>internal environment (ECF)</span> breaks its dynamic equilibrium or <span class='keyword verde'>homeostasis</span>. The body activates <b>negative feedback</b> loops to counteract deviations:</p><div style='display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:15px;'><div style='background:rgba(239, 68, 68, 0.15); padding:15px; border-radius:8px;'><h4 style='color:#f87171;'>🌡️ Temperature</h4><p style='font-size:14px;'><b>Thermoreceptors</b> detect the thermal rise → inform the <b>hypothalamus</b> → trigger:</p><ul style='font-size:14px; margin-top:8px;'><li><span class='keyword rojo'>Vasodilation</span></li><li><span class='keyword rosa'>Sweating</span></li></ul><p style='font-size:14px; margin-top:8px;'>→ Dissipate heat.</p></div><div style='background:rgba(56, 189, 248, 0.15); padding:15px; border-radius:8px;'><h4 style='color:#38bdf8;'>💨 CO₂ and O₂</h4><p style='font-size:14px;'><b>Chemoreceptors</b> detect increased CO₂ and falling O₂ → send signals to the <b>respiratory center of the medulla oblongata</b> → increase:</p><ul style='font-size:14px; margin-top:8px;'><li><span class='keyword azul'>Respiratory rate</span></li><li><span class='keyword azul'>Cardiac output</span></li></ul><p style='font-size:14px; margin-top:8px;'>→ Eliminate CO₂ and restore O₂.</p></div></div>",
+    sintesi_title: "🎯 Synthesis: The 5 Great Principles",
+    sintesi_intro: "The 10 questions reduce to <b>5 key ideas</b> you must master:",
+    sin1_title: "🔋 1. Energy conditions everything",
+    sin1_text: "Without adequate energy availability, neither bone remodels nor muscle contracts efficiently (RED-S).",
+    sin2_title: "💧 2. Homeostasis is dynamic",
+    sin2_text: "The body constantly adjusts temperature, pH, electrolytes and gases through negative feedback.",
+    sin3_title: "⚡ 3. ATP = freedom of movement",
+    sin3_text: "It doesn't just give energy: it allows detachment. Without ATP, there is stiffness (even with Ca²⁺).",
+    sin4_title: "🧠 4. Nervous control grades force",
+    sin4_text: "Recruitment by size + firing frequency = from micro-adjustments to explosive jumps.",
+    sin5_title: "🛡️ 5. Fatigue is an alarm signal",
+    sin5_text: "Central (in the brain) and peripheral (in the muscle). Ignoring it → compensations → injuries (Warning Zone).",
+    final_title: "💡 Final message:",
+    final_text: "The dancer's body is an <b>integrated system</b>. Every decision (nutrition, hydration, rest, load dosing) affects all levels: molecular, muscular, joint and nervous."
+  }
+};
+
+let actual = 0;
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+
+function setLanguage(lang, btn) {
+  currentLang = lang;
+  document.querySelectorAll('.language-selector button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key]) {
+      el.innerHTML = translations[lang][key];
+    }
+  });
+  
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (translations[lang] && translations[lang][key]) {
+      el.placeholder = translations[lang][key];
+    }
+  });
+  
+  // Update reveal buttons text
+  document.querySelectorAll('.btn-revelar').forEach(btn => {
+    const respuesta = btn.nextElementSibling;
+    if (respuesta && respuesta.classList.contains('visible')) {
+      btn.textContent = translations[lang].btn_hide;
+    } else {
+      btn.textContent = translations[lang].btn_reveal;
+    }
+  });
+  
+  document.documentElement.lang = lang;
+}
+
+function mostrar(n) {
+  slides.forEach(s => s.classList.remove('activa'));
+  slides[n].classList.add('activa');
+  slides[n].scrollTop = 0;
+  document.getElementById('contador').textContent = `${n+1} / ${total}`;
+  document.getElementById('progresoFill').style.width = ((n+1)/total*100) + '%';
+  document.getElementById('btnAnt').disabled = n === 0;
+  document.getElementById('btnSig').disabled = n === total - 1;
+  actual = n;
+}
+
+function siguiente() { if (actual < total - 1) mostrar(actual + 1); }
+function anterior() { if (actual > 0) mostrar(actual - 1); }
+function irA(n) { mostrar(n); }
+
+function revelar(btn) {
+  const respuesta = btn.nextElementSibling;
+  respuesta.classList.toggle('visible');
+  btn.textContent = respuesta.classList.contains('visible') ? translations[currentLang].btn_hide : translations[currentLang].btn_reveal;
+}
+
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'TEXTAREA') return;
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); siguiente(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); anterior(); }
+  if (e.key === 'Home') { e.preventDefault(); mostrar(0); }
+  if (e.key === 'End') { e.preventDefault(); mostrar(total - 1); }
+});
+
+setLanguage('ca', document.querySelector('.language-selector button.active'));
+mostrar(0);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fisiologia de les Articulacions - 10 Casos Pràctics</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  body {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+    position: relative;
+  }
+  header {
+    background: linear-gradient(90deg, #0f5132, #198754);
+    color: white;
+    padding: 35px;
+    text-align: center;
+    position: relative;
+  }
+  header h1 { font-size: 2.1em; margin-bottom: 10px; }
+  header p { opacity: 0.95; font-size: 1.1em; }
+  
+  .lang-selector {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+  }
+  .lang-btn {
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.4);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85em;
+    transition: all 0.3s;
+  }
+  .lang-btn:hover { background: rgba(255,255,255,0.3); }
+  .lang-btn.active {
+    background: #fff;
+    color: #0f5132;
+    border-color: #fff;
+  }
+  
+  .intro {
+    padding: 30px;
+    background: #f8f9fa;
+    border-bottom: 3px solid #dee2e6;
+  }
+  
+  .intro h2 {
+    color: #198754;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+  }
+  
+  .intro p {
+    line-height: 1.7;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .intro ul {
+    margin-left: 25px;
+    line-height: 1.8;
+  }
+  
+  .case {
+    margin: 25px 30px;
+    padding: 25px;
+    background: white;
+    border: 2px solid #dee2e6;
+    border-radius: 15px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  }
+  
+  .case-header {
+    background: linear-gradient(90deg, #198754, #0f5132);
+    color: white;
+    padding: 12px 20px;
+    margin: -25px -25px 20px -25px;
+    border-radius: 13px 13px 0 0;
+    font-size: 1.2em;
+    font-weight: 600;
+  }
+  
+  .case-topic {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    margin-left: 10px;
+    font-weight: 400;
+  }
+  
+  .case-description {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 0 8px 8px 0;
+    line-height: 1.6;
+  }
+  
+  .options { margin: 20px 0; }
+  
+  .option {
+    background: #f8f9fa;
+    border: 2px solid #dee2e6;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .option:hover {
+    background: #e8f5e9;
+    border-color: #198754;
+    transform: translateX(5px);
+  }
+  
+  .option.selected {
+    background: #c8e6c9;
+    border-color: #2e7d32;
+    border-width: 3px;
+  }
+  
+  .option.correct {
+    background: #c8e6c9;
+    border-color: #4caf50;
+  }
+  
+  .option.incorrect {
+    background: #ffcdd2;
+    border-color: #f44336;
+  }
+  
+  .btn-check {
+    background: linear-gradient(90deg, #198754, #0f5132);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 15px 5px;
+    transition: all 0.3s;
+  }
+  
+  .btn-check:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(25,135,84,0.4);
+  }
+  
+  .btn-check:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+    transform: none;
+  }
+  
+  .explanation-box {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    animation: slideDown 0.3s ease;
+  }
+  
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .explanation-box.show { display: block; }
+  
+  .explanation-box.correct {
+    background: #e8f5e9;
+    border: 2px solid #4caf50;
+  }
+  
+  .explanation-box.incorrect {
+    background: #ffebee;
+    border: 2px solid #f44336;
+  }
+  
+  .explanation-box h4 {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+  }
+  
+  .explanation-box.correct h4 { color: #2e7d32; }
+  .explanation-box.incorrect h4 { color: #c62828; }
+  
+  .explanation-content {
+    line-height: 1.7;
+    color: #333;
+  }
+  
+  .explanation-content strong { color: #198754; }
+  
+  .explanation-content ul {
+    margin-left: 20px;
+    margin-top: 10px;
+  }
+  
+  .key-concept {
+    background: #fff9c4;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-top: 15px;
+    font-size: 0.95em;
+    border-left: 4px solid #fbc02d;
+  }
+  
+  .progress-bar {
+    background: #f8f9fa;
+    padding: 20px 30px;
+    border-top: 3px solid #dee2e6;
+    text-align: center;
+  }
+  
+  .progress-text {
+    font-size: 1.1em;
+    color: #198754;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .progress-fill {
+    background: linear-gradient(90deg, #11998e, #38ef7d);
+    height: 10px;
+    border-radius: 5px;
+    transition: width 0.5s;
+  }
+  
+  @media (max-width: 768px) {
+    header h1 { font-size: 1.6em; }
+    .case { margin: 15px; padding: 20px; }
+    .case-header { margin: -20px -20px 15px -20px; }
+    .case-topic { display: block; margin: 5px 0 0 0; }
+    .lang-selector { position: static; justify-content: center; margin-top: 15px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="lang-selector">
+      <button class="lang-btn active" onclick="setLang('ca')" id="btn-ca">CAT</button>
+      <button class="lang-btn" onclick="setLang('es')" id="btn-es">ESP</button>
+      <button class="lang-btn" onclick="setLang('en')" id="btn-en">ENG</button>
+    </div>
+    <h1 id="t-header-title">🦴 Fisiologia de les Articulacions</h1>
+    <p id="t-header-sub">10 Casos Pràctics: Tipus, Estructura, Cartílag, Plans i Propiocepció</p>
+  </header>
+  
+  <div class="intro">
+    <h2 id="t-intro-title">📚 Introducció</h2>
+    <div id="t-intro-content"></div>
+  </div>
+
+  <div id="casesContainer"></div>
+
+  <div class="progress-bar">
+    <div class="progress-text"><span id="t-progress-label">Progrés:</span> <span id="progress">0</span>/10 <span id="t-progress-cases">casos completats</span></div>
+    <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   TRADUCCIONS
+   ============================================================ */
+const I18N = {
+  ca: {
+    headerTitle: "🦴 Fisiologia de les Articulacions",
+    headerSub: "10 Casos Pràctics: Tipus, Estructura, Cartílag, Plans i Propiocepció",
+    introTitle: "📚 Introducció",
+    introP1: "Les articulacions són estructures complexes que permeten el moviment del cos. No són simples \"frontisses\" mecàniques, sinó <strong>òrgans dinàmics</strong> amb metabolisme propi, capacitat d'adaptació i sistemes de protecció sofisticats.",
+    introP2: "En aquests 10 casos pràctics explorarem:",
+    introUl: [
+      "Els <strong>tipus d'articulacions</strong> i les seves implicacions funcionals",
+      "Les <strong>parts d'una articulació</strong> i la seva fisiologia",
+      "La importància del <strong>moviment i la càrrega</strong> per al cartílag",
+      "Els <strong>plans del moviment</strong> i la seva aplicació clínica",
+      "La <strong>propiocepció</strong> com a sistema de protecció articular"
+    ],
+    introP3: "<strong>Instruccions:</strong> Llegeix cada cas, selecciona la resposta que creguis correcta i prem \"Verificar\". Obre el calaix per veure l'explicació fisiològica detallada.",
+    btnCheck: "Verificar Resposta",
+    fbCorrect: "✅ Resposta Correcta:",
+    fbIncorrect: "❌ Resposta Incorrecta. La correcta és:",
+    progressLabel: "Progrés:",
+    progressCases: "casos completats",
+    alertSelect: "Si us plau, selecciona una resposta primer",
+    alertComplete: "🎉 Felicitats! Has completat tots els casos pràctics sobre fisiologia articular. Ara comprèn com funcionen aquestes estructures complexes i dinàmiques.",
+    cases: [
+      {
+        header: "Cas 1: El Maluc del Ballarí",
+        topic: "Tipus d'articulacions",
+        desc: "<p><strong>Situació:</strong> La Laura, una ballarina de ballet clàssic de 28 anys, desenvolupa artrosi precoç de maluc. El seu metge li explica que el maluc és una <strong>enartrosi</strong> (articulació esfèrica) i que això té avantatges i inconvenients.</p><p><strong>Pregunta:</strong> Quina característica fisiològica de l'enartrosi explica tant la seva gran mobilitat com la seva vulnerabilitat a l'artrosi en ballarins?</p>",
+        opts: [
+          "<strong>A)</strong> Que té molt poc líquid sinovial i s'asseca ràpid",
+          "<strong>B)</strong> Que permet moviment en els 3 plans de l'espai (multiaxial), però el cap femoral arrodonit concentra la càrrega en una superfície àmplia que, amb moviments extrems repetits, pot danyar el cartílag",
+          "<strong>C)</strong> Que és una articulació fibrosa sense cartílag"
+        ],
+        correct: "B",
+        exp: `<p><strong>Explicació fisiològica:</strong></p>
+        <p>Les <strong>enartrosis</strong> (com maluc i espatlla) són articulacions esfèriques on un cap rodó encaixa en una cavitat (cotiloide o glenoide). Aquesta estructura té conseqüències fisiològiques importants:</p>
+        <p><strong>Avantatges:</strong></p>
+        <ul>
+          <li><strong>Multiaxialitat:</strong> Permeten moviment en els 3 plans (flexo-extensió, abducció-adducció, rotació interna-externa). És el tipus d'articulació amb major rang de moviment.</li>
+          <li><strong>Estabilitat relativa:</strong> La congruència entre superfícies distribueix bé la càrrega.</li>
+        </ul>
+        <p><strong>Inconvenients en ballarins:</strong></p>
+        <ul>
+          <li><strong>Moviments extrems:</strong> Els ballarins porten el maluc a rangs extrems (turnout, extensions altes). Això sotmet el cartílag a càrregues en zones no habituals.</li>
+          <li><strong>Impacte repetitiu:</strong> En salts i aterratges, el cap femoral rep càrregues de 3-5 vegades el pes corporal, concentrades en el cartílag articular.</li>
+          <li><strong>Desgast precoç:</strong> La combinació de mobilitat extrema + càrrega repetitiva accelera el desgast del cartílag → artrosi precoç.</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Concepte clau:</strong> Les enartrosis són "tot terreny" (molta mobilitat), però aquesta versatilitat té un preu: major desgast amb ús extrem. Els ballarins han d'equilibrar mobilitat amb força per protegir el cartílag.</div>`
+      },
+      {
+        header: "Cas 2: L'Espatlla Inestable del Portador",
+        topic: "Tipus d'articulacions",
+        desc: "<p><strong>Situació:</strong> En Miquel, un portador de ballet (el que aixeca la ballarina), pateix la seva tercera luxació d'espatlla en 2 anys. El seu fisioterapeuta li diu que l'espatlla és l'articulació <strong>més inestable del cos</strong>.</p><p><strong>Pregunta:</strong> Quina característica estructural de l'espatlla (enartrosi) explica la seva alta inestabilitat comparada amb el maluc (també enartrosi)?</p>",
+        opts: [
+          "<strong>A)</strong> Que l'espatlla té menys músculs al voltant",
+          "<strong>B)</strong> Que la cavitat glenoide és molt poc profunda comparada amb el cap de l'húmer (com una pilota de golf sobre un tee), cosa que dona molta mobilitat però poca estabilitat òssia, depenent més de músculs i lligaments",
+          "<strong>C)</strong> Que l'espatlla no té càpsula articular"
+        ],
+        correct: "B",
+        exp: `<p><strong>Explicació fisiològica:</strong></p>
+        <p>Tot i que espatlla i maluc són enartrosis, les seves proporcions són molt diferents, cosa que determina el seu comportament funcional:</p>
+        <p><strong>Comparació estructural:</strong></p>
+        <ul>
+          <li><strong>Maluc:</strong> El cotiloide (cavitat) cobreix ~75% del cap femoral. Gran congruència òssia → molta estabilitat passiva.</li>
+          <li><strong>Espatlla:</strong> La cavitat glenoide cobreix només ~25-30% del cap de l'húmer. Poca congruència òssia → poca estabilitat passiva.</li>
+        </ul>
+        <p><strong>Conseqüències fisiològiques:</strong></p>
+        <ul>
+          <li><strong>Dependència muscular:</strong> L'espatlla depèn del <strong>manegot rotador</strong> (4 músculs) per mantenir el cap humeral centrat a la glenoide durant el moviment. Si aquests músculs es fatiguen o debiliten, l'espatlla es luxa.</li>
+          <li><strong>Càpsula laxa:</strong> La càpsula de l'espatlla és molt laxa (permet gran mobilitat) però ofereix poca estabilitat.</li>
+          <li><strong>Labrum glenoide:</strong> És un anell de fibrocartílag que aprofundeix la cavitat, però es pot lesionar i empitjorar la inestabilitat.</li>
+          <li><strong>Per al portador:</strong> Aixecar pes amb el braç en abducció i rotació externa (posició de "llançament") és la posició més vulnerable per a la luxació.</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Concepte clau:</strong> L'espatlla sacrifica estabilitat per mobilitat. Per això és l'articulació que més es luxa del cos. Els portadors han de reforçar especialment el manegot rotador i l'escàpula.</div>`
+      },
+      {
+        header: "Cas 3: El Genoll Inflamat del Corredor",
+        topic: "Parts d'una articulació",
+        desc: "<p><strong>Situació:</strong> En Joan, un corredor de marató, nota que el seu genoll s'infla després de córrer 20 km. La ressonància mostra un excés de líquid a l'articulació. El metge li diagnostica <strong>derrame articular</strong>.</p><p><strong>Pregunta:</strong> Quina estructura articular produeix el líquid sinovial i per què s'acumula en excés en aquest cas?</p>",
+        opts: [
+          "<strong>A)</strong> El cartílag articular produeix líquid quan es danya",
+          "<strong>B)</strong> La membrana sinovial (capa interna de la càpsula) produeix el líquid sinovial. En resposta a la irritació per sobrecàrrega, en produeix més (inflamació) com a mecanisme de protecció, però l'excés causa inflor i limitació del moviment",
+          "<strong>C)</strong> Els lligaments produeixen líquid per lubricar"
+        ],
+        correct: "B",
+        exp: `<p><strong>Explicació fisiològica:</strong></p>
+        <p>El <strong>líquid sinovial</strong> és essencial per a la salut articular i és produït per una estructura específica:</p>
+        <p><strong>La membrana sinovial:</strong></p>
+        <ul>
+          <li>És la capa interna de la càpsula articular.</li>
+          <li>Està formada per <strong>sinoviòcits</strong> (cèl·lules especialitzades) de dos tipus:
+            <ul><li><strong>Tipus A:</strong> Macròfags (netegen residus).</li><li><strong>Tipus B:</strong> Fibroblasts (produeixen àcid hialurònic i lubricina).</li></ul>
+          </li>
+          <li>Produeix 1-4 ml de líquid sinovial en condicions normals (en un genoll).</li>
+        </ul>
+        <p><strong>Funcions del líquid sinovial:</strong></p>
+        <ul>
+          <li><strong>Lubricació:</strong> Redueix la fricció entre cartílags (coeficient de fricció 5 vegades menor que el gel sobre gel).</li>
+          <li><strong>Nutrició:</strong> El cartílag no té vasos sanguinis, es nodreix per difusió del líquid sinovial.</li>
+          <li><strong>Amortiment:</strong> Absorbeix impactes.</li>
+        </ul>
+        <p><strong>Per què el derrame?</strong></p>
+        <ul>
+          <li>Davant irritació (sobrecàrrega, microtraumatismes), la membrana sinovial s'inflama (sinovitis).</li>
+          <li>Els sinoviòcits produeixen més líquid com a resposta protectora.</li>
+          <li>L'excés de líquid causa inflor, dolor i limitació del moviment (per distensió de la càpsula).</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Concepte clau:</strong> El líquid sinovial és com l'"oli del motor" de l'articulació. Sense ell, el cartílag es desnodreix i es desgasta. Però l'excés (derrame) indica irritació i cal tractar la causa.</div>`
+      },
+      {
+        header: "Cas 4: La Lesió del Lligament Encreuat",
+        topic: "Parts d'una articulació",
+        desc: "<p><strong>Situació:</strong> La Marta, una futbolista, pateix una ruptura del lligament encreuat anterior (LCA) del genoll en fer un canvi de direcció. El cirurgià li explica que els lligaments són estructures <strong>avascularitzades en la seva major part</strong>.</p><p><strong>Pregunta:</strong> Per què els lligaments (com el LCA) tenen tan mala capacitat de curació comparats amb altres teixits?</p>",
+        opts: [
+          "<strong>A)</strong> Perquè estan fets d'un material especial que no es pot reparar",
+          "<strong>B)</strong> Perquè la major part del lligament té molt poca vascularització (especialment el LCA, banyat per líquid sinovial que inhibeix la coagulació), cosa que limita l'arribada de nutrients, oxigen i cèl·lules reparadores. A més, el líquid sinovial conté enzims que degraden el coàgul inicial necessari per a la curació",
+          "<strong>C)</strong> Perquè els lligaments no tenen cèl·lules vives"
+        ],
+        correct: "B",
+        exp: `<p><strong>Explicació fisiològica:</strong></p>
+        <p>Els lligaments intraarticulars (dins de l'articulació) com el LCA tenen característiques que limiten dràsticament la seva capacitat de curació:</p>
+        <p><strong>Factors que limiten la curació:</strong></p>
+        <ul>
+          <li><strong>Escassa vascularització:</strong>
+            <ul><li>Només la zona d'inserció òssia està ben vascularitzada.</li><li>La part central del LCA té vasos sanguinis molt limitats.</li><li>Sense sang, no arriben cèl·lules reparadores ni nutrients.</li></ul>
+          </li>
+          <li><strong>Bany en líquid sinovial:</strong>
+            <ul><li>El LCA està dins de l'articulació, banyat per líquid sinovial.</li><li>El líquid sinovial conté <strong>enzims fibrinolítics</strong> que degraden el fibrinogen i impedeixen la formació d'un coàgul estable.</li><li>Sense coàgul estable, no es forma el "bastiment" inicial per a la reparació.</li></ul>
+          </li>
+          <li><strong>Càrrega mecànica constant:</strong>
+            <ul><li>El genoll es mou constantment (fins i tot al caminar).</li><li>El moviment continu impedeix la immobilització necessària per a la curació.</li><li>Les forces de cisallament trenquen les fràgils unions inicials.</li></ul>
+          </li>
+          <li><strong>Retracció del lligament:</strong>
+            <ul><li>Quan el LCA es trenca, els extrems es retreuen (s'encongeixen).</li><li>Els extrems queden separats i no poden "tocar-se" per unir-se.</li></ul>
+          </li>
+        </ul>
+        <div class="key-concept"><strong>💡 Concepte clau:</strong> Només el 5-10% de les ruptures completes del LCA curen espontàniament. Per això, en atletes joves i actius, es recomana la reconstrucció quirúrgica amb un tendó (autoinjert o al·loinjert).</div>`
+      },
+      {
+        header: "Cas 5: El Cartílag de l'Astronauta",
+        topic: "Cartílag i moviment",
+        desc: "<p><strong>Situació:</strong> Un astronauta passa 6 mesos a l'Estació Espacial Internacional. En tornar a la Terra, les ressonàncies magnètiques mostren que el cartílag dels seus genolls s'ha <strong>aprimat un 8%</strong> i ha perdut propietats mecàniques.</p><p><strong>Pregunta:</strong> Quin mecanisme fisiològic explica el deteriorament del cartílag en absència de càrrega?</p>",
+        opts: [
+          "<strong>A)</strong> Perquè a l'espai fa molt fred i el cartílag es congela",
+          "<strong>B)</strong> Perquè el cartílag necessita càrrega mecànica cíclica perquè el líquid sinovial circuli i nodreixi els condròcits. Sense càrrega, el cartílag es \"desnodreix\", els condròcits redueixen la síntesi de matriu (col·lagen i proteoglicans), i el cartílag es degrada",
+          "<strong>C)</strong> Perquè la gravetat de l'espai és diferent i danya el cartílag"
+        ],
+        correct: "B",
+        exp: `<p><strong>Explicació fisiològica:</strong></p>
+        <p>El cartílag articular és un teixit únic que depèn completament del <strong>moviment i la càrrega</strong> per a la seva nutrició i manteniment:</p>
+        <p><strong>Mecanisme de nutrició del cartílag:</strong></p>
+        <ul>
+          <li><strong>Sense vasos sanguinis:</strong> El cartílag madur és avascular. No rep sang directament.</li>
+          <li><strong>Nutrició per difusió:</strong> Els nutrients (oxigen, glucosa, aminoàcids) i els residus (CO₂, lactat) han de difondre a través del líquid sinovial.</li>
+          <li><strong>La "bomba" del moviment:</strong>
+            <ul><li><strong>Compressió (càrrega):</strong> En carregar l'articulació (ex: al caminar), el cartílag es comprimeix i "esprem" el líquid sinovial cap enfora, eliminant residus.</li><li><strong>Descompressió (descàrrega):</strong> En treure la càrrega, el cartílag s'expandeix i "absorbeix" líquid sinovial fresc amb nutrients.</li><li>Aquest cicle compressió-descompressió és essencial per a la nutrició del cartílag.</li></ul>
+          </li>
+        </ul>
+        <p><strong>Què passa a l'espai?</strong></p>
+        <ul>
+          <li><strong>Microgravetat:</strong> No hi ha càrrega significativa a les articulacions (els astronautes "floten").</li>
+          <li><strong>Sense "bomba" de nutrició:</strong> El líquid sinovial no circula adequadament.</li>
+          <li><strong>Conseqüències:</strong>
+            <ul><li>Els condròcits reben menys nutrients.</li><li>Redueixen la síntesi de col·lagen tipus II i proteoglicans (components de la matriu).</li><li>El cartílag perd gruix i propietats mecàniques.</li><li>Augmenta l'activitat d'enzims degradatius (metaloproteïnases).</li></ul>
+          </li>
+        </ul>
+        <div class="key-concept"><strong>💡 Concepte clau:</strong> El cartílag necessita càrrega per viure. La immobilització perllongada (repòs al llit, escaiola, espai) és tan danyina per al cartílag com l'excés de càrrega. L'equilibri és clau!</div>`
+      },
+      {
+        header: "Cas 6: L'Artrosi de l'Escriptor Sedentari",
+        topic: "Cartílag i moviment",
+        desc: "<p><strong>Situació:</strong> En Carles, un programador de 45 anys que passa 10 hores diàries assegut, desenvolupa artrosi de genoll. El seu metge li diu que el sedentarisme és un factor de risc tan important com el sobrepès.</p><p><strong>Pregunta:</strong> Per què el sedentarisme (absència de moviment) danya el cartílag articular?</p>",
+        opts: [
+          "<strong>A)</strong> Perquè estar assegut debilita els ossos",
+          "<strong>B)</strong> Perquè sense moviment cíclic, el cartílag no rep nutrició adequada (no funciona la \"bomba\" de compressió-descompressió), els condròcits es tornen metabòlicament inactius, i la matriu de col·lagen i proteoglicans es degrada progressivament",
+          "<strong>C)</strong> Perquè estar assegut estira massa el cartílag"
+        ],
+        correct: "B",
+        exp: `<p><strong>Explicació fisiològica:</strong></p>
+        <p>El sedentarisme és un dels majors enemics del cartílag articular, encara que sembli paradoxal (un pensaria que "no usar" protegeix):</p>
+        <p><strong>Conseqüències fisiològiques del sedentarisme:</strong></p>
+        <ul>
+          <li><strong>Falta de nutrició:</strong>
+            <ul><li>Sense cicles de compressió-descompressió, el líquid sinovial no circula.</li><li>Els condròcits reben menys glucosa, oxigen i aminoàcids.</li><li>Els residus metabòlics s'acumulen (lactat, radicals lliures).</li></ul>
+          </li>
+          <li><strong>Inactivitat dels condròcits:</strong>
+            <ul><li>Els condròcits són mecanosensibles: necessiten estímuls mecànics per mantenir-se actius.</li><li>Sense càrrega, redueixen la síntesi de col·lagen tipus II i agrecà (proteoglicà principal).</li><li>Augmenta l'expressió de gens catabòlics (MMPs, ADAMTS) que degraden la matriu.</li></ul>
+          </li>
+          <li><strong>Pèrdua de propietats mecàniques:</strong>
+            <ul><li>El cartílag perd capacitat d'absorbir impactes.</li><li>Es torna més prim i menys elàstic.</li><li>Augmenta la fricció entre superfícies articulars.</li></ul>
+          </li>
+          <li><strong>Debilitat muscular:</strong>
+            <ul><li>Els músculs que estabilitzen l'articulació es debiliten.</li><li>L'articulació rep més càrrega directa (menys amortiment muscular).</li><li>Augmenta el risc de lesions i desgast.</li></ul>
+          </li>
+        </ul>
+        <p><strong>Estudis científics:</strong></p>
+        <ul>
+          <li>Persones sedentàries tenen 2-3 vegades més risc d'artrosi de genoll que persones actives.</li>
+          <li>L'exercici moderat i regular (caminar, nedar, ciclisme) protegeix el cartílag.</li>
+          <li>L'exercici intens sense preparació pot danyar-lo. La dosi importa!</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Concepte clau:</strong> \"Use it or lose it\" (usa'l o perd-lo) s'aplica perfectament al cartílag. El moviment moderat i regular és el millor \"medicament\" per protegir les articulacions.</div>`
+      },
+      {
+        header: "Cas 7: L'Esquinç de Turmell en Inversió",
+        topic: "Plans del moviment",
+        desc: "<p><strong>Situació:</strong> L'Anna, una jugadora de bàsquet, aterra malament després d'un rebot i pateix un esquinç de turmell. El peu se'n va anar cap a \"dins\" (planta del peu mirant cap a l'altre peu). El metge diagnostica un esquinç dels lligaments laterals.</p><p><strong>Pregunta:</strong> En quin pla de l'espai va ocórrer el moviment lesiu i quin tipus de moviment articular és?</p>",
+        opts: [
+          "<strong>A)</strong> Pla sagital - moviment de flexo-extensió",
+          "<strong>B)</strong> Pla frontal - moviment d'inversió (combinació de supinació, adducció i flexió plantar). Els lligaments laterals no estan dissenyats per resistir aquest moviment en excés",
+          "<strong>C)</strong> Pla transversal - moviment de rotació"
+        ],
+        correct: "B",
+        exp: `<p><strong>Explicació fisiològica:</strong></p>
+        <p>Els <strong>plans del moviment</strong> són referències anatòmiques que descriuen la direcció en què es mou una articulació:</p>
+        <p><strong>Els 3 plans:</strong></p>
+        <ul>
+          <li><strong>Pla sagital:</strong> Divideix el cos en esquerra i dreta. Moviments: flexió-extensió (ex: caminar, flexionar el colze).</li>
+          <li><strong>Pla frontal:</strong> Divideix el cos en davant i darrere. Moviments: abducció-adducció, inversió-eversió (ex: obrir/tancar cames, moure el peu cap a dins/fora).</li>
+          <li><strong>Pla transversal:</strong> Divideix el cos en dalt i baix. Moviments: rotacions (ex: girar el cap, rotació de l'espatlla).</li>
+        </ul>
+        <p><strong>L'esquinç de turmell en inversió:</strong></p>
+        <ul>
+          <li><strong>Pla frontal:</strong> El moviment d'inversió (planta del peu cap a dins) ocorre principalment en aquest pla.</li>
+          <li><strong>Moviment complex:</strong> La inversió és en realitat una combinació de:
+            <ul><li>Supinació (eversió del peu).</li><li>Adducció (peu cap a la línia mitjana).</li><li>Flexió plantar (punta del peu cap avall).</li></ul>
+          </li>
+          <li><strong>Lligaments afectats:</strong> Els lligaments laterals (tibio-tarsal anterior, mig i posterior) estan dissenyats per resistir l'eversió (peu cap enfora), no la inversió excessiva.</li>
+          <li><strong>Mecanisme lesiu:</strong> En aterrar malament, el peu se'n va en inversió més enllà del rang segur → els lligaments laterals s'estiren massa → es trenquen (esquinç).</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Concepte clau:</strong> El 85% dels esquinços de turmell són en inversió (lligaments laterals). Només el 15% són en eversió (lligament medial/deltoide). Conèixer els plans ajuda a entendre el mecanisme i prevenir lesions.</div>`
+      },
+      {
+        header: "Cas 8: La Rotació de Genoll de l'Esquiador",
+        topic: "Plans del moviment",
+        desc: "<p><strong>Situació:</strong> En Pere, un esquiador, cau amb l'esquí posat i el genoll queda \"torçat\". La ressonància mostra ruptura del LCA i del menisc intern. El metge li explica que el genoll és una articulació que permet moviment principalment en un pla, però que la rotació és perillosa.</p><p><strong>Pregunta:</strong> Per què el genoll (articulació principalment del pla sagital) és tan vulnerable a les lesions rotacionals (pla transversal)?</p>",
+        opts: [
+          "<strong>A)</strong> Perquè el genoll no té lligaments",
+          "<strong>B)</strong> Perquè el genoll és una articulació modificada (gínglim amb component rotacional) on els meniscs i lligaments encreuats estabilitzen la rotació. Quan la tíbia rota sobre el fèmur amb el genoll flexionat i carregat, els lligaments (especialment el LCA) i meniscs reben forces de cisallament per a les quals no estan ben dissenyats",
+          "<strong>C)</strong> Perquè els esquís són massa llargs"
+        ],
+        correct: "B",
+        exp: `<p><strong>Explicació fisiològica:</strong></p>
+        <p>El genoll és una articulació complexa amb característiques úniques que la fan vulnerable a lesions rotacionals:</p>
+        <p><strong>Característiques biomecàniques del genoll:</strong></p>
+        <ul>
+          <li><strong>Articulació modificada:</strong>
+            <ul><li>És principalment una <strong>gínglim</strong> (frontissa) que permet flexo-extensió en el pla sagital.</li><li>Però té un component rotacional menor (especialment en flexió).</li><li>Quan el genoll està completament estès, hi ha un \"bloqueig\" rotacional (mecanisme screw-home) que dona estabilitat.</li></ul>
+          </li>
+          <li><strong>Estructures estabilitzadores:</strong>
+            <ul><li><strong>Lligaments encreuats (LCA i LCP):</strong> Controlen el desplaçament anterior/posterior de la tíbia i limiten la rotació.</li><li><strong>Meniscs:</strong> Milloren la congruència entre fèmur i tíbia, absorbeixen impactes i ajuden a estabilitzar.</li><li><strong>Lligaments col·laterals:</strong> Estabilitzen en el pla frontal (valg/var).</li></ul>
+          </li>
+          <li><strong>Mecanisme lesiu en esquí:</strong>
+            <ul><li>L'esquí fixa el peu (no pot rotar lliurement).</li><li>En caure, el cos rota però el peu queda fix → la tíbia rota sobre el fèmur.</li><li>Si el genoll està flexionat i carregat (pes corporal), aquesta rotació genera forces de cisallament enormes.</li><li>El LCA (que limita la rotació interna de la tíbia) es trenca.</li><li>El menisc intern (més fixat que l'extern) també es lesiona.</li></ul>
+          </li>
+        </ul>
+        <p><strong>Per què és tan danyina la rotació?</strong></p>
+        <ul>
+          <li>Els lligaments estan dissenyats per resistir tracció (estirament), no cisallament (forces perpendiculars).</li>
+          <li>La rotació combinada amb càrrega multiplica les forces.</li>
+          <li>Els meniscs, en estar fixats als seus extrems, es poden \"atrapar\" i trencar.</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Concepte clau:</strong> El genoll és vulnerable a la rotació perquè està dissenyat principalment per flexo-extensió. Per això, les lesions rotacionals (esquí, futbol, bàsquet) són tan greus i afecten múltiples estructures (LCA + menisc).</div>`
+      },
+      {
+        header: "Cas 9: El Turmell que es Torça Sempre",
+        topic: "Propiocepció",
+        desc: "<p><strong>Situació:</strong> La Lucía va patir un esquinç de turmell greu fa 6 mesos. Encara que el lligament va curar, nota que el seu turmell es \"torça\" amb facilitat en terrenys irregulars. El seu fisioterapeuta li diu que té <strong>dèficit propioceptiu</strong>.</p><p><strong>Pregunta:</strong> Què és la propiocepció i per què es perd després d'un esquinç?</p>",
+        opts: [
+          "<strong>A)</strong> La propiocepció és la força muscular, i es perd perquè el múscul s'atrofia",
+          "<strong>B)</strong> La propiocepció és la capacitat de sentir la posició i moviment de les articulacions. Es perd perquè l'esquinç danya els mecanoreceptors (fusos musculars, òrgans tendinosos de Golgi, receptors articulars) que envien informació al cervell sobre la posició del turmell. Sense aquesta informació, el cervell no pot corregir ràpidament les posicions perilloses",
+          "<strong>C)</strong> La propiocepció és la flexibilitat, i es perd perquè el lligament cicatritzat és més rígid"
+        ],
+        correct: "B",
+        exp: `<p><strong>Explicació fisiològica:</strong></p>
+        <p>La <strong>propiocepció</strong> és el \"sisè sentit\" del cos: la capacitat de percebre la posició, moviment i força de les articulacions i músculs sense necessitat de mirar.</p>
+        <p><strong>Sistema propioceptiu:</strong></p>
+        <ul>
+          <li><strong>Mecanoreceptors:</strong> Són sensors especialitzats que detecten deformacions mecàniques:
+            <ul><li><strong>Fusos musculars:</strong> Detecten la longitud del múscul i la velocitat de canvi.</li><li><strong>Òrgans tendinosos de Golgi:</strong> Detecten la tensió al tendó.</li><li><strong>Receptors articulars (Ruffini, Pacini, etc.):</strong> Estan a la càpsula i lligaments. Detecten la posició articular, pressió i acceleració.</li></ul>
+          </li>
+          <li><strong>Vies nervioses:</strong>
+            <ul><li>Els mecanoreceptors envien senyals per nervis aferents a la medul·la espinal i al cervell.</li><li>El cervell integra aquesta informació amb la visual i vestibular.</li><li>Envia respostes motores per ajustar la posició i protegir l'articulació.</li></ul>
+          </li>
+        </ul>
+        <p><strong>Per què es perd després d'un esquinç?</strong></p>
+        <ul>
+          <li><strong>Dany als receptors:</strong> En trencar-se o estirar-se els lligaments, també es danyen els mecanoreceptors que contenen.</li>
+          <li><strong>Alteració del senyal:</strong> Menys receptors = menys informació al cervell = el cervell \"veu\" pitjor la posició del turmell.</li>
+          <li><strong>Resposta muscular lenta:</strong> Sense informació precisa, els músculs que estabilitzen el turmell (peroneus) no s'activen a temps per corregir una posició perillosa.</li>
+          <li><strong>Cercle viciós:</strong> Més esquinços → més dany als receptors → més dèficit propioceptiu → més esquinços.</li>
+        </ul>
+        <p><strong>Estudis científics:</strong></p>
+        <ul>
+          <li>Després d'un esquinç, la propiocepció pot trigar 3-6 mesos a recuperar-se completament.</li>
+          <li>L'entrenament propioceptiu (equilibri en superfícies inestables) redueix el risc de recidiva en un 50%.</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Concepte clau:</strong> La propiocepció és tan important com la força i la flexibilitat per prevenir lesions. Després d'un esquinç, l'entrenament de l'equilibri és essencial per \"reeducar\" el sistema nerviós.</div>`
+      },
+      {
+        header: "Cas 10: L'Entrenament Propioceptiu del Ballarí",
+        topic: "Propiocepció",
+        desc: "<p><strong>Situació:</strong> Un professor de dansa inclou a les seves classes exercicis d'equilibri sobre una cama, amb ulls tancats, i sobre superfícies inestables (bosu, coixins). Els alumnes es queixen que és \"molt difícil\" al principi, però noten que milloren la seva estabilitat.</p><p><strong>Pregunta:</strong> Quin mecanisme fisiològic explica la millora de l'estabilitat amb l'entrenament propioceptiu?</p>",
+        opts: [
+          "<strong>A)</strong> Perquè els músculs es fan més forts i aguanten més",
+          "<strong>B)</strong> Perquè l'entrenament propioceptiu millora la sensibilitat dels mecanoreceptors, accelera la conducció nerviosa, i optimitza els patrons d'activació muscular (co-contracció, respostes anticipatòries). El cervell aprèn a processar millor la informació i a respondre més ràpid per protegir les articulacions",
+          "<strong>C)</strong> Perquè els lligaments es tornen més elàstics"
+        ],
+        correct: "B",
+        exp: `<p><strong>Explicació fisiològica:</strong></p>
+        <p>L'entrenament propioceptiu no reforça els músculs ni estira els lligaments. El seu efecte és <strong>neurològic</strong>: millora la capacitat del sistema nerviós per controlar les articulacions.</p>
+        <p><strong>Mecanismes fisiològics d'adaptació:</strong></p>
+        <ul>
+          <li><strong>Millora de la sensibilitat dels receptors:</strong>
+            <ul><li>Els mecanoreceptors es tornen més sensibles a estímuls petits.</li><li>Detecten canvis de posició més subtils i els envien més ràpid al cervell.</li></ul>
+          </li>
+          <li><strong>Acceleració de la conducció nerviosa:</strong>
+            <ul><li>Les vies nervioses es \"mielinitzen\" millor (la mielina és com l'\"aïllant\" del cable que accelera el senyal).</li><li>La informació arriba més ràpid des dels receptors al cervell i des del cervell als músculs.</li></ul>
+          </li>
+          <li><strong>Optimització dels patrons musculars:</strong>
+            <ul><li><strong>Co-contracció:</strong> Els músculs agonistes i antagonistes s'activen simultàniament per donar estabilitat (ex: quàdriceps i isquiotibials al genoll).</li><li><strong>Respostes anticipatòries:</strong> El cervell aprèn a activar els músculs estabilitzadors ABANS que ocorri el moviment (feedforward). Ex: abans d'aixecar una cama, s'activen els músculs del turmell i el maluc.</li><li><strong>Respostes reflexos:</strong> Els reflexos d'estirament es tornen més ràpids i eficients.</li></ul>
+          </li>
+          <li><strong>Integració sensorial:</strong>
+            <ul><li>El cervell aprèn a integrar millor la informació propioceptiva, visual i vestibular.</li><li>Si falla una font (ex: tancar els ulls), les altres compensen millor.</li></ul>
+          </li>
+        </ul>
+        <p><strong>Per què és difícil al principi?</strong></p>
+        <ul>
+          <li>El cervell està \"aprenent\" noves connexions neuronals.</li>
+          <li>Els patrons musculars no estan automatitzats.</li>
+          <li>Amb la pràctica (4-8 setmanes), es torna automàtic (com anar amb bicicleta).</li>
+        </ul>
+        <p><strong>Aplicació en dansa:</strong></p>
+        <ul>
+          <li>Millor equilibri en relevés i arabesques.</li>
+          <li>Menor risc d'esquinços en aterrar salts.</li>
+          <li>Major control en girs i piruetes.</li>
+          <li>Millor adaptació a superfícies irregulars (escenaris a l'aire lliure).</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Concepte clau:</strong> L'entrenament propioceptiu \"reprograma\" el sistema nerviós. No canvia l'estructura (músculs, lligaments), sinó la funció (control neuromuscular). Per això és essencial per a ballarins i esportistes.</div>`
+      }
+    ]
+  },
+  es: {
+    headerTitle: "🦴 Fisiología de las Articulaciones",
+    headerSub: "10 Casos Prácticos: Tipos, Estructura, Cartílago, Planos y Propiocepción",
+    introTitle: "📚 Introducción",
+    introP1: "Las articulaciones son estructuras complejas que permiten el movimiento del cuerpo. No son simples \"bisagras\" mecánicas, sino <strong>órganos dinámicos</strong> con metabolismo propio, capacidad de adaptación y sistemas de protección sofisticados.",
+    introP2: "En estos 10 casos prácticos exploraremos:",
+    introUl: [
+      "Los <strong>tipos de articulaciones</strong> y sus implicaciones funcionales",
+      "Las <strong>partes de una articulación</strong> y su fisiología",
+      "La importancia del <strong>movimiento y la carga</strong> para el cartílago",
+      "Los <strong>planos del movimiento</strong> y su aplicación clínica",
+      "La <strong>propiocepción</strong> como sistema de protección articular"
+    ],
+    introP3: "<strong>Instrucciones:</strong> Lee cada caso, selecciona la respuesta que creas correcta y pulsa \"Verificar\". Abre el cajón para ver la explicación fisiológica detallada.",
+    btnCheck: "Verificar Respuesta",
+    fbCorrect: "✅ Respuesta Correcta:",
+    fbIncorrect: "❌ Respuesta Incorrecta. La correcta es:",
+    progressLabel: "Progreso:",
+    progressCases: "casos completados",
+    alertSelect: "Por favor, selecciona una respuesta primero",
+    alertComplete: "🎉 ¡Felicidades! Has completado todos los casos prácticos sobre fisiología articular. Ahora comprendes cómo funcionan estas estructuras complejas y dinámicas.",
+    cases: [
+      {
+        header: "Caso 1: La Cadera del Bailarín",
+        topic: "Tipos de articulaciones",
+        desc: "<p><strong>Situación:</strong> Laura, una bailarina de ballet clásico de 28 años, desarrolla artrosis precoz de cadera. Su médico le explica que la cadera es una <strong>enartrosis</strong> (articulación esférica) y que esto tiene ventajas e inconvenientes.</p><p><strong>Pregunta:</strong> ¿Qué característica fisiológica de la enartrosis explica tanto su gran movilidad como su vulnerabilidad a la artrosis en bailarines?</p>",
+        opts: [
+          "<strong>A)</strong> Que tiene muy poco líquido sinovial y se seca rápido",
+          "<strong>B)</strong> Que permite movimiento en los 3 planos del espacio (multiaxial), pero la cabeza femoral redondeada concentra la carga en una superficie amplia que, con movimientos extremos repetidos, puede dañar el cartílago",
+          "<strong>C)</strong> Que es una articulación fibrosa sin cartílago"
+        ],
+        correct: "B",
+        exp: `<p><strong>Explicación fisiológica:</strong></p>
+        <p>Las <strong>enartrosis</strong> (como cadera y hombro) son articulaciones esféricas donde una cabeza redonda encaja en una cavidad (cotiloide o glenoides). Esta estructura tiene consecuencias fisiológicas importantes:</p>
+        <p><strong>Ventajas:</strong></p>
+        <ul>
+          <li><strong>Multiaxialidad:</strong> Permiten movimiento en los 3 planos (flexo-extensión, abducción-adducción, rotación interna-externa). Es el tipo de articulación con mayor rango de movimiento.</li>
+          <li><strong>Estabilidad relativa:</strong> La congruencia entre superficies distribuye bien la carga.</li>
+        </ul>
+        <p><strong>Desventajas en bailarines:</strong></p>
+        <ul>
+          <li><strong>Movimientos extremos:</strong> Los bailarines llevan la cadera a rangos extremos (turnout, extensiones altas). Esto somete al cartílago a cargas en zonas no habituales.</li>
+          <li><strong>Impacto repetitivo:</strong> En saltos y aterrizajes, la cabeza femoral recibe cargas de 3-5 veces el peso corporal, concentradas en el cartílago articular.</li>
+          <li><strong>Desgaste precoz:</strong> La combinación de movilidad extrema + carga repetitiva acelera el desgaste del cartílago → artrosis precoz.</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Concepto clave:</strong> Las enartrosis son \"todoterreno\" (mucha movilidad), pero esa versatilidad tiene un precio: mayor desgaste con uso extremo. Los bailarines deben equilibrar movilidad con fuerza para proteger el cartílago.</div>`
+      },
+      {
+        header: "Caso 2: El Hombro Inestable del Porteador",
+        topic: "Tipos de articulaciones",
+        desc: "<p><strong>Situación:</strong> Miguel, un porteador de ballet (el que levanta a la bailarina), sufre su tercera luxación de hombro en 2 años. Su fisioterapeuta le dice que el hombro es la articulación <strong>más inestable del cuerpo</strong>.</p><p><strong>Pregunta:</strong> ¿Qué característica estructural del hombro (enartrosis) explica su alta inestabilidad comparado con la cadera (también enartrosis)?</p>",
+        opts: [
+          "<strong>A)</strong> Que el hombro tiene menos músculos alrededor",
+          "<strong>B)</strong> Que la cavidad glenoidea es muy poco profunda comparada con la cabeza del húmero (como una pelota de golf sobre un tee), lo que da mucha movilidad pero poca estabilidad ósea, dependiendo más de músculos y ligamentos",
+          "<strong>C)</strong> Que el hombro no tiene cápsula articular"
+        ],
+        correct: "B",
+        exp: `<p><strong>Explicación fisiológica:</strong></p>
+        <p>Aunque hombro y cadera son enartrosis, sus proporciones son muy diferentes, lo que determina su comportamiento funcional:</p>
+        <p><strong>Comparación estructural:</strong></p>
+        <ul>
+          <li><strong>Cadera:</strong> El cotiloide (cavidad) cubre ~75% de la cabeza femoral. Gran congruencia ósea → mucha estabilidad pasiva.</li>
+          <li><strong>Hombro:</strong> La cavidad glenoidea cubre solo ~25-30% de la cabeza del húmero. Poca congruencia ósea → poca estabilidad pasiva.</li>
+        </ul>
+        <p><strong>Consecuencias fisiológicas:</strong></p>
+        <ul>
+          <li><strong>Dependencia muscular:</strong> El hombro depende del <strong>manguito rotador</strong> (4 músculos) para mantener la cabeza humeral centrada en la glenoides durante el movimiento. Si estos músculos se fatigan o debilitan, el hombro se luxa.</li>
+          <li><strong>Cápsula laxa:</strong> La cápsula del hombro es muy laxa (permite gran movilidad) pero ofrece poca estabilidad.</li>
+          <li><strong>Labrum glenoideo:</strong> Es un anillo de fibrocartílago que profundiza la cavidad, pero puede lesionarse y empeorar la inestabilidad.</li>
+          <li><strong>Para el porteador:</strong> Levantar peso con el brazo en abducción y rotación externa (posición de \"lanzamiento\") es la posición más vulnerable para luxación.</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Concepto clave:</strong> El hombro sacrifica estabilidad por movilidad. Por eso es la articulación que más se luxa del cuerpo. Los porteadores deben fortalecer especialmente el manguito rotador y la escápula.</div>`
+      },
+      {
+        header: "Caso 3: La Rodilla Hinchada del Corredor",
+        topic: "Partes de una articulación",
+        desc: "<p><strong>Situación:</strong> Juan, un corredor de maratón, nota que su rodilla se hincha después de correr 20 km. La resonancia muestra un exceso de líquido en la articulación. El médico le diagnostica <strong>derrame articular</strong>.</p><p><strong>Pregunta:</strong> ¿Qué estructura articular produce el líquido sinovial y por qué se acumula en exceso en este caso?</p>",
+        opts: [
+          "<strong>A)</strong> El cartílago articular produce líquido cuando se daña",
+          "<strong>B)</strong> La membrana sinovial (capa interna de la cápsula) produce el líquido sinovial. En respuesta a la irritación por sobrecarga, produce más líquido (inflamación) como mecanismo de protección, pero el exceso causa hinchazón y limitación del movimiento",
+          "<strong>C)</strong> Los ligamentos producen líquido para lubricar"
+        ],
+        correct: "B",
+        exp: `<p><strong>Explicación fisiológica:</strong></p>
+        <p>El <strong>líquido sinovial</strong> es esencial para la salud articular y es producido por una estructura específica:</p>
+        <p><strong>La membrana sinovial:</strong></p>
+        <ul>
+          <li>Es la capa interna de la cápsula articular.</li>
+          <li>Está formada por <strong>sinoviocitos</strong> (células especializadas) de dos tipos:
+            <ul><li><strong>Tipo A:</strong> Macrófagos (limpian desechos).</li><li><strong>Tipo B:</strong> Fibroblastos (producen ácido hialurónico y lubricina).</li></ul>
+          </li>
+          <li>Produce 1-4 ml de líquido sinovial en condiciones normales (en una rodilla).</li>
+        </ul>
+        <p><strong>Funciones del líquido sinovial:</strong></p>
+        <ul>
+          <li><strong>Lubricación:</strong> Reduce la fricción entre cartílagos (coeficiente de fricción 5 veces menor que el hielo sobre hielo).</li>
+          <li><strong>Nutrición:</strong> El cartílago no tiene vasos sanguíneos, se nutre por difusión del líquido sinovial.</li>
+          <li><strong>Amortiguación:</strong> Absorbe impactos.</li>
+        </ul>
+        <p><strong>¿Por qué el derrame?</strong></p>
+        <ul>
+          <li>Ante irritación (sobrecarga, microtraumatismos), la membrana sinovial se inflama (sinovitis).</li>
+          <li>Los sinoviocitos producen más líquido como respuesta protectora.</li>
+          <li>El exceso de líquido causa hinchazón, dolor y limitación del movimiento (por distensión de la cápsula).</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Concepto clave:</strong> El líquido sinovial es como el \"aceite del motor\" de la articulación. Sin él, el cartílago se desnutre y se desgasta. Pero el exceso (derrame) indica irritación y debe tratarse la causa.</div>`
+      },
+      {
+        header: "Caso 4: La Lesión del Ligamento Cruzado",
+        topic: "Partes de una articulación",
+        desc: "<p><strong>Situación:</strong> Marta, una futbolista, sufre una rotura del ligamento cruzado anterior (LCA) de la rodilla al hacer un cambio de dirección. El cirujano le explica que los ligamentos son estructuras <strong>avascularizadas en su mayor parte</strong>.</p><p><strong>Pregunta:</strong> ¿Por qué los ligamentos (como el LCA) tienen tan mala capacidad de curación comparados con otros tejidos?</p>",
+        opts: [
+          "<strong>A)</strong> Porque están hechos de un material especial que no se puede reparar",
+          "<strong>B)</strong> Porque la mayor parte del ligamento tiene muy poca vascularización (especialmente el LCA, bañado por líquido sinovial que inhibe la coagulación), lo que limita la llegada de nutrientes, oxígeno y células reparadoras. Además, el líquido sinovial contiene enzimas que degradan el coágulo inicial necesario para la curación",
+          "<strong>C)</strong> Porque los ligamentos no tienen células vivas"
+        ],
+        correct: "B",
+        exp: `<p><strong>Explicación fisiológica:</strong></p>
+        <p>Los ligamentos intraarticulares (dentro de la articulación) como el LCA tienen características que limitan drásticamente su capacidad de curación:</p>
+        <p><strong>Factores que limitan la curación:</strong></p>
+        <ul>
+          <li><strong>Escasa vascularización:</strong>
+            <ul><li>Solo la zona de inserción ósea está bien vascularizada.</li><li>La parte central del LCA tiene vasos sanguíneos muy limitados.</li><li>Sin sangre, no llegan células reparadoras ni nutrientes.</li></ul>
+          </li>
+          <li><strong>Baño en líquido sinovial:</strong>
+            <ul><li>El LCA está dentro de la articulación, bañado por líquido sinovial.</li><li>El líquido sinovial contiene <strong>enzimas fibrinolíticas</strong> que degradan el fibrinógeno e impiden la formación de un coágulo estable.</li><li>Sin coágulo estable, no se forma el \"andamio\" inicial para la reparación.</li></ul>
+          </li>
+          <li><strong>Carga mecánica constante:</strong>
+            <ul><li>La rodilla se mueve constantemente (incluso al caminar).</li><li>El movimiento continuo impide la inmovilización necesaria para la curación.</li><li>Las fuerzas de cizallamiento rompen las frágiles uniones iniciales.</li></ul>
+          </li>
+          <li><strong>Retracción del ligamento:</strong>
+            <ul><li>Cuando el LCA se rompe, los extremos se retraen (se encogen).</li><li>Los extremos quedan separados y no pueden \"tocarse\" para unirse.</li></ul>
+          </li>
+        </ul>
+        <div class="key-concept"><strong>💡 Concepto clave:</strong> Solo el 5-10% de las roturas completas del LCA curan espontáneamente. Por eso, en atletas jóvenes y activos, se recomienda la reconstrucción quirúrgica con un tendón (autoinjerto o aloinjerto).</div>`
+      },
+      {
+        header: "Caso 5: El Cartílago del Astronauta",
+        topic: "Cartílago y movimiento",
+        desc: "<p><strong>Situación:</strong> Un astronauta pasa 6 meses en la Estación Espacial Internacional. Al volver a la Tierra, las resonancias magnéticas muestran que el cartílago de sus rodillas se ha <strong>adelgazado un 8%</strong> y ha perdido propiedades mecánicas.</p><p><strong>Pregunta:</strong> ¿Qué mecanismo fisiológico explica el deterioro del cartílago en ausencia de carga?</p>",
+        opts: [
+          "<strong>A)</strong> Porque en el espacio hace mucho frío y el cartílago se congela",
+          "<strong>B)</strong> Porque el cartílago necesita carga mecánica cíclica para que el líquido sinovial circule y nutra los condrocitos. Sin carga, el cartílago se \"desnutre\", los condrocitos reducen la síntesis de matriz (colágeno y proteoglicanos), y el cartílago se degrada",
+          "<strong>C)</strong> Porque la gravedad del espacio es diferente y daña el cartílago"
+        ],
+        correct: "B",
+        exp: `<p><strong>Explicación fisiológica:</strong></p>
+        <p>El cartílago articular es un tejido único que depende completamente del <strong>movimiento y la carga</strong> para su nutrición y mantenimiento:</p>
+        <p><strong>Mecanismo de nutrición del cartílago:</strong></p>
+        <ul>
+          <li><strong>Sin vasos sanguíneos:</strong> El cartílago maduro es avascular. No recibe sangre directamente.</li>
+          <li><strong>Nutrición por difusión:</strong> Los nutrientes (oxígeno, glucosa, aminoácidos) y los desechos (CO₂, lactato) deben difundir a través del líquido sinovial.</li>
+          <li><strong>La \"bomba\" del movimiento:</strong>
+            <ul><li><strong>Compresión (carga):</strong> Al cargar la articulación (ej: al caminar), el cartílago se comprime y \"exprime\" el líquido sinovial hacia fuera, eliminando desechos.</li><li><strong>Descompresión (descarga):</strong> Al quitar la carga, el cartílago se expande y \"absorbe\" líquido sinovial fresco con nutrientes.</li><li>Este ciclo compresión-descompresión es esencial para la nutrición del cartílago.</li></ul>
+          </li>
+        </ul>
+        <p><strong>¿Qué pasa en el espacio?</strong></p>
+        <ul>
+          <li><strong>Microgravedad:</strong> No hay carga significativa en las articulaciones (los astronautas \"flotan\").</li>
+          <li><strong>Sin \"bomba\" de nutrición:</strong> El líquido sinovial no circula adecuadamente.</li>
+          <li><strong>Consecuencias:</strong>
+            <ul><li>Los condrocitos reciben menos nutrientes.</li><li>Reducen la síntesis de colágeno tipo II y proteoglicanos (componentes de la matriz).</li><li>El cartílago pierde grosor y propiedades mecánicas.</li><li>Aumenta la actividad de enzimas degradativas (metaloproteinasas).</li></ul>
+          </li>
+        </ul>
+        <div class="key-concept"><strong>💡 Concepto clave:</strong> El cartílago necesita carga para vivir. La inmovilización prolongada (reposo en cama, escayola, espacio) es tan dañina para el cartílago como el exceso de carga. ¡El equilibrio es clave!</div>`
+      },
+      {
+        header: "Caso 6: La Artrosis del Escritor Sedentario",
+        topic: "Cartílago y movimiento",
+        desc: "<p><strong>Situación:</strong> Carlos, un programador de 45 años que pasa 10 horas diarias sentado, desarrolla artrosis de rodilla. Su médico le dice que el sedentarismo es un factor de riesgo tan importante como el sobrepeso.</p><p><strong>Pregunta:</strong> ¿Por qué el sedentarismo (ausencia de movimiento) daña el cartílago articular?</p>",
+        opts: [
+          "<strong>A)</strong> Porque estar sentado debilita los huesos",
+          "<strong>B)</strong> Porque sin movimiento cíclico, el cartílago no recibe nutrición adecuada (no funciona la \"bomba\" de compresión-descompresión), los condrocitos se vuelven metabólicamente inactivos, y la matriz de colágeno y proteoglicanos se degrada progresivamente",
+          "<strong>C)</strong> Porque estar sentado estira demasiado el cartílago"
+        ],
+        correct: "B",
+        exp: `<p><strong>Explicación fisiológica:</strong></p>
+        <p>El sedentarismo es uno de los mayores enemigos del cartílago articular, aunque parezca paradójico (uno pensaría que \"no usar\" protege):</p>
+        <p><strong>Consecuencias fisiológicas del sedentarismo:</strong></p>
+        <ul>
+          <li><strong>Falta de nutrición:</strong>
+            <ul><li>Sin ciclos de compresión-descompresión, el líquido sinovial no circula.</li><li>Los condrocitos reciben menos glucosa, oxígeno y aminoácidos.</li><li>Los desechos metabólicos se acumulan (lactato, radicales libres).</li></ul>
+          </li>
+          <li><strong>Inactividad de los condrocitos:</strong>
+            <ul><li>Los condrocitos son mecanosensibles: necesitan estímulos mecánicos para mantenerse activos.</li><li>Sin carga, reducen la síntesis de colágeno tipo II y agrecano (proteoglicano principal).</li><li>Aumenta la expresión de genes catabólicos (MMPs, ADAMTS) que degradan la matriz.</li></ul>
+          </li>
+          <li><strong>Pérdida de propiedades mecánicas:</strong>
+            <ul><li>El cartílago pierde capacidad de absorber impactos.</li><li>Se vuelve más fino y menos elástico.</li><li>Aumenta la fricción entre superficies articulares.</li></ul>
+          </li>
+          <li><strong>Debilidad muscular:</strong>
+            <ul><li>Los músculos que estabilizan la articulación se debilitan.</li><li>La articulación recibe más carga directa (menos amortiguación muscular).</li><li>Aumenta el riesgo de lesiones y desgaste.</li></ul>
+          </li>
+        </ul>
+        <p><strong>Estudios científicos:</strong></p>
+        <ul>
+          <li>Personas sedentarias tienen 2-3 veces más riesgo de artrosis de rodilla que personas activas.</li>
+          <li>El ejercicio moderado y regular (caminar, nadar, ciclismo) protege el cartílago.</li>
+          <li>El ejercicio intenso sin preparación puede dañarlo. ¡La dosis importa!</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Concepto clave:</strong> \"Use it or lose it\" (úsalo o piérdelo) se aplica perfectamente al cartílago. El movimiento moderado y regular es el mejor \"medicamento\" para proteger las articulaciones.</div>`
+      },
+      {
+        header: "Caso 7: El Esguince de Tobillo en Inversión",
+        topic: "Planos del movimiento",
+        desc: "<p><strong>Situación:</strong> Ana, una jugadora de baloncesto, aterriza mal tras un rebote y sufre un esguince de tobillo. El pie se fue hacia \"dentro\" (planta del pie mirando hacia el otro pie). El médico diagnostica un esguince de los ligamentos laterales.</p><p><strong>Pregunta:</strong> ¿En qué plano del espacio ocurrió el movimiento lesivo y qué tipo de movimiento articular es?</p>",
+        opts: [
+          "<strong>A)</strong> Plano sagital - movimiento de flexo-extensión",
+          "<strong>B)</strong> Plano frontal - movimiento de inversión (combinación de supinación, aducción y flexión plantar). Los ligamentos laterales no están diseñados para resistir este movimiento en exceso",
+          "<strong>C)</strong> Plano transversal - movimiento de rotación"
+        ],
+        correct: "B",
+        exp: `<p><strong>Explicación fisiológica:</strong></p>
+        <p>Los <strong>planos del movimiento</strong> son referencias anatómicas que describen la dirección en que se mueve una articulación:</p>
+        <p><strong>Los 3 planos:</strong></p>
+        <ul>
+          <li><strong>Plano sagital:</strong> Divide el cuerpo en izquierda y derecha. Movimientos: flexión-extensión (ej: caminar, flexionar el codo).</li>
+          <li><strong>Plano frontal:</strong> Divide el cuerpo en delante y detrás. Movimientos: abducción-adducción, inversión-eversión (ej: abrir/cerrar piernas, mover el pie hacia dentro/fuera).</li>
+          <li><strong>Plano transversal:</strong> Divide el cuerpo en arriba y abajo. Movimientos: rotaciones (ej: girar la cabeza, rotación del hombro).</li>
+        </ul>
+        <p><strong>El esguince de tobillo en inversión:</strong></p>
+        <ul>
+          <li><strong>Plano frontal:</strong> El movimiento de inversión (planta del pie hacia dentro) ocurre principalmente en este plano.</li>
+          <li><strong>Movimiento complejo:</strong> La inversión es en realidad una combinación de:
+            <ul><li>Supinación (eversión del pie).</li><li>Aducción (pie hacia la línea media).</li><li>Flexión plantar (punta del pie hacia abajo).</li></ul>
+          </li>
+          <li><strong>Ligamentos afectados:</strong> Los ligamentos laterales (tibio-tarsal anterior, medio y posterior) están diseñados para resistir la eversión (pie hacia fuera), no la inversión excesiva.</li>
+          <li><strong>Mecanismo lesivo:</strong> Al aterrizar mal, el pie se va en inversión más allá del rango seguro → los ligamentos laterales se estiran demasiado → se rompen (esguince).</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Concepto clave:</strong> El 85% de los esguinces de tobillo son en inversión (ligamentos laterales). Solo el 15% son en eversión (ligamento medial/deltoideo). Conocer los planos ayuda a entender el mecanismo y prevenir lesiones.</div>`
+      },
+      {
+        header: "Caso 8: La Rotación de Rodilla del Esquiador",
+        topic: "Planos del movimiento",
+        desc: "<p><strong>Situación:</strong> Pedro, un esquiador, cae con el esquí puesto y la rodilla queda \"torcida\". La resonancia muestra rotura del LCA y del menisco interno. El médico le explica que la rodilla es una articulación que permite movimiento principalmente en un plano, pero que la rotación es peligrosa.</p><p><strong>Pregunta:</strong> ¿Por qué la rodilla (articulación principalmente del plano sagital) es tan vulnerable a las lesiones rotacionales (plano transversal)?</p>",
+        opts: [
+          "<strong>A)</strong> Porque la rodilla no tiene ligamentos",
+          "<strong>B)</strong> Porque la rodilla es una articulación modificada (ginglimo con componente rotacional) donde los meniscos y ligamentos cruzados estabilizan la rotación. Cuando la tibia rota sobre el fémur con la rodilla flexionada y cargada, los ligamentos (especialmente el LCA) y meniscos reciben fuerzas de cizallamiento para las que no están bien diseñados",
+          "<strong>C)</strong> Porque los esquís son demasiado largos"
+        ],
+        correct: "B",
+        exp: `<p><strong>Explicación fisiológica:</strong></p>
+        <p>La rodilla es una articulación compleja con características únicas que la hacen vulnerable a lesiones rotacionales:</p>
+        <p><strong>Características biomecánicas de la rodilla:</strong></p>
+        <ul>
+          <li><strong>Articulación modificada:</strong>
+            <ul><li>Es principalmente una <strong>ginglimo</strong> (bisagra) que permite flexo-extensión en el plano sagital.</li><li>Pero tiene un componente rotacional menor (especialmente en flexión).</li><li>Cuando la rodilla está completamente extendida, hay un \"bloqueo\" rotacional (screw-home mechanism) que da estabilidad.</li></ul>
+          </li>
+          <li><strong>Estructuras estabilizadoras:</strong>
+            <ul><li><strong>Ligamentos cruzados (LCA y LCP):</strong> Controlan el desplazamiento anterior/posterior de la tibia y limitan la rotación.</li><li><strong>Meniscos:</strong> Mejoran la congruencia entre fémur y tibia, absorben impactos y ayudan a estabilizar.</li><li><strong>Ligamentos colaterales:</strong> Estabilizan en el plano frontal (valgo/varo).</li></ul>
+          </li>
+          <li><strong>Mecanismo lesivo en esquí:</strong>
+            <ul><li>El esquí fija el pie (no puede rotar libremente).</li><li>Al caer, el cuerpo rota pero el pie queda fijo → la tibia rota sobre el fémur.</li><li>Si la rodilla está flexionada y cargada (peso corporal), esta rotación genera fuerzas de cizallamiento enormes.</li><li>El LCA (que limita la rotación interna de la tibia) se rompe.</li><li>El menisco interno (más fijado que el externo) también se lesiona.</li></ul>
+          </li>
+        </ul>
+        <p><strong>¿Por qué es tan dañina la rotación?</strong></p>
+        <ul>
+          <li>Los ligamentos están diseñados para resistir tracción (estiramiento), no cizallamiento (fuerzas perpendiculares).</li>
+          <li>La rotación combinada con carga multiplica las fuerzas.</li>
+          <li>Los meniscos, al estar fijados en sus extremos, pueden \"atraparse\" y romperse.</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Concepto clave:</strong> La rodilla es vulnerable a la rotación porque está diseñada principalmente para flexo-extensión. Por eso, las lesiones rotacionales (esquí, fútbol, baloncesto) son tan graves y afectan a múltiples estructuras (LCA + menisco).</div>`
+      },
+      {
+        header: "Caso 9: El Tobillo que se Tuerce Siempre",
+        topic: "Propiocepción",
+        desc: "<p><strong>Situación:</strong> Lucía sufrió un esguince de tobillo grave hace 6 meses. Aunque el ligamento curó, nota que su tobillo se \"tuerce\" con facilidad en terrenos irregulares. Su fisioterapeuta le dice que tiene <strong>déficit propioceptivo</strong>.</p><p><strong>Pregunta:</strong> ¿Qué es la propiocepción y por qué se pierde tras un esguince?</p>",
+        opts: [
+          "<strong>A)</strong> La propiocepción es la fuerza muscular, y se pierde porque el músculo se atrofia",
+          "<strong>B)</strong> La propiocepción es la capacidad de sentir la posición y movimiento de las articulaciones. Se pierde porque el esguince daña los mecanorreceptores (husos musculares, órganos tendinosos de Golgi, receptores articulares) que envían información al cerebro sobre la posición del tobillo. Sin esta información, el cerebro no puede corregir rápidamente las posiciones peligrosas",
+          "<strong>C)</strong> La propiocepción es la flexibilidad, y se pierde porque el ligamento cicatrizado es más rígido"
+        ],
+        correct: "B",
+        exp: `<p><strong>Explicación fisiológica:</strong></p>
+        <p>La <strong>propiocepción</strong> es el \"sexto sentido\" del cuerpo: la capacidad de percibir la posición, movimiento y fuerza de las articulaciones y músculos sin necesidad de mirar.</p>
+        <p><strong>Sistema propioceptivo:</strong></p>
+        <ul>
+          <li><strong>Mecanorreceptores:</strong> Son sensores especializados que detectan deformaciones mecánicas:
+            <ul><li><strong>Husos musculares:</strong> Detectan la longitud del músculo y la velocidad de cambio.</li><li><strong>Órganos tendinosos de Golgi:</strong> Detectan la tensión en el tendón.</li><li><strong>Receptores articulares (Ruffini, Pacini, etc.):</strong> Están en la cápsula y ligamentos. Detectan la posición articular, presión y aceleración.</li></ul>
+          </li>
+          <li><strong>Vías nerviosas:</strong>
+            <ul><li>Los mecanorreceptores envían señales por nervios aferentes a la médula espinal y al cerebro.</li><li>El cerebro integra esta información con la visual y vestibular.</li><li>Envía respuestas motoras para ajustar la posición y proteger la articulación.</li></ul>
+          </li>
+        </ul>
+        <p><strong>¿Por qué se pierde tras un esguince?</strong></p>
+        <ul>
+          <li><strong>Daño a los receptores:</strong> Al romperse o estirarse los ligamentos, también se dañan los mecanorreceptores que contienen.</li>
+          <li><strong>Alteración de la señal:</strong> Menos receptores = menos información al cerebro = el cerebro \"ve\" peor la posición del tobillo.</li>
+          <li><strong>Respuesta muscular lenta:</strong> Sin información precisa, los músculos que estabilizan el tobillo (peroneos) no se activan a tiempo para corregir una posición peligrosa.</li>
+          <li><strong>Círculo vicioso:</strong> Más esguinces → más daño a receptores → más déficit propioceptivo → más esguinces.</li>
+        </ul>
+        <p><strong>Estudios científicos:</strong></p>
+        <ul>
+          <li>Tras un esguince, la propiocepción puede tardar 3-6 meses en recuperarse completamente.</li>
+          <li>El entrenamiento propioceptivo (equilibrio en superficies inestables) reduce el riesgo de recidiva en un 50%.</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Concepto clave:</strong> La propiocepción es tan importante como la fuerza y la flexibilidad para prevenir lesiones. Tras un esguince, el entrenamiento del equilibrio es esencial para \"reeducar\" al sistema nervioso.</div>`
+      },
+      {
+        header: "Caso 10: El Entrenamiento Propioceptivo del Bailarín",
+        topic: "Propiocepción",
+        desc: "<p><strong>Situación:</strong> Un profesor de danza incluye en sus clases ejercicios de equilibrio sobre una pierna, con ojos cerrados, y sobre superficies inestables (bosu, cojines). Los alumnos se quejan de que es \"muy difícil\" al principio, pero notan que mejoran su estabilidad.</p><p><strong>Pregunta:</strong> ¿Qué mecanismo fisiológico explica la mejora de la estabilidad con el entrenamiento propioceptivo?</p>",
+        opts: [
+          "<strong>A)</strong> Porque los músculos se hacen más fuertes y aguantan más",
+          "<strong>B)</strong> Porque el entrenamiento propioceptivo mejora la sensibilidad de los mecanorreceptores, acelera la conducción nerviosa, y optimiza los patrones de activación muscular (co-contracción, respuestas anticipatorias). El cerebro aprende a procesar mejor la información y a responder más rápido para proteger las articulaciones",
+          "<strong>C)</strong> Porque los ligamentos se vuelven más elásticos"
+        ],
+        correct: "B",
+        exp: `<p><strong>Explicación fisiológica:</strong></p>
+        <p>El entrenamiento propioceptivo no fortalece los músculos ni estira los ligamentos. Su efecto es <strong>neurológico</strong>: mejora la capacidad del sistema nervioso para controlar las articulaciones.</p>
+        <p><strong>Mecanismos fisiológicos de adaptación:</strong></p>
+        <ul>
+          <li><strong>Mejora de la sensibilidad de los receptores:</strong>
+            <ul><li>Los mecanorreceptores se vuelven más sensibles a estímulos pequeños.</li><li>Detectan cambios de posición más sutiles y los envían más rápido al cerebro.</li></ul>
+          </li>
+          <li><strong>Aceleración de la conducción nerviosa:</strong>
+            <ul><li>Las vías nerviosas se \"mielinizan\" mejor (la mielina es como el \"aislante\" del cable que acelera la señal).</li><li>La información llega más rápido desde los receptores al cerebro y desde el cerebro a los músculos.</li></ul>
+          </li>
+          <li><strong>Optimización de los patrones musculares:</strong>
+            <ul><li><strong>Co-contracción:</strong> Los músculos agonistas y antagonistas se activan simultáneamente para dar estabilidad (ej: cuádriceps e isquiotibiales en la rodilla).</li><li><strong>Respuestas anticipatorias:</strong> El cerebro aprende a activar los músculos estabilizadores ANTES de que ocurra el movimiento (feedforward). Ej: antes de levantar una pierna, se activan los músculos del tobillo y la cadera.</li><li><strong>Respuestas reflejas:</strong> Los reflejos de estiramiento se vuelven más rápidos y eficientes.</li></ul>
+          </li>
+          <li><strong>Integración sensorial:</strong>
+            <ul><li>El cerebro aprende a integrar mejor la información propioceptiva, visual y vestibular.</li><li>Si falla una fuente (ej: cerrar los ojos), las otras compensan mejor.</li></ul>
+          </li>
+        </ul>
+        <p><strong>¿Por qué es difícil al principio?</strong></p>
+        <ul>
+          <li>El cerebro está \"aprendiendo\" nuevas conexiones neuronales.</li>
+          <li>Los patrones musculares no están automatizados.</li>
+          <li>Con la práctica (4-8 semanas), se vuelve automático (como montar en bici).</li>
+        </ul>
+        <p><strong>Aplicación en danza:</strong></p>
+        <ul>
+          <li>Mejor equilibrio en relevés y arabesques.</li>
+          <li>Menor riesgo de esguinces al aterrizar saltos.</li>
+          <li>Mayor control en giros y piruetas.</li>
+          <li>Mejor adaptación a superficies irregulares (escenarios al aire libre).</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Concepto clave:</strong> El entrenamiento propioceptivo \"reprograma\" el sistema nervioso. No cambia la estructura (músculos, ligamentos), sino la función (control neuromuscular). Por eso es esencial para bailarines y deportistas.</div>`
+      }
+    ]
+  },
+  en: {
+    headerTitle: "🦴 Joint Physiology",
+    headerSub: "10 Practical Cases: Types, Structure, Cartilage, Planes and Proprioception",
+    introTitle: "📚 Introduction",
+    introP1: "Joints are complex structures that allow body movement. They are not simple mechanical \"hinges\", but <strong>dynamic organs</strong> with their own metabolism, adaptive capacity and sophisticated protection systems.",
+    introP2: "In these 10 practical cases we will explore:",
+    introUl: [
+      "The <strong>types of joints</strong> and their functional implications",
+      "The <strong>parts of a joint</strong> and their physiology",
+      "The importance of <strong>movement and load</strong> for cartilage",
+      "The <strong>planes of movement</strong> and their clinical application",
+      "<strong>Proprioception</strong> as a joint protection system"
+    ],
+    introP3: "<strong>Instructions:</strong> Read each case, select the answer you think is correct and press \"Verify\". Open the box to see the detailed physiological explanation.",
+    btnCheck: "Verify Answer",
+    fbCorrect: "✅ Correct Answer:",
+    fbIncorrect: "❌ Incorrect Answer. The correct one is:",
+    progressLabel: "Progress:",
+    progressCases: "cases completed",
+    alertSelect: "Please select an answer first",
+    alertComplete: "🎉 Congratulations! You have completed all the practical cases on joint physiology. You now understand how these complex and dynamic structures work.",
+    cases: [
+      {
+        header: "Case 1: The Dancer's Hip",
+        topic: "Types of joints",
+        desc: "<p><strong>Situation:</strong> Laura, a 28-year-old classical ballet dancer, develops early hip osteoarthritis. Her doctor explains that the hip is a <strong>ball-and-socket joint</strong> (spherical joint) and that this has advantages and disadvantages.</p><p><strong>Question:</strong> Which physiological characteristic of the ball-and-socket joint explains both its great mobility and its vulnerability to osteoarthritis in dancers?</p>",
+        opts: [
+          "<strong>A)</strong> That it has very little synovial fluid and dries out quickly",
+          "<strong>B)</strong> That it allows movement in all 3 planes of space (multiaxial), but the rounded femoral head concentrates the load on a broad surface that, with repeated extreme movements, can damage the cartilage",
+          "<strong>C)</strong> That it is a fibrous joint without cartilage"
+        ],
+        correct: "B",
+        exp: `<p><strong>Physiological explanation:</strong></p>
+        <p><strong>Ball-and-socket joints</strong> (like the hip and shoulder) are spherical joints where a rounded head fits into a cavity (cotyloid or glenoid). This structure has important physiological consequences:</p>
+        <p><strong>Advantages:</strong></p>
+        <ul>
+          <li><strong>Multiaxiality:</strong> They allow movement in all 3 planes (flexion-extension, abduction-adduction, internal-external rotation). It is the joint type with the greatest range of motion.</li>
+          <li><strong>Relative stability:</strong> The congruence between surfaces distributes the load well.</li>
+        </ul>
+        <p><strong>Disadvantages in dancers:</strong></p>
+        <ul>
+          <li><strong>Extreme movements:</strong> Dancers take the hip to extreme ranges (turnout, high extensions). This subjects the cartilage to loads in unusual areas.</li>
+          <li><strong>Repetitive impact:</strong> In jumps and landings, the femoral head receives loads 3-5 times body weight, concentrated on the articular cartilage.</li>
+          <li><strong>Early wear:</strong> The combination of extreme mobility + repetitive load accelerates cartilage wear → early osteoarthritis.</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Key concept:</strong> Ball-and-socket joints are \"all-terrain\" (lots of mobility), but that versatility has a price: greater wear with extreme use. Dancers must balance mobility with strength to protect the cartilage.</div>`
+      },
+      {
+        header: "Case 2: The Lifter's Unstable Shoulder",
+        topic: "Types of joints",
+        desc: "<p><strong>Situation:</strong> Miguel, a ballet lifter (the one who lifts the ballerina), suffers his third shoulder dislocation in 2 years. His physiotherapist tells him that the shoulder is the <strong>most unstable joint in the body</strong>.</p><p><strong>Question:</strong> Which structural characteristic of the shoulder (ball-and-socket) explains its high instability compared to the hip (also ball-and-socket)?</p>",
+        opts: [
+          "<strong>A)</strong> That the shoulder has fewer muscles around it",
+          "<strong>B)</strong> That the glenoid cavity is very shallow compared to the humeral head (like a golf ball on a tee), which gives great mobility but little bony stability, depending more on muscles and ligaments",
+          "<strong>C)</strong> That the shoulder has no joint capsule"
+        ],
+        correct: "B",
+        exp: `<p><strong>Physiological explanation:</strong></p>
+        <p>Although shoulder and hip are both ball-and-socket joints, their proportions are very different, which determines their functional behaviour:</p>
+        <p><strong>Structural comparison:</strong></p>
+        <ul>
+          <li><strong>Hip:</strong> The cotyloid (cavity) covers ~75% of the femoral head. Great bony congruence → much passive stability.</li>
+          <li><strong>Shoulder:</strong> The glenoid cavity covers only ~25-30% of the humeral head. Little bony congruence → little passive stability.</li>
+        </ul>
+        <p><strong>Physiological consequences:</strong></p>
+        <ul>
+          <li><strong>Muscular dependence:</strong> The shoulder depends on the <strong>rotator cuff</strong> (4 muscles) to keep the humeral head centred in the glenoid during movement. If these muscles fatigue or weaken, the shoulder dislocates.</li>
+          <li><strong>Lax capsule:</strong> The shoulder capsule is very lax (allows great mobility) but offers little stability.</li>
+          <li><strong>Glenoid labrum:</strong> It is a ring of fibrocartilage that deepens the cavity, but it can be injured and worsen instability.</li>
+          <li><strong>For the lifter:</strong> Lifting weight with the arm in abduction and external rotation (\"throwing\" position) is the most vulnerable position for dislocation.</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Key concept:</strong> The shoulder sacrifices stability for mobility. That is why it is the most dislocated joint in the body. Lifters must especially strengthen the rotator cuff and scapula.</div>`
+      },
+      {
+        header: "Case 3: The Runner's Swollen Knee",
+        topic: "Parts of a joint",
+        desc: "<p><strong>Situation:</strong> Juan, a marathon runner, notices that his knee swells after running 20 km. The MRI shows excess fluid in the joint. The doctor diagnoses <strong>joint effusion</strong>.</p><p><strong>Question:</strong> Which joint structure produces synovial fluid and why does it accumulate in excess in this case?</p>",
+        opts: [
+          "<strong>A)</strong> The articular cartilage produces fluid when damaged",
+          "<strong>B)</strong> The synovial membrane (inner layer of the capsule) produces synovial fluid. In response to irritation from overload, it produces more fluid (inflammation) as a protective mechanism, but the excess causes swelling and limited movement",
+          "<strong>C)</strong> The ligaments produce fluid to lubricate"
+        ],
+        correct: "B",
+        exp: `<p><strong>Physiological explanation:</strong></p>
+        <p><strong>Synovial fluid</strong> is essential for joint health and is produced by a specific structure:</p>
+        <p><strong>The synovial membrane:</strong></p>
+        <ul>
+          <li>It is the inner layer of the joint capsule.</li>
+          <li>It is made up of <strong>synoviocytes</strong> (specialised cells) of two types:
+            <ul><li><strong>Type A:</strong> Macrophages (clean waste).</li><li><strong>Type B:</strong> Fibroblasts (produce hyaluronic acid and lubricin).</li></ul>
+          </li>
+          <li>It produces 1-4 ml of synovial fluid under normal conditions (in a knee).</li>
+        </ul>
+        <p><strong>Functions of synovial fluid:</strong></p>
+        <ul>
+          <li><strong>Lubrication:</strong> Reduces friction between cartilages (friction coefficient 5 times lower than ice on ice).</li>
+          <li><strong>Nutrition:</strong> Cartilage has no blood vessels, it is nourished by diffusion of synovial fluid.</li>
+          <li><strong>Cushioning:</strong> Absorbs impacts.</li>
+        </ul>
+        <p><strong>Why the effusion?</strong></p>
+        <ul>
+          <li>In response to irritation (overload, microtrauma), the synovial membrane becomes inflamed (synovitis).</li>
+          <li>The synoviocytes produce more fluid as a protective response.</li>
+          <li>The excess fluid causes swelling, pain and limited movement (due to capsule distension).</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Key concept:</strong> Synovial fluid is like the \"engine oil\" of the joint. Without it, the cartilage becomes malnourished and wears out. But excess (effusion) indicates irritation and the cause must be treated.</div>`
+      },
+      {
+        header: "Case 4: The Cruciate Ligament Injury",
+        topic: "Parts of a joint",
+        desc: "<p><strong>Situation:</strong> Marta, a footballer, suffers an anterior cruciate ligament (ACL) tear in her knee while changing direction. The surgeon explains that ligaments are structures that are <strong>mostly avascular</strong>.</p><p><strong>Question:</strong> Why do ligaments (like the ACL) have such poor healing capacity compared to other tissues?</p>",
+        opts: [
+          "<strong>A)</strong> Because they are made of a special material that cannot be repaired",
+          "<strong>B)</strong> Because most of the ligament has very little vascularisation (especially the ACL, bathed in synovial fluid that inhibits coagulation), which limits the arrival of nutrients, oxygen and repair cells. In addition, synovial fluid contains enzymes that degrade the initial clot needed for healing",
+          "<strong>C)</strong> Because ligaments have no living cells"
+        ],
+        correct: "B",
+        exp: `<p><strong>Physiological explanation:</strong></p>
+        <p>Intra-articular ligaments (inside the joint) such as the ACL have characteristics that drastically limit their healing capacity:</p>
+        <p><strong>Factors that limit healing:</strong></p>
+        <ul>
+          <li><strong>Poor vascularisation:</strong>
+            <ul><li>Only the bone insertion zone is well vascularised.</li><li>The central part of the ACL has very limited blood vessels.</li><li>Without blood, repair cells and nutrients do not arrive.</li></ul>
+          </li>
+          <li><strong>Bath in synovial fluid:</strong>
+            <ul><li>The ACL is inside the joint, bathed in synovial fluid.</li><li>Synovial fluid contains <strong>fibrinolytic enzymes</strong> that degrade fibrinogen and prevent the formation of a stable clot.</li><li>Without a stable clot, the initial \"scaffold\" for repair does not form.</li></ul>
+          </li>
+          <li><strong>Constant mechanical load:</strong>
+            <ul><li>The knee moves constantly (even when walking).</li><li>Continuous movement prevents the immobilisation necessary for healing.</li><li>Shear forces break the fragile initial unions.</li></ul>
+          </li>
+          <li><strong>Ligament retraction:</strong>
+            <ul><li>When the ACL tears, the ends retract (shrink).</li><li>The ends remain separated and cannot \"touch\" to unite.</li></ul>
+          </li>
+        </ul>
+        <div class="key-concept"><strong>💡 Key concept:</strong> Only 5-10% of complete ACL tears heal spontaneously. That is why, in young and active athletes, surgical reconstruction with a tendon (autograft or allograft) is recommended.</div>`
+      },
+      {
+        header: "Case 5: The Astronaut's Cartilage",
+        topic: "Cartilage and movement",
+        desc: "<p><strong>Situation:</strong> An astronaut spends 6 months on the International Space Station. Upon returning to Earth, MRI scans show that the cartilage in his knees has <strong>thinned by 8%</strong> and lost mechanical properties.</p><p><strong>Question:</strong> Which physiological mechanism explains the deterioration of cartilage in the absence of load?</p>",
+        opts: [
+          "<strong>A)</strong> Because it is very cold in space and the cartilage freezes",
+          "<strong>B)</strong> Because cartilage needs cyclic mechanical load for synovial fluid to circulate and nourish the chondrocytes. Without load, the cartilage becomes \"malnourished\", the chondrocytes reduce matrix synthesis (collagen and proteoglycans), and the cartilage degrades",
+          "<strong>C)</strong> Because the gravity in space is different and damages the cartilage"
+        ],
+        correct: "B",
+        exp: `<p><strong>Physiological explanation:</strong></p>
+        <p>Articular cartilage is a unique tissue that depends completely on <strong>movement and load</strong> for its nutrition and maintenance:</p>
+        <p><strong>Cartilage nutrition mechanism:</strong></p>
+        <ul>
+          <li><strong>No blood vessels:</strong> Mature cartilage is avascular. It does not receive blood directly.</li>
+          <li><strong>Nutrition by diffusion:</strong> Nutrients (oxygen, glucose, amino acids) and waste (CO₂, lactate) must diffuse through the synovial fluid.</li>
+          <li><strong>The \"pump\" of movement:</strong>
+            <ul><li><strong>Compression (load):</strong> When loading the joint (e.g. walking), the cartilage compresses and \"squeezes\" synovial fluid out, eliminating waste.</li><li><strong>Decompression (unloading):</strong> When the load is removed, the cartilage expands and \"absorbs\" fresh synovial fluid with nutrients.</li><li>This compression-decompression cycle is essential for cartilage nutrition.</li></ul>
+          </li>
+        </ul>
+        <p><strong>What happens in space?</strong></p>
+        <ul>
+          <li><strong>Microgravity:</strong> There is no significant load on the joints (astronauts \"float\").</li>
+          <li><strong>No nutrition \"pump\":</strong> Synovial fluid does not circulate properly.</li>
+          <li><strong>Consequences:</strong>
+            <ul><li>Chondrocytes receive fewer nutrients.</li><li>They reduce synthesis of type II collagen and proteoglycans (matrix components).</li><li>Cartilage loses thickness and mechanical properties.</li><li>Activity of degrading enzymes (metalloproteinases) increases.</li></ul>
+          </li>
+        </ul>
+        <div class="key-concept"><strong>💡 Key concept:</strong> Cartilage needs load to live. Prolonged immobilisation (bed rest, cast, space) is as harmful to cartilage as excess load. Balance is key!</div>`
+      },
+      {
+        header: "Case 6: The Sedentary Writer's Osteoarthritis",
+        topic: "Cartilage and movement",
+        desc: "<p><strong>Situation:</strong> Carlos, a 45-year-old programmer who spends 10 hours a day sitting, develops knee osteoarthritis. His doctor tells him that a sedentary lifestyle is a risk factor as important as being overweight.</p><p><strong>Question:</strong> Why does a sedentary lifestyle (absence of movement) damage articular cartilage?</p>",
+        opts: [
+          "<strong>A)</strong> Because sitting weakens the bones",
+          "<strong>B)</strong> Because without cyclic movement, the cartilage does not receive adequate nutrition (the compression-decompression \"pump\" does not work), the chondrocytes become metabolically inactive, and the collagen and proteoglycan matrix progressively degrades",
+          "<strong>C)</strong> Because sitting stretches the cartilage too much"
+        ],
+        correct: "B",
+        exp: `<p><strong>Physiological explanation:</strong></p>
+        <p>A sedentary lifestyle is one of the greatest enemies of articular cartilage, although it may seem paradoxical (one would think that \"not using\" protects):</p>
+        <p><strong>Physiological consequences of a sedentary lifestyle:</strong></p>
+        <ul>
+          <li><strong>Lack of nutrition:</strong>
+            <ul><li>Without compression-decompression cycles, synovial fluid does not circulate.</li><li>Chondrocytes receive less glucose, oxygen and amino acids.</li><li>Metabolic waste accumulates (lactate, free radicals).</li></ul>
+          </li>
+          <li><strong>Chondrocyte inactivity:</strong>
+            <ul><li>Chondrocytes are mechanosensitive: they need mechanical stimuli to stay active.</li><li>Without load, they reduce synthesis of type II collagen and aggrecan (main proteoglycan).</li><li>Expression of catabolic genes (MMPs, ADAMTS) that degrade the matrix increases.</li></ul>
+          </li>
+          <li><strong>Loss of mechanical properties:</strong>
+            <ul><li>Cartilage loses its ability to absorb impacts.</li><li>It becomes thinner and less elastic.</li><li>Friction between articular surfaces increases.</li></ul>
+          </li>
+          <li><strong>Muscle weakness:</strong>
+            <ul><li>The muscles that stabilise the joint weaken.</li><li>The joint receives more direct load (less muscle cushioning).</li><li>Risk of injury and wear increases.</li></ul>
+          </li>
+        </ul>
+        <p><strong>Scientific studies:</strong></p>
+        <ul>
+          <li>Sedentary people have 2-3 times higher risk of knee osteoarthritis than active people.</li>
+          <li>Moderate and regular exercise (walking, swimming, cycling) protects cartilage.</li>
+          <li>Intense exercise without preparation can damage it. Dose matters!</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Key concept:</strong> \"Use it or lose it\" applies perfectly to cartilage. Moderate and regular movement is the best \"medicine\" to protect joints.</div>`
+      },
+      {
+        header: "Case 7: The Ankle Sprain in Inversion",
+        topic: "Planes of movement",
+        desc: "<p><strong>Situation:</strong> Ana, a basketball player, lands badly after a rebound and suffers an ankle sprain. Her foot went \"inward\" (sole of the foot facing the other foot). The doctor diagnoses a sprain of the lateral ligaments.</p><p><strong>Question:</strong> In which plane of space did the injurious movement occur and what type of joint movement is it?</p>",
+        opts: [
+          "<strong>A)</strong> Sagittal plane - flexion-extension movement",
+          "<strong>B)</strong> Frontal plane - inversion movement (combination of supination, adduction and plantar flexion). The lateral ligaments are not designed to resist this movement in excess",
+          "<strong>C)</strong> Transverse plane - rotation movement"
+        ],
+        correct: "B",
+        exp: `<p><strong>Physiological explanation:</strong></p>
+        <p>The <strong>planes of movement</strong> are anatomical references that describe the direction in which a joint moves:</p>
+        <p><strong>The 3 planes:</strong></p>
+        <ul>
+          <li><strong>Sagittal plane:</strong> Divides the body into left and right. Movements: flexion-extension (e.g. walking, bending the elbow).</li>
+          <li><strong>Frontal plane:</strong> Divides the body into front and back. Movements: abduction-adduction, inversion-eversion (e.g. opening/closing legs, moving the foot inward/outward).</li>
+          <li><strong>Transverse plane:</strong> Divides the body into top and bottom. Movements: rotations (e.g. turning the head, shoulder rotation).</li>
+        </ul>
+        <p><strong>The ankle sprain in inversion:</strong></p>
+        <ul>
+          <li><strong>Frontal plane:</strong> The inversion movement (sole of the foot inward) occurs mainly in this plane.</li>
+          <li><strong>Complex movement:</strong> Inversion is actually a combination of:
+            <ul><li>Supination (eversion of the foot).</li><li>Adduction (foot toward the midline).</li><li>Plantar flexion (toes downward).</li></ul>
+          </li>
+          <li><strong>Ligaments affected:</strong> The lateral ligaments (anterior, middle and posterior tibio-talar) are designed to resist eversion (foot outward), not excessive inversion.</li>
+          <li><strong>Injury mechanism:</strong> When landing badly, the foot goes into inversion beyond the safe range → the lateral ligaments stretch too much → they tear (sprain).</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Key concept:</strong> 85% of ankle sprains are in inversion (lateral ligaments). Only 15% are in eversion (medial/deltoid ligament). Knowing the planes helps understand the mechanism and prevent injuries.</div>`
+      },
+      {
+        header: "Case 8: The Skier's Knee Rotation",
+        topic: "Planes of movement",
+        desc: "<p><strong>Situation:</strong> Pedro, a skier, falls with his ski on and his knee becomes \"twisted\". The MRI shows a tear of the ACL and the medial meniscus. The doctor explains that the knee is a joint that allows movement mainly in one plane, but that rotation is dangerous.</p><p><strong>Question:</strong> Why is the knee (a joint mainly of the sagittal plane) so vulnerable to rotational injuries (transverse plane)?</p>",
+        opts: [
+          "<strong>A)</strong> Because the knee has no ligaments",
+          "<strong>B)</strong> Because the knee is a modified joint (ginglymus with a rotational component) where the menisci and cruciate ligaments stabilise rotation. When the tibia rotates on the femur with the knee flexed and loaded, the ligaments (especially the ACL) and menisci receive shear forces for which they are not well designed",
+          "<strong>C)</strong> Because skis are too long"
+        ],
+        correct: "B",
+        exp: `<p><strong>Physiological explanation:</strong></p>
+        <p>The knee is a complex joint with unique characteristics that make it vulnerable to rotational injuries:</p>
+        <p><strong>Biomechanical characteristics of the knee:</strong></p>
+        <ul>
+          <li><strong>Modified joint:</strong>
+            <ul><li>It is mainly a <strong>ginglymus</strong> (hinge) that allows flexion-extension in the sagittal plane.</li><li>But it has a minor rotational component (especially in flexion).</li><li>When the knee is fully extended, there is a rotational \"lock\" (screw-home mechanism) that provides stability.</li></ul>
+          </li>
+          <li><strong>Stabilising structures:</strong>
+            <ul><li><strong>Cruciate ligaments (ACL and PCL):</strong> Control anterior/posterior displacement of the tibia and limit rotation.</li><li><strong>Menisci:</strong> Improve congruence between femur and tibia, absorb impacts and help stabilise.</li><li><strong>Collateral ligaments:</strong> Stabilise in the frontal plane (valgus/varus).</li></ul>
+          </li>
+          <li><strong>Injury mechanism in skiing:</strong>
+            <ul><li>The ski fixes the foot (cannot rotate freely).</li><li>When falling, the body rotates but the foot remains fixed → the tibia rotates on the femur.</li><li>If the knee is flexed and loaded (body weight), this rotation generates enormous shear forces.</li><li>The ACL (which limits internal rotation of the tibia) tears.</li><li>The medial meniscus (more fixed than the lateral) is also injured.</li></ul>
+          </li>
+        </ul>
+        <p><strong>Why is rotation so harmful?</strong></p>
+        <ul>
+          <li>Ligaments are designed to resist traction (stretching), not shear (perpendicular forces).</li>
+          <li>Rotation combined with load multiplies forces.</li>
+          <li>The menisci, being fixed at their ends, can be \"trapped\" and tear.</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Key concept:</strong> The knee is vulnerable to rotation because it is designed mainly for flexion-extension. That is why rotational injuries (skiing, football, basketball) are so serious and affect multiple structures (ACL + meniscus).</div>`
+      },
+      {
+        header: "Case 9: The Ankle That Always Twists",
+        topic: "Proprioception",
+        desc: "<p><strong>Situation:</strong> Lucía suffered a severe ankle sprain 6 months ago. Although the ligament healed, she notices that her ankle \"twists\" easily on irregular terrain. Her physiotherapist tells her she has a <strong>proprioceptive deficit</strong>.</p><p><strong>Question:</strong> What is proprioception and why is it lost after a sprain?</p>",
+        opts: [
+          "<strong>A)</strong> Proprioception is muscle strength, and it is lost because the muscle atrophies",
+          "<strong>B)</strong> Proprioception is the ability to feel the position and movement of joints. It is lost because the sprain damages the mechanoreceptors (muscle spindles, Golgi tendon organs, joint receptors) that send information to the brain about the ankle position. Without this information, the brain cannot quickly correct dangerous positions",
+          "<strong>C)</strong> Proprioception is flexibility, and it is lost because the scarred ligament is more rigid"
+        ],
+        correct: "B",
+        exp: `<p><strong>Physiological explanation:</strong></p>
+        <p><strong>Proprioception</strong> is the body's \"sixth sense\": the ability to perceive the position, movement and force of joints and muscles without needing to look.</p>
+        <p><strong>Proprioceptive system:</strong></p>
+        <ul>
+          <li><strong>Mechanoreceptors:</strong> They are specialised sensors that detect mechanical deformations:
+            <ul><li><strong>Muscle spindles:</strong> Detect muscle length and rate of change.</li><li><strong>Golgi tendon organs:</strong> Detect tension in the tendon.</li><li><strong>Joint receptors (Ruffini, Pacini, etc.):</strong> They are in the capsule and ligaments. They detect joint position, pressure and acceleration.</li></ul>
+          </li>
+          <li><strong>Nerve pathways:</strong>
+            <ul><li>Mechanoreceptors send signals via afferent nerves to the spinal cord and brain.</li><li>The brain integrates this information with visual and vestibular information.</li><li>It sends motor responses to adjust position and protect the joint.</li></ul>
+          </li>
+        </ul>
+        <p><strong>Why is it lost after a sprain?</strong></p>
+        <ul>
+          <li><strong>Damage to receptors:</strong> When ligaments tear or stretch, the mechanoreceptors they contain are also damaged.</li>
+          <li><strong>Signal alteration:</strong> Fewer receptors = less information to the brain = the brain \"sees\" the ankle position worse.</li>
+          <li><strong>Slow muscle response:</strong> Without precise information, the muscles that stabilise the ankle (peroneals) do not activate in time to correct a dangerous position.</li>
+          <li><strong>Vicious circle:</strong> More sprains → more receptor damage → more proprioceptive deficit → more sprains.</li>
+        </ul>
+        <p><strong>Scientific studies:</strong></p>
+        <ul>
+          <li>After a sprain, proprioception can take 3-6 months to recover completely.</li>
+          <li>Proprioceptive training (balance on unstable surfaces) reduces the risk of recurrence by 50%.</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Key concept:</strong> Proprioception is as important as strength and flexibility for preventing injuries. After a sprain, balance training is essential to \"re-educate\" the nervous system.</div>`
+      },
+      {
+        header: "Case 10: The Dancer's Proprioceptive Training",
+        topic: "Proprioception",
+        desc: "<p><strong>Situation:</strong> A dance teacher includes in his classes exercises of balance on one leg, with eyes closed, and on unstable surfaces (bosu, cushions). The students complain that it is \"very difficult\" at first, but notice that their stability improves.</p><p><strong>Question:</strong> What physiological mechanism explains the improvement in stability with proprioceptive training?</p>",
+        opts: [
+          "<strong>A)</strong> Because the muscles get stronger and endure more",
+          "<strong>B)</strong> Because proprioceptive training improves the sensitivity of mechanoreceptors, speeds up nerve conduction, and optimises muscle activation patterns (co-contraction, anticipatory responses). The brain learns to process information better and respond faster to protect the joints",
+          "<strong>C)</strong> Because the ligaments become more elastic"
+        ],
+        correct: "B",
+        exp: `<p><strong>Physiological explanation:</strong></p>
+        <p>Proprioceptive training does not strengthen muscles or stretch ligaments. Its effect is <strong>neurological</strong>: it improves the nervous system's ability to control joints.</p>
+        <p><strong>Physiological adaptation mechanisms:</strong></p>
+        <ul>
+          <li><strong>Improved receptor sensitivity:</strong>
+            <ul><li>Mechanoreceptors become more sensitive to small stimuli.</li><li>They detect subtler position changes and send them to the brain faster.</li></ul>
+          </li>
+          <li><strong>Accelerated nerve conduction:</strong>
+            <ul><li>Nerve pathways \"myelinate\" better (myelin is like the \"insulation\" of the cable that speeds up the signal).</li><li>Information arrives faster from receptors to the brain and from the brain to the muscles.</li></ul>
+          </li>
+          <li><strong>Optimisation of muscle patterns:</strong>
+            <ul><li><strong>Co-contraction:</strong> Agonist and antagonist muscles activate simultaneously to provide stability (e.g. quadriceps and hamstrings in the knee).</li><li><strong>Anticipatory responses:</strong> The brain learns to activate stabilising muscles BEFORE movement occurs (feedforward). E.g. before lifting a leg, the ankle and hip muscles activate.</li><li><strong>Reflex responses:</strong> Stretch reflexes become faster and more efficient.</li></ul>
+          </li>
+          <li><strong>Sensory integration:</strong>
+            <ul><li>The brain learns to better integrate proprioceptive, visual and vestibular information.</li><li>If one source fails (e.g. closing the eyes), the others compensate better.</li></ul>
+          </li>
+        </ul>
+        <p><strong>Why is it difficult at first?</strong></p>
+        <ul>
+          <li>The brain is \"learning\" new neural connections.</li>
+          <li>Muscle patterns are not automated.</li>
+          <li>With practice (4-8 weeks), it becomes automatic (like riding a bike).</li>
+        </ul>
+        <p><strong>Application in dance:</strong></p>
+        <ul>
+          <li>Better balance in relevés and arabesques.</li>
+          <li>Lower risk of sprains when landing jumps.</li>
+          <li>Greater control in turns and pirouettes.</li>
+          <li>Better adaptation to irregular surfaces (outdoor stages).</li>
+        </ul>
+        <div class="key-concept"><strong>💡 Key concept:</strong> Proprioceptive training \"reprogrammes\" the nervous system. It does not change structure (muscles, ligaments), but function (neuromuscular control). That is why it is essential for dancers and athletes.</div>`
+      }
+    ]
+  }
+};
+
+/* ============================================================
+   ESTAT I RENDER
+   ============================================================ */
+let currentLang = 'ca';
+let completedCases = 0;
+const totalCases = 10;
+let selectedAnswers = {};
+
+function renderIntro() {
+  const t = I18N[currentLang];
+  document.getElementById('t-header-title').textContent = t.headerTitle;
+  document.getElementById('t-header-sub').textContent = t.headerSub;
+  document.getElementById('t-intro-title').textContent = t.introTitle;
+  document.getElementById('t-progress-label').textContent = t.progressLabel;
+  document.getElementById('t-progress-cases').textContent = t.progressCases;
+  
+  document.getElementById('t-intro-content').innerHTML = `
+    <p>${t.introP1}</p>
+    <p>${t.introP2}</p>
+    <ul>${t.introUl.map(x => `<li>${x}</li>`).join('')}</ul>
+    <p style="margin-top: 15px;">${t.introP3}</p>
+  `;
+}
+
+function renderCases() {
+  const t = I18N[currentLang];
+  const container = document.getElementById('casesContainer');
+  container.innerHTML = '';
+  
+  t.cases.forEach((c, idx) => {
+    const caseNum = idx + 1;
+    let html = `<div class="case" id="case${caseNum}">
+      <div class="case-header">${c.header} <span class="case-topic">${c.topic}</span></div>
+      <div class="case-description">${c.desc}</div>
+      <div class="options">`;
+    c.opts.forEach((opt, oi) => {
+      const letter = String.fromCharCode(65 + oi);
+      html += `<div class="option" data-value="${letter}">${opt}</div>`;
+    });
+    html += `</div>
+      <button class="btn-check" onclick="checkAnswer(${caseNum}, '${c.correct}')">${t.btnCheck}</button>
+      <div class="explanation-box" id="explanation${caseNum}">
+        <h4 id="fb-title${caseNum}"></h4>
+        <div class="explanation-content">${c.exp}</div>
+      </div>
+    </div>`;
+    container.innerHTML += html;
+  });
+  
+  // Restaurar estats
+  completedCases = 0;
+  Object.keys(selectedAnswers).forEach(caseNum => {
+    const saved = selectedAnswers[caseNum];
+    const caseEl = document.getElementById(`case${caseNum}`);
+    if (!caseEl) return;
+    const opts = caseEl.querySelectorAll('.option');
+    const btn = caseEl.querySelector('.btn-check');
+    const exp = document.getElementById(`explanation${caseNum}`);
+    const fbTitle = document.getElementById(`fb-title${caseNum}`);
+    
+    opts.forEach(o => {
+      if (o.getAttribute('data-value') === saved.selected) o.classList.add('selected');
+      o.style.pointerEvents = 'none';
+      o.style.opacity = '0.7';
+      if (o.getAttribute('data-value') === saved.correct) { o.classList.add('correct'); o.style.opacity = '1'; }
+      if (o.getAttribute('data-value') === saved.selected && saved.selected !== saved.correct) { o.classList.add('incorrect'); o.style.opacity = '1'; }
+    });
+    btn.disabled = true;
+    if (saved.selected === saved.correct) {
+      exp.classList.add('correct', 'show');
+      fbTitle.textContent = t.fbCorrect + ' ' + saved.correct;
+      completedCases++;
+    } else {
+      exp.classList.add('incorrect', 'show');
+      fbTitle.textContent = t.fbIncorrect + ' ' + saved.correct;
+    }
+  });
+  
+  // Afegir listeners
+  container.querySelectorAll('.option').forEach(option => {
+    option.addEventListener('click', function() {
+      if (this.style.pointerEvents === 'none') return;
+      const parent = this.parentElement;
+      parent.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+      this.classList.add('selected');
+    });
+  });
+  
+  updateProgress();
+}
+
+function checkAnswer(caseNum, correctAnswer) {
+  const t = I18N[currentLang];
+  const caseElement = document.getElementById(`case${caseNum}`);
+  const options = caseElement.querySelectorAll('.option');
+  const btn = caseElement.querySelector('.btn-check');
+  const explanation = document.getElementById(`explanation${caseNum}`);
+  const fbTitle = document.getElementById(`fb-title${caseNum}`);
+  
+  btn.disabled = true;
+  
+  let selectedValue = null;
+  options.forEach(option => {
+    if (option.classList.contains('selected')) {
+      selectedValue = option.getAttribute('data-value');
+    }
+    option.style.pointerEvents = 'none';
+    option.style.opacity = '0.7';
+  });
+  
+  if (!selectedValue) {
+    alert(t.alertSelect);
+    btn.disabled = false;
+    options.forEach(option => {
+      option.style.pointerEvents = 'auto';
+      option.style.opacity = '1';
+    });
+    return;
+  }
+  
+  options.forEach(option => {
+    if (option.getAttribute('data-value') === correctAnswer) {
+      option.classList.add('correct');
+      option.style.opacity = '1';
+    } else if (option.getAttribute('data-value') === selectedValue && selectedValue !== correctAnswer) {
+      option.classList.add('incorrect');
+      option.style.opacity = '1';
+    }
+  });
+  
+  if (selectedValue === correctAnswer) {
+    explanation.classList.add('correct', 'show');
+    fbTitle.textContent = t.fbCorrect + ' ' + correctAnswer;
+    completedCases++;
+  } else {
+    explanation.classList.add('incorrect', 'show');
+    fbTitle.textContent = t.fbIncorrect + ' ' + correctAnswer;
+  }
+  
+  selectedAnswers[caseNum] = { selected: selectedValue, correct: correctAnswer };
+  updateProgress();
+}
+
+function updateProgress() {
+  const t = I18N[currentLang];
+  const progress = (completedCases / totalCases) * 100;
+  document.getElementById('progressBar').style.width = progress + '%';
+  document.getElementById('progress').textContent = completedCases;
+  
+  if (completedCases === totalCases) {
+    setTimeout(() => { alert(t.alertComplete); }, 500);
+  }
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + lang).classList.add('active');
+  renderIntro();
+  renderCases();
+}
+
+/* Inicialització */
+setLang('ca');
+</script>
+</body>
+</html>

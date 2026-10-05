@@ -1,0 +1,2158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fisiología de la Coactivación Muscular en Danza</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  body {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+  }
+  header {
+    background: linear-gradient(90deg, #0f2027, #203a43, #2c5364);
+    color: white;
+    padding: 40px;
+    text-align: center;
+    position: relative;
+  }
+  header h1 { font-size: 2.2em; margin-bottom: 10px; }
+  header p { opacity: 0.9; font-size: 1.1em; }
+  header .subtitle { font-size: 0.9em; opacity: 0.8; margin-top: 8px; font-style: italic; }
+  
+  .language-selector {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 8px;
+  }
+  .language-selector button {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.4);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  .language-selector button:hover {
+    background: rgba(255,255,255,0.3);
+  }
+  .language-selector button.active {
+    background: white;
+    color: #0f2027;
+  }
+  
+  .nav-tabs {
+    display: flex;
+    background: #f8f9fa;
+    flex-wrap: wrap;
+    border-bottom: 3px solid #dee2e6;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    overflow-x: auto;
+  }
+  .nav-tabs button {
+    flex: 1;
+    min-width: 100px;
+    padding: 12px 6px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.8em;
+    font-weight: 600;
+    color: #666;
+    transition: all 0.3s;
+    border-bottom: 4px solid transparent;
+  }
+  .nav-tabs button:hover { background: #e9ecef; color: #2a5298; }
+  .nav-tabs button.active {
+    color: #2a5298;
+    border-bottom-color: #2a5298;
+    background: white;
+  }
+  
+  .slide { display: none; padding: 30px; min-height: 600px; }
+  .slide.active { display: block; animation: fadeIn 0.5s; }
+  @keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+  
+  .slide h2 {
+    color: #0f2027;
+    margin-bottom: 20px;
+    font-size: 1.6em;
+    border-bottom: 3px solid #2a5298;
+    padding-bottom: 10px;
+  }
+  
+  .physio-box {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-left: 5px solid #1976d2;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+    line-height: 1.7;
+  }
+  
+  .physio-box h3 {
+    color: #1565c0;
+    margin-bottom: 12px;
+    font-size: 1.2em;
+  }
+  
+  .physio-box ul {
+    margin-left: 25px;
+    margin-top: 10px;
+  }
+  
+  .physio-box li {
+    margin-bottom: 8px;
+  }
+  
+  .exercise-card {
+    background: white;
+    border: 3px solid #2a5298;
+    border-radius: 15px;
+    padding: 25px;
+    margin: 20px 0;
+    box-shadow: 0 5px 20px rgba(42,82,152,0.15);
+  }
+  
+  .exercise-card h3 {
+    color: #2a5298;
+    font-size: 1.4em;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .mechanism-box {
+    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+    padding: 18px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border-left: 5px solid #f57c00;
+  }
+  
+  .mechanism-box h4 {
+    color: #e65100;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+  }
+  
+  .fiber-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px 0;
+  }
+  
+  .fiber-tag {
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    font-weight: 600;
+  }
+  
+  .type1 { background: #81c784; color: #1b5e20; }
+  .type2a { background: #ffb74d; color: #e65100; }
+  .type2x { background: #e57373; color: #b71c1c; }
+  
+  .scenario-box {
+    background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    border: 2px dashed #9b59b6;
+  }
+  
+  .scenario-box h4 {
+    color: #8e44ad;
+    margin-bottom: 15px;
+    font-size: 1.15em;
+  }
+  
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+    margin: 15px 0;
+  }
+  
+  .option-card {
+    background: white;
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.93em;
+  }
+  
+  .option-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-color: #2a5298;
+  }
+  
+  .option-card.selected {
+    background: #e3f2fd;
+    border-color: #2a5298;
+    border-width: 3px;
+  }
+  
+  .option-card.correct {
+    background: #d4edda;
+    border-color: #28a745;
+  }
+  
+  .option-card.incorrect {
+    background: #f8d7da;
+    border-color: #dc3545;
+  }
+  
+  .option-card strong {
+    color: #2a5298;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1.05em;
+  }
+  
+  .explanation-field {
+    margin: 15px 0;
+  }
+  
+  .explanation-field label {
+    display: block;
+    font-weight: 600;
+    color: #2a5298;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+  }
+  
+  .explanation-field textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    font-size: 0.95em;
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+  }
+  
+  .explanation-field textarea:focus {
+    outline: none;
+    border-color: #2a5298;
+  }
+  
+  .btn {
+    background: linear-gradient(90deg, #2a5298, #1e3c72);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 8px 5px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(42,82,152,0.3);
+  }
+  
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(42,82,152,0.4);
+  }
+  
+  .btn-secondary {
+    background: #6c757d;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+  
+  .feedback {
+    margin-top: 15px;
+    padding: 18px;
+    border-radius: 10px;
+    display: none;
+    line-height: 1.7;
+    font-size: 0.95em;
+  }
+  
+  .feedback.show { display: block; animation: fadeIn 0.3s; }
+  .feedback.success { background: #d4edda; color: #155724; border: 2px solid #28a745; }
+  .feedback.error { background: #f8d7da; color: #721c24; border: 2px solid #dc3545; }
+  
+  .adaptation-box {
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border-left: 5px solid #388e3c;
+  }
+  
+  .adaptation-box h4 {
+    color: #2e7d32;
+    margin-bottom: 8px;
+    font-size: 1.05em;
+  }
+  
+  .diagram-container {
+    background: white;
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0;
+    text-align: center;
+  }
+  
+  .diagram-container svg {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .intro-box {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-left: 5px solid #1976d2;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+    line-height: 1.7;
+  }
+  
+  .intro-box h3 {
+    color: #1565c0;
+    margin-bottom: 12px;
+    font-size: 1.2em;
+  }
+  
+  .highlight {
+    background: linear-gradient(120deg, #ffeaa7 0%, #ffeaa7 100%);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  
+  .emoji { font-size: 1.2em; margin-right: 6px; }
+  
+  @media (max-width: 768px) {
+    header h1 { font-size: 1.5em; }
+    .slide { padding: 20px; }
+    .exercise-card { padding: 18px; }
+    .options-grid { grid-template-columns: 1fr; }
+    .nav-tabs button { font-size: 0.75em; padding: 10px 4px; }
+    .language-selector { position: static; margin-bottom: 15px; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="language-selector">
+      <button class="active" onclick="setLanguage('es', this)">ES</button>
+      <button onclick="setLanguage('ca', this)">CA</button>
+      <button onclick="setLanguage('en', this)">EN</button>
+    </div>
+    <h1 data-i18n="title"> Fisiología de la Coactivación Muscular</h1>
+    <p data-i18n="subtitle">10 Ejercicios para Estabilidad y Control en Danza</p>
+    <div class="subtitle" data-i18n="subtitle2">Mecanismos neurales, tipos de fibras, metabolismo y adaptaciones</div>
+  </header>
+
+  <div class="nav-tabs">
+    <button class="active" onclick="showSlide(0, this)" data-i18n="nav0">📚 Introducción</button>
+    <button onclick="showSlide(1, this)" data-i18n="nav1">1. Plancha</button>
+    <button onclick="showSlide(2, this)" data-i18n="nav2">2. Relevé</button>
+    <button onclick="showSlide(3, this)" data-i18n="nav3">3. Arabesque</button>
+    <button onclick="showSlide(4, this)" data-i18n="nav4">4. Sentadilla</button>
+    <button onclick="showSlide(5, this)" data-i18n="nav5">5. Plié</button>
+    <button onclick="showSlide(6, this)" data-i18n="nav6">6. Equilibrio</button>
+    <button onclick="showSlide(7, this)" data-i18n="nav7">7. Puente</button>
+    <button onclick="showSlide(8, this)" data-i18n="nav8">8. Battement</button>
+    <button onclick="showSlide(9, this)" data-i18n="nav9">9. Giros</button>
+    <button onclick="showSlide(10, this)" data-i18n="nav10">10. Saltos</button>
+    <button onclick="showSlide(11, this)" data-i18n="nav11">📊 Resumen</button>
+  </div>
+
+  <!-- SLIDE 1: INTRODUCCIÓN -->
+  <div class="slide active">
+    <h2 data-i18n="slide0_title"> Bases Fisiológicas de la Coactivación</h2>
+    
+    <div class="intro-box">
+      <h3 data-i18n="slide0_intro_title"> Definición fisiológica</h3>
+      <p data-i18n="slide0_intro_text">La <strong>coactivación</strong> es la <span class="highlight">activación simultánea de músculos agonistas y antagonistas</span> alrededor de una articulación, mediada por el sistema nervioso central para proporcionar estabilidad mecánica y control del movimiento.</p>
+    </div>
+    
+    <div class="physio-box">
+      <h3 data-i18n="slide0_neural_title">🧠 Mecanismos neurales implicados</h3>
+      <ul>
+        <li data-i18n="slide0_neural_1"><strong>Inhibición recíproca modificada:</strong> El SNC reduce (pero no elimina) la inhibición del antagonista</li>
+        <li data-i18n="slide0_neural_2"><strong>Reclutamiento de unidades motoras (UM):</strong> Activación sincronizada de UM de diferentes pools musculares</li>
+        <li data-i18n="slide0_neural_3"><strong>Reflejos espinales:</strong> Husos musculares y órganos tendinosos de Golgi modulan la coactivación</li>
+        <li data-i18n="slide0_neural_4"><strong>Control cortical:</strong> La corteza motora y cerebelo ajustan el nivel de coactivación según la tarea</li>
+        <li data-i18n="slide0_neural_5"><strong>Propiocepción:</strong> Receptores articulares y musculares proporcionan feedback en tiempo real</li>
+      </ul>
+    </div>
+    
+    <div class="mechanism-box">
+      <h4 data-i18n="slide0_fibers_title">⚡ Tipos de fibras reclutadas</h4>
+      <p data-i18n="slide0_fibers_text">Dependiendo de la intensidad y duración de la coactivación:</p>
+      <ul>
+        <li data-i18n="slide0_fibers_1"><span class="fiber-tag type1">Tipo I (lentas)</span> - Coactivación sostenida, baja intensidad (postura, equilibrio)</li>
+        <li data-i18n="slide0_fibers_2"><span class="fiber-tag type2a">Tipo IIa (rápidas oxidativas)</span> - Coactivación moderada, resistencia a fatiga</li>
+        <li data-i18n="slide0_fibers_3"><span class="fiber-tag type2x">Tipo IIx (rápidas glucolíticas)</span> - Coactivación intensa, corta duración (saltos, giros)</li>
+      </ul>
+    </div>
+    
+    <div class="diagram-container">
+      <h4 data-i18n="slide0_diagram_title">📐 Esquema del control neural de la coactivación</h4>
+      <svg viewBox="0 0 800 300">
+        <!-- Corteza motora -->
+        <rect x="300" y="20" width="200" height="50" fill="#9b59b6" opacity="0.8" rx="5"/>
+        <text x="400" y="40" text-anchor="middle" font-size="11" fill="white" font-weight="bold" data-i18n="diagram_cortex">CORTEZA MOTORA</text>
+        <text x="400" y="55" text-anchor="middle" font-size="9" fill="white" data-i18n="diagram_cortex_sub">Planificación del movimiento</text>
+        
+        <!-- Flecha descendente -->
+        <line x1="400" y1="70" x2="400" y2="90" stroke="#7f8c8d" stroke-width="2" marker-end="url(#arrow)"/>
+        
+        <!-- Médula espinal -->
+        <rect x="300" y="95" width="200" height="60" fill="#3498db" opacity="0.7" rx="5"/>
+        <text x="400" y="120" text-anchor="middle" font-size="11" fill="white" font-weight="bold" data-i18n="diagram_spinal">MÉDULA ESPINAL</text>
+        <text x="400" y="135" text-anchor="middle" font-size="9" fill="white" data-i18n="diagram_spinal_sub">Motoneuronas α</text>
+        
+        <!-- Motoneuronas -->
+        <circle cx="350" cy="180" r="20" fill="#e74c3c" opacity="0.8"/>
+        <text x="350" y="185" text-anchor="middle" font-size="9" fill="white" font-weight="bold">MN α</text>
+        <text x="350" y="205" text-anchor="middle" font-size="8" fill="#e74c3c" data-i18n="diagram_agonist">Agonista</text>
+        
+        <circle cx="450" cy="180" r="20" fill="#3498db" opacity="0.8"/>
+        <text x="450" y="185" text-anchor="middle" font-size="9" fill="white" font-weight="bold">MN α</text>
+        <text x="450" y="205" text-anchor="middle" font-size="8" fill="#3498db" data-i18n="diagram_antagonist">Antagonista</text>
+        
+        <!-- Flechas a músculos -->
+        <line x1="350" y1="200" x2="350" y2="230" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrowRed)"/>
+        <line x1="450" y1="200" x2="450" y2="230" stroke="#3498db" stroke-width="2" marker-end="url(#arrowBlue)"/>
+        
+        <!-- Músculos -->
+        <rect x="300" y="235" width="100" height="40" fill="#e74c3c" opacity="0.6" rx="5"/>
+        <text x="350" y="260" text-anchor="middle" font-size="9" fill="white" data-i18n="diagram_agonist">Agonista</text>
+        
+        <rect x="400" y="235" width="100" height="40" fill="#3498db" opacity="0.6" rx="5"/>
+        <text x="450" y="260" text-anchor="middle" font-size="9" fill="white" data-i18n="diagram_antagonist">Antagonista</text>
+        
+        <!-- Husos musculares (feedback) -->
+        <path d="M 280 255 Q 200 255 200 150 Q 200 120 300 120" stroke="#f39c12" stroke-width="2" fill="none" stroke-dasharray="5,3"/>
+        <text x="180" y="180" font-size="9" fill="#f39c12" data-i18n="diagram_spindles">Husos</text>
+        
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+            <polygon points="0 0, 10 3, 0 6" fill="#7f8c8d"/>
+          </marker>
+          <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+            <polygon points="0 0, 10 3, 0 6" fill="#e74c3c"/>
+          </marker>
+          <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+            <polygon points="0 0, 10 3, 0 6" fill="#3498db"/>
+          </marker>
+        </defs>
+        
+        <text x="400" y="295" text-anchor="middle" font-size="10" fill="#2a5298" font-weight="bold" data-i18n="diagram_both">Ambas motoneuronas activas → COACTIVACIÓN</text>
+      </svg>
+    </div>
+    
+    <div class="adaptation-box">
+      <h4 data-i18n="slide0_adapt_title"> Adaptaciones fisiológicas al entrenamiento</h4>
+      <ul>
+        <li data-i18n="slide0_adapt_1"><strong>Neurales:</strong> Mejora en el reclutamiento sincronizado de UM, reducción del tiempo de latencia</li>
+        <li data-i18n="slide0_adapt_2"><strong>Musculares:</strong> Hipertrofia selectiva de fibras tipo I y IIa, aumento de capilarización</li>
+        <li data-i18n="slide0_adapt_3"><strong>Metabólicas:</strong> Aumento de mitocondrias, enzimas oxidativas, reservas de glucógeno</li>
+        <li data-i18n="slide0_adapt_4"><strong>Propioceptivas:</strong> Mayor sensibilidad de husos musculares y receptores articulares</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: EJERCICIO 1 - PLANCHA -->
+  <div class="slide">
+    <h2 data-i18n="slide1_title">1️⃣ Plancha: Fisiología del Core</h2>
+    
+    <div class="exercise-card">
+      <h3><span class="emoji"></span> <span data-i18n="slide1_mech_title">Mecanismos fisiológicos</span></h3>
+      <div class="physio-box">
+        <h4 data-i18n="slide1_neural_title">🧠 Control neural</h4>
+        <ul>
+          <li data-i18n="slide1_neural_1"><strong>Activación cortical:</strong> Alta (tarea estática consciente)</li>
+          <li data-i18n="slide1_neural_2"><strong>Reclutamiento:</strong> UM tipo I predominantes (resistencia), con reclutamiento progresivo de tipo IIa por fatiga</li>
+          <li data-i18n="slide1_neural_3"><strong>Frecuencia de disparo:</strong> 10-20 Hz (tetanización incompleta para mantener tensión sostenida)</li>
+          <li data-i18n="slide1_neural_4"><strong>Reflejos:</strong> Husos musculares detectan micro-oscilaciones → reflejo miotático correctivo</li>
+        </ul>
+      </div>
+      
+      <div class="mechanism-box">
+        <h4 data-i18n="slide1_metab_title">⚡ Metabolismo energético</h4>
+        <ul>
+          <li data-i18n="slide1_metab_1"><strong>Vía principal:</strong> Glucólisis anaerobia (isquemia por compresión vascular)</li>
+          <li data-i18n="slide1_metab_2"><strong>Acumulación:</strong> Lactato, H (acidosis → fatiga)</li>
+          <li data-i18n="slide1_metab_3"><strong>Consumo de O₂:</strong> Elevado pero limitado por compresión capilar</li>
+          <li data-i18n="slide1_metab_4"><strong>Fatiga:</strong> Rápida (30-60s) por isquemia local y acumulación de metabolitos</li>
+        </ul>
+      </div>
+      
+      <div class="adaptation-box">
+        <h4 data-i18n="slide1_adapt_title">📈 Adaptaciones específicas</h4>
+        <ul>
+          <li data-i18n="slide1_adapt_1"><strong>Músculos:</strong> Recto abdominal, oblicuos, transverso, erectores espinales, multífidos</li>
+          <li data-i18n="slide1_adapt_2"><strong>Tipo de contracción:</strong> Isométrica (longitud constante, tensión variable)</li>
+          <li data-i18n="slide1_adapt_3"><strong>Adaptación:</strong> Aumento de resistencia isométrica, mejora de la coordinación intermuscular</li>
+          <li data-i18n="slide1_adapt_4"><strong>Biomecánica:</strong> Coactivación anterior-posterior crea "cilindro" de estabilidad intraabdominal</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="scenario-box">
+      <h4 data-i18n="slide1_q_title"> Pregunta fisiológica</h4>
+      <p data-i18n="slide1_q_text">Después de 20 segundos de plancha, empiezas a temblar. ¿Qué mecanismo fisiológico explica este temblor?</p>
+      
+      <div class="options-grid" id="options1">
+        <div class="option-card" onclick="selectOption(1, 0, false)">
+          <strong data-i18n="slide1_optA_title">Opción A</strong>
+          <span data-i18n="slide1_optA_text">Agotamiento total del ATP muscular → fallo contráctil</span>
+        </div>
+        <div class="option-card" onclick="selectOption(1, 1, true)">
+          <strong data-i18n="slide1_optB_title">Opción B</strong>
+          <span data-i18n="slide1_optB_text">Reclutamiento asíncrono de UM por fatiga → oscilaciones en la fuerza generada</span>
+        </div>
+        <div class="option-card" onclick="selectOption(1, 2, false)">
+          <strong data-i18n="slide1_optC_title">Opción C</strong>
+          <span data-i18n="slide1_optC_text">Daño estructural de las fibras musculares → pérdida de control</span>
+        </div>
+      </div>
+      
+      <div class="explanation-field">
+        <label for="explanation1" data-i18n="slide1_expl_label">💭 Explica el mecanismo fisiológico del temblor:</label>
+        <textarea id="explanation1" placeholder="Considera el reclutamiento de UM, la fatiga y el control neural..."></textarea>
+      </div>
+      
+      <button class="btn" onclick="checkAnswer(1)" data-i18n="btn_check">Verificar respuesta</button>
+      <button class="btn btn-secondary" onclick="resetExercise(1)" data-i18n="btn_reset">Reiniciar</button>
+      
+      <div class="feedback" id="feedback1"></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: EJERCICIO 2 - RELEVÉ -->
+  <div class="slide">
+    <h2 data-i18n="slide2_title">2️⃣ Relevé: Fisiología del Tobillo</h2>
+    
+    <div class="exercise-card">
+      <h3><span class="emoji">🔬</span> <span data-i18n="slide2_mech_title">Mecanismos fisiológicos</span></h3>
+      <div class="physio-box">
+        <h4 data-i18n="slide2_neural_title">🧠 Control neural</h4>
+        <ul>
+          <li data-i18n="slide2_neural_1"><strong>Reclutamiento:</strong> Gemelos (tipo II predominante por ser músculo potente), sóleo (tipo I por ser postural)</li>
+          <li data-i18n="slide2_neural_2"><strong>Tibial anterior:</strong> Coactivación del 10-20% de su máxima para estabilización</li>
+          <li data-i18n="slide2_neural_3"><strong>Propiocepción:</strong> Husos en gemelos detectan longitud; OG de Golgi en tendón de Aquiles detectan tensión</li>
+          <li data-i18n="slide2_neural_4"><strong>Reflejo de estiramiento:</strong> Ajusta la activación según la posición del tobillo</li>
+        </ul>
+      </div>
+      
+      <div class="mechanism-box">
+        <h4 data-i18n="slide2_biomech_title">⚡ Biomecánica y fuerzas</h4>
+        <ul>
+          <li data-i18n="slide2_biomech_1"><strong>Ventaja mecánica:</strong> Gemelos tienen brazo de momento corto → necesitan generar 3-4x el peso corporal</li>
+          <li data-i18n="slide2_biomech_2"><strong>Presión en antepié:</strong> 5-7x el peso corporal en relevé máximo</li>
+          <li data-i18n="slide2_biomech_3"><strong>Estabilidad:</strong> Coactivación tibial anterior crea "freno" anterior para evitar hiperextensión</li>
+          <li data-i18n="slide2_biomech_4"><strong>Peroneos:</strong> Coactivación lateral para evitar inversión (esguince)</li>
+        </ul>
+      </div>
+      
+      <div class="adaptation-box">
+        <h4 data-i18n="slide2_adapt_title">📈 Adaptaciones específicas</h4>
+        <ul>
+          <li data-i18n="slide2_adapt_1"><strong>Hipertrofia:</strong> Gemelos (especialmente tipo II) por alta tensión</li>
+          <li data-i18n="slide2_adapt_2"><strong>Tendón de Aquiles:</strong> Aumento de rigidez tendinosa → mejor transmisión de fuerza</li>
+          <li data-i18n="slide2_adapt_3"><strong>Huesos:</strong> Remodelación ósea (Ley de Wolff) en metatarsianos por carga</li>
+          <li data-i18n="slide2_adapt_4"><strong>Propiocepción:</strong> Mejora de la sensibilidad de receptores del tobillo</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="scenario-box">
+      <h4 data-i18n="slide2_q_title">🤔 Pregunta fisiológica</h4>
+      <p data-i18n="slide2_q_text">¿Por qué el tibial anterior (flexor dorsal) se coactiva durante el relevé si el movimiento es de flexión plantar?</p>
+      
+      <div class="options-grid" id="options2">
+        <div class="option-card" onclick="selectOption(2, 0, false)">
+          <strong data-i18n="slide2_optA_title">Opción A</strong>
+          <span data-i18n="slide2_optA_text">Por error del sistema nervioso que activa músculos opuestos</span>
+        </div>
+        <div class="option-card" onclick="selectOption(2, 1, true)">
+          <strong data-i18n="slide2_optB_title">Opción B</strong>
+          <span data-i18n="slide2_optB_text">Para estabilizar la articulación talocrural y evitar hiperextensión por co-contracción</span>
+        </div>
+        <div class="option-card" onclick="selectOption(2, 2, false)">
+          <strong data-i18n="slide2_optC_title">Opción C</strong>
+          <span data-i18n="slide2_optC_text">Para preparar la siguiente fase de bajada (antagonista)</span>
+        </div>
+      </div>
+      
+      <div class="explanation-field">
+        <label for="explanation2" data-i18n="slide2_expl_label">💭 Explica la función fisiológica de esta coactivación:</label>
+        <textarea id="explanation2" placeholder="Considera la estabilidad articular, la propiocepción y el control del movimiento..."></textarea>
+      </div>
+      
+      <button class="btn" onclick="checkAnswer(2)" data-i18n="btn_check">Verificar respuesta</button>
+      <button class="btn btn-secondary" onclick="resetExercise(2)" data-i18n="btn_reset">Reiniciar</button>
+      
+      <div class="feedback" id="feedback2"></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: EJERCICIO 3 - ARABESQUE -->
+  <div class="slide">
+    <h2 data-i18n="slide3_title">3️⃣ Arabesque: Fisiología de la Cadera</h2>
+    
+    <div class="exercise-card">
+      <h3><span class="emoji"></span> <span data-i18n="slide3_mech_title">Mecanismos fisiológicos</span></h3>
+      <div class="physio-box">
+        <h4 data-i18n="slide3_neural_title">🧠 Control neural</h4>
+        <ul>
+          <li data-i18n="slide3_neural_1"><strong>Agonistas principales:</strong> Glúteo mayor (tipo IIx por ser potente), isquiotibiales (tipo IIa)</li>
+          <li data-i18n="slide3_neural_2"><strong>Coactivación del psoas:</strong> 15-25% de su máxima para controlar la extensión</li>
+          <li data-i18n="slide3_neural_3"><strong>Inhibición recíproca parcial:</strong> El SNC reduce pero no elimina la activación del psoas</li>
+          <li data-i18n="slide3_neural_4"><strong>Reflejos:</strong> Husos en isquiotibiales detectan alargamiento → aumentan activación</li>
+        </ul>
+      </div>
+      
+      <div class="mechanism-box">
+        <h4 data-i18n="slide3_biomech_title">⚡ Biomecánica</h4>
+        <ul>
+          <li data-i18n="slide3_biomech_1"><strong>Momento de fuerza:</strong> La gravedad crea momento de flexión → extensores deben contrarrestar</li>
+          <li data-i18n="slide3_biomech_2"><strong>Brazo de momento:</strong> Mayor distancia = mayor momento = más fuerza requerida</li>
+          <li data-i18n="slide3_biomech_3"><strong>Coactivación psoas:</strong> Crea "freno" para evitar hiperextensión (>20°) que dañaría la cápsula</li>
+          <li data-i18n="slide3_biomech_4"><strong>Rotadores:</strong> Coactivación de rotadores externos para mantener la alineación</li>
+        </ul>
+      </div>
+      
+      <div class="adaptation-box">
+        <h4 data-i18n="slide3_adapt_title">📈 Adaptaciones específicas</h4>
+        <ul>
+          <li data-i18n="slide3_adapt_1"><strong>Glúteos:</strong> Hipertrofia de tipo II por alta tensión en extensión</li>
+          <li data-i18n="slide3_adapt_2"><strong>Psoas:</strong> Aumento de control excéntrico (frenado)</li>
+          <li data-i18n="slide3_adapt_3"><strong>Cápsula articular:</strong> Adaptación a la extensión controlada</li>
+          <li data-i18n="slide3_adapt_4"><strong>Propiocepción:</strong> Mejora de receptores en cápsula de cadera</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="scenario-box">
+      <h4 data-i18n="slide3_q_title">🤔 Pregunta fisiológica</h4>
+      <p data-i18n="slide3_q_text">En el arabesque, el psoas (flexor) se coactiva aunque la pierna esté en extensión. ¿Qué ventaja fisiológica proporciona?</p>
+      
+      <div class="options-grid" id="options3">
+        <div class="option-card" onclick="selectOption(3, 0, false)">
+          <strong data-i18n="slide3_optA_title">Opción A</strong>
+          <span data-i18n="slide3_optA_text">Ninguna, es un desperdicio de energía que debería evitarse</span>
+        </div>
+        <div class="option-card" onclick="selectOption(3, 1, false)">
+          <strong data-i18n="slide3_optB_title">Opción B</strong>
+          <span data-i18n="slide3_optB_text">Para preparar la siguiente flexión de cadera (movimiento concéntrico)</span>
+        </div>
+        <div class="option-card" onclick="selectOption(3, 2, true)">
+          <strong data-i18n="slide3_optC_title">Opción C</strong>
+          <span data-i18n="slide3_optC_text">Para controlar la altura mediante co-contracción y proteger la articulación de hiperextensión</span>
+        </div>
+      </div>
+      
+      <div class="explanation-field">
+        <label for="explanation3" data-i18n="slide3_expl_label">💭 Explica el papel fisiológico del psoas en extensión:</label>
+        <textarea id="explanation3" placeholder="Considera el control de la posición, la protección articular y la precisión del movimiento..."></textarea>
+      </div>
+      
+      <button class="btn" onclick="checkAnswer(3)" data-i18n="btn_check">Verificar respuesta</button>
+      <button class="btn btn-secondary" onclick="resetExercise(3)" data-i18n="btn_reset">Reiniciar</button>
+      
+      <div class="feedback" id="feedback3"></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: EJERCICIO 4 - SENTADILLA -->
+  <div class="slide">
+    <h2 data-i18n="slide4_title">4️⃣ Sentadilla: Fisiología de la Rodilla</h2>
+    
+    <div class="exercise-card">
+      <h3><span class="emoji">🔬</span> <span data-i18n="slide4_mech_title">Mecanismos fisiológicos</span></h3>
+      <div class="physio-box">
+        <h4 data-i18n="slide4_neural_title">🧠 Control neural en fase excéntrica</h4>
+        <ul>
+          <li data-i18n="slide4_neural_1"><strong>Cuádriceps:</strong> Activación excéntrica (alargamiento bajo tensión) → reclutamiento de tipo IIx</li>
+          <li data-i18n="slide4_neural_2"><strong>Isquiotibiales:</strong> Coactivación del 30-40% para estabilizar rodilla</li>
+          <li data-i18n="slide4_neural_3"><strong>Reflejo de estiramiento:</strong> Husos en cuádriceps detectan alargamiento → aumentan activación</li>
+          <li data-i18n="slide4_neural_4"><strong>OG de Golgi:</strong> En tendón rotuliano detectan tensión excesiva → inhibición protectora</li>
+        </ul>
+      </div>
+      
+      <div class="mechanism-box">
+        <h4 data-i18n="slide4_lca_title">⚡ Protección del LCA (Ligamento Cruzado Anterior)</h4>
+        <ul>
+          <li data-i18n="slide4_lca_1"><strong>Problema:</strong> El cuádriceps excéntrico tira de la tibia hacia adelante (translación anterior)</li>
+          <li data-i18n="slide4_lca_2"><strong>Solución:</strong> Isquiotibiales coactivan tirando de la tibia hacia atrás</li>
+          <li data-i18n="slide4_lca_3"><strong>Resultado:</strong> Fuerzas opuestas se equilibran → LCA protegido</li>
+          <li data-i18n="slide4_lca_4"><strong>Importancia:</strong> Sin esta coactivación, el LCA soportaría toda la carga → riesgo de rotura</li>
+        </ul>
+      </div>
+      
+      <div class="adaptation-box">
+        <h4 data-i18n="slide4_adapt_title">📈 Adaptaciones específicas</h4>
+        <ul>
+          <li data-i18n="slide4_adapt_1"><strong>Cuádriceps:</strong> Hipertrofia excéntrica (más que concéntrica), aumento de fuerza excéntrica</li>
+          <li data-i18n="slide4_adapt_2"><strong>Isquiotibiales:</strong> Mejora de la coactivación refleja (automática)</li>
+          <li data-i18n="slide4_adapt_3"><strong>LCA:</strong> Menor estrés por coactivación adecuada</li>
+          <li data-i18n="slide4_adapt_4"><strong>Cartílago:</strong> Distribución de carga → nutrición del cartílago por compresión-descompresión</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="scenario-box">
+      <h4 data-i18n="slide4_q_title">🤔 Pregunta fisiológica</h4>
+      <p data-i18n="slide4_q_text">¿Por qué es fisiológicamente importante la coactivación de isquiotibiales durante la bajada de la sentadilla?</p>
+      
+      <div class="options-grid" id="options4">
+        <div class="option-card" onclick="selectOption(4, 0, true)">
+          <strong data-i18n="slide4_optA_title">Opción A</strong>
+          <span data-i18n="slide4_optA_text">Para proteger el LCA contrarrestando la translación anterior de la tibia producida por el cuádriceps</span>
+        </div>
+        <div class="option-card" onclick="selectOption(4, 1, false)">
+          <strong data-i18n="slide4_optB_title">Opción B</strong>
+          <span data-i18n="slide4_optB_text">Para ayudar al cuádriceps a frenar la bajada (sinergia)</span>
+        </div>
+        <div class="option-card" onclick="selectOption(4, 2, false)">
+          <strong data-i18n="slide4_optC_title">Opción C</strong>
+          <span data-i18n="slide4_optC_text">Para estirar el cuádriceps y mejorar la flexibilidad</span>
+        </div>
+      </div>
+      
+      <div class="explanation-field">
+        <label for="explanation4" data-i18n="slide4_expl_label">💭 Explica el mecanismo de protección del LCA:</label>
+        <textarea id="explanation4" placeholder="Describe las fuerzas opuestas y cómo se equilibran..."></textarea>
+      </div>
+      
+      <button class="btn" onclick="checkAnswer(4)" data-i18n="btn_check">Verificar respuesta</button>
+      <button class="btn btn-secondary" onclick="resetExercise(4)" data-i18n="btn_reset">Reiniciar</button>
+      
+      <div class="feedback" id="feedback4"></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: EJERCICIO 5 - PLIÉ -->
+  <div class="slide">
+    <h2 data-i18n="slide5_title">5️⃣ Plié: Fisiología Multiplanar</h2>
+    
+    <div class="exercise-card">
+      <h3><span class="emoji">🔬</span> <span data-i18n="slide5_mech_title">Mecanismos fisiológicos</span></h3>
+      <div class="physio-box">
+        <h4 data-i18n="slide5_neural_title">🧠 Control neural en rotación externa</h4>
+        <ul>
+          <li data-i18n="slide5_neural_1"><strong>Triple coactivación:</strong> Cuádriceps (sagital) + isquiotibiales (sagital) + aductores (frontal/transversal)</li>
+          <li data-i18n="slide5_neural_2"><strong>Aductores:</strong> Coactivación del 40-50% para mantener rotación externa de cadera</li>
+          <li data-i18n="slide5_neural_3"><strong>Rotadores externos:</strong> Glúteo medio (porción posterior), piramidal, obturadores</li>
+          <li data-i18n="slide5_neural_4"><strong>Propiocepción:</strong> Receptores en cápsula de cadera informan del grado de rotación</li>
+        </ul>
+      </div>
+      
+      <div class="mechanism-box">
+        <h4 data-i18n="slide5_3planes_title">⚡ Estabilidad en 3 planos</h4>
+        <ul>
+          <li data-i18n="slide5_3planes_1"><strong>Plano sagital:</strong> Cuádriceps/isquiotibiales controlan flexión-extensión de rodilla</li>
+          <li data-i18n="slide5_3planes_2"><strong>Plano frontal:</strong> Aductores/abductores controlan valgo-varo de rodilla</li>
+          <li data-i18n="slide5_3planes_3"><strong>Plano transversal:</strong> Rotadores controlan rotación de fémur sobre tibia</li>
+          <li data-i18n="slide5_3planes_4"><strong>Resultado:</strong> Coactivación tridimensional crea estabilidad omnidireccional</li>
+        </ul>
+      </div>
+      
+      <div class="adaptation-box">
+        <h4 data-i18n="slide5_adapt_title">📈 Adaptaciones específicas</h4>
+        <ul>
+          <li data-i18n="slide5_adapt_1"><strong>Aductores:</strong> Hipertrofia y mejora de resistencia (tipo I y IIa)</li>
+          <li data-i18n="slide5_adapt_2"><strong>Rotadores:</strong> Mejora de la coordinación intermuscular</li>
+          <li data-i18n="slide5_adapt_3"><strong>Meniscos:</strong> Mejor distribución de carga por alineación correcta</li>
+          <li data-i18n="slide5_adapt_4"><strong>LCA/LCP:</strong> Menor estrés por estabilidad multiplanar</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="scenario-box">
+      <h4 data-i18n="slide5_q_title">🤔 Pregunta fisiológica</h4>
+      <p data-i18n="slide5_q_text">En el plié con rotación externa, ¿por qué es necesaria la coactivación de aductores además de cuádriceps e isquiotibiales?</p>
+      
+      <div class="options-grid" id="options5">
+        <div class="option-card" onclick="selectOption(5, 0, false)">
+          <strong data-i18n="slide5_optA_title">Opción A</strong>
+          <span data-i18n="slide5_optA_text">Porque los aductores ayudan a flexionar la rodilla (sinergia)</span>
+        </div>
+        <div class="option-card" onclick="selectOption(5, 1, true)">
+          <strong data-i18n="slide5_optB_title">Opción B</strong>
+          <span data-i18n="slide5_optB_text">Para proporcionar estabilidad en el plano frontal y mantener la rotación externa de cadera</span>
+        </div>
+        <div class="option-card" onclick="selectOption(5, 2, false)">
+          <strong data-i18n="slide5_optC_title">Opción C</strong>
+          <span data-i18n="slide5_optC_text">Para estirar los abductores y mejorar la apertura</span>
+        </div>
+      </div>
+      
+      <div class="explanation-field">
+        <label for="explanation5" data-i18n="slide5_expl_label">💭 Explica la coactivación multiplanar:</label>
+        <textarea id="explanation5" placeholder="Considera los tres planos del movimiento y la estabilidad articular..."></textarea>
+      </div>
+      
+      <button class="btn" onclick="checkAnswer(5)" data-i18n="btn_check">Verificar respuesta</button>
+      <button class="btn btn-secondary" onclick="resetExercise(5)" data-i18n="btn_reset">Reiniciar</button>
+      
+      <div class="feedback" id="feedback5"></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: EQUILIBRIO -->
+  <div class="slide">
+    <h2 data-i18n="slide6_title">6️⃣ Equilibrio: Fisiología Propioceptiva</h2>
+    
+    <div class="exercise-card">
+      <h3><span class="emoji">🔬</span> <span data-i18n="slide6_mech_title">Mecanismos fisiológicos</span></h3>
+      <div class="physio-box">
+        <h4 data-i18n="slide6_neural_title">🧠 Control neural reflejo</h4>
+        <ul>
+          <li data-i18n="slide6_neural_1"><strong>Sin visión:</strong> Dependencia total de propiocepción (husos musculares, OG de Golgi, receptores articulares)</li>
+          <li data-i18n="slide6_neural_2"><strong>Micro-ajustes:</strong> Oscilaciones de 5-10 Hz (reflejos espinales rápidos)</li>
+          <li data-i18n="slide6_neural_3"><strong>Coactivación tónica:</strong> UM tipo I activadas constantemente (baja frecuencia 8-12 Hz)</li>
+          <li data-i18n="slide6_neural_4"><strong>Latencia refleja:</strong> 30-50 ms (arco reflejo espinal)</li>
+        </ul>
+      </div>
+      
+      <div class="mechanism-box">
+        <h4 data-i18n="slide6_strategies_title">⚡ Estrategias de equilibrio</h4>
+        <ul>
+          <li data-i18n="slide6_strategies_1"><strong>Estrategia de tobillo:</strong> Pequeñas oscilaciones → gemelos/tibial ajustan</li>
+          <li data-i18n="slide6_strategies_2"><strong>Estrategia de cadera:</strong> Oscilaciones grandes → glúteos/abdominales corrigen</li>
+          <li data-i18n="slide6_strategies_3"><strong>Coactivación:</strong> Peroneos (lateral) + tibial posterior (medial) estabilizan en plano frontal</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="scenario-box">
+      <h4 data-i18n="slide6_q_title">🤔 Pregunta</h4>
+      <p data-i18n="slide6_q_text">Al mantener el equilibrio con ojos cerrados, sientes pequeñas oscilaciones. ¿Qué mecanismo fisiológico las produce?</p>
+      
+      <div class="options-grid" id="options6">
+        <div class="option-card" onclick="selectOption(6, 0, false)">
+          <strong data-i18n="slide6_optA_title">Opción A</strong>
+          <span data-i18n="slide6_optA_text">Falta de fuerza muscular</span>
+        </div>
+        <div class="option-card" onclick="selectOption(6, 1, true)">
+          <strong data-i18n="slide6_optB_title">Opción B</strong>
+          <span data-i18n="slide6_optB_text">Micro-ajustes reflejos de 5-10 Hz mediados por husos musculares</span>
+        </div>
+        <div class="option-card" onclick="selectOption(6, 2, false)">
+          <strong data-i18n="slide6_optC_title">Opción C</strong>
+          <span data-i18n="slide6_optC_text">Fatiga muscular progresiva</span>
+        </div>
+      </div>
+      
+      <div class="explanation-field">
+        <label for="explanation6" data-i18n="slide6_expl_label">💭 Explica la fisiología del equilibrio:</label>
+        <textarea id="explanation6" placeholder="Considera la propiocepción, los reflejos y la coactivación..."></textarea>
+      </div>
+      
+      <button class="btn" onclick="checkAnswer(6)" data-i18n="btn_check">Verificar</button>
+      <button class="btn btn-secondary" onclick="resetExercise(6)" data-i18n="btn_reset">Reiniciar</button>
+      <div class="feedback" id="feedback6"></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: PUENTE -->
+  <div class="slide">
+    <h2 data-i18n="slide7_title">7️⃣ Puente: Fisiología del Control Pélvico</h2>
+    
+    <div class="exercise-card">
+      <h3><span class="emoji">🔬</span> <span data-i18n="slide7_mech_title">Mecanismos fisiológicos</span></h3>
+      <div class="physio-box">
+        <h4 data-i18n="slide7_neural_title">🧠 Control neural</h4>
+        <ul>
+          <li data-i18n="slide7_neural_1"><strong>Glúteos:</strong> Activación concéntrica (extensión de cadera) → tipo II reclutadas</li>
+          <li data-i18n="slide7_neural_2"><strong>Abdominales:</strong> Coactivación del 30-40% para evitar anteversión pélvica</li>
+          <li data-i18n="slide7_neural_3"><strong>Lumbares:</strong> Coactivación isométrica para estabilizar columna</li>
+          <li data-i18n="slide7_neural_4"><strong>Sincronización:</strong> Activación simultánea de core anterior y posterior</li>
+        </ul>
+      </div>
+      
+      <div class="mechanism-box">
+        <h4 data-i18n="slide7_pelvis_title"> Control de la pelvis</h4>
+        <ul>
+          <li data-i18n="slide7_pelvis_1"><strong>Glúteos:</strong> Crean momento de extensión</li>
+          <li data-i18n="slide7_pelvis_2"><strong>Abdominales:</strong> Crean momento de retroversión (contrarrestan)</li>
+          <li data-i18n="slide7_pelvis_3"><strong>Resultado:</strong> Pelvis en posición neutra (ni anteversión ni retroversión)</li>
+          <li data-i18n="slide7_pelvis_4"><strong>Importancia:</strong> Evita hiperlordosis lumbar (lesión discal)</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="scenario-box">
+      <h4 data-i18n="slide7_q_title">🤔 Pregunta</h4>
+      <p data-i18n="slide7_q_text">¿Por qué los abdominales se coactivan en un ejercicio de extensión de cadera (puente)?</p>
+      
+      <div class="options-grid" id="options7">
+        <div class="option-card" onclick="selectOption(7, 0, true)">
+          <strong data-i18n="slide7_optA_title">Opción A</strong>
+          <span data-i18n="slide7_optA_text">Para contrarrestar la anteversión pélvica producida por los glúteos y mantener la pelvis neutra</span>
+        </div>
+        <div class="option-card" onclick="selectOption(7, 1, false)">
+          <strong data-i18n="slide7_optB_title">Opción B</strong>
+          <span data-i18n="slide7_optB_text">Para ayudar a elevar la cadera (sinergia)</span>
+        </div>
+        <div class="option-card" onclick="selectOption(7, 2, false)">
+          <strong data-i18n="slide7_optC_title">Opción C</strong>
+          <span data-i18n="slide7_optC_text">Para respirar correctamente durante el ejercicio</span>
+        </div>
+      </div>
+      
+      <div class="explanation-field">
+        <label for="explanation7" data-i18n="slide7_expl_label">💭 Explica el control pélvico:</label>
+        <textarea id="explanation7" placeholder="Considera los momentos de fuerza y la posición neutra..."></textarea>
+      </div>
+      
+      <button class="btn" onclick="checkAnswer(7)" data-i18n="btn_check">Verificar</button>
+      <button class="btn btn-secondary" onclick="resetExercise(7)" data-i18n="btn_reset">Reiniciar</button>
+      <div class="feedback" id="feedback7"></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: BATTEMENT -->
+  <div class="slide">
+    <h2 data-i18n="slide8_title">8️⃣ Battement: Fisiología del Control Excéntrico</h2>
+    
+    <div class="exercise-card">
+      <h3><span class="emoji">🔬</span> <span data-i18n="slide8_mech_title">Mecanismos fisiológicos</span></h3>
+      <div class="physio-box">
+        <h4 data-i18n="slide8_neural_title">🧠 Control excéntrico</h4>
+        <ul>
+          <li data-i18n="slide8_neural_1"><strong>Abductores:</strong> Trabajo excéntrico (alargamiento bajo tensión) → reclutamiento de tipo IIx</li>
+          <li data-i18n="slide8_neural_2"><strong>Daño muscular:</strong> Las contracciones excéntricas producen más microroturas de sarcómeros</li>
+          <li data-i18n="slide8_neural_3"><strong>Aductores:</strong> Coactivación del 25-35% para estabilizar en plano frontal</li>
+          <li data-i18n="slide8_neural_4"><strong>Reflejo de estiramiento:</strong> Husos en abductores detectan alargamiento → aumentan activación</li>
+        </ul>
+      </div>
+      
+      <div class="mechanism-box">
+        <h4 data-i18n="slide8_control_title"> Fisiología del control</h4>
+        <ul>
+          <li data-i18n="slide8_control_1"><strong>Fuerza excéntrica:</strong> 20-40% mayor que concéntrica (más puentes cruzados activos)</li>
+          <li data-i18n="slide8_control_2"><strong>Coste energético:</strong> Menor ATP/fuerza que concéntrica (eficiencia)</li>
+          <li data-i18n="slide8_control_3"><strong>DOMS:</strong> Mayor dolor muscular tardío (24-72h) por daño estructural</li>
+          <li data-i18n="slide8_control_4"><strong>Adaptación:</strong> Aumento de sarcómeros en serie (longitud de fascículos)</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="scenario-box">
+      <h4 data-i18n="slide8_q_title">🤔 Pregunta</h4>
+      <p data-i18n="slide8_q_text">¿Por qué el battement contrôlé (bajada lenta) produce más agujetas que la subida rápida?</p>
+      
+      <div class="options-grid" id="options8">
+        <div class="option-card" onclick="selectOption(8, 0, false)">
+          <strong data-i18n="slide8_optA_title">Opción A</strong>
+          <span data-i18n="slide8_optA_text">Porque se tarda más tiempo y hay más fatiga</span>
+        </div>
+        <div class="option-card" onclick="selectOption(8, 1, true)">
+          <strong data-i18n="slide8_optB_title">Opción B</strong>
+          <span data-i18n="slide8_optB_text">Porque la fase excéntrica produce más microroturas de sarcómeros que la concéntrica</span>
+        </div>
+        <div class="option-card" onclick="selectOption(8, 2, false)">
+          <strong data-i18n="slide8_optC_title">Opción C</strong>
+          <span data-i18n="slide8_optC_text">Porque se acumula más lactato</span>
+        </div>
+      </div>
+      
+      <div class="explanation-field">
+        <label for="explanation8" data-i18n="slide8_expl_label">💭 Explica la fisiología excéntrica:</label>
+        <textarea id="explanation8" placeholder="Considera el daño muscular estructural y las adaptaciones..."></textarea>
+      </div>
+      
+      <button class="btn" onclick="checkAnswer(8)" data-i18n="btn_check">Verificar</button>
+      <button class="btn btn-secondary" onclick="resetExercise(8)" data-i18n="btn_reset">Reiniciar</button>
+      <div class="feedback" id="feedback8"></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: GIROS -->
+  <div class="slide">
+    <h2 data-i18n="slide9_title">9️⃣ Giros: Fisiología de la Estabilidad Rotacional</h2>
+    
+    <div class="exercise-card">
+      <h3><span class="emoji">🔬</span> <span data-i18n="slide9_mech_title">Mecanismos fisiológicos</span></h3>
+      <div class="physio-box">
+        <h4 data-i18n="slide9_neural_title">🧠 Control neural</h4>
+        <ul>
+          <li data-i18n="slide9_neural_1"><strong>Core 360°:</strong> Coactivación isométrica de recto, oblicuos, transverso, lumbares, multífidos</li>
+          <li data-i18n="slide9_neural_2"><strong>Frecuencia:</strong> 15-25 Hz (tetanización completa para rigidez)</li>
+          <li data-i18n="slide9_neural_3"><strong>Propiocepción vestibular:</strong> Oído interno detecta rotación → ajustes posturales</li>
+          <li data-i18n="slide9_neural_4"><strong>Reflejo vestíbulo-espinal:</strong> Mantiene la cabeza estable durante la rotación</li>
+        </ul>
+      </div>
+      
+      <div class="mechanism-box">
+        <h4 data-i18n="slide9_biomech_title"> Biomecánica rotacional</h4>
+        <ul>
+          <li data-i18n="slide9_biomech_1"><strong>Momento de inercia:</strong> Core rígido reduce el momento → giro más rápido</li>
+          <li data-i18n="slide9_biomech_2"><strong>Eje vertical:</strong> Coactivación crea "cilindro" que mantiene el centro de masa</li>
+          <li data-i18n="slide9_biomech_3"><strong>Conservación del momento angular:</strong> Brazos cerca del cuerpo → velocidad angular aumenta</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="scenario-box">
+      <h4 data-i18n="slide9_q_title">🤔 Pregunta</h4>
+      <p data-i18n="slide9_q_text">¿Por qué es fisiológicamente necesaria la coactivación isométrica del core durante la pirueta?</p>
+      
+      <div class="options-grid" id="options9">
+        <div class="option-card" onclick="selectOption(9, 0, true)">
+          <strong data-i18n="slide9_optA_title">Opción A</strong>
+          <span data-i18n="slide9_optA_text">Para crear un cilindro rígido que mantenga el eje vertical y reduzca el momento de inercia</span>
+        </div>
+        <div class="option-card" onclick="selectOption(9, 1, false)">
+          <strong data-i18n="slide9_optB_title">Opción B</strong>
+          <span data-i18n="slide9_optB_text">Para generar la rotación (movimiento concéntrico)</span>
+        </div>
+        <div class="option-card" onclick="selectOption(9, 2, false)">
+          <strong data-i18n="slide9_optC_title">Opción C</strong>
+          <span data-i18n="slide9_optC_text">Para respirar correctamente durante el giro</span>
+        </div>
+      </div>
+      
+      <div class="explanation-field">
+        <label for="explanation9" data-i18n="slide9_expl_label">💭 Explica la biomecánica rotacional:</label>
+        <textarea id="explanation9" placeholder="Considera el momento de inercia, el eje vertical y la estabilidad..."></textarea>
+      </div>
+      
+      <button class="btn" onclick="checkAnswer(9)" data-i18n="btn_check">Verificar</button>
+      <button class="btn btn-secondary" onclick="resetExercise(9)" data-i18n="btn_reset">Reiniciar</button>
+      <div class="feedback" id="feedback9"></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11: SALTOS -->
+  <div class="slide">
+    <h2 data-i18n="slide10_title">🔟 Saltos: Fisiología del Impacto</h2>
+    
+    <div class="exercise-card">
+      <h3><span class="emoji">🔬</span> <span data-i18n="slide10_mech_title">Mecanismos fisiológicos</span></h3>
+      <div class="physio-box">
+        <h4 data-i18n="slide10_neural_title">🧠 Control neural del aterrizaje</h4>
+        <ul>
+          <li data-i18n="slide10_neural_1"><strong>Pre-activación:</strong> 100-150 ms antes del contacto, los músculos se activan (feedforward)</li>
+          <li data-i18n="slide10_neural_2"><strong>Coactivación global:</strong> Cuádriceps + isquiotibiales + gemelos + glúteos (toda la cadena)</li>
+          <li data-i18n="slide10_neural_3"><strong>Reflejos:</strong> Husos detectan impacto → aumentan activación (reflejo de estiramiento)</li>
+          <li data-i18n="slide10_neural_4"><strong>OG de Golgi:</strong> Detectan tensión excesiva → inhibición protectora si es necesario</li>
+        </ul>
+      </div>
+      
+      <div class="mechanism-box">
+        <h4 data-i18n="slide10_energy_title">⚡ Absorción de energía</h4>
+        <ul>
+          <li data-i18n="slide10_energy_1"><strong>Fuerza de impacto:</strong> 5-8x el peso corporal en grand jeté</li>
+          <li data-i18n="slide10_energy_2"><strong>Trabajo excéntrico:</strong> Músculos absorben energía cinética (E = ½mv²)</li>
+          <li data-i18n="slide10_energy_3"><strong>Distribución:</strong> Coactivación distribuye la carga entre múltiples articulaciones</li>
+          <li data-i18n="slide10_energy_4"><strong>Tendones:</strong> Almacenan energía elástica (tendón de Aquiles, rotuliano)</li>
+        </ul>
+      </div>
+      
+      <div class="adaptation-box">
+        <h4 data-i18n="slide10_adapt_title">📈 Adaptaciones</h4>
+        <ul>
+          <li data-i18n="slide10_adapt_1"><strong>Huesos:</strong> Remodelación ósea por impacto (Ley de Wolff)</li>
+          <li data-i18n="slide10_adapt_2"><strong>Tendones:</strong> Aumento de rigidez → mejor transmisión y almacenamiento</li>
+          <li data-i18n="slide10_adapt_3"><strong>Músculos:</strong> Hipertrofia excéntrica, aumento de fuerza de frenado</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="scenario-box">
+      <h4 data-i18n="slide10_q_title">🤔 Pregunta</h4>
+      <p data-i18n="slide10_q_text">¿Por qué es fisiológicamente crucial la coactivación global en el aterrizaje de saltos?</p>
+      
+      <div class="options-grid" id="options10">
+        <div class="option-card" onclick="selectOption(10, 0, false)">
+          <strong data-i18n="slide10_optA_title">Opción A</strong>
+          <span data-i18n="slide10_optA_text">Para generar más fuerza y saltar de nuevo inmediatamente</span>
+        </div>
+        <div class="option-card" onclick="selectOption(10, 1, true)">
+          <strong data-i18n="slide10_optB_title">Opción B</strong>
+          <span data-i18n="slide10_optB_text">Para absorber y distribuir fuerzas de 5-8x el peso corporal, protegiendo articulaciones</span>
+        </div>
+        <div class="option-card" onclick="selectOption(10, 2, false)">
+          <strong data-i18n="slide10_optC_title">Opción C</strong>
+          <span data-i18n="slide10_optC_text">Para estirar los músculos y mejorar la flexibilidad</span>
+        </div>
+      </div>
+      
+      <div class="explanation-field">
+        <label for="explanation10" data-i18n="slide10_expl_label">💭 Explica la fisiología del impacto:</label>
+        <textarea id="explanation10" placeholder="Considera las fuerzas, la absorción de energía y la protección articular..."></textarea>
+      </div>
+      
+      <button class="btn" onclick="checkAnswer(10)" data-i18n="btn_check">Verificar</button>
+      <button class="btn btn-secondary" onclick="resetExercise(10)" data-i18n="btn_reset">Reiniciar</button>
+      <div class="feedback" id="feedback10"></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12: RESUMEN -->
+  <div class="slide">
+    <h2 data-i18n="slide11_title">📊 Resumen Fisiológico</h2>
+    
+    <div class="physio-box">
+      <h3 data-i18n="slide11_principles_title"> Principios fisiológicos de la coactivación</h3>
+      <ul>
+        <li data-i18n="slide11_principles_1"><strong>Control neural:</strong> Modificación de la inhibición recíproca, reclutamiento sincronizado de UM</li>
+        <li data-i18n="slide11_principles_2"><strong>Tipos de fibras:</strong> Tipo I (sostenido), IIa (moderado), IIx (intenso) según la tarea</li>
+        <li data-i18n="slide11_principles_3"><strong>Metabolismo:</strong> Glucólisis anaerobia en isométrica, aerobia en dinámico suave</li>
+        <li data-i18n="slide11_principles_4"><strong>Propiocepción:</strong> Husos, OG de Golgi, receptores articulares → feedback en tiempo real</li>
+        <li data-i18n="slide11_principles_5"><strong>Biomecánica:</strong> Coactivación crea estabilidad multiplanar, protege articulaciones</li>
+      </ul>
+    </div>
+    
+    <div class="adaptation-box">
+      <h4 data-i18n="slide11_adapt_title">📈 Adaptaciones al entrenamiento</h4>
+      <ul>
+        <li data-i18n="slide11_adapt_1"><strong>Neurales:</strong> Mejor sincronización, menor latencia, mayor frecuencia de disparo</li>
+        <li data-i18n="slide11_adapt_2"><strong>Musculares:</strong> Hipertrofia selectiva, aumento de capilarización, más mitocondrias</li>
+        <li data-i18n="slide11_adapt_3"><strong>Estructurales:</strong> Tendones más rígidos, huesos más densos, cartílago más resistente</li>
+        <li data-i18n="slide11_adapt_4"><strong>Propioceptivas:</strong> Mayor sensibilidad de receptores, mejores reflejos</li>
+      </ul>
+    </div>
+    
+    <div class="intro-box">
+      <h3 data-i18n="slide11_apply_title">✅ Aplicación en tu entrenamiento</h3>
+      <p data-i18n="slide11_apply_text">Comprender la fisiología de la coactivación te permite:</p>
+      <ol style="margin-left: 25px; line-height: 1.8; margin-top: 10px;">
+        <li data-i18n="slide11_apply_1">Entrenar de forma más específica y eficiente</li>
+        <li data-i18n="slide11_apply_2">Prevenir lesiones mediante estabilidad articular</li>
+        <li data-i18n="slide11_apply_3">Mejorar la calidad del movimiento (control, precisión)</li>
+        <li data-i18n="slide11_apply_4">Optimizar el rendimiento (fuerza, equilibrio, potencia)</li>
+        <li data-i18n="slide11_apply_5">Entender por qué duele (DOMS excéntrico) y cómo recuperarte</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<script>
+const exerciseState = {};
+let currentLang = 'es';
+
+const translations = {
+  es: {
+    // Header
+    title: " Fisiología de la Coactivación Muscular",
+    subtitle: "10 Ejercicios para Estabilidad y Control en Danza",
+    subtitle2: "Mecanismos neurales, tipos de fibras, metabolismo y adaptaciones",
+    // Navigation
+    nav0: "📚 Introducción", nav1: "1. Plancha", nav2: "2. Relevé", nav3: "3. Arabesque",
+    nav4: "4. Sentadilla", nav5: "5. Plié", nav6: "6. Equilibrio", nav7: "7. Puente",
+    nav8: "8. Battement", nav9: "9. Giros", nav10: "10. Saltos", nav11: "📊 Resumen",
+    // Buttons
+    btn_check: "Verificar respuesta", btn_reset: "Reiniciar",
+    // Slide 0 - Intro
+    slide0_title: " Bases Fisiológicas de la Coactivación",
+    slide0_intro_title: " Definición fisiológica",
+    slide0_intro_text: 'La <strong>coactivación</strong> es la <span class="highlight">activación simultánea de músculos agonistas y antagonistas</span> alrededor de una articulación, mediada por el sistema nervioso central para proporcionar estabilidad mecánica y control del movimiento.',
+    slide0_neural_title: "🧠 Mecanismos neurales implicados",
+    slide0_neural_1: "<strong>Inhibición recíproca modificada:</strong> El SNC reduce (pero no elimina) la inhibición del antagonista",
+    slide0_neural_2: "<strong>Reclutamiento de unidades motoras (UM):</strong> Activación sincronizada de UM de diferentes pools musculares",
+    slide0_neural_3: "<strong>Reflejos espinales:</strong> Husos musculares y órganos tendinosos de Golgi modulan la coactivación",
+    slide0_neural_4: "<strong>Control cortical:</strong> La corteza motora y cerebelo ajustan el nivel de coactivación según la tarea",
+    slide0_neural_5: "<strong>Propiocepción:</strong> Receptores articulares y musculares proporcionan feedback en tiempo real",
+    slide0_fibers_title: "⚡ Tipos de fibras reclutadas",
+    slide0_fibers_text: "Dependiendo de la intensidad y duración de la coactivación:",
+    slide0_fibers_1: '<span class="fiber-tag type1">Tipo I (lentas)</span> - Coactivación sostenida, baja intensidad (postura, equilibrio)',
+    slide0_fibers_2: '<span class="fiber-tag type2a">Tipo IIa (rápidas oxidativas)</span> - Coactivación moderada, resistencia a fatiga',
+    slide0_fibers_3: '<span class="fiber-tag type2x">Tipo IIx (rápidas glucolíticas)</span> - Coactivación intensa, corta duración (saltos, giros)',
+    slide0_diagram_title: "📐 Esquema del control neural de la coactivación",
+    slide0_adapt_title: " Adaptaciones fisiológicas al entrenamiento",
+    slide0_adapt_1: "<strong>Neurales:</strong> Mejora en el reclutamiento sincronizado de UM, reducción del tiempo de latencia",
+    slide0_adapt_2: "<strong>Musculares:</strong> Hipertrofia selectiva de fibras tipo I y IIa, aumento de capilarización",
+    slide0_adapt_3: "<strong>Metabólicas:</strong> Aumento de mitocondrias, enzimas oxidativas, reservas de glucógeno",
+    slide0_adapt_4: "<strong>Propioceptivas:</strong> Mayor sensibilidad de husos musculares y receptores articulares",
+    // Diagram
+    diagram_cortex: "CORTEZA MOTORA", diagram_cortex_sub: "Planificación del movimiento",
+    diagram_spinal: "MÉDULA ESPINAL", diagram_spinal_sub: "Motoneuronas α",
+    diagram_agonist: "Agonista", diagram_antagonist: "Antagonista", diagram_spindles: "Husos",
+    diagram_both: "Ambas motoneuronas activas → COACTIVACIÓN",
+    // Slide 1
+    slide1_title: "1️⃣ Plancha: Fisiología del Core",
+    slide1_mech_title: "Mecanismos fisiológicos",
+    slide1_neural_title: "🧠 Control neural",
+    slide1_neural_1: "<strong>Activación cortical:</strong> Alta (tarea estática consciente)",
+    slide1_neural_2: "<strong>Reclutamiento:</strong> UM tipo I predominantes (resistencia), con reclutamiento progresivo de tipo IIa por fatiga",
+    slide1_neural_3: "<strong>Frecuencia de disparo:</strong> 10-20 Hz (tetanización incompleta para mantener tensión sostenida)",
+    slide1_neural_4: "<strong>Reflejos:</strong> Husos musculares detectan micro-oscilaciones → reflejo miotático correctivo",
+    slide1_metab_title: "⚡ Metabolismo energético",
+    slide1_metab_1: "<strong>Vía principal:</strong> Glucólisis anaerobia (isquemia por compresión vascular)",
+    slide1_metab_2: "<strong>Acumulación:</strong> Lactato, H (acidosis → fatiga)",
+    slide1_metab_3: "<strong>Consumo de O₂:</strong> Elevado pero limitado por compresión capilar",
+    slide1_metab_4: "<strong>Fatiga:</strong> Rápida (30-60s) por isquemia local y acumulación de metabolitos",
+    slide1_adapt_title: "📈 Adaptaciones específicas",
+    slide1_adapt_1: "<strong>Músculos:</strong> Recto abdominal, oblicuos, transverso, erectores espinales, multífidos",
+    slide1_adapt_2: "<strong>Tipo de contracción:</strong> Isométrica (longitud constante, tensión variable)",
+    slide1_adapt_3: "<strong>Adaptación:</strong> Aumento de resistencia isométrica, mejora de la coordinación intermuscular",
+    slide1_adapt_4: '<strong>Biomecánica:</strong> Coactivación anterior-posterior crea "cilindro" de estabilidad intraabdominal',
+    slide1_q_title: " Pregunta fisiológica",
+    slide1_q_text: "Después de 20 segundos de plancha, empiezas a temblar. ¿Qué mecanismo fisiológico explica este temblor?",
+    slide1_optA_title: "Opción A", slide1_optA_text: "Agotamiento total del ATP muscular → fallo contráctil",
+    slide1_optB_title: "Opción B", slide1_optB_text: "Reclutamiento asíncrono de UM por fatiga → oscilaciones en la fuerza generada",
+    slide1_optC_title: "Opción C", slide1_optC_text: "Daño estructural de las fibras musculares → pérdida de control",
+    slide1_expl_label: "💭 Explica el mecanismo fisiológico del temblor:",
+    // Slide 2
+    slide2_title: "2️⃣ Relevé: Fisiología del Tobillo",
+    slide2_mech_title: "Mecanismos fisiológicos",
+    slide2_neural_title: "🧠 Control neural",
+    slide2_neural_1: "<strong>Reclutamiento:</strong> Gemelos (tipo II predominante por ser músculo potente), sóleo (tipo I por ser postural)",
+    slide2_neural_2: "<strong>Tibial anterior:</strong> Coactivación del 10-20% de su máxima para estabilización",
+    slide2_neural_3: "<strong>Propiocepción:</strong> Husos en gemelos detectan longitud; OG de Golgi en tendón de Aquiles detectan tensión",
+    slide2_neural_4: "<strong>Reflejo de estiramiento:</strong> Ajusta la activación según la posición del tobillo",
+    slide2_biomech_title: "⚡ Biomecánica y fuerzas",
+    slide2_biomech_1: "<strong>Ventaja mecánica:</strong> Gemelos tienen brazo de momento corto → necesitan generar 3-4x el peso corporal",
+    slide2_biomech_2: "<strong>Presión en antepié:</strong> 5-7x el peso corporal en relevé máximo",
+    slide2_biomech_3: '<strong>Estabilidad:</strong> Coactivación tibial anterior crea "freno" anterior para evitar hiperextensión',
+    slide2_biomech_4: "<strong>Peroneos:</strong> Coactivación lateral para evitar inversión (esguince)",
+    slide2_adapt_title: "📈 Adaptaciones específicas",
+    slide2_adapt_1: "<strong>Hipertrofia:</strong> Gemelos (especialmente tipo II) por alta tensión",
+    slide2_adapt_2: "<strong>Tendón de Aquiles:</strong> Aumento de rigidez tendinosa → mejor transmisión de fuerza",
+    slide2_adapt_3: "<strong>Huesos:</strong> Remodelación ósea (Ley de Wolff) en metatarsianos por carga",
+    slide2_adapt_4: "<strong>Propiocepción:</strong> Mejora de la sensibilidad de receptores del tobillo",
+    slide2_q_title: "🤔 Pregunta fisiológica",
+    slide2_q_text: "¿Por qué el tibial anterior (flexor dorsal) se coactiva durante el relevé si el movimiento es de flexión plantar?",
+    slide2_optA_title: "Opción A", slide2_optA_text: "Por error del sistema nervioso que activa músculos opuestos",
+    slide2_optB_title: "Opción B", slide2_optB_text: "Para estabilizar la articulación talocrural y evitar hiperextensión por co-contracción",
+    slide2_optC_title: "Opción C", slide2_optC_text: "Para preparar la siguiente fase de bajada (antagonista)",
+    slide2_expl_label: "💭 Explica la función fisiológica de esta coactivación:",
+    // Slide 3
+    slide3_title: "3️⃣ Arabesque: Fisiología de la Cadera",
+    slide3_mech_title: "Mecanismos fisiológicos",
+    slide3_neural_title: "🧠 Control neural",
+    slide3_neural_1: "<strong>Agonistas principales:</strong> Glúteo mayor (tipo IIx por ser potente), isquiotibiales (tipo IIa)",
+    slide3_neural_2: "<strong>Coactivación del psoas:</strong> 15-25% de su máxima para controlar la extensión",
+    slide3_neural_3: "<strong>Inhibición recíproca parcial:</strong> El SNC reduce pero no elimina la activación del psoas",
+    slide3_neural_4: "<strong>Reflejos:</strong> Husos en isquiotibiales detectan alargamiento → aumentan activación",
+    slide3_biomech_title: "⚡ Biomecánica",
+    slide3_biomech_1: "<strong>Momento de fuerza:</strong> La gravedad crea momento de flexión → extensores deben contrarrestar",
+    slide3_biomech_2: "<strong>Brazo de momento:</strong> Mayor distancia = mayor momento = más fuerza requerida",
+    slide3_biomech_3: '<strong>Coactivación psoas:</strong> Crea "freno" para evitar hiperextensión (>20°) que dañaría la cápsula',
+    slide3_biomech_4: "<strong>Rotadores:</strong> Coactivación de rotadores externos para mantener la alineación",
+    slide3_adapt_title: "📈 Adaptaciones específicas",
+    slide3_adapt_1: "<strong>Glúteos:</strong> Hipertrofia de tipo II por alta tensión en extensión",
+    slide3_adapt_2: "<strong>Psoas:</strong> Aumento de control excéntrico (frenado)",
+    slide3_adapt_3: "<strong>Cápsula articular:</strong> Adaptación a la extensión controlada",
+    slide3_adapt_4: "<strong>Propiocepción:</strong> Mejora de receptores en cápsula de cadera",
+    slide3_q_title: "🤔 Pregunta fisiológica",
+    slide3_q_text: "En el arabesque, el psoas (flexor) se coactiva aunque la pierna esté en extensión. ¿Qué ventaja fisiológica proporciona?",
+    slide3_optA_title: "Opción A", slide3_optA_text: "Ninguna, es un desperdicio de energía que debería evitarse",
+    slide3_optB_title: "Opción B", slide3_optB_text: "Para preparar la siguiente flexión de cadera (movimiento concéntrico)",
+    slide3_optC_title: "Opción C", slide3_optC_text: "Para controlar la altura mediante co-contracción y proteger la articulación de hiperextensión",
+    slide3_expl_label: "💭 Explica el papel fisiológico del psoas en extensión:",
+    // Slide 4
+    slide4_title: "4️⃣ Sentadilla: Fisiología de la Rodilla",
+    slide4_mech_title: "Mecanismos fisiológicos",
+    slide4_neural_title: "🧠 Control neural en fase excéntrica",
+    slide4_neural_1: "<strong>Cuádriceps:</strong> Activación excéntrica (alargamiento bajo tensión) → reclutamiento de tipo IIx",
+    slide4_neural_2: "<strong>Isquiotibiales:</strong> Coactivación del 30-40% para estabilizar rodilla",
+    slide4_neural_3: "<strong>Reflejo de estiramiento:</strong> Husos en cuádriceps detectan alargamiento → aumentan activación",
+    slide4_neural_4: "<strong>OG de Golgi:</strong> En tendón rotuliano detectan tensión excesiva → inhibición protectora",
+    slide4_lca_title: "⚡ Protección del LCA (Ligamento Cruzado Anterior)",
+    slide4_lca_1: "<strong>Problema:</strong> El cuádriceps excéntrico tira de la tibia hacia adelante (translación anterior)",
+    slide4_lca_2: "<strong>Solución:</strong> Isquiotibiales coactivan tirando de la tibia hacia atrás",
+    slide4_lca_3: "<strong>Resultado:</strong> Fuerzas opuestas se equilibran → LCA protegido",
+    slide4_lca_4: "<strong>Importancia:</strong> Sin esta coactivación, el LCA soportaría toda la carga → riesgo de rotura",
+    slide4_adapt_title: "📈 Adaptaciones específicas",
+    slide4_adapt_1: "<strong>Cuádriceps:</strong> Hipertrofia excéntrica (más que concéntrica), aumento de fuerza excéntrica",
+    slide4_adapt_2: "<strong>Isquiotibiales:</strong> Mejora de la coactivación refleja (automática)",
+    slide4_adapt_3: "<strong>LCA:</strong> Menor estrés por coactivación adecuada",
+    slide4_adapt_4: "<strong>Cartílago:</strong> Distribución de carga → nutrición del cartílago por compresión-descompresión",
+    slide4_q_title: "🤔 Pregunta fisiológica",
+    slide4_q_text: "¿Por qué es fisiológicamente importante la coactivación de isquiotibiales durante la bajada de la sentadilla?",
+    slide4_optA_title: "Opción A", slide4_optA_text: "Para proteger el LCA contrarrestando la translación anterior de la tibia producida por el cuádriceps",
+    slide4_optB_title: "Opción B", slide4_optB_text: "Para ayudar al cuádriceps a frenar la bajada (sinergia)",
+    slide4_optC_title: "Opción C", slide4_optC_text: "Para estirar el cuádriceps y mejorar la flexibilidad",
+    slide4_expl_label: "💭 Explica el mecanismo de protección del LCA:",
+    // Slide 5
+    slide5_title: "5️⃣ Plié: Fisiología Multiplanar",
+    slide5_mech_title: "Mecanismos fisiológicos",
+    slide5_neural_title: "🧠 Control neural en rotación externa",
+    slide5_neural_1: "<strong>Triple coactivación:</strong> Cuádriceps (sagital) + isquiotibiales (sagital) + aductores (frontal/transversal)",
+    slide5_neural_2: "<strong>Aductores:</strong> Coactivación del 40-50% para mantener rotación externa de cadera",
+    slide5_neural_3: "<strong>Rotadores externos:</strong> Glúteo medio (porción posterior), piramidal, obturadores",
+    slide5_neural_4: "<strong>Propiocepción:</strong> Receptores en cápsula de cadera informan del grado de rotación",
+    slide5_3planes_title: "⚡ Estabilidad en 3 planos",
+    slide5_3planes_1: "<strong>Plano sagital:</strong> Cuádriceps/isquiotibiales controlan flexión-extensión de rodilla",
+    slide5_3planes_2: "<strong>Plano frontal:</strong> Aductores/abductores controlan valgo-varo de rodilla",
+    slide5_3planes_3: "<strong>Plano transversal:</strong> Rotadores controlan rotación de fémur sobre tibia",
+    slide5_3planes_4: "<strong>Resultado:</strong> Coactivación tridimensional crea estabilidad omnidireccional",
+    slide5_adapt_title: "📈 Adaptaciones específicas",
+    slide5_adapt_1: "<strong>Aductores:</strong> Hipertrofia y mejora de resistencia (tipo I y IIa)",
+    slide5_adapt_2: "<strong>Rotadores:</strong> Mejora de la coordinación intermuscular",
+    slide5_adapt_3: "<strong>Meniscos:</strong> Mejor distribución de carga por alineación correcta",
+    slide5_adapt_4: "<strong>LCA/LCP:</strong> Menor estrés por estabilidad multiplanar",
+    slide5_q_title: "🤔 Pregunta fisiológica",
+    slide5_q_text: "En el plié con rotación externa, ¿por qué es necesaria la coactivación de aductores además de cuádriceps e isquiotibiales?",
+    slide5_optA_title: "Opción A", slide5_optA_text: "Porque los aductores ayudan a flexionar la rodilla (sinergia)",
+    slide5_optB_title: "Opción B", slide5_optB_text: "Para proporcionar estabilidad en el plano frontal y mantener la rotación externa de cadera",
+    slide5_optC_title: "Opción C", slide5_optC_text: "Para estirar los abductores y mejorar la apertura",
+    slide5_expl_label: "💭 Explica la coactivación multiplanar:",
+    // Slide 6
+    slide6_title: "6️⃣ Equilibrio: Fisiología Propioceptiva",
+    slide6_mech_title: "Mecanismos fisiológicos",
+    slide6_neural_title: "🧠 Control neural reflejo",
+    slide6_neural_1: "<strong>Sin visión:</strong> Dependencia total de propiocepción (husos musculares, OG de Golgi, receptores articulares)",
+    slide6_neural_2: "<strong>Micro-ajustes:</strong> Oscilaciones de 5-10 Hz (reflejos espinales rápidos)",
+    slide6_neural_3: "<strong>Coactivación tónica:</strong> UM tipo I activadas constantemente (baja frecuencia 8-12 Hz)",
+    slide6_neural_4: "<strong>Latencia refleja:</strong> 30-50 ms (arco reflejo espinal)",
+    slide6_strategies_title: "⚡ Estrategias de equilibrio",
+    slide6_strategies_1: "<strong>Estrategia de tobillo:</strong> Pequeñas oscilaciones → gemelos/tibial ajustan",
+    slide6_strategies_2: "<strong>Estrategia de cadera:</strong> Oscilaciones grandes → glúteos/abdominales corrigen",
+    slide6_strategies_3: "<strong>Coactivación:</strong> Peroneos (lateral) + tibial posterior (medial) estabilizan en plano frontal",
+    slide6_q_title: "🤔 Pregunta",
+    slide6_q_text: "Al mantener el equilibrio con ojos cerrados, sientes pequeñas oscilaciones. ¿Qué mecanismo fisiológico las produce?",
+    slide6_optA_title: "Opción A", slide6_optA_text: "Falta de fuerza muscular",
+    slide6_optB_title: "Opción B", slide6_optB_text: "Micro-ajustes reflejos de 5-10 Hz mediados por husos musculares",
+    slide6_optC_title: "Opción C", slide6_optC_text: "Fatiga muscular progresiva",
+    slide6_expl_label: "💭 Explica la fisiología del equilibrio:",
+    // Slide 7
+    slide7_title: "7️⃣ Puente: Fisiología del Control Pélvico",
+    slide7_mech_title: "Mecanismos fisiológicos",
+    slide7_neural_title: "🧠 Control neural",
+    slide7_neural_1: "<strong>Glúteos:</strong> Activación concéntrica (extensión de cadera) → tipo II reclutadas",
+    slide7_neural_2: "<strong>Abdominales:</strong> Coactivación del 30-40% para evitar anteversión pélvica",
+    slide7_neural_3: "<strong>Lumbares:</strong> Coactivación isométrica para estabilizar columna",
+    slide7_neural_4: "<strong>Sincronización:</strong> Activación simultánea de core anterior y posterior",
+    slide7_pelvis_title: " Control de la pelvis",
+    slide7_pelvis_1: "<strong>Glúteos:</strong> Crean momento de extensión",
+    slide7_pelvis_2: "<strong>Abdominales:</strong> Crean momento de retroversión (contrarrestan)",
+    slide7_pelvis_3: "<strong>Resultado:</strong> Pelvis en posición neutra (ni anteversión ni retroversión)",
+    slide7_pelvis_4: "<strong>Importancia:</strong> Evita hiperlordosis lumbar (lesión discal)",
+    slide7_q_title: "🤔 Pregunta",
+    slide7_q_text: "¿Por qué los abdominales se coactivan en un ejercicio de extensión de cadera (puente)?",
+    slide7_optA_title: "Opción A", slide7_optA_text: "Para contrarrestar la anteversión pélvica producida por los glúteos y mantener la pelvis neutra",
+    slide7_optB_title: "Opción B", slide7_optB_text: "Para ayudar a elevar la cadera (sinergia)",
+    slide7_optC_title: "Opción C", slide7_optC_text: "Para respirar correctamente durante el ejercicio",
+    slide7_expl_label: "💭 Explica el control pélvico:",
+    // Slide 8
+    slide8_title: "8️⃣ Battement: Fisiología del Control Excéntrico",
+    slide8_mech_title: "Mecanismos fisiológicos",
+    slide8_neural_title: "🧠 Control excéntrico",
+    slide8_neural_1: "<strong>Abductores:</strong> Trabajo excéntrico (alargamiento bajo tensión) → reclutamiento de tipo IIx",
+    slide8_neural_2: "<strong>Daño muscular:</strong> Las contracciones excéntricas producen más microroturas de sarcómeros",
+    slide8_neural_3: "<strong>Aductores:</strong> Coactivación del 25-35% para estabilizar en plano frontal",
+    slide8_neural_4: "<strong>Reflejo de estiramiento:</strong> Husos en abductores detectan alargamiento → aumentan activación",
+    slide8_control_title: " Fisiología del control",
+    slide8_control_1: "<strong>Fuerza excéntrica:</strong> 20-40% mayor que concéntrica (más puentes cruzados activos)",
+    slide8_control_2: "<strong>Coste energético:</strong> Menor ATP/fuerza que concéntrica (eficiencia)",
+    slide8_control_3: "<strong>DOMS:</strong> Mayor dolor muscular tardío (24-72h) por daño estructural",
+    slide8_control_4: "<strong>Adaptación:</strong> Aumento de sarcómeros en serie (longitud de fascículos)",
+    slide8_q_title: "🤔 Pregunta",
+    slide8_q_text: "¿Por qué el battement contrôlé (bajada lenta) produce más agujetas que la subida rápida?",
+    slide8_optA_title: "Opción A", slide8_optA_text: "Porque se tarda más tiempo y hay más fatiga",
+    slide8_optB_title: "Opción B", slide8_optB_text: "Porque la fase excéntrica produce más microroturas de sarcómeros que la concéntrica",
+    slide8_optC_title: "Opción C", slide8_optC_text: "Porque se acumula más lactato",
+    slide8_expl_label: "💭 Explica la fisiología excéntrica:",
+    // Slide 9
+    slide9_title: "9️⃣ Giros: Fisiología de la Estabilidad Rotacional",
+    slide9_mech_title: "Mecanismos fisiológicos",
+    slide9_neural_title: "🧠 Control neural",
+    slide9_neural_1: "<strong>Core 360°:</strong> Coactivación isométrica de recto, oblicuos, transverso, lumbares, multífidos",
+    slide9_neural_2: "<strong>Frecuencia:</strong> 15-25 Hz (tetanización completa para rigidez)",
+    slide9_neural_3: "<strong>Propiocepción vestibular:</strong> Oído interno detecta rotación → ajustes posturales",
+    slide9_neural_4: "<strong>Reflejo vestíbulo-espinal:</strong> Mantiene la cabeza estable durante la rotación",
+    slide9_biomech_title: " Biomecánica rotacional",
+    slide9_biomech_1: "<strong>Momento de inercia:</strong> Core rígido reduce el momento → giro más rápido",
+    slide9_biomech_2: '<strong>Eje vertical:</strong> Coactivación crea "cilindro" que mantiene el centro de masa',
+    slide9_biomech_3: "<strong>Conservación del momento angular:</strong> Brazos cerca del cuerpo → velocidad angular aumenta",
+    slide9_q_title: "🤔 Pregunta",
+    slide9_q_text: "¿Por qué es fisiológicamente necesaria la coactivación isométrica del core durante la pirueta?",
+    slide9_optA_title: "Opción A", slide9_optA_text: "Para crear un cilindro rígido que mantenga el eje vertical y reduzca el momento de inercia",
+    slide9_optB_title: "Opción B", slide9_optB_text: "Para generar la rotación (movimiento concéntrico)",
+    slide9_optC_title: "Opción C", slide9_optC_text: "Para respirar correctamente durante el giro",
+    slide9_expl_label: "💭 Explica la biomecánica rotacional:",
+    // Slide 10
+    slide10_title: "🔟 Saltos: Fisiología del Impacto",
+    slide10_mech_title: "Mecanismos fisiológicos",
+    slide10_neural_title: "🧠 Control neural del aterrizaje",
+    slide10_neural_1: "<strong>Pre-activación:</strong> 100-150 ms antes del contacto, los músculos se activan (feedforward)",
+    slide10_neural_2: "<strong>Coactivación global:</strong> Cuádriceps + isquiotibiales + gemelos + glúteos (toda la cadena)",
+    slide10_neural_3: "<strong>Reflejos:</strong> Husos detectan impacto → aumentan activación (reflejo de estiramiento)",
+    slide10_neural_4: "<strong>OG de Golgi:</strong> Detectan tensión excesiva → inhibición protectora si es necesario",
+    slide10_energy_title: "⚡ Absorción de energía",
+    slide10_energy_1: "<strong>Fuerza de impacto:</strong> 5-8x el peso corporal en grand jeté",
+    slide10_energy_2: "<strong>Trabajo excéntrico:</strong> Músculos absorben energía cinética (E = ½mv²)",
+    slide10_energy_3: "<strong>Distribución:</strong> Coactivación distribuye la carga entre múltiples articulaciones",
+    slide10_energy_4: "<strong>Tendones:</strong> Almacenan energía elástica (tendón de Aquiles, rotuliano)",
+    slide10_adapt_title: "📈 Adaptaciones",
+    slide10_adapt_1: "<strong>Huesos:</strong> Remodelación ósea por impacto (Ley de Wolff)",
+    slide10_adapt_2: "<strong>Tendones:</strong> Aumento de rigidez → mejor transmisión y almacenamiento",
+    slide10_adapt_3: "<strong>Músculos:</strong> Hipertrofia excéntrica, aumento de fuerza de frenado",
+    slide10_q_title: "🤔 Pregunta",
+    slide10_q_text: "¿Por qué es fisiológicamente crucial la coactivación global en el aterrizaje de saltos?",
+    slide10_optA_title: "Opción A", slide10_optA_text: "Para generar más fuerza y saltar de nuevo inmediatamente",
+    slide10_optB_title: "Opción B", slide10_optB_text: "Para absorber y distribuir fuerzas de 5-8x el peso corporal, protegiendo articulaciones",
+    slide10_optC_title: "Opción C", slide10_optC_text: "Para estirar los músculos y mejorar la flexibilidad",
+    slide10_expl_label: "💭 Explica la fisiología del impacto:",
+    // Slide 11
+    slide11_title: "📊 Resumen Fisiológico",
+    slide11_principles_title: " Principios fisiológicos de la coactivación",
+    slide11_principles_1: "<strong>Control neural:</strong> Modificación de la inhibición recíproca, reclutamiento sincronizado de UM",
+    slide11_principles_2: "<strong>Tipos de fibras:</strong> Tipo I (sostenido), IIa (moderado), IIx (intenso) según la tarea",
+    slide11_principles_3: "<strong>Metabolismo:</strong> Glucólisis anaerobia en isométrica, aerobia en dinámico suave",
+    slide11_principles_4: "<strong>Propiocepción:</strong> Husos, OG de Golgi, receptores articulares → feedback en tiempo real",
+    slide11_principles_5: "<strong>Biomecánica:</strong> Coactivación crea estabilidad multiplanar, protege articulaciones",
+    slide11_adapt_title: "📈 Adaptaciones al entrenamiento",
+    slide11_adapt_1: "<strong>Neurales:</strong> Mejor sincronización, menor latencia, mayor frecuencia de disparo",
+    slide11_adapt_2: "<strong>Musculares:</strong> Hipertrofia selectiva, aumento de capilarización, más mitocondrias",
+    slide11_adapt_3: "<strong>Estructurales:</strong> Tendones más rígidos, huesos más densos, cartílago más resistente",
+    slide11_adapt_4: "<strong>Propioceptivas:</strong> Mayor sensibilidad de receptores, mejores reflejos",
+    slide11_apply_title: "✅ Aplicación en tu entrenamiento",
+    slide11_apply_text: "Comprender la fisiología de la coactivación te permite:",
+    slide11_apply_1: "Entrenar de forma más específica y eficiente",
+    slide11_apply_2: "Prevenir lesiones mediante estabilidad articular",
+    slide11_apply_3: "Mejorar la calidad del movimiento (control, precisión)",
+    slide11_apply_4: "Optimizar el rendimiento (fuerza, equilibrio, potencia)",
+    slide11_apply_5: "Entender por qué duele (DOMS excéntrico) y cómo recuperarte",
+    // Feedback correct
+    fb1: `<strong>¡Correcto!</strong> El temblor se debe al <strong>reclutamiento asíncrono de UM</strong>. Cuando las UM tipo I se fatigan (isquemia por compresión), el SNC recluta y desrecluta UM de forma oscilante para mantener la fuerza media. Esto produce las vibraciones visibles. Además, la acumulación de H⁺ y lactato altera la excitabilidad de las membranas.`,
+    fb2: `<strong>¡Exacto!</strong> El tibial anterior se coactiva (10-20% de su máxima) para <strong>estabilizar la articulación talocrural</strong>. Esta co-contracción crea un "freno" anterior que evita la hiperextensión del tobillo y mejora la propiocepción. Los OG de Golgi en el tendón de Aquiles detectan la tensión y ajustan la coactivación.`,
+    fb3: `<strong>¡Muy bien!</strong> El psoas se coactiva (15-25%) para <strong>controlar la altura</strong> mediante co-contracción y proteger la cápsula articular de hiperextensión (>20°). Los husos musculares en isquiotibiales detectan el alargamiento y ajustan la activación. Esto permite un control fino de la posición.`,
+    fb4: `<strong>¡Correcto!</strong> Durante la fase excéntrica, el cuádriceps tira de la tibia hacia adelante (translación anterior). Los isquiotibiales coactivan (30-40%) tirando hacia atrás, <strong>equilibrando las fuerzas y protegiendo el LCA</strong>. Sin esta coactivación, el LCA soportaría toda la carga → riesgo de rotura.`,
+    fb5: `<strong>¡Excelente!</strong> Los aductores coactivan (40-50%) para proporcionar <strong>estabilidad en el plano frontal</strong> y mantener la rotación externa de cadera. Esta coactivación triple (cuádriceps + isquiotibiales + aductores) crea estabilidad omnidireccional en los 3 planos del movimiento.`,
+    fb6: `<strong>¡Perfecto!</strong> Las oscilaciones son <strong>micro-ajustes reflejos de 5-10 Hz</strong> mediados por husos musculares. Sin visión, el sistema depende totalmente de la propiocepción. Los husos detectan cambios de longitud → reflejo miotático correctivo. Es un proceso automático espinal (latencia 30-50 ms).`,
+    fb7: `<strong>¡Correcto!</strong> Los glúteos crean un momento de extensión que produciría anteversión pélvica (hiperlordosis). Los abdominales coactivan (30-40%) creando un momento de retroversión opuesto. <strong>El equilibrio de momentos mantiene la pelvis neutra</strong> y protege los discos lumbares.`,
+    fb8: `<strong>¡Muy bien!</strong> La fase excéntrica produce <strong>20-40% más microroturas de sarcómeros</strong> (especialmente en la línea Z) que la concéntrica. Esto desencadena una respuesta inflamatoria (DOMS) a las 24-72h. Aunque duele, es una adaptación positiva: el músculo se reconstruye más fuerte.`,
+    fb9: `<strong>¡Exacto!</strong> La coactivación isométrica del core (15-25 Hz, tetanización completa) crea un <strong>cilindro rígido</strong> que mantiene el eje vertical y reduce el momento de inercia (I = mr²). Menor I = mayor velocidad angular (ω) para el mismo momento angular (L = Iω). Además, el reflejo vestíbulo-espinal mantiene la cabeza estable.`,
+    fb10: `<strong>¡Correcto!</strong> En el aterrizaje, las fuerzas son de <strong>5-8x el peso corporal</strong>. La coactivación global (cuádriceps + isquiotibiales + gemelos + glúteos) distribuye esta carga entre múltiples articulaciones y absorbe la energía cinética mediante trabajo excéntrico. Sin coactivación, las articulaciones soportarían todo el impacto → lesión.`,
+    // Feedback incorrect
+    fbi1: `<strong>Reflexiona...</strong> El ATP no se agota totalmente (habría rigor, no temblor). El daño estructural no ocurre tan rápido. El temblor es un <strong>fenómeno neural</strong>: las UM se fatigan por isquemia (compresión vascular) y el SNC las recluta/desrecluta de forma oscilante. Además, la acumulación de H⁺ altera la excitabilidad de membrana.`,
+    fbi2: `<strong>Piensa...</strong> No es un error del SNC ni una preparación para bajar. La coactivación del tibial anterior es <strong>funcional</strong>: estabiliza el tobillo en el plano anteroposterior, evita la hiperextensión y mejora la propiocepción. Los OG de Golgi modulan esta coactivación según la tensión.`,
+    fbi3: `<strong>Considera...</strong> No es desperdicio de energía ni solo preparación. El psoas coactiva para <strong>control fino de la posición</strong>. Sin esta co-contracción, la pierna o caería por gravedad o se iría a hiperextensión (dañando la cápsula). Los husos en isquiotibiales ajustan constantemente la activación.`,
+    fbi4: `<strong>Analiza...</strong> Los isquiotibiales no ayudan al cuádriceps (son antagonistas en la rodilla) ni estiran el cuádriceps. Su coactivación es <strong>protectora</strong>: contrarresta la translación anterior de la tibia producida por el cuádriceps excéntrico, protegiendo el LCA. Es un mecanismo de seguridad neural.`,
+    fbi5: `<strong>Reflexiona...</strong> Los aductores no ayudan a flexionar la rodilla ni solo estiran abductores. Su coactivación (40-50%) proporciona <strong>estabilidad en el plano frontal</strong> y mantiene la rotación externa de cadera. Sin ellos, la rodilla colapsaría en valgo o perderías la rotación. Es coactivación multiplanar.`,
+    fbi6: `<strong>Observa...</strong> No es falta de fuerza (puedes mantenerlo) ni fatiga (aparece inmediatamente). Las oscilaciones son <strong>micro-ajustes reflejos</strong> (5-10 Hz) mediados por husos musculares. Sin visión, la propiocepción es la única fuente de información. El SNC ajusta constantemente la activación para mantener el centro de gravedad.`,
+    fbi7: `<strong>Piensa...</strong> Los abdominales no ayudan a elevar la cadera (son antagonistas de la extensión) ni es por respiración. Coactivan (30-40%) para <strong>contrarrestar la anteversión pélvica</strong> que producirían los glúteos. El equilibrio de momentos (extensión vs. retroversión) mantiene la pelvis neutra y protege la columna lumbar.`,
+    fbi8: `<strong>Considera...</strong> No es por tiempo ni lactato (el excéntrico consume MENOS ATP). Las agujetas (DOMS) se deben a <strong>microroturas de sarcómeros</strong> (especialmente línea Z) producidas por la alta tensión en alargamiento. Esto desencadena inflamación (24-72h). Es una adaptación: el músculo se reconstruye más fuerte.`,
+    fbi9: `<strong>Reflexiona...</strong> El core no genera la rotación (eso lo hacen los impulsores) ni es por respiración. La coactivación isométrica (15-25 Hz) crea un <strong>cilindro rígido</strong> que mantiene el eje vertical y reduce el momento de inercia. Menor I = mayor ω (velocidad angular). Además, el reflejo vestíbulo-espinal estabiliza la cabeza.`,
+    fbi10: `<strong>Analiza...</strong> No es para saltar de nuevo ni para estirar. La coactivación global es <strong>protectora</strong>: distribuye fuerzas de 5-8x el peso corporal entre múltiples articulaciones y absorbe energía cinética mediante trabajo excéntrico. Sin coactivación, el impacto iría directo a huesos/cartílagos → lesión.`
+  },
+  ca: {
+    title: " Fisiologia de la Coactivació Muscular",
+    subtitle: "10 Exercicis per a Estabilitat i Control en Dansa",
+    subtitle2: "Mecanismes neurals, tipus de fibres, metabolisme i adaptacions",
+    nav0: "📚 Introducció", nav1: "1. Planxa", nav2: "2. Relevé", nav3: "3. Arabesque",
+    nav4: "4. Esquat", nav5: "5. Plié", nav6: "6. Equilibri", nav7: "7. Pont",
+    nav8: "8. Battement", nav9: "9. Girs", nav10: "10. Salts", nav11: "📊 Resum",
+    btn_check: "Verificar resposta", btn_reset: "Reiniciar",
+    slide0_title: " Bases Fisiològiques de la Coactivació",
+    slide0_intro_title: " Definició fisiològica",
+    slide0_intro_text: 'La <strong>coactivació</strong> és la <span class="highlight">activació simultània de músculs agonistes i antagonistes</span> al voltant d\'una articulació, mediada pel sistema nerviós central per proporcionar estabilitat mecànica i control del moviment.',
+    slide0_neural_title: "🧠 Mecanismes neurals implicats",
+    slide0_neural_1: "<strong>Inhibició recíproca modificada:</strong> El SNC redueix (però no elimina) la inhibició de l'antagonista",
+    slide0_neural_2: "<strong>Reclutament d'unitats motores (UM):</strong> Activació sincronitzada d'UM de diferents pools musculars",
+    slide0_neural_3: "<strong>Reflexos espinals:</strong> Fusos musculars i òrgans tendinosos de Golgi modulen la coactivació",
+    slide0_neural_4: "<strong>Control cortical:</strong> L'escorça motora i el cerebel ajusten el nivell de coactivació segons la tasca",
+    slide0_neural_5: "<strong>Propiocepció:</strong> Receptors articulars i musculars proporcionen feedback en temps real",
+    slide0_fibers_title: "⚡ Tipus de fibres reclutades",
+    slide0_fibers_text: "Depenent de la intensitat i durada de la coactivació:",
+    slide0_fibers_1: '<span class="fiber-tag type1">Tipus I (lentes)</span> - Coactivació sostinguda, baixa intensitat (postura, equilibri)',
+    slide0_fibers_2: '<span class="fiber-tag type2a">Tipus IIa (ràpides oxidatives)</span> - Coactivació moderada, resistència a la fatiga',
+    slide0_fibers_3: '<span class="fiber-tag type2x">Tipus IIx (ràpides glucolítiques)</span> - Coactivació intensa, curta durada (salts, girs)',
+    slide0_diagram_title: "📐 Esquema del control neural de la coactivació",
+    slide0_adapt_title: " Adaptacions fisiològiques a l'entrenament",
+    slide0_adapt_1: "<strong>Neurals:</strong> Millora en el reclutament sincronitzat d'UM, reducció del temps de latència",
+    slide0_adapt_2: "<strong>Musculars:</strong> Hipertròfia selectiva de fibres tipus I i IIa, augment de capil·larització",
+    slide0_adapt_3: "<strong>Metabòliques:</strong> Augment de mitocondris, enzims oxidatius, reserves de glucogen",
+    slide0_adapt_4: "<strong>Propioceptives:</strong> Major sensibilitat de fusos musculars i receptors articulars",
+    diagram_cortex: "ESCORÇA MOTORA", diagram_cortex_sub: "Planificació del moviment",
+    diagram_spinal: "MEDUL·LA ESPINAL", diagram_spinal_sub: "Motoneurones α",
+    diagram_agonist: "Agonista", diagram_antagonist: "Antagonista", diagram_spindles: "Fusos",
+    diagram_both: "Ambdues motoneurones actives → COACTIVACIÓ",
+    slide1_title: "1️⃣ Planxa: Fisiologia del Core",
+    slide1_mech_title: "Mecanismes fisiològics",
+    slide1_neural_title: "🧠 Control neural",
+    slide1_neural_1: "<strong>Activació cortical:</strong> Alta (tasca estàtica conscient)",
+    slide1_neural_2: "<strong>Reclutament:</strong> UM tipus I predominants (resistència), amb reclutament progressiu de tipus IIa per fatiga",
+    slide1_neural_3: "<strong>Freqüència de dispar:</strong> 10-20 Hz (tetanització incompleta per mantenir tensió sostinguda)",
+    slide1_neural_4: "<strong>Reflexos:</strong> Fusos musculars detecten micro-oscil·lacions → reflex miotàtic correctiu",
+    slide1_metab_title: "⚡ Metabolisme energètic",
+    slide1_metab_1: "<strong>Via principal:</strong> Glucòlisi anaeròbia (isquèmia per compressió vascular)",
+    slide1_metab_2: "<strong>Acumulació:</strong> Lactat, H (acidosi → fatiga)",
+    slide1_metab_3: "<strong>Consum d'O₂:</strong> Elevat però limitat per compressió capil·lar",
+    slide1_metab_4: "<strong>Fatiga:</strong> Ràpida (30-60s) per isquèmia local i acumulació de metabòlits",
+    slide1_adapt_title: "📈 Adaptacions específiques",
+    slide1_adapt_1: "<strong>Músculs:</strong> Recte abdominal, oblics, transvers, erectors espinals, multífids",
+    slide1_adapt_2: "<strong>Tipus de contracció:</strong> Isomètrica (longitud constant, tensió variable)",
+    slide1_adapt_3: "<strong>Adaptació:</strong> Augment de resistència isomètrica, millora de la coordinació intermuscular",
+    slide1_adapt_4: '<strong>Biomecànica:</strong> Coactivació anterior-posterior crea "cilindre" d\'estabilitat intraabdominal',
+    slide1_q_title: " Pregunta fisiològica",
+    slide1_q_text: "Després de 20 segons de planxa, comences a tremolar. Quin mecanisme fisiològic explica aquest tremor?",
+    slide1_optA_title: "Opció A", slide1_optA_text: "Esgotament total de l'ATP muscular → fallada contràctil",
+    slide1_optB_title: "Opció B", slide1_optB_text: "Reclutament asíncron d'UM per fatiga → oscil·lacions en la força generada",
+    slide1_optC_title: "Opció C", slide1_optC_text: "Dany estructural de les fibres musculars → pèrdua de control",
+    slide1_expl_label: "💭 Explica el mecanisme fisiològic del tremor:",
+    slide2_title: "2️⃣ Relevé: Fisiologia del Turmell",
+    slide2_mech_title: "Mecanismes fisiològics",
+    slide2_neural_title: "🧠 Control neural",
+    slide2_neural_1: "<strong>Reclutament:</strong> Bessons (tipus II predominant per ser múscul potent), soli (tipus I per ser postural)",
+    slide2_neural_2: "<strong>Tibial anterior:</strong> Coactivació del 10-20% de la seva màxima per estabilització",
+    slide2_neural_3: "<strong>Propiocepció:</strong> Fusos en bessons detecten longitud; OG de Golgi en tendó d'Aquil·les detecten tensió",
+    slide2_neural_4: "<strong>Reflex d'estirament:</strong> Ajusta l'activació segons la posició del turmell",
+    slide2_biomech_title: "⚡ Biomecànica i forces",
+    slide2_biomech_1: "<strong>Avantatge mecànic:</strong> Bessons tenen braç de moment curt → necessiten generar 3-4x el pes corporal",
+    slide2_biomech_2: "<strong>Pressió en avantpeu:</strong> 5-7x el pes corporal en relevé màxim",
+    slide2_biomech_3: '<strong>Estabilitat:</strong> Coactivació tibial anterior crea "fre" anterior per evitar hiperextensió',
+    slide2_biomech_4: "<strong>Peroneals:</strong> Coactivació lateral per evitar inversió (esquinç)",
+    slide2_adapt_title: "📈 Adaptacions específiques",
+    slide2_adapt_1: "<strong>Hipertròfia:</strong> Bessons (especialment tipus II) per alta tensió",
+    slide2_adapt_2: "<strong>Tendó d'Aquil·les:</strong> Augment de rigidesa tendinosa → millor transmissió de força",
+    slide2_adapt_3: "<strong>Ossos:</strong> Remodelació òssia (Llei de Wolff) en metatarsians per càrrega",
+    slide2_adapt_4: "<strong>Propiocepció:</strong> Millora de la sensibilitat de receptors del turmell",
+    slide2_q_title: "🤔 Pregunta fisiològica",
+    slide2_q_text: "Per què el tibial anterior (flexor dorsal) es coactiva durant el relevé si el moviment és de flexió plantar?",
+    slide2_optA_title: "Opció A", slide2_optA_text: "Per error del sistema nerviós que activa músculs oposats",
+    slide2_optB_title: "Opció B", slide2_optB_text: "Per estabilitzar l'articulació talocrural i evitar hiperextensió per co-contracció",
+    slide2_optC_title: "Opció C", slide2_optC_text: "Per preparar la següent fase de baixada (antagonista)",
+    slide2_expl_label: "💭 Explica la funció fisiològica d'aquesta coactivació:",
+    slide3_title: "3️⃣ Arabesque: Fisiologia del Maluc",
+    slide3_mech_title: "Mecanismes fisiològics",
+    slide3_neural_title: "🧠 Control neural",
+    slide3_neural_1: "<strong>Agonistes principals:</strong> Gluti major (tipus IIx per ser potent), isquiotibials (tipus IIa)",
+    slide3_neural_2: "<strong>Coactivació del psoes:</strong> 15-25% de la seva màxima per controlar l'extensió",
+    slide3_neural_3: "<strong>Inhibició recíproca parcial:</strong> El SNC redueix però no elimina l'activació del psoes",
+    slide3_neural_4: "<strong>Reflexos:</strong> Fusos en isquiotibials detecten allargament → augmenten activació",
+    slide3_biomech_title: "⚡ Biomecànica",
+    slide3_biomech_1: "<strong>Moment de força:</strong> La gravetat crea moment de flexió → extensors han de contrarestar",
+    slide3_biomech_2: "<strong>Braç de moment:</strong> Major distància = major moment = més força requerida",
+    slide3_biomech_3: '<strong>Coactivació psoes:</strong> Crea "fre" per evitar hiperextensió (>20°) que danyaria la càpsula',
+    slide3_biomech_4: "<strong>Rotadors:</strong> Coactivació de rotadors externs per mantenir l'alineació",
+    slide3_adapt_title: "📈 Adaptacions específiques",
+    slide3_adapt_1: "<strong>Glutis:</strong> Hipertròfia de tipus II per alta tensió en extensió",
+    slide3_adapt_2: "<strong>Psoes:</strong> Augment de control excèntric (frenada)",
+    slide3_adapt_3: "<strong>Càpsula articular:</strong> Adaptació a l'extensió controlada",
+    slide3_adapt_4: "<strong>Propiocepció:</strong> Millora de receptors en càpsula de maluc",
+    slide3_q_title: "🤔 Pregunta fisiològica",
+    slide3_q_text: "En l'arabesque, el psoes (flexor) es coactiva encara que la cama estigui en extensió. Quin avantatge fisiològic proporciona?",
+    slide3_optA_title: "Opció A", slide3_optA_text: "Cap, és un malbaratament d'energia que s'hauria d'evitar",
+    slide3_optB_title: "Opció B", slide3_optB_text: "Per preparar la següent flexió de maluc (moviment concèntric)",
+    slide3_optC_title: "Opció C", slide3_optC_text: "Per controlar l'altura mitjançant co-contracció i protegir l'articulació d'hiperextensió",
+    slide3_expl_label: "💭 Explica el paper fisiològic del psoes en extensió:",
+    slide4_title: "4️⃣ Esquat: Fisiologia del Genoll",
+    slide4_mech_title: "Mecanismes fisiològics",
+    slide4_neural_title: "🧠 Control neural en fase excèntrica",
+    slide4_neural_1: "<strong>Quàdriceps:</strong> Activació excèntrica (allargament sota tensió) → reclutament de tipus IIx",
+    slide4_neural_2: "<strong>Isquiotibials:</strong> Coactivació del 30-40% per estabilitzar genoll",
+    slide4_neural_3: "<strong>Reflex d'estirament:</strong> Fusos en quàdriceps detecten allargament → augmenten activació",
+    slide4_neural_4: "<strong>OG de Golgi:</strong> En tendó rotulià detecten tensió excessiva → inhibició protectora",
+    slide4_lca_title: "⚡ Protecció del LCA (Lligament Creuat Anterior)",
+    slide4_lca_1: "<strong>Problema:</strong> El quàdriceps excèntric estira la tíbia cap endavant (translació anterior)",
+    slide4_lca_2: "<strong>Solució:</strong> Isquiotibials coactiven estirant la tíbia cap enrere",
+    slide4_lca_3: "<strong>Resultat:</strong> Forces oposades s'equilibren → LCA protegit",
+    slide4_lca_4: "<strong>Importància:</strong> Sense aquesta coactivació, el LCA suportaria tota la càrrega → risc de ruptura",
+    slide4_adapt_title: "📈 Adaptacions específiques",
+    slide4_adapt_1: "<strong>Quàdriceps:</strong> Hipertròfia excèntrica (més que concèntrica), augment de força excèntrica",
+    slide4_adapt_2: "<strong>Isquiotibials:</strong> Millora de la coactivació reflexa (automàtica)",
+    slide4_adapt_3: "<strong>LCA:</strong> Menor estrès per coactivació adequada",
+    slide4_adapt_4: "<strong>Cartílag:</strong> Distribució de càrrega → nutrició del cartílag per compressió-descompressió",
+    slide4_q_title: "🤔 Pregunta fisiològica",
+    slide4_q_text: "Per què és fisiològicament important la coactivació d'isquiotibials durant la baixada de l'esquat?",
+    slide4_optA_title: "Opció A", slide4_optA_text: "Per protegir el LCA contrarestant la translació anterior de la tíbia produïda pel quàdriceps",
+    slide4_optB_title: "Opció B", slide4_optB_text: "Per ajudar al quàdriceps a frenar la baixada (sinèrgia)",
+    slide4_optC_title: "Opció C", slide4_optC_text: "Per estirar el quàdriceps i millorar la flexibilitat",
+    slide4_expl_label: "💭 Explica el mecanisme de protecció del LCA:",
+    slide5_title: "5️⃣ Plié: Fisiologia Multiplanar",
+    slide5_mech_title: "Mecanismes fisiològics",
+    slide5_neural_title: "🧠 Control neural en rotació externa",
+    slide5_neural_1: "<strong>Triple coactivació:</strong> Quàdriceps (sagital) + isquiotibials (sagital) + adductors (frontal/transversal)",
+    slide5_neural_2: "<strong>Adductors:</strong> Coactivació del 40-50% per mantenir rotació externa de maluc",
+    slide5_neural_3: "<strong>Rotadors externs:</strong> Gluti mitjà (porció posterior), piramidal, obturadors",
+    slide5_neural_4: "<strong>Propiocepció:</strong> Receptors en càpsula de maluc informen del grau de rotació",
+    slide5_3planes_title: "⚡ Estabilitat en 3 plans",
+    slide5_3planes_1: "<strong>Pla sagital:</strong> Quàdriceps/isquiotibials controlen flexió-extensió de genoll",
+    slide5_3planes_2: "<strong>Pla frontal:</strong> Adductors/abductors controlen valg-var de genoll",
+    slide5_3planes_3: "<strong>Pla transversal:</strong> Rotadors controlen rotació de fèmur sobre tíbia",
+    slide5_3planes_4: "<strong>Resultat:</strong> Coactivació tridimensional crea estabilitat omnidireccional",
+    slide5_adapt_title: "📈 Adaptacions específiques",
+    slide5_adapt_1: "<strong>Adductors:</strong> Hipertròfia i millora de resistència (tipus I i IIa)",
+    slide5_adapt_2: "<strong>Rotadors:</strong> Millora de la coordinació intermuscular",
+    slide5_adapt_3: "<strong>Meniscs:</strong> Millor distribució de càrrega per alineació correcta",
+    slide5_adapt_4: "<strong>LCA/LCP:</strong> Menor estrès per estabilitat multiplanar",
+    slide5_q_title: "🤔 Pregunta fisiològica",
+    slide5_q_text: "En el plié amb rotació externa, per què és necessària la coactivació d'adductors a més de quàdriceps i isquiotibials?",
+    slide5_optA_title: "Opció A", slide5_optA_text: "Perquè els adductors ajuden a flexionar el genoll (sinèrgia)",
+    slide5_optB_title: "Opció B", slide5_optB_text: "Per proporcionar estabilitat en el pla frontal i mantenir la rotació externa de maluc",
+    slide5_optC_title: "Opció C", slide5_optC_text: "Per estirar els abductors i millorar l'obertura",
+    slide5_expl_label: "💭 Explica la coactivació multiplanar:",
+    slide6_title: "6️⃣ Equilibri: Fisiologia Propioceptiva",
+    slide6_mech_title: "Mecanismes fisiològics",
+    slide6_neural_title: "🧠 Control neural reflex",
+    slide6_neural_1: "<strong>Sense visió:</strong> Dependència total de propiocepció (fusos musculars, OG de Golgi, receptors articulars)",
+    slide6_neural_2: "<strong>Micro-ajustos:</strong> Oscil·lacions de 5-10 Hz (reflexos espinals ràpids)",
+    slide6_neural_3: "<strong>Coactivació tònica:</strong> UM tipus I activades constantment (baixa freqüència 8-12 Hz)",
+    slide6_neural_4: "<strong>Latència reflexa:</strong> 30-50 ms (arc reflex espinal)",
+    slide6_strategies_title: "⚡ Estratègies d'equilibri",
+    slide6_strategies_1: "<strong>Estratègia de turmell:</strong> Petites oscil·lacions → bessons/tibial ajusten",
+    slide6_strategies_2: "<strong>Estratègia de maluc:</strong> Oscil·lacions grans → glutis/abdominals corregeixen",
+    slide6_strategies_3: "<strong>Coactivació:</strong> Peroneals (lateral) + tibial posterior (medial) estabilitzen en pla frontal",
+    slide6_q_title: "🤔 Pregunta",
+    slide6_q_text: "En mantenir l'equilibri amb ulls tancats, sents petites oscil·lacions. Quin mecanisme fisiològic les produeix?",
+    slide6_optA_title: "Opció A", slide6_optA_text: "Manca de força muscular",
+    slide6_optB_title: "Opció B", slide6_optB_text: "Micro-ajustos reflexos de 5-10 Hz mediats per fusos musculars",
+    slide6_optC_title: "Opció C", slide6_optC_text: "Fatiga muscular progressiva",
+    slide6_expl_label: "💭 Explica la fisiologia de l'equilibri:",
+    slide7_title: "7️⃣ Pont: Fisiologia del Control Pelvià",
+    slide7_mech_title: "Mecanismes fisiològics",
+    slide7_neural_title: "🧠 Control neural",
+    slide7_neural_1: "<strong>Glutis:</strong> Activació concèntrica (extensió de maluc) → tipus II reclutades",
+    slide7_neural_2: "<strong>Abdominals:</strong> Coactivació del 30-40% per evitar anteversió pelviana",
+    slide7_neural_3: "<strong>Lumbars:</strong> Coactivació isomètrica per estabilitzar columna",
+    slide7_neural_4: "<strong>Sincronització:</strong> Activació simultània de core anterior i posterior",
+    slide7_pelvis_title: " Control de la pelvis",
+    slide7_pelvis_1: "<strong>Glutis:</strong> Creen moment d'extensió",
+    slide7_pelvis_2: "<strong>Abdominals:</strong> Creen moment de retroversió (contraresten)",
+    slide7_pelvis_3: "<strong>Resultat:</strong> Pelvis en posició neutra (ni anteversió ni retroversió)",
+    slide7_pelvis_4: "<strong>Importància:</strong> Evita hiperlordosi lumbar (lesió discal)",
+    slide7_q_title: "🤔 Pregunta",
+    slide7_q_text: "Per què els abdominals es coactiven en un exercici d'extensió de maluc (pont)?",
+    slide7_optA_title: "Opció A", slide7_optA_text: "Per contrarestar l'anteversió pelviana produïda pels glutis i mantenir la pelvis neutra",
+    slide7_optB_title: "Opció B", slide7_optB_text: "Per ajudar a elevar el maluc (sinèrgia)",
+    slide7_optC_title: "Opció C", slide7_optC_text: "Per respirar correctament durant l'exercici",
+    slide7_expl_label: "💭 Explica el control pelvià:",
+    slide8_title: "8️⃣ Battement: Fisiologia del Control Excèntric",
+    slide8_mech_title: "Mecanismes fisiològics",
+    slide8_neural_title: "🧠 Control excèntric",
+    slide8_neural_1: "<strong>Abductors:</strong> Treball excèntric (allargament sota tensió) → reclutament de tipus IIx",
+    slide8_neural_2: "<strong>Dany muscular:</strong> Les contraccions excèntriques produeixen més microruptures de sarcòmers",
+    slide8_neural_3: "<strong>Adductors:</strong> Coactivació del 25-35% per estabilitzar en pla frontal",
+    slide8_neural_4: "<strong>Reflex d'estirament:</strong> Fusos en abductors detecten allargament → augmenten activació",
+    slide8_control_title: " Fisiologia del control",
+    slide8_control_1: "<strong>Força excèntrica:</strong> 20-40% major que concèntrica (més ponts creuats actius)",
+    slide8_control_2: "<strong>Cost energètic:</strong> Menor ATP/força que concèntrica (eficiència)",
+    slide8_control_3: "<strong>DOMS:</strong> Major dolor muscular tardà (24-72h) per dany estructural",
+    slide8_control_4: "<strong>Adaptació:</strong> Augment de sarcòmers en sèrie (longitud de fascicles)",
+    slide8_q_title: "🤔 Pregunta",
+    slide8_q_text: "Per què el battement contrôlé (baixada lenta) produeix més agulletes que la pujada ràpida?",
+    slide8_optA_title: "Opció A", slide8_optA_text: "Perquè es triga més temps i hi ha més fatiga",
+    slide8_optB_title: "Opció B", slide8_optB_text: "Perquè la fase excèntrica produeix més microruptures de sarcòmers que la concèntrica",
+    slide8_optC_title: "Opció C", slide8_optC_text: "Perquè s'acumula més lactat",
+    slide8_expl_label: "💭 Explica la fisiologia excèntrica:",
+    slide9_title: "9️⃣ Girs: Fisiologia de l'Estabilitat Rotacional",
+    slide9_mech_title: "Mecanismes fisiològics",
+    slide9_neural_title: "🧠 Control neural",
+    slide9_neural_1: "<strong>Core 360°:</strong> Coactivació isomètrica de recte, oblics, transvers, lumbars, multífids",
+    slide9_neural_2: "<strong>Freqüència:</strong> 15-25 Hz (tetanització completa per rigidesa)",
+    slide9_neural_3: "<strong>Propiocepció vestibular:</strong> Oïda interna detecta rotació → ajustos posturals",
+    slide9_neural_4: "<strong>Reflex vestíbulo-espinal:</strong> Manté el cap estable durant la rotació",
+    slide9_biomech_title: " Biomecànica rotacional",
+    slide9_biomech_1: "<strong>Moment d'inèrcia:</strong> Core rígid redueix el moment → gir més ràpid",
+    slide9_biomech_2: '<strong>Eix vertical:</strong> Coactivació crea "cilindre" que manté el centre de massa',
+    slide9_biomech_3: "<strong>Conservació del moment angular:</strong> Braços a prop del cos → velocitat angular augmenta",
+    slide9_q_title: "🤔 Pregunta",
+    slide9_q_text: "Per què és fisiològicament necessària la coactivació isomètrica del core durant la pirueta?",
+    slide9_optA_title: "Opció A", slide9_optA_text: "Per crear un cilindre rígid que mantingui l'eix vertical i redueixi el moment d'inèrcia",
+    slide9_optB_title: "Opció B", slide9_optB_text: "Per generar la rotació (moviment concèntric)",
+    slide9_optC_title: "Opció C", slide9_optC_text: "Per respirar correctament durant el gir",
+    slide9_expl_label: "💭 Explica la biomecànica rotacional:",
+    slide10_title: "🔟 Salts: Fisiologia de l'Impacte",
+    slide10_mech_title: "Mecanismes fisiològics",
+    slide10_neural_title: "🧠 Control neural de l'aterratge",
+    slide10_neural_1: "<strong>Pre-activació:</strong> 100-150 ms abans del contacte, els músculs s'activen (feedforward)",
+    slide10_neural_2: "<strong>Coactivació global:</strong> Quàdriceps + isquiotibials + bessons + glutis (tota la cadena)",
+    slide10_neural_3: "<strong>Reflexos:</strong> Fusos detecten impacte → augmenten activació (reflex d'estirament)",
+    slide10_neural_4: "<strong>OG de Golgi:</strong> Detecten tensió excessiva → inhibició protectora si cal",
+    slide10_energy_title: "⚡ Absorció d'energia",
+    slide10_energy_1: "<strong>Força d'impacte:</strong> 5-8x el pes corporal en grand jeté",
+    slide10_energy_2: "<strong>Treball excèntric:</strong> Músculs absorbeixen energia cinètica (E = ½mv²)",
+    slide10_energy_3: "<strong>Distribució:</strong> Coactivació distribueix la càrrega entre múltiples articulacions",
+    slide10_energy_4: "<strong>Tendons:</strong> Emmagatzemen energia elàstica (tendó d'Aquil·les, rotulià)",
+    slide10_adapt_title: "📈 Adaptacions",
+    slide10_adapt_1: "<strong>Ossos:</strong> Remodelació òssia per impacte (Llei de Wolff)",
+    slide10_adapt_2: "<strong>Tendons:</strong> Augment de rigidesa → millor transmissió i emmagatzematge",
+    slide10_adapt_3: "<strong>Músculs:</strong> Hipertròfia excèntrica, augment de força de frenada",
+    slide10_q_title: "🤔 Pregunta",
+    slide10_q_text: "Per què és fisiològicament crucial la coactivació global en l'aterratge de salts?",
+    slide10_optA_title: "Opció A", slide10_optA_text: "Per generar més força i saltar de nou immediatament",
+    slide10_optB_title: "Opció B", slide10_optB_text: "Per absorbir i distribuir forces de 5-8x el pes corporal, protegint articulacions",
+    slide10_optC_title: "Opció C", slide10_optC_text: "Per estirar els músculs i millorar la flexibilitat",
+    slide10_expl_label: "💭 Explica la fisiologia de l'impacte:",
+    slide11_title: "📊 Resum Fisiològic",
+    slide11_principles_title: " Principis fisiològics de la coactivació",
+    slide11_principles_1: "<strong>Control neural:</strong> Modificació de la inhibició recíproca, reclutament sincronitzat d'UM",
+    slide11_principles_2: "<strong>Tipus de fibres:</strong> Tipus I (sostingut), IIa (moderat), IIx (intens) segons la tasca",
+    slide11_principles_3: "<strong>Metabolisme:</strong> Glucòlisi anaeròbia en isomètrica, aeròbia en dinàmic suau",
+    slide11_principles_4: "<strong>Propiocepció:</strong> Fusos, OG de Golgi, receptors articulars → feedback en temps real",
+    slide11_principles_5: "<strong>Biomecànica:</strong> Coactivació crea estabilitat multiplanar, protegeix articulacions",
+    slide11_adapt_title: "📈 Adaptacions a l'entrenament",
+    slide11_adapt_1: "<strong>Neurals:</strong> Millor sincronització, menor latència, major freqüència de dispar",
+    slide11_adapt_2: "<strong>Musculars:</strong> Hipertròfia selectiva, augment de capil·larització, més mitocondris",
+    slide11_adapt_3: "<strong>Estructurals:</strong> Tendons més rígids, ossos més densos, cartílag més resistent",
+    slide11_adapt_4: "<strong>Propioceptives:</strong> Major sensibilitat de receptors, millors reflexos",
+    slide11_apply_title: "✅ Aplicació en el teu entrenament",
+    slide11_apply_text: "Comprendre la fisiologia de la coactivació et permet:",
+    slide11_apply_1: "Entrenar de forma més específica i eficient",
+    slide11_apply_2: "Prevenir lesions mitjançant estabilitat articular",
+    slide11_apply_3: "Millorar la qualitat del moviment (control, precisió)",
+    slide11_apply_4: "Optimitzar el rendiment (força, equilibri, potència)",
+    slide11_apply_5: "Entendre per què fa mal (DOMS excèntric) i com recuperar-te",
+    fb1: `<strong>Correcte!</strong> El tremor es deu al <strong>reclutament asíncron d'UM</strong>. Quan les UM tipus I es fatiguen (isquèmia per compressió), el SNC recluta i desrecluta UM de forma oscil·lant per mantenir la força mitjana. Això produeix les vibracions visibles. A més, l'acumulació d'H⁺ i lactat altera l'excitabilitat de les membranes.`,
+    fb2: `<strong>Exacte!</strong> El tibial anterior es coactiva (10-20% de la seva màxima) per <strong>estabilitzar l'articulació talocrural</strong>. Aquesta co-contracció crea un "fre" anterior que evita la hiperextensió del turmell i millora la propiocepció. Els OG de Golgi en el tendó d'Aquil·les detecten la tensió i ajusten la coactivació.`,
+    fb3: `<strong>Molt bé!</strong> El psoes es coactiva (15-25%) per <strong>controlar l'altura</strong> mitjançant co-contracció i protegir la càpsula articular d'hiperextensió (>20°). Els fusos musculars en isquiotibials detecten l'allargament i ajusten l'activació. Això permet un control fi de la posició.`,
+    fb4: `<strong>Correcte!</strong> Durant la fase excèntrica, el quàdriceps estira la tíbia cap endavant (translació anterior). Els isquiotibials coactiven (30-40%) estirant cap enrere, <strong>equilibrant les forces i protegint el LCA</strong>. Sense aquesta coactivació, el LCA suportaria tota la càrrega → risc de ruptura.`,
+    fb5: `<strong>Excel·lent!</strong> Els adductors coactiven (40-50%) per proporcionar <strong>estabilitat en el pla frontal</strong> i mantenir la rotació externa de maluc. Aquesta coactivació triple (quàdriceps + isquiotibials + adductors) crea estabilitat omnidireccional en els 3 plans del moviment.`,
+    fb6: `<strong>Perfecte!</strong> Les oscil·lacions són <strong>micro-ajustos reflexos de 5-10 Hz</strong> mediats per fusos musculars. Sense visió, el sistema depèn totalment de la propiocepció. Els fusos detecten canvis de longitud → reflex miotàtic correctiu. És un procés automàtic espinal (latència 30-50 ms).`,
+    fb7: `<strong>Correcte!</strong> Els glutis creen un moment d'extensió que produiria anteversió pelviana (hiperlordosi). Els abdominals coactiven (30-40%) creant un moment de retroversió oposat. <strong>L'equilibri de moments manté la pelvis neutra</strong> i protegeix els discs lumbars.`,
+    fb8: `<strong>Molt bé!</strong> La fase excèntrica produeix <strong>20-40% més microruptures de sarcòmers</strong> (especialment en la línia Z) que la concèntrica. Això desencadena una resposta inflamatòria (DOMS) a les 24-72h. Encara que fa mal, és una adaptació positiva: el múscul es reconstrueix més fort.`,
+    fb9: `<strong>Exacte!</strong> La coactivació isomètrica del core (15-25 Hz, tetanització completa) crea un <strong>cilindre rígid</strong> que manté l'eix vertical i redueix el moment d'inèrcia (I = mr²). Menor I = major velocitat angular (ω) per al mateix moment angular (L = Iω). A més, el reflex vestíbulo-espinal manté el cap estable.`,
+    fb10: `<strong>Correcte!</strong> En l'aterratge, les forces són de <strong>5-8x el pes corporal</strong>. La coactivació global (quàdriceps + isquiotibials + bessons + glutis) distribueix aquesta càrrega entre múltiples articulacions i absorbeix l'energia cinètica mitjançant treball excèntric. Sense coactivació, les articulacions suportarien tot l'impacte → lesió.`,
+    fbi1: `<strong>Reflexiona...</strong> L'ATP no s'esgota totalment (hi hauria rigor, no tremor). El dany estructural no ocorre tan ràpid. El tremor és un <strong>fenomen neural</strong>: les UM es fatiguen per isquèmia (compressió vascular) i el SNC les recluta/desrecluta de forma oscil·lant. A més, l'acumulació d'H⁺ altera l'excitabilitat de membrana.`,
+    fbi2: `<strong>Pensa...</strong> No és un error del SNC ni una preparació per baixar. La coactivació del tibial anterior és <strong>funcional</strong>: estabilitza el turmell en el pla anteroposterior, evita la hiperextensió i millora la propiocepció. Els OG de Golgi modulen aquesta coactivació segons la tensió.`,
+    fbi3: `<strong>Considera...</strong> No és malbaratament d'energia ni només preparació. El psoes coactiva per <strong>control fi de la posició</strong>. Sense aquesta co-contracció, la cama o cauria per gravetat o aniria a hiperextensió (danyant la càpsula). Els fusos en isquiotibials ajusten constantment l'activació.`,
+    fbi4: `<strong>Analitza...</strong> Els isquiotibials no ajuden al quàdriceps (són antagonistes en el genoll) ni estiren el quàdriceps. La seva coactivació és <strong>protectora</strong>: contraresta la translació anterior de la tíbia produïda pel quàdriceps excèntric, protegint el LCA. És un mecanisme de seguretat neural.`,
+    fbi5: `<strong>Reflexiona...</strong> Els adductors no ajuden a flexionar el genoll ni només estiren abductors. La seva coactivació (40-50%) proporciona <strong>estabilitat en el pla frontal</strong> i manté la rotació externa de maluc. Sense ells, el genoll col·lapsaria en valg o perdríeu la rotació. És coactivació multiplanar.`,
+    fbi6: `<strong>Observa...</strong> No és manca de força (pots mantenir-lo) ni fatiga (apareix immediatament). Les oscil·lacions són <strong>micro-ajustos reflexos</strong> (5-10 Hz) mediats per fusos musculars. Sense visió, la propiocepció és l'única font d'informació. El SNC ajusta constantment l'activació per mantenir el centre de gravetat.`,
+    fbi7: `<strong>Pensa...</strong> Els abdominals no ajuden a elevar el maluc (són antagonistes de l'extensió) ni és per respiració. Coactiven (30-40%) per <strong>contrarestar l'anteversió pelviana</strong> que produirien els glutis. L'equilibri de moments (extensió vs. retroversió) manté la pelvis neutra i protegeix la columna lumbar.`,
+    fbi8: `<strong>Considera...</strong> No és per temps ni lactat (l'excèntric consumeix MENYS ATP). Les agulletes (DOMS) es deuen a <strong>microruptures de sarcòmers</strong> (especialment línia Z) produïdes per l'alta tensió en allargament. Això desencadena inflamació (24-72h). És una adaptació: el múscul es reconstrueix més fort.`,
+    fbi9: `<strong>Reflexiona...</strong> El core no genera la rotació (això ho fan els impulsors) ni és per respiració. La coactivació isomètrica (15-25 Hz) crea un <strong>cilindre rígid</strong> que manté l'eix vertical i redueix el moment d'inèrcia. Menor I = major ω (velocitat angular). A més, el reflex vestíbulo-espinal estabilitza el cap.`,
+    fbi10: `<strong>Analitza...</strong> No és per saltar de nou ni per estirar. La coactivació global és <strong>protectora</strong>: distribueix forces de 5-8x el pes corporal entre múltiples articulacions i absorbeix energia cinètica mitjançant treball excèntric. Sense coactivació, l'impacte aniria directe a ossos/cartílags → lesió.`
+  },
+  en: {
+    title: " Physiology of Muscle Coactivation",
+    subtitle: "10 Exercises for Stability and Control in Dance",
+    subtitle2: "Neural mechanisms, fiber types, metabolism and adaptations",
+    nav0: "📚 Introduction", nav1: "1. Plank", nav2: "2. Relevé", nav3: "3. Arabesque",
+    nav4: "4. Squat", nav5: "5. Plié", nav6: "6. Balance", nav7: "7. Bridge",
+    nav8: "8. Battement", nav9: "9. Turns", nav10: "10. Jumps", nav11: "📊 Summary",
+    btn_check: "Check answer", btn_reset: "Reset",
+    slide0_title: " Physiological Bases of Coactivation",
+    slide0_intro_title: " Physiological definition",
+    slide0_intro_text: '<strong>Coactivation</strong> is the <span class="highlight">simultaneous activation of agonist and antagonist muscles</span> around a joint, mediated by the central nervous system to provide mechanical stability and movement control.',
+    slide0_neural_title: "🧠 Neural mechanisms involved",
+    slide0_neural_1: "<strong>Modified reciprocal inhibition:</strong> The CNS reduces (but does not eliminate) antagonist inhibition",
+    slide0_neural_2: "<strong>Motor unit (MU) recruitment:</strong> Synchronized activation of MUs from different muscle pools",
+    slide0_neural_3: "<strong>Spinal reflexes:</strong> Muscle spindles and Golgi tendon organs modulate coactivation",
+    slide0_neural_4: "<strong>Cortical control:</strong> Motor cortex and cerebellum adjust coactivation level according to the task",
+    slide0_neural_5: "<strong>Proprioception:</strong> Joint and muscle receptors provide real-time feedback",
+    slide0_fibers_title: "⚡ Fiber types recruited",
+    slide0_fibers_text: "Depending on the intensity and duration of coactivation:",
+    slide0_fibers_1: '<span class="fiber-tag type1">Type I (slow)</span> - Sustained coactivation, low intensity (posture, balance)',
+    slide0_fibers_2: '<span class="fiber-tag type2a">Type IIa (fast oxidative)</span> - Moderate coactivation, fatigue resistance',
+    slide0_fibers_3: '<span class="fiber-tag type2x">Type IIx (fast glycolytic)</span> - Intense coactivation, short duration (jumps, turns)',
+    slide0_diagram_title: "📐 Diagram of neural control of coactivation",
+    slide0_adapt_title: " Physiological adaptations to training",
+    slide0_adapt_1: "<strong>Neural:</strong> Improved synchronized MU recruitment, reduced latency time",
+    slide0_adapt_2: "<strong>Muscular:</strong> Selective hypertrophy of type I and IIa fibers, increased capillarization",
+    slide0_adapt_3: "<strong>Metabolic:</strong> Increased mitochondria, oxidative enzymes, glycogen stores",
+    slide0_adapt_4: "<strong>Proprioceptive:</strong> Greater sensitivity of muscle spindles and joint receptors",
+    diagram_cortex: "MOTOR CORTEX", diagram_cortex_sub: "Movement planning",
+    diagram_spinal: "SPINAL CORD", diagram_spinal_sub: "α Motoneurons",
+    diagram_agonist: "Agonist", diagram_antagonist: "Antagonist", diagram_spindles: "Spindles",
+    diagram_both: "Both motoneurons active → COACTIVATION",
+    slide1_title: "1️⃣ Plank: Core Physiology",
+    slide1_mech_title: "Physiological mechanisms",
+    slide1_neural_title: "🧠 Neural control",
+    slide1_neural_1: "<strong>Cortical activation:</strong> High (conscious static task)",
+    slide1_neural_2: "<strong>Recruitment:</strong> Predominant type I MUs (endurance), with progressive type IIa recruitment due to fatigue",
+    slide1_neural_3: "<strong>Firing frequency:</strong> 10-20 Hz (incomplete tetanization to maintain sustained tension)",
+    slide1_neural_4: "<strong>Reflexes:</strong> Muscle spindles detect micro-oscillations → corrective myotatic reflex",
+    slide1_metab_title: "⚡ Energy metabolism",
+    slide1_metab_1: "<strong>Main pathway:</strong> Anaerobic glycolysis (ischemia due to vascular compression)",
+    slide1_metab_2: "<strong>Accumulation:</strong> Lactate, H⁺ (acidosis → fatigue)",
+    slide1_metab_3: "<strong>O₂ consumption:</strong> High but limited by capillary compression",
+    slide1_metab_4: "<strong>Fatigue:</strong> Rapid (30-60s) due to local ischemia and metabolite accumulation",
+    slide1_adapt_title: "📈 Specific adaptations",
+    slide1_adapt_1: "<strong>Muscles:</strong> Rectus abdominis, obliques, transversus, spinal erectors, multifidus",
+    slide1_adapt_2: "<strong>Contraction type:</strong> Isometric (constant length, variable tension)",
+    slide1_adapt_3: "<strong>Adaptation:</strong> Increased isometric endurance, improved intermuscular coordination",
+    slide1_adapt_4: '<strong>Biomechanics:</strong> Anterior-posterior coactivation creates an intra-abdominal stability "cylinder"',
+    slide1_q_title: " Physiological question",
+    slide1_q_text: "After 20 seconds of plank, you start to tremble. What physiological mechanism explains this tremor?",
+    slide1_optA_title: "Option A", slide1_optA_text: "Total ATP depletion → contractile failure",
+    slide1_optB_title: "Option B", slide1_optB_text: "Asynchronous MU recruitment due to fatigue → oscillations in generated force",
+    slide1_optC_title: "Option C", slide1_optC_text: "Structural damage to muscle fibers → loss of control",
+    slide1_expl_label: "💭 Explain the physiological mechanism of the tremor:",
+    slide2_title: "2️⃣ Relevé: Ankle Physiology",
+    slide2_mech_title: "Physiological mechanisms",
+    slide2_neural_title: "🧠 Neural control",
+    slide2_neural_1: "<strong>Recruitment:</strong> Gastrocnemius (predominant type II as powerful muscle), soleus (type I as postural)",
+    slide2_neural_2: "<strong>Tibialis anterior:</strong> 10-20% coactivation of maximum for stabilization",
+    slide2_neural_3: "<strong>Proprioception:</strong> Spindles in gastrocnemius detect length; Golgi tendon organs in Achilles tendon detect tension",
+    slide2_neural_4: "<strong>Stretch reflex:</strong> Adjusts activation according to ankle position",
+    slide2_biomech_title: "⚡ Biomechanics and forces",
+    slide2_biomech_1: "<strong>Mechanical advantage:</strong> Gastrocnemius has short moment arm → needs to generate 3-4x body weight",
+    slide2_biomech_2: "<strong>Forefoot pressure:</strong> 5-7x body weight at maximum relevé",
+    slide2_biomech_3: '<strong>Stability:</strong> Tibialis anterior coactivation creates an anterior "brake" to prevent hyperextension',
+    slide2_biomech_4: "<strong>Peroneals:</strong> Lateral coactivation to prevent inversion (sprain)",
+    slide2_adapt_title: "📈 Specific adaptations",
+    slide2_adapt_1: "<strong>Hypertrophy:</strong> Gastrocnemius (especially type II) due to high tension",
+    slide2_adapt_2: "<strong>Achilles tendon:</strong> Increased tendon stiffness → better force transmission",
+    slide2_adapt_3: "<strong>Bones:</strong> Bone remodeling (Wolff's Law) in metatarsals due to load",
+    slide2_adapt_4: "<strong>Proprioception:</strong> Improved ankle receptor sensitivity",
+    slide2_q_title: "🤔 Physiological question",
+    slide2_q_text: "Why does the tibialis anterior (dorsiflexor) coactivate during relevé if the movement is plantar flexion?",
+    slide2_optA_title: "Option A", slide2_optA_text: "Due to a nervous system error that activates opposing muscles",
+    slide2_optB_title: "Option B", slide2_optB_text: "To stabilize the talocrural joint and prevent hyperextension through co-contraction",
+    slide2_optC_title: "Option C", slide2_optC_text: "To prepare for the next lowering phase (antagonist)",
+    slide2_expl_label: "💭 Explain the physiological function of this coactivation:",
+    slide3_title: "3️⃣ Arabesque: Hip Physiology",
+    slide3_mech_title: "Physiological mechanisms",
+    slide3_neural_title: "🧠 Neural control",
+    slide3_neural_1: "<strong>Primary agonists:</strong> Gluteus maximus (type IIx as powerful), hamstrings (type IIa)",
+    slide3_neural_2: "<strong>Psoas coactivation:</strong> 15-25% of maximum to control extension",
+    slide3_neural_3: "<strong>Partial reciprocal inhibition:</strong> The CNS reduces but does not eliminate psoas activation",
+    slide3_neural_4: "<strong>Reflexes:</strong> Hamstring spindles detect lengthening → increase activation",
+    slide3_biomech_title: "⚡ Biomechanics",
+    slide3_biomech_1: "<strong>Moment of force:</strong> Gravity creates flexion moment → extensors must counteract",
+    slide3_biomech_2: "<strong>Moment arm:</strong> Greater distance = greater moment = more force required",
+    slide3_biomech_3: '<strong>Psoas coactivation:</strong> Creates a "brake" to prevent hyperextension (>20°) that would damage the capsule',
+    slide3_biomech_4: "<strong>Rotators:</strong> External rotator coactivation to maintain alignment",
+    slide3_adapt_title: "📈 Specific adaptations",
+    slide3_adapt_1: "<strong>Glutes:</strong> Type II hypertrophy due to high tension in extension",
+    slide3_adapt_2: "<strong>Psoas:</strong> Increased eccentric control (braking)",
+    slide3_adapt_3: "<strong>Joint capsule:</strong> Adaptation to controlled extension",
+    slide3_adapt_4: "<strong>Proprioception:</strong> Improved hip capsule receptors",
+    slide3_q_title: "🤔 Physiological question",
+    slide3_q_text: "In arabesque, the psoas (flexor) coactivates even though the leg is in extension. What physiological advantage does this provide?",
+    slide3_optA_title: "Option A", slide3_optA_text: "None, it's a waste of energy that should be avoided",
+    slide3_optB_title: "Option B", slide3_optB_text: "To prepare for the next hip flexion (concentric movement)",
+    slide3_optC_title: "Option C", slide3_optC_text: "To control height through co-contraction and protect the joint from hyperextension",
+    slide3_expl_label: "💭 Explain the physiological role of the psoas in extension:",
+    slide4_title: "4️⃣ Squat: Knee Physiology",
+    slide4_mech_title: "Physiological mechanisms",
+    slide4_neural_title: "🧠 Neural control in eccentric phase",
+    slide4_neural_1: "<strong>Quadriceps:</strong> Eccentric activation (lengthening under tension) → type IIx recruitment",
+    slide4_neural_2: "<strong>Hamstrings:</strong> 30-40% coactivation to stabilize knee",
+    slide4_neural_3: "<strong>Stretch reflex:</strong> Quadriceps spindles detect lengthening → increase activation",
+    slide4_neural_4: "<strong>Golgi tendon organs:</strong> In patellar tendon detect excessive tension → protective inhibition",
+    slide4_lca_title: "⚡ ACL (Anterior Cruciate Ligament) protection",
+    slide4_lca_1: "<strong>Problem:</strong> Eccentric quadriceps pulls tibia forward (anterior translation)",
+    slide4_lca_2: "<strong>Solution:</strong> Hamstrings coactivate pulling tibia backward",
+    slide4_lca_3: "<strong>Result:</strong> Opposing forces balance → ACL protected",
+    slide4_lca_4: "<strong>Importance:</strong> Without this coactivation, the ACL would bear the entire load → risk of rupture",
+    slide4_adapt_title: "📈 Specific adaptations",
+    slide4_adapt_1: "<strong>Quadriceps:</strong> Eccentric hypertrophy (more than concentric), increased eccentric strength",
+    slide4_adapt_2: "<strong>Hamstrings:</strong> Improved reflex coactivation (automatic)",
+    slide4_adapt_3: "<strong>ACL:</strong> Less stress due to adequate coactivation",
+    slide4_adapt_4: "<strong>Cartilage:</strong> Load distribution → cartilage nutrition through compression-decompression",
+    slide4_q_title: "🤔 Physiological question",
+    slide4_q_text: "Why is hamstring coactivation physiologically important during the descent phase of a squat?",
+    slide4_optA_title: "Option A", slide4_optA_text: "To protect the ACL by counteracting the anterior tibial translation produced by the quadriceps",
+    slide4_optB_title: "Option B", slide4_optB_text: "To help the quadriceps brake the descent (synergy)",
+    slide4_optC_title: "Option C", slide4_optC_text: "To stretch the quadriceps and improve flexibility",
+    slide4_expl_label: "💭 Explain the ACL protection mechanism:",
+    slide5_title: "5️⃣ Plié: Multiplanar Physiology",
+    slide5_mech_title: "Physiological mechanisms",
+    slide5_neural_title: "🧠 Neural control in external rotation",
+    slide5_neural_1: "<strong>Triple coactivation:</strong> Quadriceps (sagittal) + hamstrings (sagittal) + adductors (frontal/transverse)",
+    slide5_neural_2: "<strong>Adductors:</strong> 40-50% coactivation to maintain hip external rotation",
+    slide5_neural_3: "<strong>External rotators:</strong> Gluteus medius (posterior portion), piriformis, obturators",
+    slide5_neural_4: "<strong>Proprioception:</strong> Hip capsule receptors inform degree of rotation",
+    slide5_3planes_title: "⚡ Stability in 3 planes",
+    slide5_3planes_1: "<strong>Sagittal plane:</strong> Quadriceps/hamstrings control knee flexion-extension",
+    slide5_3planes_2: "<strong>Frontal plane:</strong> Adductors/abductors control knee valgus-varus",
+    slide5_3planes_3: "<strong>Transverse plane:</strong> Rotators control femur rotation over tibia",
+    slide5_3planes_4: "<strong>Result:</strong> Three-dimensional coactivation creates omnidirectional stability",
+    slide5_adapt_title: "📈 Specific adaptations",
+    slide5_adapt_1: "<strong>Adductors:</strong> Hypertrophy and improved endurance (type I and IIa)",
+    slide5_adapt_2: "<strong>Rotators:</strong> Improved intermuscular coordination",
+    slide5_adapt_3: "<strong>Menisci:</strong> Better load distribution through correct alignment",
+    slide5_adapt_4: "<strong>ACL/PCL:</strong> Less stress due to multiplanar stability",
+    slide5_q_title: "🤔 Physiological question",
+    slide5_q_text: "In plié with external rotation, why is adductor coactivation necessary in addition to quadriceps and hamstrings?",
+    slide5_optA_title: "Option A", slide5_optA_text: "Because adductors help flex the knee (synergy)",
+    slide5_optB_title: "Option B", slide5_optB_text: "To provide frontal plane stability and maintain hip external rotation",
+    slide5_optC_title: "Option C", slide5_optC_text: "To stretch the abductors and improve turnout",
+    slide5_expl_label: "💭 Explain multiplanar coactivation:",
+    slide6_title: "6️⃣ Balance: Proprioceptive Physiology",
+    slide6_mech_title: "Physiological mechanisms",
+    slide6_neural_title: "🧠 Reflex neural control",
+    slide6_neural_1: "<strong>Without vision:</strong> Total dependence on proprioception (muscle spindles, Golgi tendon organs, joint receptors)",
+    slide6_neural_2: "<strong>Micro-adjustments:</strong> 5-10 Hz oscillations (rapid spinal reflexes)",
+    slide6_neural_3: "<strong>Tonic coactivation:</strong> Type I MUs constantly activated (low frequency 8-12 Hz)",
+    slide6_neural_4: "<strong>Reflex latency:</strong> 30-50 ms (spinal reflex arc)",
+    slide6_strategies_title: "⚡ Balance strategies",
+    slide6_strategies_1: "<strong>Ankle strategy:</strong> Small oscillations → gastrocnemius/tibialis adjust",
+    slide6_strategies_2: "<strong>Hip strategy:</strong> Large oscillations → glutes/abdominals correct",
+    slide6_strategies_3: "<strong>Coactivation:</strong> Peroneals (lateral) + tibialis posterior (medial) stabilize in frontal plane",
+    slide6_q_title: "🤔 Question",
+    slide6_q_text: "When maintaining balance with eyes closed, you feel small oscillations. What physiological mechanism produces them?",
+    slide6_optA_title: "Option A", slide6_optA_text: "Lack of muscle strength",
+    slide6_optB_title: "Option B", slide6_optB_text: "5-10 Hz reflex micro-adjustments mediated by muscle spindles",
+    slide6_optC_title: "Option C", slide6_optC_text: "Progressive muscle fatigue",
+    slide6_expl_label: "💭 Explain the physiology of balance:",
+    slide7_title: "7️⃣ Bridge: Pelvic Control Physiology",
+    slide7_mech_title: "Physiological mechanisms",
+    slide7_neural_title: "🧠 Neural control",
+    slide7_neural_1: "<strong>Glutes:</strong> Concentric activation (hip extension) → type II recruited",
+    slide7_neural_2: "<strong>Abdominals:</strong> 30-40% coactivation to prevent pelvic anteversion",
+    slide7_neural_3: "<strong>Lumbar:</strong> Isometric coactivation to stabilize spine",
+    slide7_neural_4: "<strong>Synchronization:</strong> Simultaneous activation of anterior and posterior core",
+    slide7_pelvis_title: " Pelvis control",
+    slide7_pelvis_1: "<strong>Glutes:</strong> Create extension moment",
+    slide7_pelvis_2: "<strong>Abdominals:</strong> Create retroversion moment (counteract)",
+    slide7_pelvis_3: "<strong>Result:</strong> Pelvis in neutral position (neither anteversion nor retroversion)",
+    slide7_pelvis_4: "<strong>Importance:</strong> Prevents lumbar hyperlordosis (disc injury)",
+    slide7_q_title: "🤔 Question",
+    slide7_q_text: "Why do abdominals coactivate in a hip extension exercise (bridge)?",
+    slide7_optA_title: "Option A", slide7_optA_text: "To counteract pelvic anteversion produced by the glutes and maintain neutral pelvis",
+    slide7_optB_title: "Option B", slide7_optB_text: "To help lift the hip (synergy)",
+    slide7_optC_title: "Option C", slide7_optC_text: "To breathe correctly during the exercise",
+    slide7_expl_label: "💭 Explain pelvic control:",
+    slide8_title: "8️⃣ Battement: Eccentric Control Physiology",
+    slide8_mech_title: "Physiological mechanisms",
+    slide8_neural_title: "🧠 Eccentric control",
+    slide8_neural_1: "<strong>Abductors:</strong> Eccentric work (lengthening under tension) → type IIx recruitment",
+    slide8_neural_2: "<strong>Muscle damage:</strong> Eccentric contractions produce more sarcomere microtears",
+    slide8_neural_3: "<strong>Adductors:</strong> 25-35% coactivation to stabilize in frontal plane",
+    slide8_neural_4: "<strong>Stretch reflex:</strong> Abductor spindles detect lengthening → increase activation",
+    slide8_control_title: " Control physiology",
+    slide8_control_1: "<strong>Eccentric strength:</strong> 20-40% greater than concentric (more active cross-bridges)",
+    slide8_control_2: "<strong>Energy cost:</strong> Less ATP/force than concentric (efficiency)",
+    slide8_control_3: "<strong>DOMS:</strong> Greater delayed onset muscle soreness (24-72h) due to structural damage",
+    slide8_control_4: "<strong>Adaptation:</strong> Increased sarcomeres in series (fascicle length)",
+    slide8_q_title: "🤔 Question",
+    slide8_q_text: "Why does battement contrôlé (slow lowering) produce more soreness than fast lifting?",
+    slide8_optA_title: "Option A", slide8_optA_text: "Because it takes longer and there is more fatigue",
+    slide8_optB_title: "Option B", slide8_optB_text: "Because the eccentric phase produces more sarcomere microtears than the concentric phase",
+    slide8_optC_title: "Option C", slide8_optC_text: "Because more lactate accumulates",
+    slide8_expl_label: "💭 Explain eccentric physiology:",
+    slide9_title: "9️⃣ Turns: Rotational Stability Physiology",
+    slide9_mech_title: "Physiological mechanisms",
+    slide9_neural_title: "🧠 Neural control",
+    slide9_neural_1: "<strong>360° core:</strong> Isometric coactivation of rectus, obliques, transversus, lumbar, multifidus",
+    slide9_neural_2: "<strong>Frequency:</strong> 15-25 Hz (complete tetanization for stiffness)",
+    slide9_neural_3: "<strong>Vestibular proprioception:</strong> Inner ear detects rotation → postural adjustments",
+    slide9_neural_4: "<strong>Vestibulospinal reflex:</strong> Maintains head stability during rotation",
+    slide9_biomech_title: " Rotational biomechanics",
+    slide9_biomech_1: "<strong>Moment of inertia:</strong> Rigid core reduces moment → faster turn",
+    slide9_biomech_2: '<strong>Vertical axis:</strong> Coactivation creates "cylinder" that maintains center of mass',
+    slide9_biomech_3: "<strong>Conservation of angular momentum:</strong> Arms close to body → angular velocity increases",
+    slide9_q_title: "🤔 Question",
+    slide9_q_text: "Why is isometric core coactivation physiologically necessary during a pirouette?",
+    slide9_optA_title: "Option A", slide9_optA_text: "To create a rigid cylinder that maintains the vertical axis and reduces moment of inertia",
+    slide9_optB_title: "Option B", slide9_optB_text: "To generate rotation (concentric movement)",
+    slide9_optC_title: "Option C", slide9_optC_text: "To breathe correctly during the turn",
+    slide9_expl_label: "💭 Explain rotational biomechanics:",
+    slide10_title: "🔟 Jumps: Impact Physiology",
+    slide10_mech_title: "Physiological mechanisms",
+    slide10_neural_title: "🧠 Neural control of landing",
+    slide10_neural_1: "<strong>Pre-activation:</strong> 100-150 ms before contact, muscles activate (feedforward)",
+    slide10_neural_2: "<strong>Global coactivation:</strong> Quadriceps + hamstrings + gastrocnemius + glutes (whole chain)",
+    slide10_neural_3: "<strong>Reflexes:</strong> Spindles detect impact → increase activation (stretch reflex)",
+    slide10_neural_4: "<strong>Golgi tendon organs:</strong> Detect excessive tension → protective inhibition if necessary",
+    slide10_energy_title: "⚡ Energy absorption",
+    slide10_energy_1: "<strong>Impact force:</strong> 5-8x body weight in grand jeté",
+    slide10_energy_2: "<strong>Eccentric work:</strong> Muscles absorb kinetic energy (E = ½mv²)",
+    slide10_energy_3: "<strong>Distribution:</strong> Coactivation distributes load among multiple joints",
+    slide10_energy_4: "<strong>Tendons:</strong> Store elastic energy (Achilles, patellar tendon)",
+    slide10_adapt_title: "📈 Adaptations",
+    slide10_adapt_1: "<strong>Bones:</strong> Bone remodeling due to impact (Wolff's Law)",
+    slide10_adapt_2: "<strong>Tendons:</strong> Increased stiffness → better transmission and storage",
+    slide10_adapt_3: "<strong>Muscles:</strong> Eccentric hypertrophy, increased braking strength",
+    slide10_q_title: "🤔 Question",
+    slide10_q_text: "Why is global coactivation physiologically crucial when landing from jumps?",
+    slide10_optA_title: "Option A", slide10_optA_text: "To generate more force and jump again immediately",
+    slide10_optB_title: "Option B", slide10_optB_text: "To absorb and distribute forces of 5-8x body weight, protecting joints",
+    slide10_optC_title: "Option C", slide10_optC_text: "To stretch muscles and improve flexibility",
+    slide10_expl_label: "💭 Explain impact physiology:",
+    slide11_title: "📊 Physiological Summary",
+    slide11_principles_title: " Physiological principles of coactivation",
+    slide11_principles_1: "<strong>Neural control:</strong> Modification of reciprocal inhibition, synchronized MU recruitment",
+    slide11_principles_2: "<strong>Fiber types:</strong> Type I (sustained), IIa (moderate), IIx (intense) depending on task",
+    slide11_principles_3: "<strong>Metabolism:</strong> Anaerobic glycolysis in isometric, aerobic in gentle dynamic",
+    slide11_principles_4: "<strong>Proprioception:</strong> Spindles, Golgi tendon organs, joint receptors → real-time feedback",
+    slide11_principles_5: "<strong>Biomechanics:</strong> Coactivation creates multiplanar stability, protects joints",
+    slide11_adapt_title: "📈 Training adaptations",
+    slide11_adapt_1: "<strong>Neural:</strong> Better synchronization, lower latency, higher firing frequency",
+    slide11_adapt_2: "<strong>Muscular:</strong> Selective hypertrophy, increased capillarization, more mitochondria",
+    slide11_adapt_3: "<strong>Structural:</strong> Stiffer tendons, denser bones, more resistant cartilage",
+    slide11_adapt_4: "<strong>Proprioceptive:</strong> Greater receptor sensitivity, better reflexes",
+    slide11_apply_title: "✅ Application in your training",
+    slide11_apply_text: "Understanding the physiology of coactivation allows you to:",
+    slide11_apply_1: "Train more specifically and efficiently",
+    slide11_apply_2: "Prevent injuries through joint stability",
+    slide11_apply_3: "Improve movement quality (control, precision)",
+    slide11_apply_4: "Optimize performance (strength, balance, power)",
+    slide11_apply_5: "Understand why it hurts (eccentric DOMS) and how to recover",
+    fb1: `<strong>Correct!</strong> The tremor is due to <strong>asynchronous MU recruitment</strong>. When type I MUs fatigue (ischemia due to compression), the CNS recruits and de-recruits MUs in an oscillating manner to maintain average force. This produces visible vibrations. Additionally, H⁺ and lactate accumulation alters membrane excitability.`,
+    fb2: `<strong>Exactly!</strong> The tibialis anterior coactivates (10-20% of maximum) to <strong>stabilize the talocrural joint</strong>. This co-contraction creates an anterior "brake" that prevents ankle hyperextension and improves proprioception. Golgi tendon organs in the Achilles tendon detect tension and adjust coactivation.`,
+    fb3: `<strong>Very good!</strong> The psoas coactivates (15-25%) to <strong>control height</strong> through co-contraction and protect the joint capsule from hyperextension (>20°). Muscle spindles in the hamstrings detect lengthening and adjust activation. This allows fine position control.`,
+    fb4: `<strong>Correct!</strong> During the eccentric phase, the quadriceps pulls the tibia forward (anterior translation). The hamstrings coactivate (30-40%) pulling backward, <strong>balancing forces and protecting the ACL</strong>. Without this coactivation, the ACL would bear the entire load → risk of rupture.`,
+    fb5: `<strong>Excellent!</strong> The adductors coactivate (40-50%) to provide <strong>frontal plane stability</strong> and maintain hip external rotation. This triple coactivation (quadriceps + hamstrings + adductors) creates omnidirectional stability in all 3 planes of movement.`,
+    fb6: `<strong>Perfect!</strong> The oscillations are <strong>5-10 Hz reflex micro-adjustments</strong> mediated by muscle spindles. Without vision, the system depends entirely on proprioception. Spindles detect length changes → corrective myotatic reflex. It's an automatic spinal process (30-50 ms latency).`,
+    fb7: `<strong>Correct!</strong> The glutes create an extension moment that would produce pelvic anteversion (hyperlordosis). The abdominals coactivate (30-40%) creating an opposing retroversion moment. <strong>The balance of moments maintains a neutral pelvis</strong> and protects the lumbar discs.`,
+    fb8: `<strong>Very good!</strong> The eccentric phase produces <strong>20-40% more sarcomere microtears</strong> (especially at the Z-line) than the concentric phase. This triggers an inflammatory response (DOMS) at 24-72h. Although it hurts, it's a positive adaptation: the muscle rebuilds stronger.`,
+    fb9: `<strong>Exactly!</strong> Isometric core coactivation (15-25 Hz, complete tetanization) creates a <strong>rigid cylinder</strong> that maintains the vertical axis and reduces moment of inertia (I = mr²). Lower I = higher angular velocity (ω) for the same angular momentum (L = Iω). Additionally, the vestibulospinal reflex keeps the head stable.`,
+    fb10: `<strong>Correct!</strong> On landing, forces are <strong>5-8x body weight</strong>. Global coactivation (quadriceps + hamstrings + gastrocnemius + glutes) distributes this load among multiple joints and absorbs kinetic energy through eccentric work. Without coactivation, joints would bear the entire impact → injury.`,
+    fbi1: `<strong>Think...</strong> ATP is not totally depleted (that would cause rigor, not tremor). Structural damage doesn't occur that fast. The tremor is a <strong>neural phenomenon</strong>: MUs fatigue due to ischemia (vascular compression) and the CNS recruits/de-recruits them in an oscillating manner. Additionally, H⁺ accumulation alters membrane excitability.`,
+    fbi2: `<strong>Think...</strong> It's not a CNS error or preparation for lowering. Tibialis anterior coactivation is <strong>functional</strong>: it stabilizes the ankle in the anteroposterior plane, prevents hyperextension, and improves proprioception. Golgi tendon organs modulate this coactivation based on tension.`,
+    fbi3: `<strong>Consider...</strong> It's not a waste of energy or just preparation. The psoas coactivates for <strong>fine position control</strong>. Without this co-contraction, the leg would either fall due to gravity or go into hyperextension (damaging the capsule). Hamstring spindles constantly adjust activation.`,
+    fbi4: `<strong>Analyze...</strong> The hamstrings don't help the quadriceps (they are antagonists at the knee) or stretch the quadriceps. Their coactivation is <strong>protective</strong>: it counteracts the anterior tibial translation produced by the eccentric quadriceps, protecting the ACL. It's a neural safety mechanism.`,
+    fbi5: `<strong>Reflect...</strong> Adductors don't help flex the knee or just stretch abductors. Their coactivation (40-50%) provides <strong>frontal plane stability</strong> and maintains hip external rotation. Without them, the knee would collapse into valgus or you'd lose rotation. It's multiplanar coactivation.`,
+    fbi6: `<strong>Observe...</strong> It's not lack of strength (you can maintain it) or fatigue (it appears immediately). The oscillations are <strong>reflex micro-adjustments</strong> (5-10 Hz) mediated by muscle spindles. Without vision, proprioception is the only source of information. The CNS constantly adjusts activation to maintain the center of gravity.`,
+    fbi7: `<strong>Think...</strong> The abdominals don't help lift the hip (they are antagonists to extension) nor is it for breathing. They coactivate (30-40%) to <strong>counteract pelvic anteversion</strong> that the glutes would produce. The balance of moments (extension vs. retroversion) maintains a neutral pelvis and protects the lumbar spine.`,
+    fbi8: `<strong>Consider...</strong> It's not due to time or lactate (eccentric uses LESS ATP). DOMS is due to <strong>sarcomere microtears</strong> (especially Z-line) produced by high tension during lengthening. This triggers inflammation (24-72h). It's an adaptation: the muscle rebuilds stronger.`,
+    fbi9: `<strong>Reflect...</strong> The core doesn't generate rotation (that's done by the impulse muscles) nor is it for breathing. Isometric coactivation (15-25 Hz) creates a <strong>rigid cylinder</strong> that maintains the vertical axis and reduces moment of inertia. Lower I = higher ω (angular velocity). Additionally, the vestibulospinal reflex stabilizes the head.`,
+    fbi10: `<strong>Analyze...</strong> It's not to jump again or to stretch. Global coactivation is <strong>protective</strong>: it distributes forces of 5-8x body weight among multiple joints and absorbs kinetic energy through eccentric work. Without coactivation, the impact would go directly to bones/cartilage → injury.`
+  }
+};
+
+function setLanguage(lang, btn) {
+  currentLang = lang;
+  document.querySelectorAll('.language-selector button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  
+  // Update all elements with data-i18n
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key]) {
+      el.innerHTML = translations[lang][key];
+    }
+  });
+  
+  // Update textareas placeholders
+  const placeholders = {
+    es: {
+      explanation1: "Considera el reclutamiento de UM, la fatiga y el control neural...",
+      explanation2: "Considera la estabilidad articular, la propiocepción y el control del movimiento...",
+      explanation3: "Considera el control de la posición, la protección articular y la precisión del movimiento...",
+      explanation4: "Describe las fuerzas opuestas y cómo se equilibran...",
+      explanation5: "Considera los tres planos del movimiento y la estabilidad articular...",
+      explanation6: "Considera la propiocepción, los reflejos y la coactivación...",
+      explanation7: "Considera los momentos de fuerza y la posición neutra...",
+      explanation8: "Considera el daño muscular estructural y las adaptaciones...",
+      explanation9: "Considera el momento de inercia, el eje vertical y la estabilidad...",
+      explanation10: "Considera las fuerzas, la absorción de energía y la protección articular..."
+    },
+    ca: {
+      explanation1: "Considera el reclutament d'UM, la fatiga i el control neural...",
+      explanation2: "Considera l'estabilitat articular, la propiocepció i el control del moviment...",
+      explanation3: "Considera el control de la posició, la protecció articular i la precisió del moviment...",
+      explanation4: "Descriu les forces oposades i com s'equilibren...",
+      explanation5: "Considera els tres plans del moviment i l'estabilitat articular...",
+      explanation6: "Considera la propiocepció, els reflexos i la coactivació...",
+      explanation7: "Considera els moments de força i la posició neutra...",
+      explanation8: "Considera el dany muscular estructural i les adaptacions...",
+      explanation9: "Considera el moment d'inèrcia, l'eix vertical i l'estabilitat...",
+      explanation10: "Considera les forces, l'absorció d'energia i la protecció articular..."
+    },
+    en: {
+      explanation1: "Consider MU recruitment, fatigue and neural control...",
+      explanation2: "Consider joint stability, proprioception and movement control...",
+      explanation3: "Consider position control, joint protection and movement precision...",
+      explanation4: "Describe the opposing forces and how they balance...",
+      explanation5: "Consider the three planes of movement and joint stability...",
+      explanation6: "Consider proprioception, reflexes and coactivation...",
+      explanation7: "Consider force moments and neutral position...",
+      explanation8: "Consider structural muscle damage and adaptations...",
+      explanation9: "Consider moment of inertia, vertical axis and stability...",
+      explanation10: "Consider forces, energy absorption and joint protection..."
+    }
+  };
+  
+  for (let i = 1; i <= 10; i++) {
+    const textarea = document.getElementById(`explanation${i}`);
+    if (textarea && placeholders[lang] && placeholders[lang][`explanation${i}`]) {
+      textarea.placeholder = placeholders[lang][`explanation${i}`];
+    }
+  }
+  
+  // Update feedback if visible
+  for (let i = 1; i <= 10; i++) {
+    const feedback = document.getElementById(`feedback${i}`);
+    if (feedback && feedback.classList.contains('show')) {
+      const state = exerciseState[i];
+      if (state && state.checked) {
+        if (state.isCorrect) {
+          feedback.innerHTML = translations[lang][`fb${i}`];
+        } else {
+          feedback.innerHTML = translations[lang][`fbi${i}`];
+        }
+      }
+    }
+  }
+}
+
+function showSlide(i, btn) {
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.slide')[i].classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function selectOption(exerciseNum, optionIndex, isCorrect) {
+  const options = document.querySelectorAll(`#options${exerciseNum} .option-card`);
+  options.forEach(opt => opt.classList.remove('selected', 'correct', 'incorrect'));
+  options[optionIndex].classList.add('selected');
+  exerciseState[exerciseNum] = { selected: optionIndex, isCorrect, checked: false };
+}
+
+function checkAnswer(exerciseNum) {
+  if (!exerciseState[exerciseNum] || exerciseState[exerciseNum].selected === undefined) {
+    alert(currentLang === 'es' ? 'Selecciona una opción primero' : 
+          currentLang === 'ca' ? 'Selecciona una opció primer' : 
+          'Select an option first');
+    return;
+  }
+  
+  const state = exerciseState[exerciseNum];
+  const feedback = document.getElementById(`feedback${exerciseNum}`);
+  const options = document.querySelectorAll(`#options${exerciseNum} .option-card`);
+  
+  options.forEach((opt, idx) => {
+    if (idx === state.selected) {
+      opt.classList.add(state.isCorrect ? 'correct' : 'incorrect');
+    }
+  });
+  
+  feedback.classList.remove('show');
+  setTimeout(() => {
+    feedback.classList.add('show');
+    if (state.isCorrect) {
+      feedback.className = 'feedback show success';
+      feedback.innerHTML = translations[currentLang][`fb${exerciseNum}`];
+    } else {
+      feedback.className = 'feedback show error';
+      feedback.innerHTML = translations[currentLang][`fbi${exerciseNum}`];
+    }
+  }, 100);
+  
+  state.checked = true;
+}
+
+function resetExercise(exerciseNum) {
+  const options = document.querySelectorAll(`#options${exerciseNum} .option-card`);
+  options.forEach(opt => opt.classList.remove('selected', 'correct', 'incorrect'));
+  const textarea = document.getElementById(`explanation${exerciseNum}`);
+  if (textarea) textarea.value = '';
+  const feedback = document.getElementById(`feedback${exerciseNum}`);
+  feedback.classList.remove('show');
+  delete exerciseState[exerciseNum];
+}
+
+// Initialize with Spanish
+setLanguage('es', document.querySelector('.language-selector button'));
+</script>
+</body>
+</html>

@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapeo de Diapositivas vs. Recursos HTML</title>
+<style>
+  :root { 
+    --primary: #4f46e5; 
+    --secondary: #7c3aed; 
+    --bg: #f8fafc; 
+    --text: #1e293b; 
+    --card-bg: #ffffff; 
+    --border: #e2e8f0;
+    --no-link: #94a3b8;
+  }
+  * { box-sizing: border-box; }
+  body { 
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+    line-height: 1.6; 
+    color: var(--text); 
+    background: var(--bg); 
+    margin: 0; 
+    padding: 0; 
+  }
+  .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+  
+  header { 
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); 
+    color: white; 
+    padding: 30px 20px; 
+    text-align: center; 
+    border-radius: 0 0 20px 20px; 
+    margin-bottom: 30px; 
+    box-shadow: 0 10px 25px rgba(79, 70, 229, 0.2); 
+    position: relative;
+  }
+  header h1 { margin: 0; font-size: 2em; font-weight: 800; }
+  header p { margin: 10px 0 0; opacity: 0.9; font-size: 1.1em; }
+  
+  .language-selector {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    gap: 8px;
+  }
+  .language-selector button {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.4);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  .language-selector button:hover {
+    background: rgba(255,255,255,0.3);
+  }
+  .language-selector button.active {
+    background: white;
+    color: var(--primary);
+  }
+  
+  .table-container {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    overflow-x: auto;
+  }
+  
+  table { 
+    width: 100%; 
+    border-collapse: separate; 
+    border-spacing: 0; 
+    border-radius: 8px; 
+    overflow: hidden; 
+    border: 1px solid var(--border); 
+    min-width: 600px;
+  }
+  th, td { 
+    padding: 14px 18px; 
+    text-align: left; 
+    border-bottom: 1px solid var(--border); 
+    vertical-align: top;
+  }
+  th { 
+    background-color: #f1f5f9; 
+    color: #334155; 
+    font-weight: 700; 
+    font-size: 0.95em; 
+    text-transform: uppercase; 
+    letter-spacing: 0.5px;
+    position: sticky;
+    top: 0;
+  }
+  th.col-a { width: 35%; }
+  th.col-b { width: 65%; }
+  
+  tr:last-child td { border-bottom: none; }
+  tr:hover { background-color: #f8fafc; transition: background-color 0.2s; }
+  
+  .slide-number {
+    font-weight: 800;
+    color: var(--primary);
+    font-size: 1.1em;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .slide-title {
+    font-size: 0.95em;
+    color: #475569;
+    font-weight: 500;
+  }
+  .slide-type {
+    display: inline-block;
+    font-size: 0.75em;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-top: 6px;
+    font-weight: 600;
+  }
+  .type-visual { background: #f1f5f9; color: #64748b; }
+  .type-anim { background: #fef3c7; color: #92400e; }
+  
+  .link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .link-list li {
+    margin-bottom: 6px;
+  }
+  .link-list li:last-child {
+    margin-bottom: 0;
+  }
+  a.resource-link { 
+    color: var(--primary); 
+    text-decoration: none; 
+    font-weight: 600; 
+    font-size: 0.95em;
+    display: inline-flex; 
+    align-items: center; 
+    gap: 6px; 
+    transition: all 0.2s; 
+    word-break: break-all;
+  }
+  a.resource-link:hover { 
+    color: var(--secondary); 
+    text-decoration: underline; 
+  }
+  a.resource-link::after { 
+    content: "↗"; 
+    font-size: 0.8em; 
+    opacity: 0.7; 
+  }
+  
+  .no-link {
+    color: var(--no-link);
+    font-style: italic;
+    font-size: 0.95em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .no-link::before {
+    content: "⚠️";
+    font-style: normal;
+  }
+
+  footer { 
+    text-align: center; 
+    padding: 30px 20px; 
+    color: #64748b; 
+    font-size: 0.9em; 
+    border-top: 1px solid var(--border); 
+    margin-top: 20px; 
+  }
+  
+  @media (max-width: 768px) {
+    header h1 { font-size: 1.5em; }
+    .container { padding: 15px; }
+    .table-container { padding: 15px; }
+    th, td { padding: 10px 12px; font-size: 0.9em; }
+    .language-selector { position: static; margin-bottom: 15px; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="language-selector">
+    <button class="active" onclick="setLanguage('es', this)">ES</button>
+    <button onclick="setLanguage('ca', this)">CA</button>
+    <button onclick="setLanguage('en', this)">EN</button>
+  </div>
+  <h1 data-i18n="header_title">📋 Mapeo de Diapositivas vs. Recursos HTML</h1>
+  <p data-i18n="header_subtitle">Sistema Musculoesquelético I · 80 Diapositivas · Curso 2026-2027</p>
+</header>
+
+<div class="container">
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-a" data-i18n="th_slide">Nº DIAPOSITIVA</th>
+          <th class="col-b" data-i18n="th_url">URL ARCHIVO WEB</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="slide-number">1</span><span class="slide-title" data-i18n="slide1_title">Portada</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_00_A.html" target="_blank">esqueleto_00_A.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">2</span><span class="slide-title" data-i18n="slide2_title">Niveles de organización del cuerpo humano</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_00_A.html" target="_blank">esqueleto_00_A.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_00_B.html" target="_blank">esqueleto_00_B.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/homeostasis_movimiento.html" target="_blank">homeostasis_movimiento.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">3</span><span class="slide-title" data-i18n="slide3_title">Líquido intra y extracelular</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/homeostasis_movimiento.html" target="_blank">homeostasis_movimiento.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_A.html" target="_blank">casos_practicos02_A.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">4</span><span class="slide-title" data-i18n="slide4_title">El medio acuoso</span><span class="slide-type type-visual" data-i18n="type_visual">Visual</span></td>
+          <td><span class="no-link" data-i18n="no_link_visual">Sin enlace específico (Diapositiva de apoyo visual)</span></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">5</span><span class="slide-title" data-i18n="slide5_title">Variables del medio interno</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/homeostasis_movimiento.html" target="_blank">homeostasis_movimiento.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">6</span><span class="slide-title" data-i18n="slide6_title">Mantenimiento del medio fluido</span><span class="slide-type type-visual" data-i18n="type_visual">Visual</span></td>
+          <td><span class="no-link" data-i18n="no_link_visual">Sin enlace específico (Diapositiva de apoyo visual)</span></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">7</span><span class="slide-title" data-i18n="slide7_title">Homeostasis</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/homeostasis_movimiento.html" target="_blank">homeostasis_movimiento.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_A.html" target="_blank">casos_practicos02_A.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">8</span><span class="slide-title" data-i18n="slide8_title">Alerta de desequilibrio</span><span class="slide-type type-visual" data-i18n="type_visual">Visual</span></td>
+          <td><span class="no-link" data-i18n="no_link_visual">Sin enlace específico (Diapositiva de apoyo visual)</span></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">9</span><span class="slide-title" data-i18n="slide9_title">Sistemas de regulación</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/homeostasis_movimiento.html" target="_blank">homeostasis_movimiento.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/unidad_motora.html" target="_blank">unidad_motora.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">10</span><span class="slide-title" data-i18n="slide10_title">Integración anatómica</span><span class="slide-type type-visual" data-i18n="type_visual">Visual</span></td>
+          <td><span class="no-link" data-i18n="no_link_visual">Sin enlace específico (Diapositiva de apoyo visual)</span></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">11</span><span class="slide-title" data-i18n="slide11_title">Balanza en equilibrio</span><span class="slide-type type-visual" data-i18n="type_visual">Visual</span></td>
+          <td><span class="no-link" data-i18n="no_link_visual">Sin enlace específico (Diapositiva de apoyo visual)</span></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">12</span><span class="slide-title" data-i18n="slide12_title">Homeostasis en el movimiento</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/homeostasis_movimiento.html" target="_blank">homeostasis_movimiento.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_A.html" target="_blank">casos_practicos02_A.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">13</span><span class="slide-title" data-i18n="slide13_title">Músculos en esfuerzo</span><span class="slide-type type-visual" data-i18n="type_visual">Visual</span></td>
+          <td><span class="no-link" data-i18n="no_link_visual">Sin enlace específico (Diapositiva de apoyo visual)</span></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">14</span><span class="slide-title" data-i18n="slide14_title">Dinámica del movimiento</span><span class="slide-type type-visual" data-i18n="type_visual">Visual</span></td>
+          <td><span class="no-link" data-i18n="no_link_visual">Sin enlace específico (Diapositiva de apoyo visual)</span></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">15</span><span class="slide-title" data-i18n="slide15_title">Desequilibrio homeostático</span><span class="slide-type type-visual" data-i18n="type_visual">Visual</span></td>
+          <td><span class="no-link" data-i18n="no_link_visual">Sin enlace específico (Diapositiva de apoyo visual)</span></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">16</span><span class="slide-title" data-i18n="slide16_title">Restablecimiento del equilibrio</span><span class="slide-type type-visual" data-i18n="type_visual">Visual</span></td>
+          <td><span class="no-link" data-i18n="no_link_visual">Sin enlace específico (Diapositiva de apoyo visual)</span></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">17</span><span class="slide-title" data-i18n="slide17_title">Retroalimentación negativa</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/homeostasis_movimiento.html" target="_blank">homeostasis_movimiento.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_A.html" target="_blank">casos_practicos02_A.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">18</span><span class="slide-title" data-i18n="slide18_title">Mecanismo de retroalimentación en el parto</span><span class="slide-type type-visual" data-i18n="type_visual_diagram">Visual/Diagrama</span></td>
+          <td><span class="no-link" data-i18n="no_link_diagram">Sin enlace específico (Diagrama de apoyo)</span></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">19</span><span class="slide-title" data-i18n="slide19_title">Retroalimentación positiva</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/homeostasis_movimiento.html" target="_blank">homeostasis_movimiento.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_A.html" target="_blank">casos_practicos02_A.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">20</span><span class="slide-title" data-i18n="slide20_title">El sistema musculoesquelético</span><span class="slide-type type-visual" data-i18n="type_visual_diagram">Visual/Diagrama</span></td>
+          <td><span class="no-link" data-i18n="no_link_diagram">Sin enlace específico (Diagrama de apoyo)</span></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">21</span><span class="slide-title" data-i18n="slide21_title">Tres tipos de músculos (Estructura)</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_A.html" target="_blank">casos_practicos02_A.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">22</span><span class="slide-title" data-i18n="slide22_title">Tres tipos de músculos (Funciones)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">23</span><span class="slide-title" data-i18n="slide23_title">El músculo esquelético: un trabajo en equipo</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/musculos_tr_equipo.html" target="_blank">musculos_tr_equipo.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/trabajo_musculos.html" target="_blank">trabajo_musculos.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">24</span><span class="slide-title" data-i18n="slide24_title">Músculo esquelético (La fibra muscular)</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/actividades_sarcomero.html" target="_blank">actividades_sarcomero.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">25</span><span class="slide-title" data-i18n="slide25_title">Niveles de organización muscular (Diagrama)</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/actividades_sarcomero.html" target="_blank">actividades_sarcomero.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">26</span><span class="slide-title" data-i18n="slide26_title">Músculo esquelético: Célula muscular</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">27</span><span class="slide-title" data-i18n="slide27_title">Organización muscular (Fascículo)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/actividades_sarcomero.html" target="_blank">actividades_sarcomero.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">28</span><span class="slide-title" data-i18n="slide28_title">Organización muscular (Fibra)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/actividades_sarcomero.html" target="_blank">actividades_sarcomero.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">29</span><span class="slide-title" data-i18n="slide29_title">Organización muscular (Miofibrilla)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/actividades_sarcomero.html" target="_blank">actividades_sarcomero.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">30</span><span class="slide-title" data-i18n="slide30_title">Organización muscular (Sarcómero)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/actividades_sarcomero.html" target="_blank">actividades_sarcomero.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">31</span><span class="slide-title" data-i18n="slide31_title">Organización muscular (Completo)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/actividades_sarcomero.html" target="_blank">actividades_sarcomero.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">32</span><span class="slide-title" data-i18n="slide32_title">Definición de la Fibra muscular</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">33</span><span class="slide-title" data-i18n="slide33_title">Músculo esquelético (Cierre de sección)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">34</span><span class="slide-title" data-i18n="slide34_title">Niveles de Organización: Miofilamentos</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">35</span><span class="slide-title" data-i18n="slide35_title">Estructura interna de la miofibrilla</span><span class="slide-type type-visual" data-i18n="type_visual">Visual</span></td>
+          <td><span class="no-link" data-i18n="no_link_visual">Sin enlace específico (Diapositiva de apoyo visual)</span></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">36</span><span class="slide-title" data-i18n="slide36_title">Detalle de las cabezas de miosina</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">37</span><span class="slide-title" data-i18n="slide37_title">Niveles de Organización: Sarcómero</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/actividades_sarcomero.html" target="_blank">actividades_sarcomero.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">38</span><span class="slide-title" data-i18n="slide38_title">Delimitación de las Líneas Z</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/actividades_sarcomero.html" target="_blank">actividades_sarcomero.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">39</span><span class="slide-title" data-i18n="slide39_title">Ubicación de la Actina</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">40</span><span class="slide-title" data-i18n="slide40_title">Ubicación de la Miosina</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">41</span><span class="slide-title" data-i18n="slide41_title">Resumen de la organización interna</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/actividades_sarcomero.html" target="_blank">actividades_sarcomero.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">42</span><span class="slide-title" data-i18n="slide42_title">Estructura detallada del Sarcómero</span><span class="slide-type type-visual" data-i18n="type_visual_diagram">Visual/Diagrama</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/actividades_sarcomero.html" target="_blank">actividades_sarcomero.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">43</span><span class="slide-title" data-i18n="slide43_title">Comportamiento de las Bandas</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/actividades_sarcomero.html" target="_blank">actividades_sarcomero.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">44</span><span class="slide-title" data-i18n="slide44_title">Contracción del sarcómero</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/actividades_sarcomero.html" target="_blank">actividades_sarcomero.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">45</span><span class="slide-title" data-i18n="slide45_title">¿Cómo empieza la contracción muscular?</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/unidad_motora.html" target="_blank">unidad_motora.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp.html" target="_blank">calcio_atp.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">46</span><span class="slide-title" data-i18n="slide46_title">Origen del impulso nervioso</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/unidad_motora.html" target="_blank">unidad_motora.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">47</span><span class="slide-title" data-i18n="slide47_title">Trayecto del axón motor</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/unidad_motora.html" target="_blank">unidad_motora.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">48</span><span class="slide-title" data-i18n="slide48_title">La unidad motora</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/unidad_motora.html" target="_blank">unidad_motora.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/trabajo_musculos.html" target="_blank">trabajo_musculos.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">49</span><span class="slide-title" data-i18n="slide49_title">Control de precisión vs. fuerza</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/unidad_motora.html" target="_blank">unidad_motora.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">50</span><span class="slide-title" data-i18n="slide50_title">La unidad motora (Completa)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/unidad_motora.html" target="_blank">unidad_motora.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">51</span><span class="slide-title" data-i18n="slide51_title">El Mecanismo de Deslizamiento</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/contraccion_muscular.html" target="_blank">contraccion_muscular.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">52</span><span class="slide-title" data-i18n="slide52_title">¿Cómo llega la orden al músculo? (Unión neuromuscular)</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp.html" target="_blank">calcio_atp.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp1.html" target="_blank">calcio_atp1.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">53</span><span class="slide-title" data-i18n="slide53_title">El Mecanismo de Deslizamiento (Transición)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">54</span><span class="slide-title" data-i18n="slide54_title">Unión neuromuscular: Paso 1</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp.html" target="_blank">calcio_atp.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">55</span><span class="slide-title" data-i18n="slide55_title">Unión neuromuscular: Paso 2</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp.html" target="_blank">calcio_atp.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">56</span><span class="slide-title" data-i18n="slide56_title">Unión neuromuscular: Paso 3</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp.html" target="_blank">calcio_atp.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">57</span><span class="slide-title" data-i18n="slide57_title">Unión neuromuscular: Paso 4</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp.html" target="_blank">calcio_atp.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">58</span><span class="slide-title" data-i18n="slide58_title">Del potencial de acción a la contracción</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp.html" target="_blank">calcio_atp.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp1.html" target="_blank">calcio_atp1.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">59</span><span class="slide-title" data-i18n="slide59_title">Señal de calcio: Paso 1</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp.html" target="_blank">calcio_atp.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">60</span><span class="slide-title" data-i18n="slide60_title">Señal de calcio: Paso 2</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp.html" target="_blank">calcio_atp.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">61</span><span class="slide-title" data-i18n="slide61_title">Señal de calcio: Paso 3</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp.html" target="_blank">calcio_atp.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">62</span><span class="slide-title" data-i18n="slide62_title">Señal de calcio: Paso 4</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp.html" target="_blank">calcio_atp.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">63</span><span class="slide-title" data-i18n="slide63_title">El papel del calcio en la contracción</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp.html" target="_blank">calcio_atp.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp1.html" target="_blank">calcio_atp1.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">64</span><span class="slide-title" data-i18n="slide64_title">Miosina bloqueada</span><span class="slide-type type-visual" data-i18n="type_visual">Visual</span></td>
+          <td><span class="no-link" data-i18n="no_link_visual">Sin enlace específico (Diapositiva de apoyo visual)</span></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">65</span><span class="slide-title" data-i18n="slide65_title">Liberación de la miosina</span><span class="slide-type type-visual" data-i18n="type_visual">Visual</span></td>
+          <td><span class="no-link" data-i18n="no_link_visual">Sin enlace específico (Diapositiva de apoyo visual)</span></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">66</span><span class="slide-title" data-i18n="slide66_title">Papel energético del ATP</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp.html" target="_blank">calcio_atp.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp1.html" target="_blank">calcio_atp1.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">67</span><span class="slide-title" data-i18n="slide67_title">El ciclo de la miosina</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp.html" target="_blank">calcio_atp.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">68</span><span class="slide-title" data-i18n="slide68_title">Inicio del nuevo ciclo</span><span class="slide-type type-visual" data-i18n="type_visual">Visual</span></td>
+          <td><span class="no-link" data-i18n="no_link_visual">Sin enlace específico (Diapositiva de apoyo visual)</span></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">69</span><span class="slide-title" data-i18n="slide69_title">Hidrólisis de ATP</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp.html" target="_blank">calcio_atp.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">70</span><span class="slide-title" data-i18n="slide70_title">Rampa muscular (Definición)</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp.html" target="_blank">calcio_atp.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_A.html" target="_blank">casos_practicos02_A.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">71</span><span class="slide-title" data-i18n="slide71_title">Rampa muscular (Factores predisponentes)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp.html" target="_blank">calcio_atp.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_A.html" target="_blank">casos_practicos02_A.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">72</span><span class="slide-title" data-i18n="slide72_title">Tipos de contracción en el movimiento</span><span class="slide-type type-visual" data-i18n="type_visual">Visual</span></td>
+          <td><span class="no-link" data-i18n="no_link_visual">Sin enlace específico (Diapositiva de apoyo visual)</span></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">73</span><span class="slide-title" data-i18n="slide73_title">Ejemplos prácticos de contracción</span><span class="slide-type type-visual" data-i18n="type_visual">Visual</span></td>
+          <td><span class="no-link" data-i18n="no_link_visual">Sin enlace específico (Diapositiva de apoyo visual)</span></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">74</span><span class="slide-title" data-i18n="slide74_title">Tipos de contracción muscular</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/contraccion_muscular.html" target="_blank">contraccion_muscular.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control_1.html" target="_blank">estabilidad_control_1.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">75</span><span class="slide-title" data-i18n="slide75_title">Contracción Concéntrica</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/contraccion_muscular.html" target="_blank">contraccion_muscular.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control_1.html" target="_blank">estabilidad_control_1.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">76</span><span class="slide-title" data-i18n="slide76_title">Contracción Excéntrica</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/contraccion_muscular.html" target="_blank">contraccion_muscular.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control_2.html" target="_blank">estabilidad_control_2.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">77</span><span class="slide-title" data-i18n="slide77_title">Modos de Contracción en el Grand Jeté</span><span class="slide-type type-visual" data-i18n="type_visual_diagram">Visual/Diagrama</span></td>
+          <td><span class="no-link" data-i18n="no_link_diagram">Sin enlace específico (Diagrama de apoyo)</span></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">78</span><span class="slide-title" data-i18n="slide78_title">Contracción Isométrica</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/contraccion_muscular.html" target="_blank">contraccion_muscular.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control_1.html" target="_blank">estabilidad_control_1.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">79</span><span class="slide-title" data-i18n="slide79_title">Detrás de cada gesto</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/musculos_tr_equipo.html" target="_blank">musculos_tr_equipo.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/trabajo_musculos.html" target="_blank">trabajo_musculos.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">80</span><span class="slide-title" data-i18n="slide80_title">Práctica: Fisiología en movimiento</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control_1.html" target="_blank">estabilidad_control_1.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control_2.html" target="_blank">estabilidad_control_2.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/musculos_tr_equipo.html" target="_blank">musculos_tr_equipo.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/trabajo_musculos.html" target="_blank">trabajo_musculos.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_A.html" target="_blank">casos_practicos02_A.html</a></li>
+          </ul></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<footer>
+  <p data-i18n="footer_line1">🩰 Fisiología aplicada a la Danza · Dra. Cèlia Painous, MD, PhD · Curso 2026-2027</p>
+  <p style="font-size: 0.85em; margin-top: 8px;" data-i18n="footer_line2">Todos los enlaces se abren en una nueva pestaña para facilitar la navegación.</p>
+</footer>
+
+<script>
+let currentLang = 'es';
+
+const translations = {
+  es: {
+    header_title: "📋 Mapeo de Diapositivas vs. Recursos HTML",
+    header_subtitle: "Sistema Musculoesquelético I · 80 Diapositivas · Curso 2026-2027",
+    th_slide: "Nº DIAPOSITIVA",
+    th_url: "URL ARCHIVO WEB",
+    type_visual: "Visual",
+    type_anim: "Animación",
+    type_visual_diagram: "Visual/Diagrama",
+    no_link_visual: "Sin enlace específico (Diapositiva de apoyo visual)",
+    no_link_diagram: "Sin enlace específico (Diagrama de apoyo)",
+    footer_line1: "🩰 Fisiología aplicada a la Danza · Dra. Cèlia Painous, MD, PhD · Curso 2026-2027",
+    footer_line2: "Todos los enlaces se abren en una nueva pestaña para facilitar la navegación.",
+    slide1_title: "Portada",
+    slide2_title: "Niveles de organización del cuerpo humano",
+    slide3_title: "Líquido intra y extracelular",
+    slide4_title: "El medio acuoso",
+    slide5_title: "Variables del medio interno",
+    slide6_title: "Mantenimiento del medio fluido",
+    slide7_title: "Homeostasis",
+    slide8_title: "Alerta de desequilibrio",
+    slide9_title: "Sistemas de regulación",
+    slide10_title: "Integración anatómica",
+    slide11_title: "Balanza en equilibrio",
+    slide12_title: "Homeostasis en el movimiento",
+    slide13_title: "Músculos en esfuerzo",
+    slide14_title: "Dinámica del movimiento",
+    slide15_title: "Desequilibrio homeostático",
+    slide16_title: "Restablecimiento del equilibrio",
+    slide17_title: "Retroalimentación negativa",
+    slide18_title: "Mecanismo de retroalimentación en el parto",
+    slide19_title: "Retroalimentación positiva",
+    slide20_title: "El sistema musculoesquelético",
+    slide21_title: "Tres tipos de músculos (Estructura)",
+    slide22_title: "Tres tipos de músculos (Funciones)",
+    slide23_title: "El músculo esquelético: un trabajo en equipo",
+    slide24_title: "Músculo esquelético (La fibra muscular)",
+    slide25_title: "Niveles de organización muscular (Diagrama)",
+    slide26_title: "Músculo esquelético: Célula muscular",
+    slide27_title: "Organización muscular (Fascículo)",
+    slide28_title: "Organización muscular (Fibra)",
+    slide29_title: "Organización muscular (Miofibrilla)",
+    slide30_title: "Organización muscular (Sarcómero)",
+    slide31_title: "Organización muscular (Completo)",
+    slide32_title: "Definición de la Fibra muscular",
+    slide33_title: "Músculo esquelético (Cierre de sección)",
+    slide34_title: "Niveles de Organización: Miofilamentos",
+    slide35_title: "Estructura interna de la miofibrilla",
+    slide36_title: "Detalle de las cabezas de miosina",
+    slide37_title: "Niveles de Organización: Sarcómero",
+    slide38_title: "Delimitación de las Líneas Z",
+    slide39_title: "Ubicación de la Actina",
+    slide40_title: "Ubicación de la Miosina",
+    slide41_title: "Resumen de la organización interna",
+    slide42_title: "Estructura detallada del Sarcómero",
+    slide43_title: "Comportamiento de las Bandas",
+    slide44_title: "Contracción del sarcómero",
+    slide45_title: "¿Cómo empieza la contracción muscular?",
+    slide46_title: "Origen del impulso nervioso",
+    slide47_title: "Trayecto del axón motor",
+    slide48_title: "La unidad motora",
+    slide49_title: "Control de precisión vs. fuerza",
+    slide50_title: "La unidad motora (Completa)",
+    slide51_title: "El Mecanismo de Deslizamiento",
+    slide52_title: "¿Cómo llega la orden al músculo? (Unión neuromuscular)",
+    slide53_title: "El Mecanismo de Deslizamiento (Transición)",
+    slide54_title: "Unión neuromuscular: Paso 1",
+    slide55_title: "Unión neuromuscular: Paso 2",
+    slide56_title: "Unión neuromuscular: Paso 3",
+    slide57_title: "Unión neuromuscular: Paso 4",
+    slide58_title: "Del potencial de acción a la contracción",
+    slide59_title: "Señal de calcio: Paso 1",
+    slide60_title: "Señal de calcio: Paso 2",
+    slide61_title: "Señal de calcio: Paso 3",
+    slide62_title: "Señal de calcio: Paso 4",
+    slide63_title: "El papel del calcio en la contracción",
+    slide64_title: "Miosina bloqueada",
+    slide65_title: "Liberación de la miosina",
+    slide66_title: "Papel energético del ATP",
+    slide67_title: "El ciclo de la miosina",
+    slide68_title: "Inicio del nuevo ciclo",
+    slide69_title: "Hidrólisis de ATP",
+    slide70_title: "Rampa muscular (Definición)",
+    slide71_title: "Rampa muscular (Factores predisponentes)",
+    slide72_title: "Tipos de contracción en el movimiento",
+    slide73_title: "Ejemplos prácticos de contracción",
+    slide74_title: "Tipos de contracción muscular",
+    slide75_title: "Contracción Concéntrica",
+    slide76_title: "Contracción Excéntrica",
+    slide77_title: "Modos de Contracción en el Grand Jeté",
+    slide78_title: "Contracción Isométrica",
+    slide79_title: "Detrás de cada gesto",
+    slide80_title: "Práctica: Fisiología en movimiento"
+  },
+  ca: {
+    header_title: "📋 Mapatge de Diapositives vs. Recursos HTML",
+    header_subtitle: "Sistema Musculoesquelètic I · 80 Diapositives · Curs 2026-2027",
+    th_slide: "Nº DIAPOSITIVA",
+    th_url: "URL ARXIU WEB",
+    type_visual: "Visual",
+    type_anim: "Animació",
+    type_visual_diagram: "Visual/Diagrama",
+    no_link_visual: "Sense enllaç específic (Diapositiva de suport visual)",
+    no_link_diagram: "Sense enllaç específic (Diagrama de suport)",
+    footer_line1: "🩰 Fisiologia aplicada a la Dansa · Dra. Cèlia Painous, MD, PhD · Curs 2026-2027",
+    footer_line2: "Tots els enllaços s'obren en una nova pestanya per facilitar la navegació.",
+    slide1_title: "Portada",
+    slide2_title: "Nivells d'organització del cos humà",
+    slide3_title: "Líquid intra i extracel·lular",
+    slide4_title: "El medi aquós",
+    slide5_title: "Variables del medi intern",
+    slide6_title: "Manteniment del medi fluid",
+    slide7_title: "Homeòstasi",
+    slide8_title: "Alerta de desequilibri",
+    slide9_title: "Sistemes de regulació",
+    slide10_title: "Integració anatòmica",
+    slide11_title: "Balança en equilibri",
+    slide12_title: "Homeòstasi en el moviment",
+    slide13_title: "Músculs en esforç",
+    slide14_title: "Dinàmica del moviment",
+    slide15_title: "Desequilibri homeostàtic",
+    slide16_title: "Restabliment de l'equilibri",
+    slide17_title: "Retroalimentació negativa",
+    slide18_title: "Mecanisme de retroalimentació en el part",
+    slide19_title: "Retroalimentació positiva",
+    slide20_title: "El sistema musculoesquelètic",
+    slide21_title: "Tres tipus de músculs (Estructura)",
+    slide22_title: "Tres tipus de músculs (Funcions)",
+    slide23_title: "El múscul esquelètic: un treball en equip",
+    slide24_title: "Múscul esquelètic (La fibra muscular)",
+    slide25_title: "Nivells d'organització muscular (Diagrama)",
+    slide26_title: "Múscul esquelètic: Cèl·lula muscular",
+    slide27_title: "Organització muscular (Fascicle)",
+    slide28_title: "Organització muscular (Fibra)",
+    slide29_title: "Organització muscular (Miofibril·la)",
+    slide30_title: "Organització muscular (Sarcòmer)",
+    slide31_title: "Organització muscular (Complet)",
+    slide32_title: "Definició de la Fibra muscular",
+    slide33_title: "Múscul esquelètic (Tancament de secció)",
+    slide34_title: "Nivells d'Organització: Miofilaments",
+    slide35_title: "Estructura interna de la miofibril·la",
+    slide36_title: "Detall dels caps de miosina",
+    slide37_title: "Nivells d'Organització: Sarcòmer",
+    slide38_title: "Delimitació de les Línies Z",
+    slide39_title: "Ubicació de l'Actina",
+    slide40_title: "Ubicació de la Miosina",
+    slide41_title: "Resum de l'organització interna",
+    slide42_title: "Estructura detallada del Sarcòmer",
+    slide43_title: "Comportament de les Bandes",
+    slide44_title: "Contracció del sarcòmer",
+    slide45_title: "Com comença la contracció muscular?",
+    slide46_title: "Origen de l'impuls nerviós",
+    slide47_title: "Trajecte de l'axó motor",
+    slide48_title: "La unitat motora",
+    slide49_title: "Control de precisió vs. força",
+    slide50_title: "La unitat motora (Completa)",
+    slide51_title: "El Mecanisme de Lliscament",
+    slide52_title: "Com arriba l'ordre al múscul? (Unió neuromuscular)",
+    slide53_title: "El Mecanisme de Lliscament (Transició)",
+    slide54_title: "Unió neuromuscular: Pas 1",
+    slide55_title: "Unió neuromuscular: Pas 2",
+    slide56_title: "Unió neuromuscular: Pas 3",
+    slide57_title: "Unió neuromuscular: Pas 4",
+    slide58_title: "Del potencial d'acció a la contracció",
+    slide59_title: "Senyal de calci: Pas 1",
+    slide60_title: "Senyal de calci: Pas 2",
+    slide61_title: "Senyal de calci: Pas 3",
+    slide62_title: "Senyal de calci: Pas 4",
+    slide63_title: "El paper del calci en la contracció",
+    slide64_title: "Miosina bloquejada",
+    slide65_title: "Alliberament de la miosina",
+    slide66_title: "Paper energètic de l'ATP",
+    slide67_title: "El cicle de la miosina",
+    slide68_title: "Inici del nou cicle",
+    slide69_title: "Hidròlisi d'ATP",
+    slide70_title: "Rampa muscular (Definició)",
+    slide71_title: "Rampa muscular (Factors predisponents)",
+    slide72_title: "Tipus de contracció en el moviment",
+    slide73_title: "Exemples pràctics de contracció",
+    slide74_title: "Tipus de contracció muscular",
+    slide75_title: "Contracció Concèntrica",
+    slide76_title: "Contracció Excèntrica",
+    slide77_title: "Modes de Contracció en el Grand Jeté",
+    slide78_title: "Contracció Isomètrica",
+    slide79_title: "Darrere de cada gest",
+    slide80_title: "Pràctica: Fisiologia en moviment"
+  },
+  en: {
+    header_title: "📋 Mapping of Slides vs. HTML Resources",
+    header_subtitle: "Musculoskeletal System I · 80 Slides · Academic Year 2026-2027",
+    th_slide: "SLIDE Nº",
+    th_url: "WEB FILE URL",
+    type_visual: "Visual",
+    type_anim: "Animation",
+    type_visual_diagram: "Visual/Diagram",
+    no_link_visual: "No specific link (Visual support slide)",
+    no_link_diagram: "No specific link (Support diagram)",
+    footer_line1: "🩰 Physiology applied to Dance · Dra. Cèlia Painous, MD, PhD · Academic Year 2026-2027",
+    footer_line2: "All links open in a new tab for easier navigation.",
+    slide1_title: "Cover",
+    slide2_title: "Levels of organization of the human body",
+    slide3_title: "Intra- and extracellular fluid",
+    slide4_title: "The aqueous medium",
+    slide5_title: "Variables of the internal environment",
+    slide6_title: "Maintenance of the fluid medium",
+    slide7_title: "Homeostasis",
+    slide8_title: "Imbalance alert",
+    slide9_title: "Regulatory systems",
+    slide10_title: "Anatomical integration",
+    slide11_title: "Balance scale",
+    slide12_title: "Homeostasis in movement",
+    slide13_title: "Muscles under strain",
+    slide14_title: "Movement dynamics",
+    slide15_title: "Homeostatic imbalance",
+    slide16_title: "Restoration of balance",
+    slide17_title: "Negative feedback",
+    slide18_title: "Feedback mechanism in childbirth",
+    slide19_title: "Positive feedback",
+    slide20_title: "The musculoskeletal system",
+    slide21_title: "Three types of muscles (Structure)",
+    slide22_title: "Three types of muscles (Functions)",
+    slide23_title: "Skeletal muscle: a team effort",
+    slide24_title: "Skeletal muscle (The muscle fiber)",
+    slide25_title: "Muscle organization levels (Diagram)",
+    slide26_title: "Skeletal muscle: Muscle cell",
+    slide27_title: "Muscle organization (Fascicle)",
+    slide28_title: "Muscle organization (Fiber)",
+    slide29_title: "Muscle organization (Myofibril)",
+    slide30_title: "Muscle organization (Sarcomere)",
+    slide31_title: "Muscle organization (Complete)",
+    slide32_title: "Definition of the muscle fiber",
+    slide33_title: "Skeletal muscle (Section closing)",
+    slide34_title: "Organization levels: Myofilaments",
+    slide35_title: "Internal structure of the myofibril",
+    slide36_title: "Detail of myosin heads",
+    slide37_title: "Organization levels: Sarcomere",
+    slide38_title: "Delimitation of Z-lines",
+    slide39_title: "Location of Actin",
+    slide40_title: "Location of Myosin",
+    slide41_title: "Summary of internal organization",
+    slide42_title: "Detailed structure of the sarcomere",
+    slide43_title: "Behavior of the bands",
+    slide44_title: "Sarcomere contraction",
+    slide45_title: "How does muscle contraction begin?",
+    slide46_title: "Origin of the nerve impulse",
+    slide47_title: "Path of the motor axon",
+    slide48_title: "The motor unit",
+    slide49_title: "Precision vs. strength control",
+    slide50_title: "The motor unit (Complete)",
+    slide51_title: "The sliding mechanism",
+    slide52_title: "How does the order reach the muscle? (Neuromuscular junction)",
+    slide53_title: "The sliding mechanism (Transition)",
+    slide54_title: "Neuromuscular junction: Step 1",
+    slide55_title: "Neuromuscular junction: Step 2",
+    slide56_title: "Neuromuscular junction: Step 3",
+    slide57_title: "Neuromuscular junction: Step 4",
+    slide58_title: "From action potential to contraction",
+    slide59_title: "Calcium signal: Step 1",
+    slide60_title: "Calcium signal: Step 2",
+    slide61_title: "Calcium signal: Step 3",
+    slide62_title: "Calcium signal: Step 4",
+    slide63_title: "The role of calcium in contraction",
+    slide64_title: "Blocked myosin",
+    slide65_title: "Myosin release",
+    slide66_title: "Energy role of ATP",
+    slide67_title: "The myosin cycle",
+    slide68_title: "Start of a new cycle",
+    slide69_title: "ATP hydrolysis",
+    slide70_title: "Muscle cramp (Definition)",
+    slide71_title: "Muscle cramp (Predisposing factors)",
+    slide72_title: "Types of contraction in movement",
+    slide73_title: "Practical examples of contraction",
+    slide74_title: "Types of muscle contraction",
+    slide75_title: "Concentric contraction",
+    slide76_title: "Eccentric contraction",
+    slide77_title: "Contraction modes in Grand Jeté",
+    slide78_title: "Isometric contraction",
+    slide79_title: "Behind every gesture",
+    slide80_title: "Practice: Physiology in movement"
+  }
+};
+
+function setLanguage(lang, btn) {
+  currentLang = lang;
+  document.querySelectorAll('.language-selector button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key]) {
+      el.textContent = translations[lang][key];
+    }
+  });
+  
+  // Update html lang attribute
+  document.documentElement.lang = lang;
+}
+
+// Initialize with Spanish
+setLanguage('es', document.querySelector('.language-selector button'));
+</script>
+</body>
+</html>

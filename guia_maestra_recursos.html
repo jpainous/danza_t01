@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de Recursos - Sistema Musculoesquelético II</title>
+<style>
+:root { --primary: #11998e; --secondary: #38ef7d; --bg: #f4f6f9; --text: #2d3748; --card-bg: #ffffff; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.6; color: var(--text); background: var(--bg); margin: 0; padding: 0; }
+.container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+header {
+background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+color: white;
+padding: 40px 20px;
+text-align: center;
+border-radius: 0 0 20px 20px;
+margin-bottom: 30px;
+box-shadow: 0 4px 15px rgba(17, 153, 142, 0.3);
+position: relative;
+}
+header h1 { margin: 0; font-size: 2.2em; }
+header p { margin: 10px 0 0; opacity: 0.9; font-size: 1.1em; }
+
+/* Selector d'idioma */
+.lang-selector {
+position: absolute;
+top: 15px;
+right: 20px;
+display: flex;
+gap: 6px;
+background: rgba(255,255,255,0.15);
+padding: 6px;
+border-radius: 25px;
+backdrop-filter: blur(10px);
+}
+.lang-btn {
+background: transparent;
+border: 2px solid transparent;
+color: white;
+padding: 6px 14px;
+border-radius: 20px;
+cursor: pointer;
+font-size: 0.85em;
+font-weight: 600;
+transition: all 0.3s;
+}
+.lang-btn:hover { background: rgba(255,255,255,0.2); }
+.lang-btn.active {
+background: white;
+color: #11998e;
+border-color: white;
+}
+
+.section { background: var(--card-bg); border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-left: 5px solid var(--primary); }
+.section h2 { color: var(--primary); margin-top: 0; font-size: 1.4em; border-bottom: 2px solid #edf2f7; padding-bottom: 10px; }
+.section p { color: #4a5568; margin-bottom: 15px; }
+table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #edf2f7; }
+th { background-color: #edf2f7; color: #4a5568; font-weight: 600; font-size: 0.95em; }
+tr:hover { background-color: #f7fafc; }
+a.resource-link { color: var(--primary); text-decoration: none; font-weight: 600; word-break: break-all; transition: color 0.2s; }
+a.resource-link:hover { color: #0d7a6e; text-decoration: underline; }
+.tag { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.75em; font-weight: bold; color: white; margin-right: 5px; }
+.tag.key { background-color: #38a169; }
+.tag.case { background-color: #dd6b20; }
+.tag.anat { background-color: #3182ce; }
+footer { text-align: center; padding: 30px; color: #718096; font-size: 0.9em; }
+
+@media (max-width: 768px) {
+header h1 { font-size: 1.6em; }
+.lang-selector { position: static; margin: 0 auto 15px auto; justify-content: center; }
+th, td { padding: 8px 10px; font-size: 0.9em; }
+}
+</style>
+</head>
+<body>
+<header>
+<div class="lang-selector">
+<button class="lang-btn active" onclick="setLanguage('es', this)">🇪🇸 ES</button>
+<button class="lang-btn" onclick="setLanguage('ca', this)">🏴 CA</button>
+<button class="lang-btn" onclick="setLanguage('en', this)">🇬🇧 EN</button>
+</div>
+<h1 data-i18n="main_title">🦴 Guía de Recursos Interactivos</h1>
+<p data-i18n="main_subtitle">Sistema Musculoesquelético II · Fisiología · Curso 2026-2027 · Dra. Cèlia Painous</p>
+</header>
+<div class="container">
+
+<div class="section">
+<h2 data-i18n="sec1_title">⚙️ Diapositivas 1-5: Componentes de la Cadena Biomecánica</h2>
+<p data-i18n="sec1_desc">Músculo, tendón, hueso, articulación y ligamento como sistema integrado.</p>
+<table>
+<tr><th data-i18n="th_resource">Recurso</th><th data-i18n="th_justification">Justificación</th></tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_00_A.html" target="_blank">esqueleto_00_A.html</a></td>
+<td data-i18n="sec1_r1_just">Introduce la visión general y los 5 componentes del sistema.</td>
+</tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_04_tendones.html" target="_blank">esqueleto_04_tendones.html</a></td>
+<td data-i18n="sec1_r2_just">Profundiza en el tendón y el ligamento como transmisores y estabilizadores.</td>
+</tr>
+</table>
+</div>
+
+<div class="section">
+<h2 data-i18n="sec2_title">🏭 Diapositivas 6-10: Bloque 1 "El Motor" (Sarcómero y Deslizamiento)</h2>
+<p data-i18n="sec2_desc">Repaso del mecanismo molecular, papel del calcio y ATP en el ciclo de contracción.</p>
+<table>
+<tr><th data-i18n="th_resource">Recurso</th><th data-i18n="th_justification">Justificación</th></tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/actividades_sarcomero.html" target="_blank">actividades_sarcomero.html</a></td>
+<td data-i18n="sec2_r1_just">Interactivo para identificar la unidad funcional que se acorta.</td>
+</tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/calcio_atp.html" target="_blank">calcio_atp.html</a></td>
+<td data-i18n="sec2_r2_just">Detalla el papel del Ca²⁺ y el ATP en el ciclo de contracción.</td>
+</tr>
+<tr>
+<td><span class="tag case" data-i18n="tag_case">📝 Casos</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_A.html" target="_blank">casos_practicos02_A.html</a></td>
+<td data-i18n="sec2_r3_just">Bloques 2 y 3: Casos sobre el mecanismo de deslizamiento y rol del calcio/ATP.</td>
+</tr>
+</table>
+</div>
+
+<div class="section">
+<h2 data-i18n="sec3_title">🎭 Diapositivas 16-30: Roles Musculares y Coactivación</h2>
+<p data-i18n="sec3_desc">Agonista, antagonista, sinergista, estabilizador y control postural.</p>
+<table>
+<tr><th data-i18n="th_resource">Recurso</th><th data-i18n="th_justification">Justificación</th></tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/musculos_tr_equipo.html" target="_blank">musculos_tr_equipo.html</a></td>
+<td data-i18n="sec3_r1_just">Explica cómo los músculos trabajan en equipo con estos roles específicos.</td>
+</tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control.html" target="_blank">estabilidad_control.html</a></td>
+<td data-i18n="sec3_r2_just">Define la coactivación (activación simultánea de agonistas y antagonistas).</td>
+</tr>
+<tr>
+<td><span class="tag case" data-i18n="tag_case">📝 Casos</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_B.html" target="_blank">casos_practicos02_B.html</a></td>
+<td data-i18n="sec3_r3_just">Bloque 4: Casos sobre identificación de roles y coactivación.</td>
+</tr>
+</table>
+</div>
+
+<div class="section">
+<h2 data-i18n="sec4_title">🦴 Diapositivas 31-40: Clasificación Ósea y Partes de un Hueso Largo</h2>
+<p data-i18n="sec4_desc">Huesos largos, cortos, planos, irregulares, sesamoideos. Epífisis, metáfisis y diáfisis.</p>
+<table>
+<tr><th data-i18n="th_resource">Recurso</th><th data-i18n="th_justification">Justificación</th></tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_01_A.html" target="_blank">esqueleto_01_A.html</a></td>
+<td data-i18n="sec4_r1_just">Clasifica los huesos según su forma y función biomecánica.</td>
+</tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_02_A.html" target="_blank">esqueleto_02_A.html</a></td>
+<td data-i18n="sec4_r2_just">Detalla la anatomía de epífisis, metáfisis (placa de crecimiento) y diáfisis.</td>
+</tr>
+<tr>
+<td><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_mano.html" target="_blank">esqueleto_mano.html</a></td>
+<td data-i18n="sec4_r3_just">Ejemplo práctico visual de huesos cortos, largos y planos en una región.</td>
+</tr>
+</table>
+</div>
+
+<div class="section">
+<h2 data-i18n="sec5_title">🔬 Diapositivas 41-50: Tejido Óseo, Histología y Remodelación</h2>
+<p data-i18n="sec5_desc">Células óseas, hueso compacto/esponjoso, médula y adaptación a la carga (Ley de Wolff).</p>
+<table>
+<tr><th data-i18n="th_resource">Recurso</th><th data-i18n="th_justification">Justificación</th></tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_A.html" target="_blank">esqueleto_03_A.html</a></td>
+<td data-i18n="sec5_r1_just">Introduce la estructura interna y los recubrimientos (periostio, endostio).</td>
+</tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_D.html" target="_blank">esqueleto_03_D.html</a></td>
+<td data-i18n="sec5_r2_just">Explica la histología (osteoblastos, osteocitos, osteoclastos) y la remodelación.</td>
+</tr>
+<tr>
+<td><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_E.html" target="_blank">esqueleto_03_E.html</a></td>
+<td data-i18n="sec5_r3_just">Complementa con la Ley de Wolff: cómo el hueso se adapta a la carga (ej. pointe work).</td>
+</tr>
+</table>
+</div>
+
+<div class="section">
+<h2 data-i18n="sec6_title">🔗 Diapositivas 51-55: Tendones (Energía Elástica) y Ligamentos</h2>
+<p data-i18n="sec6_desc">El tendón como almacén de energía y el ligamento como guía y límite.</p>
+<table>
+<tr><th data-i18n="th_resource">Recurso</th><th data-i18n="th_justification">Justificación</th></tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_04_tendones.html" target="_blank">esqueleto_04_tendones.html</a></td>
+<td data-i18n="sec6_r1_just">Explica el tendón como transmisor de fuerza y almacén de energía elástica (demi-plié → impulso).</td>
+</tr>
+</table>
+</div>
+
+<div class="section">
+<h2 data-i18n="sec7_title">🦵 Diapositivas 56-60: Articulaciones y Fisiología del Cartílago</h2>
+<p data-i18n="sec7_desc">Tipos de articulaciones, estructura sinovial y nutrición del cartílago por carga-descarga.</p>
+<table>
+<tr><th data-i18n="th_resource">Recurso</th><th data-i18n="th_justification">Justificación</th></tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_05_articulaciones_A.html" target="_blank">esqueleto_05_articulaciones_A.html</a></td>
+<td data-i18n="sec7_r1_just">Clasifica las articulaciones (fibrosas, cartilaginosas, sinoviales).</td>
+</tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_05_articulaciones_B.html" target="_blank">esqueleto_05_articulaciones_B.html</a></td>
+<td data-i18n="sec7_r2_just">Detalla cartílago, cápsula, líquido sinovial y explica la nutrición por alternancia carga-descarga.</td>
+</tr>
+</table>
+</div>
+
+<div class="section">
+<h2 data-i18n="sec8_title">🔄 Diapositivas 61-70: Planos del Movimiento</h2>
+<p data-i18n="sec8_desc">Planos sagital, frontal y transversal. Flexión, extensión, abducción, aducción, en dehors / en dedans.</p>
+<table>
+<tr><th data-i18n="th_resource">Recurso</th><th data-i18n="th_justification">Justificación</th></tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/planos_movimiento.html" target="_blank">planos_movimiento.html</a></td>
+<td data-i18n="sec8_r1_just">Cubre los 3 planos y las rotaciones aplicadas específicamente a la danza.</td>
+</tr>
+<tr>
+<td><span class="tag case" data-i18n="tag_case">📝 Casos</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_B.html" target="_blank">casos_practicos02_B.html</a></td>
+<td data-i18n="sec8_r2_just">Bloque 7: Casos sobre planos de movimiento aplicados a la danza.</td>
+</tr>
+</table>
+</div>
+
+<div class="section">
+<h2 data-i18n="sec9_title">🧠 Diapositivas 71-75: Control Sensoriomotor (Propiocepción)</h2>
+<p data-i18n="sec9_desc">Huso muscular, órgano tendinoso de Golgi y receptores articulares para el equilibrio.</p>
+<table>
+<tr><th data-i18n="th_resource">Recurso</th><th data-i18n="th_justification">Justificación</th></tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control.html" target="_blank">estabilidad_control.html</a></td>
+<td data-i18n="sec9_r1_just">Introduce la propiocepción y los mecanorreceptores para el control postural.</td>
+</tr>
+<tr>
+<td><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control_2.html" target="_blank">estabilidad_control_2.html</a></td>
+<td data-i18n="sec9_r2_just">Aplica la propiocepción a equilibrios y aterrizajes en danza.</td>
+</tr>
+</table>
+</div>
+
+<div class="section" style="border-left-color: #e53e3e;">
+<h2 style="color: #e53e3e;" data-i18n="sec10_title">🎁 Cierre: Práctica Somática de Integración Biomecánica</h2>
+<p data-i18n="sec10_desc">Evaluación final que combina los 3 bloques: El Motor, El Chasis Vivo y El Control Preciso.</p>
+<table>
+<tr><th data-i18n="th_resource">Recurso</th><th data-i18n="th_justification">Justificación</th></tr>
+<tr>
+<td><span class="tag key" data-i18n="tag_key">⭐ Clave</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_test_final.html" target="_blank">esqueleto_test_final.html</a></td>
+<td data-i18n="sec10_r1_just">Evaluación integradora global que combina todos los conceptos de la asignatura.</td>
+</tr>
+<tr>
+<td><span class="tag case" data-i18n="tag_case">📝 Casos</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_A.html" target="_blank">casos_practicos02_A.html</a></td>
+<td data-i18n="sec10_r2_just">Refuerzo de los Bloques 1-3 (30 casos).</td>
+</tr>
+<tr>
+<td><span class="tag case" data-i18n="tag_case">📝 Casos</span><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_B.html" target="_blank">casos_practicos02_B.html</a></td>
+<td data-i18n="sec10_r3_just">Refuerzo de los Bloques 4-7 (30 casos).</td>
+</tr>
+</table>
+</div>
+
+</div>
+<footer>
+<p data-i18n="footer_text">🩰 Fisiología aplicada a la Danza · Dra. Cèlia Painous · Curso 2026-2027</p>
+</footer>
+
+<script>
+// ==================== SISTEMA DE TRADUCCIONS ====================
+const translations = {
+es: {
+main_title: "🦴 Guía de Recursos Interactivos",
+main_subtitle: "Sistema Musculoesquelético II · Fisiología · Curso 2026-2027 · Dra. Cèlia Painous",
+th_resource: "Recurso",
+th_justification: "Justificación",
+tag_key: "⭐ Clave",
+tag_case: "📝 Casos",
+sec1_title: "⚙️ Diapositivas 1-5: Componentes de la Cadena Biomecánica",
+sec1_desc: "Músculo, tendón, hueso, articulación y ligamento como sistema integrado.",
+sec1_r1_just: "Introduce la visión general y los 5 componentes del sistema.",
+sec1_r2_just: "Profundiza en el tendón y el ligamento como transmisores y estabilizadores.",
+sec2_title: "🏭 Diapositivas 6-10: Bloque 1 \"El Motor\" (Sarcómero y Deslizamiento)",
+sec2_desc: "Repaso del mecanismo molecular, papel del calcio y ATP en el ciclo de contracción.",
+sec2_r1_just: "Interactivo para identificar la unidad funcional que se acorta.",
+sec2_r2_just: "Detalla el papel del Ca²⁺ y el ATP en el ciclo de contracción.",
+sec2_r3_just: "Bloques 2 y 3: Casos sobre el mecanismo de deslizamiento y rol del calcio/ATP.",
+sec3_title: "🎭 Diapositivas 16-30: Roles Musculares y Coactivación",
+sec3_desc: "Agonista, antagonista, sinergista, estabilizador y control postural.",
+sec3_r1_just: "Explica cómo los músculos trabajan en equipo con estos roles específicos.",
+sec3_r2_just: "Define la coactivación (activación simultánea de agonistas y antagonistas).",
+sec3_r3_just: "Bloque 4: Casos sobre identificación de roles y coactivación.",
+sec4_title: "🦴 Diapositivas 31-40: Clasificación Ósea y Partes de un Hueso Largo",
+sec4_desc: "Huesos largos, cortos, planos, irregulares, sesamoideos. Epífisis, metáfisis y diáfisis.",
+sec4_r1_just: "Clasifica los huesos según su forma y función biomecánica.",
+sec4_r2_just: "Detalla la anatomía de epífisis, metáfisis (placa de crecimiento) y diáfisis.",
+sec4_r3_just: "Ejemplo práctico visual de huesos cortos, largos y planos en una región.",
+sec5_title: "🔬 Diapositivas 41-50: Tejido Óseo, Histología y Remodelación",
+sec5_desc: "Células óseas, hueso compacto/esponjoso, médula y adaptación a la carga (Ley de Wolff).",
+sec5_r1_just: "Introduce la estructura interna y los recubrimientos (periostio, endostio).",
+sec5_r2_just: "Explica la histología (osteoblastos, osteocitos, osteoclastos) y la remodelación.",
+sec5_r3_just: "Complementa con la Ley de Wolff: cómo el hueso se adapta a la carga (ej. pointe work).",
+sec6_title: "🔗 Diapositivas 51-55: Tendones (Energía Elástica) y Ligamentos",
+sec6_desc: "El tendón como almacén de energía y el ligamento como guía y límite.",
+sec6_r1_just: "Explica el tendón como transmisor de fuerza y almacén de energía elástica (demi-plié → impulso).",
+sec7_title: "🦵 Diapositivas 56-60: Articulaciones y Fisiología del Cartílago",
+sec7_desc: "Tipos de articulaciones, estructura sinovial y nutrición del cartílago por carga-descarga.",
+sec7_r1_just: "Clasifica las articulaciones (fibrosas, cartilaginosas, sinoviales).",
+sec7_r2_just: "Detalla cartílago, cápsula, líquido sinovial y explica la nutrición por alternancia carga-descarga.",
+sec8_title: "🔄 Diapositivas 61-70: Planos del Movimiento",
+sec8_desc: "Planos sagital, frontal y transversal. Flexión, extensión, abducción, aducción, en dehors / en dedans.",
+sec8_r1_just: "Cubre los 3 planos y las rotaciones aplicadas específicamente a la danza.",
+sec8_r2_just: "Bloque 7: Casos sobre planos de movimiento aplicados a la danza.",
+sec9_title: "🧠 Diapositivas 71-75: Control Sensoriomotor (Propiocepción)",
+sec9_desc: "Huso muscular, órgano tendinoso de Golgi y receptores articulares para el equilibrio.",
+sec9_r1_just: "Introduce la propiocepción y los mecanorreceptores para el control postural.",
+sec9_r2_just: "Aplica la propiocepción a equilibrios y aterrizajes en danza.",
+sec10_title: "🎁 Cierre: Práctica Somática de Integración Biomecánica",
+sec10_desc: "Evaluación final que combina los 3 bloques: El Motor, El Chasis Vivo y El Control Preciso.",
+sec10_r1_just: "Evaluación integradora global que combina todos los conceptos de la asignatura.",
+sec10_r2_just: "Refuerzo de los Bloques 1-3 (30 casos).",
+sec10_r3_just: "Refuerzo de los Bloques 4-7 (30 casos).",
+footer_text: "🩰 Fisiología aplicada a la Danza · Dra. Cèlia Painous · Curso 2026-2027"
+},
+ca: {
+main_title: "🦴 Guia de Recursos Interactius",
+main_subtitle: "Sistema Musculoesquelètic II · Fisiologia · Curs 2026-2027 · Dra. Cèlia Painous",
+th_resource: "Recurs",
+th_justification: "Justificació",
+tag_key: "⭐ Clau",
+tag_case: "📝 Casos",
+sec1_title: "⚙️ Diapositives 1-5: Components de la Cadena Biomecànica",
+sec1_desc: "Múscul, tendó, os, articulació i lligament com a sistema integrat.",
+sec1_r1_just: "Introdueix la visió general i els 5 components del sistema.",
+sec1_r2_just: "Aprofundeix en el tendó i el lligament com a transmissors i estabilitzadors.",
+sec2_title: "🏭 Diapositives 6-10: Bloc 1 \"El Motor\" (Sarcòmer i Lliscament)",
+sec2_desc: "Repàs del mecanisme molecular, paper del calci i ATP al cicle de contracció.",
+sec2_r1_just: "Interactiu per identificar la unitat funcional que s'escurça.",
+sec2_r2_just: "Detalla el paper del Ca²⁺ i l'ATP al cicle de contracció.",
+sec2_r3_just: "Blocs 2 i 3: Casos sobre el mecanisme de lliscament i rol del calci/ATP.",
+sec3_title: "🎭 Diapositives 16-30: Rols Musculars i Coactivació",
+sec3_desc: "Agonista, antagonista, sinergista, estabilitzador i control postural.",
+sec3_r1_just: "Explica com els músculs treballen en equip amb aquests rols específics.",
+sec3_r2_just: "Defineix la coactivació (activació simultània d'agonistes i antagonistes).",
+sec3_r3_just: "Bloc 4: Casos sobre identificació de rols i coactivació.",
+sec4_title: "🦴 Diapositives 31-40: Classificació Òssia i Parts d'un Os Llarg",
+sec4_desc: "Ossos llargs, curts, plans, irregulars, sesamoïdes. Epífisi, metàfisi i diàfisi.",
+sec4_r1_just: "Classifica els ossos segons la seva forma i funció biomecànica.",
+sec4_r2_just: "Detalla l'anatomia d'epífisi, metàfisi (placa de creixement) i diàfisi.",
+sec4_r3_just: "Exemple pràctic visual d'ossos curts, llargs i plans en una regió.",
+sec5_title: "🔬 Diapositives 41-50: Teixit Ossí, Histologia i Remodelació",
+sec5_desc: "Cèl·lules òssies, os compacte/esponjós, medul·la i adaptació a la càrrega (Llei de Wolff).",
+sec5_r1_just: "Introdueix l'estructura interna i els recobriments (periosti, endosti).",
+sec5_r2_just: "Explica la histologia (osteoblasts, osteòcits, osteoclasts) i la remodelació.",
+sec5_r3_just: "Complementa amb la Llei de Wolff: com l'os s'adapta a la càrrega (ex. pointe work).",
+sec6_title: "🔗 Diapositives 51-55: Tendons (Energia Elàstica) i Lligaments",
+sec6_desc: "El tendó com a magatzem d'energia i el lligament com a guia i límit.",
+sec6_r1_just: "Explica el tendó com a transmissor de força i magatzem d'energia elàstica (demi-plié → impuls).",
+sec7_title: "🦵 Diapositives 56-60: Articulacions i Fisiologia del Cartílag",
+sec7_desc: "Tipus d'articulacions, estructura sinovial i nutrició del cartílag per càrrega-descàrrega.",
+sec7_r1_just: "Classifica les articulacions (fibroses, cartilaginoses, sinovials).",
+sec7_r2_just: "Detalla cartílag, càpsula, líquid sinovial i explica la nutrició per alternança càrrega-descàrrega.",
+sec8_title: "🔄 Diapositives 61-70: Plans del Moviment",
+sec8_desc: "Plans sagital, frontal i transversal. Flexió, extensió, abducció, adducció, en dehors / en dedans.",
+sec8_r1_just: "Cobreix els 3 plans i les rotacions aplicades específicament a la dansa.",
+sec8_r2_just: "Bloc 7: Casos sobre plans de moviment aplicats a la dansa.",
+sec9_title: "🧠 Diapositives 71-75: Control Sensoriomotor (Propiocepció)",
+sec9_desc: "Fus muscular, òrgan tendinós de Golgi i receptors articulars per a l'equilibri.",
+sec9_r1_just: "Introdueix la propiocepció i els mecanoreceptors per al control postural.",
+sec9_r2_just: "Aplica la propiocepció a equilibris i aterratges en dansa.",
+sec10_title: "🎁 Tancament: Pràctica Somàtica d'Integració Biomecànica",
+sec10_desc: "Avaluació final que combina els 3 blocs: El Motor, El Xassís Viu i El Control Precís.",
+sec10_r1_just: "Avaluació integradora global que combina tots els conceptes de l'assignatura.",
+sec10_r2_just: "Reforç dels Blocs 1-3 (30 casos).",
+sec10_r3_just: "Reforç dels Blocs 4-7 (30 casos).",
+footer_text: "🩰 Fisiologia aplicada a la Dansa · Dra. Cèlia Painous · Curs 2026-2027"
+},
+en: {
+main_title: "🦴 Interactive Resources Guide",
+main_subtitle: "Musculoskeletal System II · Physiology · Course 2026-2027 · Dr. Cèlia Painous",
+th_resource: "Resource",
+th_justification: "Justification",
+tag_key: "⭐ Key",
+tag_case: "📝 Cases",
+sec1_title: "⚙️ Slides 1-5: Components of the Biomechanical Chain",
+sec1_desc: "Muscle, tendon, bone, joint and ligament as an integrated system.",
+sec1_r1_just: "Introduces the general overview and the 5 components of the system.",
+sec1_r2_just: "Deepens into the tendon and ligament as transmitters and stabilizers.",
+sec2_title: "🏭 Slides 6-10: Block 1 \"The Engine\" (Sarcomere and Sliding)",
+sec2_desc: "Review of the molecular mechanism, role of calcium and ATP in the contraction cycle.",
+sec2_r1_just: "Interactive to identify the functional unit that shortens.",
+sec2_r2_just: "Details the role of Ca²⁺ and ATP in the contraction cycle.",
+sec2_r3_just: "Blocks 2 and 3: Cases about the sliding mechanism and role of calcium/ATP.",
+sec3_title: "🎭 Slides 16-30: Muscle Roles and Co-activation",
+sec3_desc: "Agonist, antagonist, synergist, stabilizer and postural control.",
+sec3_r1_just: "Explains how muscles work as a team with these specific roles.",
+sec3_r2_just: "Defines co-activation (simultaneous activation of agonists and antagonists).",
+sec3_r3_just: "Block 4: Cases about role identification and co-activation.",
+sec4_title: "🦴 Slides 31-40: Bone Classification and Parts of a Long Bone",
+sec4_desc: "Long, short, flat, irregular, sesamoid bones. Epiphysis, metaphysis and diaphysis.",
+sec4_r1_just: "Classifies bones according to their shape and biomechanical function.",
+sec4_r2_just: "Details the anatomy of epiphysis, metaphysis (growth plate) and diaphysis.",
+sec4_r3_just: "Visual practical example of short, long and flat bones in a region.",
+sec5_title: "🔬 Slides 41-50: Bone Tissue, Histology and Remodeling",
+sec5_desc: "Bone cells, compact/spongy bone, marrow and load adaptation (Wolff's Law).",
+sec5_r1_just: "Introduces the internal structure and coverings (periosteum, endosteum).",
+sec5_r2_just: "Explains the histology (osteoblasts, osteocytes, osteoclasts) and remodeling.",
+sec5_r3_just: "Complements with Wolff's Law: how bone adapts to load (e.g. pointe work).",
+sec6_title: "🔗 Slides 51-55: Tendons (Elastic Energy) and Ligaments",
+sec6_desc: "The tendon as an energy store and the ligament as a guide and limit.",
+sec6_r1_just: "Explains the tendon as a force transmitter and elastic energy store (demi-plié → impulse).",
+sec7_title: "🦵 Slides 56-60: Joints and Cartilage Physiology",
+sec7_desc: "Types of joints, synovial structure and cartilage nutrition by load-unloading.",
+sec7_r1_just: "Classifies the joints (fibrous, cartilaginous, synovial).",
+sec7_r2_just: "Details cartilage, capsule, synovial fluid and explains nutrition by load-unloading alternation.",
+sec8_title: "🔄 Slides 61-70: Planes of Movement",
+sec8_desc: "Sagittal, frontal and transverse planes. Flexion, extension, abduction, adduction, en dehors / en dedans.",
+sec8_r1_just: "Covers the 3 planes and rotations specifically applied to dance.",
+sec8_r2_just: "Block 7: Cases about planes of movement applied to dance.",
+sec9_title: "🧠 Slides 71-75: Sensorimotor Control (Proprioception)",
+sec9_desc: "Muscle spindle, Golgi tendon organ and joint receptors for balance.",
+sec9_r1_just: "Introduces proprioception and mechanoreceptors for postural control.",
+sec9_r2_just: "Applies proprioception to balances and landings in dance.",
+sec10_title: "🎁 Closing: Somatic Practice of Biomechanical Integration",
+sec10_desc: "Final evaluation combining the 3 blocks: The Engine, The Living Chassis and The Precise Control.",
+sec10_r1_just: "Global integrative evaluation combining all the concepts of the subject.",
+sec10_r2_just: "Reinforcement of Blocks 1-3 (30 cases).",
+sec10_r3_just: "Reinforcement of Blocks 4-7 (30 cases).",
+footer_text: "🩰 Physiology applied to Dance · Dr. Cèlia Painous · Course 2026-2027"
+}
+};
+
+let currentLang = 'es';
+
+function setLanguage(lang, btn) {
+currentLang = lang;
+document.documentElement.lang = lang;
+// Actualitza botons d'idioma
+document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+if (btn) btn.classList.add('active');
+else document.querySelector(`.lang-btn[onclick*="'${lang}'"]`).classList.add('active');
+
+// Actualitza tots els elements amb data-i18n
+document.querySelectorAll('[data-i18n]').forEach(el => {
+const key = el.getAttribute('data-i18n');
+if (translations[lang] && translations[lang][key]) {
+el.innerHTML = translations[lang][key];
+}
+});
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nutrición del Cartílago</title>
+<style>
+  body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; }
+  h1 { text-align: center; color: #10b981; }
+  .container { max-width: 1000px; margin: auto; position: relative; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+  .panel { background: #1e293b; padding: 20px; border-radius: 12px; }
+  canvas { background: #0b1220; border-radius: 8px; display: block; width: 100%; cursor: pointer; }
+  .info { margin-top: 15px; padding: 12px; background: #0f172a; border-radius: 6px; border-left: 4px solid #10b981; min-height: 80px; }
+  button { background: #10b981; color: #0f172a; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 15px; margin: 5px; }
+  .barra { height: 20px; background: #334155; border-radius: 10px; overflow: hidden; margin: 10px 0; }
+  .barra-fill { height: 100%; background: linear-gradient(90deg, #10b981, #34d399); transition: width 0.3s; }
+  
+  .language-selector {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    gap: 8px;
+  }
+  .language-selector button {
+    background: rgba(16,185,129,0.15);
+    border: 1px solid rgba(16,185,129,0.4);
+    color: #10b981;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  .language-selector button:hover { background: rgba(16,185,129,0.3); }
+  .language-selector button.active { background: #10b981; color: #0f172a; }
+  
+  @media (max-width: 600px) {
+    .language-selector { position: static; margin-bottom: 15px; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="language-selector">
+    <button class="active" onclick="setLanguage('es', this)">ES</button>
+    <button onclick="setLanguage('ca', this)">CA</button>
+    <button onclick="setLanguage('en', this)">EN</button>
+  </div>
+  <h1 data-i18n="title">🦵 Nutrición del Cartílago Articular</h1>
+  <p style="text-align:center; color:#94a3b8;" data-i18n="subtitle">El cartílago es <b>avascular</b>: se nutre por bombeo mecánico. Haz clic para comprimir y ver el proceso.</p>
+
+  <div class="grid">
+    <div class="panel">
+      <h3 style="color:#10b981;" data-i18n="panel1_title">Articulación (clic para cargar/descargar)</h3>
+      <canvas id="cart" width="450" height="400"></canvas>
+      <button onclick="comprimir()" data-i18n="btn_compress">⬇️ Comprimir (carga)</button>
+      <button onclick="descargar()" data-i18n="btn_decompress">⬆️ Descargar (reposo)</button>
+      <button onclick="ciclo()" data-i18n="btn_cycle">🔄 Ciclo automático</button>
+    </div>
+    <div class="panel">
+      <h3 style="color:#10b981;" data-i18n="panel2_title">Estado del cartílago</h3>
+      <div class="info" id="info"></div>
+      <div>
+        <b data-i18n="hydro_label">Nivel de hidratación:</b>
+        <div class="barra"><div class="barra-fill" id="hidro" style="width:80%"></div></div>
+      </div>
+      <div>
+        <b data-i18n="waste_label">Eliminación de desechos:</b>
+        <div class="barra"><div class="barra-fill" id="desechos" style="width:30%; background: linear-gradient(90deg, #ef4444, #f87171);"></div></div>
+      </div>
+      <div style="margin-top:20px; padding:15px; background:#0f172a; border-radius:8px;">
+        <b data-i18n="why_title">📚 ¿Por qué es importante?</b><br>
+        <span data-i18n="why_text">Sin movimiento regular, el cartílago no se nutre → se degrada → artrosis. Por eso la inmovilización prolongada es perjudicial.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentLang = 'es';
+
+const translations = {
+  es: {
+    title: "🦵 Nutrición del Cartílago Articular",
+    subtitle: "El cartílago es <b>avascular</b>: se nutre por bombeo mecánico. Haz clic para comprimir y ver el proceso.",
+    panel1_title: "Articulación (clic para cargar/descargar)",
+    panel2_title: "Estado del cartílago",
+    btn_compress: "⬇️ Comprimir (carga)",
+    btn_decompress: "⬆️ Descargar (reposo)",
+    btn_cycle: "🔄 Ciclo automático",
+    hydro_label: "Nivel de hidratación:",
+    waste_label: "Eliminación de desechos:",
+    why_title: "📚 ¿Por qué es importante?",
+    why_text: "Sin movimiento regular, el cartílago no se nutre → se degrada → artrosis. Por eso la inmovilización prolongada es perjudicial.",
+    initial_info: "<b>Sin carga:</b> el cartílago absorbe líquido sinovial rico en nutrientes.",
+    compress_info: "<b>⬇️ CARGA (compresión):</b> el cartílago se comprime → expulsa agua y desechos metabólicos hacia el líquido sinovial.",
+    decompress_info: "<b>⬆️ DESCARGA (reposo):</b> el cartílago se expande → absorbe líquido sinovial rico en nutrientes (glucosa, oxígeno).",
+    cycle_complete: "<br><br>🎉 <b>¡Perfecto!</b> Has simulado 5 ciclos de bombeo. Así se nutre el cartílago durante el movimiento articular.",
+    bone_label: "Hueso subcondral",
+    cartilage_label: "CARTÍLAGO",
+    synovial_label: "Líquido sinovial"
+  },
+  ca: {
+    title: "🦵 Nutrició del Cartílag Articular",
+    subtitle: "El cartílag és <b>avascular</b>: es nodreix per bombament mecànic. Fes clic per comprimir i veure el procés.",
+    panel1_title: "Articulació (clic per carregar/descarregar)",
+    panel2_title: "Estat del cartílag",
+    btn_compress: "⬇️ Comprimir (càrrega)",
+    btn_decompress: "⬆️ Descarregar (repòs)",
+    btn_cycle: "🔄 Cicle automàtic",
+    hydro_label: "Nivell d'hidratació:",
+    waste_label: "Eliminació de residus:",
+    why_title: "📚 Per què és important?",
+    why_text: "Sense moviment regular, el cartílag no es nodreix → es degrada → artrosi. Per això la immobilització perllongada és perjudicial.",
+    initial_info: "<b>Sense càrrega:</b> el cartílag absorbeix líquid sinovial ric en nutrients.",
+    compress_info: "<b>⬇️ CÀRREGA (compressió):</b> el cartílag es comprimeix → expulsa aigua i residus metabòlics cap al líquid sinovial.",
+    decompress_info: "<b>⬆️ DESCARREGA (repòs):</b> el cartílag s'expandeix → absorbeix líquid sinovial ric en nutrients (glucosa, oxigen).",
+    cycle_complete: "<br><br>🎉 <b>Perfecte!</b> Has simulat 5 cicles de bombament. Així es nodreix el cartílag durant el moviment articular.",
+    bone_label: "Os subcondral",
+    cartilage_label: "CARTÍLAG",
+    synovial_label: "Líquid sinovial"
+  },
+  en: {
+    title: "🦵 Articular Cartilage Nutrition",
+    subtitle: "Cartilage is <b>avascular</b>: it is nourished by mechanical pumping. Click to compress and see the process.",
+    panel1_title: "Joint (click to load/unload)",
+    panel2_title: "Cartilage status",
+    btn_compress: "⬇️ Compress (load)",
+    btn_decompress: "⬆️ Unload (rest)",
+    btn_cycle: "🔄 Automatic cycle",
+    hydro_label: "Hydration level:",
+    waste_label: "Waste removal:",
+    why_title: "📚 Why is it important?",
+    why_text: "Without regular movement, cartilage is not nourished → it degrades → osteoarthritis. That is why prolonged immobilization is harmful.",
+    initial_info: "<b>No load:</b> cartilage absorbs synovial fluid rich in nutrients.",
+    compress_info: "<b>⬇️ LOAD (compression):</b> cartilage compresses → expels water and metabolic waste into the synovial fluid.",
+    decompress_info: "<b>⬆️ UNLOAD (rest):</b> cartilage expands → absorbs synovial fluid rich in nutrients (glucose, oxygen).",
+    cycle_complete: "<br><br>🎉 <b>Perfect!</b> You have simulated 5 pumping cycles. This is how cartilage is nourished during joint movement.",
+    bone_label: "Subchondral bone",
+    cartilage_label: "CARTILAGE",
+    synovial_label: "Synovial fluid"
+  }
+};
+
+const canvas = document.getElementById('cart');
+const ctx = canvas.getContext('2d');
+
+let estado = 'descargado';
+let hidratacion = 80;
+let desechos = 30;
+let particulas = [];
+let cicloActivo = false;
+
+for (let i = 0; i < 30; i++) {
+  particulas.push({
+    x: 100 + Math.random()*250,
+    y: 200 + Math.random()*80,
+    r: 3 + Math.random()*3,
+    tipo: Math.random() > 0.5 ? 'nutriente' : 'desecho'
+  });
+}
+
+function setLanguage(lang, btn) {
+  currentLang = lang;
+  document.querySelectorAll('.language-selector button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key]) {
+      el.innerHTML = translations[lang][key];
+    }
+  });
+  
+  document.documentElement.lang = lang;
+  
+  // Reset info if it's initial or cycle complete
+  const info = document.getElementById('info');
+  if (!info.innerHTML.trim() || info.innerHTML.includes('Sin carga') || info.innerHTML.includes('Sense càrrega') || info.innerHTML.includes('No load')) {
+    info.innerHTML = translations[lang].initial_info;
+  }
+  
+  draw();
+}
+
+function draw() {
+  const t = translations[currentLang];
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  
+  // Hueso superior
+  ctx.fillStyle = '#e5e7eb';
+  ctx.fillRect(80, 50, 290, 100);
+  ctx.fillStyle = '#9ca3af';
+  ctx.font = '14px sans-serif';
+  ctx.fillText(t.bone_label, 170, 100);
+  
+  // Cartílago
+  const grosor = estado === 'cargado' ? 60 : 100;
+  const yCart = 150;
+  ctx.fillStyle = estado === 'cargado' ? '#6ee7b7' : '#a7f3d0';
+  ctx.fillRect(80, yCart, 290, grosor);
+  ctx.strokeStyle = '#10b981';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(80, yCart, 290, grosor);
+  ctx.fillStyle = '#064e3b';
+  ctx.font = 'bold 14px sans-serif';
+  ctx.fillText(t.cartilage_label, 190, yCart + grosor/2);
+  
+  // Partículas
+  particulas.forEach(p => {
+    if (estado === 'cargado') {
+      p.x += (Math.random()-0.5)*2;
+      if (p.x < 80 || p.x > 370) p.x = 100 + Math.random()*250;
+    } else {
+      p.x += (225 - p.x)*0.01;
+      p.y += (yCart + grosor/2 - p.y)*0.02;
+    }
+    ctx.fillStyle = p.tipo === 'nutriente' ? '#fbbf24' : '#ef4444';
+    ctx.beginPath();
+    ctx.arc(p.x, yCart + 10 + (p.y-200)%grosor, p.r, 0, Math.PI*2);
+    ctx.fill();
+  });
+  
+  // Hueso inferior
+  ctx.fillStyle = '#e5e7eb';
+  ctx.fillRect(80, yCart + grosor, 290, 100);
+  
+  // Líquido sinovial
+  ctx.fillStyle = 'rgba(56, 189, 248, 0.3)';
+  ctx.fillRect(80, yCart - 30, 290, 30);
+  ctx.fillRect(80, yCart + grosor, 290, 30);
+  ctx.fillStyle = '#38bdf8';
+  ctx.font = '12px sans-serif';
+  ctx.fillText(t.synovial_label, 170, yCart - 10);
+  
+  // Flechas
+  if (estado === 'cargado') {
+    ctx.strokeStyle = '#ef4444';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(100, yCart + grosor/2);
+    ctx.lineTo(60, yCart + grosor/2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(60, yCart + grosor/2);
+    ctx.lineTo(70, yCart + grosor/2 - 5);
+    ctx.lineTo(70, yCart + grosor/2 + 5);
+    ctx.closePath();
+    ctx.fill();
+  } else {
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(60, yCart + grosor/2);
+    ctx.lineTo(100, yCart + grosor/2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(100, yCart + grosor/2);
+    ctx.lineTo(90, yCart + grosor/2 - 5);
+    ctx.lineTo(90, yCart + grosor/2 + 5);
+    ctx.closePath();
+    ctx.fillStyle = '#fbbf24';
+    ctx.fill();
+  }
+  
+  document.getElementById('hidro').style.width = hidratacion + '%';
+  document.getElementById('desechos').style.width = desechos + '%';
+}
+
+function comprimir() {
+  estado = 'cargado';
+  hidratacion = Math.max(40, hidratacion - 15);
+  desechos = Math.min(80, desechos + 10);
+  document.getElementById('info').innerHTML = translations[currentLang].compress_info;
+  draw();
+}
+
+function descargar() {
+  estado = 'descargado';
+  hidratacion = Math.min(100, hidratacion + 15);
+  desechos = Math.max(10, desechos - 15);
+  document.getElementById('info').innerHTML = translations[currentLang].decompress_info;
+  draw();
+}
+
+function ciclo() {
+  if (cicloActivo) return;
+  cicloActivo = true;
+  let i = 0;
+  const interval = setInterval(() => {
+    if (i % 2 === 0) descargar();
+    else comprimir();
+    i++;
+    if (i > 10) {
+      clearInterval(interval);
+      cicloActivo = false;
+      document.getElementById('info').innerHTML += translations[currentLang].cycle_complete;
+    }
+  }, 1000);
+}
+
+canvas.addEventListener('click', () => {
+  if (estado === 'descargado') comprimir();
+  else descargar();
+});
+
+// Initialize
+setLanguage('es', document.querySelector('.language-selector button'));
+</script>
+</body>
+</html>

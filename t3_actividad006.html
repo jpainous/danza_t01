@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análisis del Relevé</title>
+<style>
+  body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; }
+  h1 { text-align: center; color: #ec4899; }
+  .container { max-width: 1100px; margin: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; position: relative; }
+  @media (max-width: 800px) { .container { grid-template-columns: 1fr; } }
+  .escena { background: #1e293b; padding: 20px; border-radius: 12px; }
+  svg { width: 100%; height: auto; background: linear-gradient(to bottom, #1e293b, #0f172a); border-radius: 8px; }
+  .hotspot { cursor: pointer; transition: all 0.3s; }
+  .hotspot:hover { transform: scale(1.2); }
+  .hotspot circle { fill: #fbbf24; stroke: #fff; stroke-width: 2; }
+  .hotspot text { fill: #0f172a; font-weight: bold; font-size: 14px; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+  .info-panel { background: #1e293b; padding: 25px; border-radius: 12px; }
+  .info-panel h2 { color: #ec4899; margin-top: 0; }
+  .contraccion { display: inline-block; padding: 6px 14px; border-radius: 20px; font-weight: bold; margin: 10px 0; }
+  .concentrica { background: #16a34a; color: white; }
+  .isometrica { background: #2563eb; color: white; }
+  .excentrica { background: #dc2626; color: white; }
+  .estructura { background: #334155; color: #fbbf24; }
+  .detalle { background: #0f172a; padding: 15px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #ec4899; line-height: 1.6; }
+  .placeholder { color: #64748b; text-align: center; padding: 40px 20px; }
+  .roles { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .rol { background: #475569; padding: 4px 10px; border-radius: 12px; font-size: 12px; }
+  
+  .language-selector {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    display: flex;
+    gap: 8px;
+  }
+  .language-selector button {
+    background: rgba(236,72,153,0.15);
+    border: 1px solid rgba(236,72,153,0.4);
+    color: #ec4899;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  .language-selector button:hover { background: rgba(236,72,153,0.3); }
+  .language-selector button.active { background: #ec4899; color: white; }
+  
+  @media (max-width: 600px) {
+    .language-selector { position: static; margin-bottom: 15px; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<h1 data-i18n="title">🩰 Análisis Biomecánico del Relevé</h1>
+<p style="text-align:center; color:#94a3b8;" data-i18n="subtitle">Haz clic en cada punto numerado para descubrir la fisiología del gesto.</p>
+
+<div class="container">
+  <div class="language-selector">
+    <button class="active" onclick="setLanguage('es', this)">ES</button>
+    <button onclick="setLanguage('ca', this)">CA</button>
+    <button onclick="setLanguage('en', this)">EN</button>
+  </div>
+  <div class="escena">
+    <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+      <line x1="50" y1="450" x2="350" y2="450" stroke="#475569" stroke-width="2" stroke-dasharray="5,5"/>
+      
+      <ellipse cx="200" cy="430" rx="35" ry="12" fill="#fbbf24" opacity="0.3"/>
+      <path d="M 180 430 Q 200 400 220 430" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+      
+      <circle cx="200" cy="380" r="15" fill="#fca5a5" stroke="#dc2626" stroke-width="2"/>
+      
+      <path d="M 175 370 Q 160 300 175 230 L 225 230 Q 240 300 225 370 Z" 
+            fill="#f472b6" stroke="#be185d" stroke-width="2"/>
+      
+      <rect x="192" y="370" width="16" height="60" fill="#e5e7eb" stroke="#6b7280" stroke-width="1.5" rx="4"/>
+      
+      <circle cx="200" cy="220" r="18" fill="#fca5a5" stroke="#dc2626" stroke-width="2"/>
+      
+      <path d="M 180 215 L 175 120 L 225 120 L 220 215 Z" fill="#fb923c" stroke="#c2410c" stroke-width="2"/>
+      
+      <g class="hotspot" onclick="mostrar(1)">
+        <circle cx="150" cy="300" r="18"/>
+        <text x="150" y="300">1</text>
+      </g>
+      <g class="hotspot" onclick="mostrar(2)">
+        <circle cx="200" cy="400" r="18"/>
+        <text x="200" y="400">2</text>
+      </g>
+      <g class="hotspot" onclick="mostrar(3)">
+        <circle cx="250" cy="300" r="18"/>
+        <text x="250" y="300">3</text>
+      </g>
+      <g class="hotspot" onclick="mostrar(4)">
+        <circle cx="200" cy="220" r="18"/>
+        <text x="200" y="220">4</text>
+      </g>
+      <g class="hotspot" onclick="mostrar(5)">
+        <circle cx="200" cy="150" r="18"/>
+        <text x="200" y="150">5</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="info-panel" id="panel">
+    <div class="placeholder" data-i18n="placeholder">
+      👆 Haz clic en un punto numerado del dibujo para ver el análisis biomecánico.
+    </div>
+  </div>
+</div>
+
+<script>
+let currentLang = 'es';
+
+const translations = {
+  es: {
+    title: "🩰 Análisis Biomecánico del Relevé",
+    subtitle: "Haz clic en cada punto numerado para descubrir la fisiología del gesto.",
+    placeholder: "👆 Haz clic en un punto numerado del dibujo para ver el análisis biomecánico.",
+    contenidos: {
+      1: {
+        titulo: 'Gemelos (Gastrocnemio + Sóleo)',
+        tipo: 'concentrica',
+        etiqueta: 'CONCÉNTRICA',
+        detalle: 'Durante la <b>subida al relevé</b>, los gemelos generan tensión mientras se <b>acortan</b> (Tensión > Resistencia). Son los <b>agonistas</b> principales del movimiento de flexión plantar.',
+        roles: ['Agonista principal', 'Motor del movimiento', 'Fibras mixtas (I + IIa)']
+      },
+      2: {
+        titulo: 'Tendón de Aquiles',
+        tipo: 'estructura',
+        etiqueta: 'MUELLE ELÁSTICO',
+        detalle: 'No es un músculo, sino <b>tejido conectivo</b> que une el gemelo al calcáneo. Actúa como un <b>muelle</b>: acumula energía elástica durante la fase excéntrica y la devuelve en la concéntrica, ahorrando hasta un 50% del coste metabólico.',
+        roles: ['Transmite fuerza', 'Almacena energía elástica', 'Reduce coste metabólico']
+      },
+      3: {
+        titulo: 'Tibial anterior (antagonista)',
+        tipo: 'excentrica',
+        etiqueta: 'EXCÉNTRICA / CONTROL',
+        detalle: 'Mientras los gemelos se acortan, el tibial anterior se <b>alarga controladamente</b> para frenar el movimiento y dar precisión. Es el <b>antagonista</b>: su acción es opuesta pero necesaria para un gesto limpio.',
+        roles: ['Antagonista', 'Frena el movimiento', 'Da precisión']
+      },
+      4: {
+        titulo: 'Tobillo en posición media',
+        tipo: 'isometrica',
+        etiqueta: 'ISOMÉTRICA',
+        detalle: 'Cuando <b>mantienes</b> el relevé arriba, los músculos generan tensión <b>sin cambiar su longitud</b> (Tensión = Resistencia). Es una contracción isométrica pura, con <b>coactivación</b> de agonistas y antagonistas para estabilizar.',
+        roles: ['Estabilización', 'Coactivación', 'Gasto energético alto sin movimiento']
+      },
+      5: {
+        titulo: 'Cuádriceps / Estabilizadores',
+        tipo: 'isometrica',
+        etiqueta: 'ESTABILIZADORES',
+        detalle: 'Aunque no mueven el tobillo, los músculos del muslo y la cadera trabajan <b>isométricamente</b> para fijar la rodilla y la pelvis. Sin ellos, el gesto sería imposible: son los <b>estabilizadores</b> de la cadena cinética.',
+        roles: ['Estabilizadores', 'Fijan articulaciones proximales', 'Permiten el gesto distal']
+      }
+    }
+  },
+  ca: {
+    title: "🩰 Anàlisi Biomecànica del Relevé",
+    subtitle: "Fes clic a cada punt numerat per descobrir la fisiologia del gest.",
+    placeholder: "👆 Fes clic en un punt numerat del dibuix per veure l'anàlisi biomecànica.",
+    contenidos: {
+      1: {
+        titulo: 'Bessons (Gastrocnemi + Soli)',
+        tipo: 'concentrica',
+        etiqueta: 'CONCÈNTRICA',
+        detalle: 'Durant la <b>pujada al relevé</b>, els bessons generen tensió mentre s\'<b>acurten</b> (Tensió > Resistència). Són els <b>agonistes</b> principals del moviment de flexió plantar.',
+        roles: ['Agonista principal', 'Motor del moviment', 'Fibres mixtes (I + IIa)']
+      },
+      2: {
+        titulo: "Tendó d'Aquil·les",
+        tipo: 'estructura',
+        etiqueta: 'MOLLA ELÀSTICA',
+        detalle: "No és un múscul, sinó <b>teixit connectiu</b> que uneix el bessó al calcani. Actua com una <b>molla</b>: acumula energia elàstica durant la fase excèntrica i la retorna en la concèntrica, estalviant fins a un 50% del cost metabòlic.",
+        roles: ['Transmet força', 'Emmagatzema energia elàstica', 'Redueix cost metabòlic']
+      },
+      3: {
+        titulo: 'Tibial anterior (antagonista)',
+        tipo: 'excentrica',
+        etiqueta: 'EXCÈNTRICA / CONTROL',
+        detalle: "Mentre els bessons s'acurten, el tibial anterior s'<b>allarga controladament</b> per frenar el moviment i donar precisió. És l'<b>antagonista</b>: la seva acció és oposada però necessària per a un gest net.",
+        roles: ['Antagonista', 'Frena el moviment', 'Dona precisió']
+      },
+      4: {
+        titulo: 'Turmell en posició mitjana',
+        tipo: 'isometrica',
+        etiqueta: 'ISOMÈTRICA',
+        detalle: "Quan <b>mantens</b> el relevé a dalt, els músculs generen tensió <b>sense canviar la seva longitud</b> (Tensió = Resistència). És una contracció isomètrica pura, amb <b>coactivació</b> d'agonistes i antagonistes per estabilitzar.",
+        roles: ['Estabilització', 'Coactivació', 'Cost energètic alt sense moviment']
+      },
+      5: {
+        titulo: 'Quàdriceps / Estabilitzadors',
+        tipo: 'isometrica',
+        etiqueta: 'ESTABILITZADORS',
+        detalle: "Encara que no mouen el turmell, els músculs de la cuixa i el maluc treballen <b>isomètricament</b> per fixar el genoll i la pelvis. Sense ells, el gest seria impossible: són els <b>estabilitzadors</b> de la cadena cinètica.",
+        roles: ['Estabilitzadors', 'Fixen articulacions proximals', 'Permeten el gest distal']
+      }
+    }
+  },
+  en: {
+    title: "🩰 Biomechanical Analysis of Relevé",
+    subtitle: "Click each numbered point to discover the physiology of the movement.",
+    placeholder: "👆 Click a numbered point on the drawing to see the biomechanical analysis.",
+    contenidos: {
+      1: {
+        titulo: 'Calves (Gastrocnemius + Soleus)',
+        tipo: 'concentrica',
+        etiqueta: 'CONCENTRIC',
+        detalle: 'During the <b>rise to relevé</b>, the calves generate tension while <b>shortening</b> (Tension > Resistance). They are the main <b>agonists</b> of the plantar flexion movement.',
+        roles: ['Main agonist', 'Movement motor', 'Mixed fibers (I + IIa)']
+      },
+      2: {
+        titulo: 'Achilles Tendon',
+        tipo: 'estructura',
+        etiqueta: 'ELASTIC SPRING',
+        detalle: 'It is not a muscle, but <b>connective tissue</b> that joins the calf to the calcaneus. It acts as a <b>spring</b>: it stores elastic energy during the eccentric phase and returns it during the concentric phase, saving up to 50% of metabolic cost.',
+        roles: ['Transmits force', 'Stores elastic energy', 'Reduces metabolic cost']
+      },
+      3: {
+        titulo: 'Tibialis anterior (antagonist)',
+        tipo: 'excentrica',
+        etiqueta: 'ECCENTRIC / CONTROL',
+        detalle: 'While the calves shorten, the tibialis anterior <b>lengthens in a controlled way</b> to brake the movement and provide precision. It is the <b>antagonist</b>: its action is opposite but necessary for a clean movement.',
+        roles: ['Antagonist', 'Brakes the movement', 'Provides precision']
+      },
+      4: {
+        titulo: 'Ankle in middle position',
+        tipo: 'isometrica',
+        etiqueta: 'ISOMETRIC',
+        detalle: 'When you <b>hold</b> the relevé at the top, the muscles generate tension <b>without changing their length</b> (Tension = Resistance). It is a pure isometric contraction, with <b>coactivation</b> of agonists and antagonists to stabilize.',
+        roles: ['Stabilization', 'Coactivation', 'High energy cost without movement']
+      },
+      5: {
+        titulo: 'Quadriceps / Stabilizers',
+        tipo: 'isometrica',
+        etiqueta: 'STABILIZERS',
+        detalle: 'Although they do not move the ankle, the muscles of the thigh and hip work <b>isometrically</b> to fix the knee and pelvis. Without them, the movement would be impossible: they are the <b>stabilizers</b> of the kinetic chain.',
+        roles: ['Stabilizers', 'Fix proximal joints', 'Allow the distal movement']
+      }
+    }
+  }
+};
+
+function setLanguage(lang, btn) {
+  currentLang = lang;
+  document.querySelectorAll('.language-selector button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key]) {
+      el.textContent = translations[lang][key];
+    }
+  });
+  
+  document.documentElement.lang = lang;
+  
+  // Reset panel to placeholder
+  const panel = document.getElementById('panel');
+  panel.innerHTML = `<div class="placeholder">${translations[lang].placeholder}</div>`;
+}
+
+function mostrar(n) {
+  const c = translations[currentLang].contenidos[n];
+  const panel = document.getElementById('panel');
+  const rolesHtml = c.roles.map(r => `<span class="rol">${r}</span>`).join('');
+  panel.innerHTML = `
+    <h2>${n}. ${c.titulo}</h2>
+    <span class="contraccion ${c.tipo}">${c.etiqueta}</span>
+    <div class="detalle">${c.detalle}</div>
+    <div class="roles">${rolesHtml}</div>
+  `;
+}
+
+// Initialize
+setLanguage('es', document.querySelector('.language-selector button'));
+</script>
+</body>
+</html>

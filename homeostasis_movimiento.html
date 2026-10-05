@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Homeostasis y Movimiento - Fisiología de la Danza</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+  body { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); min-height: 100vh; padding: 20px; color: #333; }
+  .container { max-width: 900px; margin: 0 auto; background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+  header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; text-align: center; }
+  header h1 { font-size: 2.2em; margin-bottom: 10px; }
+  header p { font-size: 1.1em; opacity: 0.95; }
+  .section { padding: 30px 40px; border-bottom: 1px solid #eee; }
+  .section h2 { color: #667eea; font-size: 1.6em; margin-bottom: 15px; border-left: 5px solid #764ba2; padding-left: 15px; }
+  .section h3 { color: #2a5298; margin: 20px 0 10px; font-size: 1.2em; }
+  .section p { line-height: 1.7; margin-bottom: 12px; font-size: 1.05em; }
+  .analogy { background: #fff8e1; border-left: 4px solid #ffa000; padding: 15px 20px; margin: 15px 0; border-radius: 8px; }
+  .analogy strong { color: #e65100; }
+  .dance-example { background: #e3f2fd; border-left: 4px solid #1976d2; padding: 15px 20px; margin: 15px 0; border-radius: 8px; }
+  .dance-example strong { color: #0d47a1; }
+  .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin: 20px 0; }
+  .value-card { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+  .value-card .value { font-size: 1.8em; font-weight: bold; color: #667eea; }
+  .value-card .label { font-size: 0.9em; color: #555; margin-top: 5px; }
+  .activity { background: #f3e5f5; border: 2px dashed #9c27b0; padding: 20px; border-radius: 12px; margin: 20px 0; }
+  .activity h3 { color: #6a1b9a; }
+  .quiz-option { display: block; background: white; padding: 12px 18px; margin: 8px 0; border-radius: 8px; cursor: pointer; border: 2px solid #ddd; transition: all 0.3s; }
+  .quiz-option:hover { border-color: #9c27b0; transform: translateX(5px); }
+  .quiz-option.correct { background: #c8e6c9; border-color: #2e7d32; color: #1b5e20; }
+  .quiz-option.incorrect { background: #ffcdd2; border-color: #c62828; color: #b71c1c; }
+  .feedback { margin-top: 12px; padding: 12px; border-radius: 8px; display: none; font-weight: 500; }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #c8e6c9; color: #1b5e20; }
+  .feedback.bad { background: #ffcdd2; color: #b71c1c; }
+  .diagram { background: #fafafa; padding: 20px; border-radius: 12px; text-align: center; margin: 20px 0; }
+  .flow { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 15px 0; }
+  .flow-item { background: #667eea; color: white; padding: 12px 18px; border-radius: 25px; font-weight: 500; }
+  .flow-arrow { font-size: 1.5em; color: #764ba2; }
+  .highlight { background: #fff59d; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+  footer { background: #2a5298; color: white; text-align: center; padding: 20px; font-size: 0.9em; }
+</style><style>.language-bar{display:flex;justify-content:flex-end;gap:6px;padding:10px 18px;background:#f8f9fa;border-bottom:1px solid #eee}.language-bar button{border:1px solid #bbb;background:#fff;border-radius:18px;padding:6px 12px;cursor:pointer;font-weight:600;color:#555}.language-bar button.active{background:#667eea;color:#fff;border-color:#667eea}.lang-copy{display:none}.lang-copy.active{display:block}</style>
+</head>
+<body><div class="language-bar"><button data-lang="es" class="active" onclick="showLang('es')">ES</button><button data-lang="ca" onclick="showLang('ca')">CA</button><button data-lang="en" onclick="showLang('en')">EN</button></div><div class="lang-copy active" id="lang-es">
+<div class="container">
+
+<header>
+  <h1>🏠 Homeostasis y Movimiento</h1>
+  <p>¿Cómo mantiene tu cuerpo el equilibrio mientras bailas?</p>
+</header>
+
+<div class="section">
+  <h2>💧 ¿De qué estamos hechos?</h2>
+  <p>Tu cuerpo es aproximadamente un <span class="highlight">60% de agua</span>. Esta agua no está repartida al azar: se divide en dos compartimentos principales.</p>
+  
+  <div class="analogy">
+    <strong>🧠 Analogía:</strong> Imagina tu cuerpo como una ciudad. Dentro de cada casa (célula) hay agua (líquido intracelular). Entre las casas corren calles y ríos (líquido extracelular). Para que la ciudad funcione, las calles deben estar limpias y con el caudal adecuado.
+  </div>
+
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value">60-65%</div>
+      <div class="label">Líquido Intracelular (LIC)<br><small>Dentro de las células</small></div>
+    </div>
+    <div class="value-card">
+      <div class="value">35-40%</div>
+      <div class="label">Líquido Extracelular (LEC)<br><small>Fuera de las células</small></div>
+    </div>
+  </div>
+
+  <p>El <strong>Líquido Extracelular (LEC)</strong> es el "medio interno" donde viven tus células. Es como el agua de una pecera: si se ensucia o cambia de temperatura, los peces (células) sufren.</p>
+</div>
+
+<div class="section">
+  <h2>⚖️ ¿Qué es la Homeostasis?</h2>
+  <p><strong>Homeostasis</strong> significa "mantenerse igual". Es la capacidad de tu cuerpo de mantener el medio interno (LEC) estable, dentro de unos rangos muy precisos, aunque el mundo exterior cambie.</p>
+
+  <div class="analogy">
+    <strong>🧠 Analogía:</strong> Es como el termostato de tu casa. Si hace frío fuera, la calefacción se enciende para mantener la temperatura interior a 21°C. Tu cuerpo hace lo mismo con muchas variables.
+  </div>
+
+  <h3>📊 Valores normales en reposo</h3>
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value">7,35-7,45</div>
+      <div class="label">pH sanguíneo</div>
+    </div>
+    <div class="value-card">
+      <div class="value">75-110</div>
+      <div class="label">Glucosa (mg/dL)</div>
+    </div>
+    <div class="value-card">
+      <div class="value">36-37,5°C</div>
+      <div class="label">Temperatura</div>
+    </div>
+    <div class="value-card">
+      <div class="value">120/80</div>
+      <div class="label">Presión arterial (mmHg)</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>🎭 Homeostasis en el Movimiento</h2>
+  <p>Cuando bailas, <strong>rompes el equilibrio</strong> del medio interno. Tus músculos consumen más oxígeno, generan más calor, producen más CO₂ y gastan glucosa. El cuerpo debe trabajar más para restaurar el equilibrio.</p>
+
+  <div class="dance-example">
+    <strong>💃 Ejemplo en danza:</strong> Durante un <em>grand allegro</em> con muchos <em>grand jetés</em>, tu temperatura sube, sudas, tu corazón late más rápido y respiras más deprisa. Todo esto son <strong>respuestas homeostáticas</strong> para enfriarte, llevar oxígeno a los músculos y eliminar CO₂.
+  </div>
+
+  <h3>🔄 El ciclo del movimiento</h3>
+  <div class="diagram">
+    <div class="flow">
+      <div class="flow-item">🧘 Reposo (homeostasis)</div>
+      <div class="flow-arrow">➡️</div>
+      <div class="flow-item">💃 Movimiento (ruptura)</div>
+      <div class="flow-arrow">➡️</div>
+      <div class="flow-item">🔄 Respuestas del cuerpo</div>
+      <div class="flow-arrow">➡️</div>
+      <div class="flow-item">🧘 Nuevo equilibrio</div>
+    </div>
+  </div>
+
+  <p>Por eso el <strong>reposo</strong> después de bailar es tan importante: es cuando el cuerpo restaura las condiciones homeostáticas y se adapta (mejora su capacidad para la próxima vez).</p>
+</div>
+
+<div class="section">
+  <h2>🎛️ Sistemas de Regulación</h2>
+  <p>Dos grandes sistemas controlan la homeostasis:</p>
+
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value" style="font-size:1.3em;">⚡ Sistema Nervioso</div>
+      <div class="label">Respuestas <strong>rápidas</strong> y precisas<br><small>Ej: contraer un músculo, apartar la mano del fuego</small></div>
+    </div>
+    <div class="value-card">
+      <div class="value" style="font-size:1.3em;">🧪 Sistema Endocrino</div>
+      <div class="label">Respuestas <strong>lentas</strong> y duraderas<br><small>Ej: adrenalina, insulina, hormonas del crecimiento</small></div>
+    </div>
+  </div>
+
+  <div class="dance-example">
+    <strong>💃 Ejemplo en danza:</strong> Antes de salir a escena, tu <strong>sistema nervioso</strong> activa los músculos para el primer paso. Tu <strong>sistema endocrino</strong> libera adrenalina que te mantiene alerta durante toda la función.
+  </div>
+</div>
+
+<div class="section">
+  <h2>📈 Retroalimentación Positiva</h2>
+  <p>La mayoría de los procesos del cuerpo usan <strong>retroalimentación negativa</strong> (si algo sube, el cuerpo lo baja). Pero algunos procesos usan <strong>retroalimentación positiva</strong>: la respuesta <em>amplifica</em> el estímulo hasta completar un proceso.</p>
+
+  <div class="analogy">
+    <strong>🧠 Analogía:</strong> Es como el efecto de un micrófono cerca de un altavoz: el sonido se amplifica cada vez más hasta que se completa un evento (y luego se corta).
+  </div>
+
+  <div class="dance-example">
+    <strong>💃 Ejemplo en danza:</strong> El <strong>parto</strong> (aunque no sea danza) es el ejemplo clásico: las contracciones provocan más contracciones hasta el nacimiento. En danza, un ejemplo sería la <strong>carrera hacia un clímax coreográfico</strong>: la música sube de intensidad, la emoción crece, los movimientos se hacen más amplios, y esto retroalimenta la expresión hasta el punto culminante.
+  </div>
+</div>
+
+<div class="section">
+  <h2>🎯 Actividades</h2>
+  
+  <div class="activity">
+    <h3>❓ Pregunta 1: ¿Qué es la homeostasis?</h3>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f1')">a) Bailar sin cansarse</div>
+    <div class="quiz-option" onclick="checkAnswer(this, true, 'f1')">b) Mantener estable el medio interno aunque cambie el exterior</div>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f1')">c) Tener los músculos siempre relajados</div>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f1')">d) Sudar mucho durante el ejercicio</div>
+    <div class="feedback" id="f1"></div>
+  </div>
+
+  <div class="activity">
+    <h3>❓ Pregunta 2: Durante un <em>grand allegro</em>, ¿qué ocurre?</h3>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f2')">a) El medio interno se mantiene totalmente estable</div>
+    <div class="quiz-option" onclick="checkAnswer(this, true, 'f2')">b) Se rompe el equilibrio y el cuerpo activa respuestas para restaurarlo</div>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f2')">c) El cuerpo se detiene para protegerse</div>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f2')">d) Solo trabaja el sistema nervioso</div>
+    <div class="feedback" id="f2"></div>
+  </div>
+
+  <div class="activity">
+    <h3>🎭 Reflexión práctica</h3>
+    <p>Imagina que estás bailando una variación intensa de 2 minutos. Piensa en <strong>3 cambios</strong> que notarás en tu cuerpo durante y después del baile, y relaciona cada uno con la variable homeostática que el cuerpo está intentando regular:</p>
+    <ul style="margin-left: 30px; line-height: 2;">
+      <li>💦 <em>Sudoración → regula la ______</em></li>
+      <li>💨 <em>Respiración acelerada → regula el ______ y el ______</em></li>
+      <li>❤️ <em>Taquicardia → regula el ______ a los músculos</em></li>
+    </ul>
+    <p style="margin-top: 15px; font-style: italic; color: #6a1b9a;">💡 Pista: temperatura, CO₂, O₂, oxígeno/nutrientes.</p>
+  </div>
+
+  <div class="activity">
+    <h3>🩰 Conexión con la técnica</h3>
+    <p>¿Por qué es tan importante el <strong>calentamiento</strong> antes de bailar y el <strong>vuelta a la calma</strong> después? Relaciona con lo aprendido sobre homeostasis:</p>
+    <ul style="margin-left: 30px; line-height: 2;">
+      <li><strong>Calentamiento:</strong> prepara al cuerpo para la ______ del medio interno.</li>
+      <li><strong>Vuelta a la calma:</strong> permite ______ las condiciones homeostáticas.</li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  🩰 Fisiología aplicada a la Danza | Homeostasis y Movimiento
+</footer>
+
+</div>
+
+
+</div><div class="lang-copy" id="lang-ca">
+<div class="container">
+
+<header>
+  <h1>🏠 Homeòstasi i Moviment</h1>
+  <p>Com manté el teu cos l’equilibri mentre balles?</p>
+</header>
+
+<div class="section">
+  <h2>💧 De què estem fets?</h2>
+  <p>El teu cos és aproximadament un <span class="highlight">60% d’aigua</span>. Aquesta aigua no està distribuïda a l’atzar: es divideix en dos compartiments principals.</p>
+  
+  <div class="analogy">
+    <strong>🧠 Analogia:</strong> Imagina el teu cos com una ciutat. Dins de cada casa (cèl·lula) hi ha aigua (líquid intracel·lular). Entre les cases hi ha carrers i rius (líquid extracel·lular). Perquè la ciutat funcioni, els carrers han d’estar nets i amb el cabal adequat.
+  </div>
+
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value">60-65%</div>
+      <div class="label">Líquid intracel·lular (LIC)<br><small>Dins de les cèl·lules</small></div>
+    </div>
+    <div class="value-card">
+      <div class="value">35-40%</div>
+      <div class="label">Líquid extracel·lular (LEC)<br><small>Fora de les cèl·lules</small></div>
+    </div>
+  </div>
+
+  <p>El <strong>líquid extracel·lular (LEC)</strong> és el «medi intern» on viuen les teves cèl·lules. És com l’aigua d’una peixera: si s’embruta o canvia de temperatura, els peixos (cèl·lules) pateixen.</p>
+</div>
+
+<div class="section">
+  <h2>⚖️ Què és l’homeòstasi?</h2>
+  <p><strong>Homeòstasi</strong> significa «mantenir-se igual». És la capacitat del teu cos de mantenir estable el medi intern (LEC), dins d’uns intervals molt precisos, encara que el món exterior canviï.</p>
+
+  <div class="analogy">
+    <strong>🧠 Analogia:</strong> És com el termòstat de casa teva. Si fa fred a fora, la calefacció s’encén per mantenir la temperatura interior a 21 °C. El teu cos fa el mateix amb moltes variables.
+  </div>
+
+  <h3>📊 Valors normals en repòs</h3>
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value">7,35-7,45</div>
+      <div class="label">pH sanguini</div>
+    </div>
+    <div class="value-card">
+      <div class="value">75-110</div>
+      <div class="label">Glucosa (mg/dL)</div>
+    </div>
+    <div class="value-card">
+      <div class="value">36-37,5°C</div>
+      <div class="label">Temperatura</div>
+    </div>
+    <div class="value-card">
+      <div class="value">120/80</div>
+      <div class="label">Pressió arterial (mmHg)</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>🎭 Homeòstasi en el Moviment</h2>
+  <p>Quan balles, <strong>trenques l’equilibri</strong> del medi intern. Els teus músculs consumeixen més oxigen, generen més calor, produeixen més CO₂ i gasten glucosa. El cos ha de treballar més per restaurar l’equilibri.</p>
+
+  <div class="dance-example">
+    <strong>💃 Exemple en dansa:</strong> Durante un <em>grand allegro</em> con muchos <em>grand jetés</em>, tu temperatura sube, sudas, tu corazón late más rápido y respiras más deprisa. Tot això són <strong>respostes homeostàtiques</strong> per refredar-te, portar oxigen als músculs i eliminar CO₂.
+  </div>
+
+  <h3>🔄 El cicle del moviment</h3>
+  <div class="diagram">
+    <div class="flow">
+      <div class="flow-item">🧘 Repòs (homeòstasi)</div>
+      <div class="flow-arrow">➡️</div>
+      <div class="flow-item">💃 Moviment (alteració)</div>
+      <div class="flow-arrow">➡️</div>
+      <div class="flow-item">🔄 Respostes del cos</div>
+      <div class="flow-arrow">➡️</div>
+      <div class="flow-item">🧘 Nou equilibri</div>
+    </div>
+  </div>
+
+  <p>Per això el <strong>repòs</strong> després de ballar és tan important: és quan el cos restaura les condicions homeostàtiques i s’adapta (millora la seva capacitat per a la propera vegada).</p>
+</div>
+
+<div class="section">
+  <h2>🎛️ Sistemes de Regulació</h2>
+  <p>Dos grans sistemes controlen l’homeòstasi:</p>
+
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value" style="font-size:1.3em;">⚡ Sistema Nerviós</div>
+      <div class="label">Respostes <strong>ràpides</strong> i precises<br><small>Ex.: contreure un múscul, apartar la mà del foc</small></div>
+    </div>
+    <div class="value-card">
+      <div class="value" style="font-size:1.3em;">🧪 Sistema Endocrí</div>
+      <div class="label">Respostes <strong>lentes</strong> i duradores<br><small>Ex.: adrenalina, insulina, hormones del creixement</small></div>
+    </div>
+  </div>
+
+  <div class="dance-example">
+    <strong>💃 Exemple en dansa:</strong> Abans de sortir a escena, el teu <strong>sistema nerviós</strong> activa els músculs per al primer pas. El teu <strong>sistema endocrí</strong> allibera adrenalina que et manté alerta durant tota la funció.
+  </div>
+</div>
+
+<div class="section">
+  <h2>📈 Retroalimentació Positiva</h2>
+  <p>La majoria dels processos del cos utilitzen <strong>retroalimentació negativa</strong> (si alguna cosa puja, el cos la fa baixar). Però alguns processos utilitzen <strong>retroalimentació positiva</strong>: la resposta <em>amplifica</em> l’estímul fins a completar un procés.</p>
+
+  <div class="analogy">
+    <strong>🧠 Analogia:</strong> És com l’efecte d’un micròfon a prop d’un altaveu: el so s’amplifica cada vegada més fins que es completa un esdeveniment (i després s’atura).
+  </div>
+
+  <div class="dance-example">
+    <strong>💃 Exemple en dansa:</strong> El <strong>part</strong> (encara que no sigui dansa) és l’exemple clàssic: les contraccions provoquen més contraccions fins al naixement. En dansa, un exemple seria la <strong>progressió cap a un clímax coreogràfic</strong>: la música augmenta d’intensitat, l’emoció creix, els moviments es fan més amplis, i això retroalimenta l’expressió fins al punt culminant.
+  </div>
+</div>
+
+<div class="section">
+  <h2>🎯 Activitats</h2>
+  
+  <div class="activity">
+    <h3>❓ Pregunta 1: Què és l’homeòstasi?</h3>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f1')">a) Ballar sense cansar-se</div>
+    <div class="quiz-option" onclick="checkAnswer(this, true, 'f1')">b) Mantenir estable el medi intern encara que canviï l’exterior</div>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f1')">c) Tenir els músculs sempre relaxats</div>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f1')">d) Suar molt durant l’exercici</div>
+    <div class="feedback" id="f1"></div>
+  </div>
+
+  <div class="activity">
+    <h3>❓ Pregunta 2: Durant un <em>grand allegro</em>, què passa?</h3>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f2')">a) El medi intern es manté totalment estable</div>
+    <div class="quiz-option" onclick="checkAnswer(this, true, 'f2')">b) Es trenca l’equilibri i el cos activa respostes per restaurar-lo</div>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f2')">c) El cos s’atura per protegir-se</div>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f2')">d) Només treballa el sistema nerviós</div>
+    <div class="feedback" id="f2"></div>
+  </div>
+
+  <div class="activity">
+    <h3>🎭 Reflexió pràctica</h3>
+    <p>Imagina que estàs ballant una variació intensa de 2 minuts. Pensa en <strong>3 canvis</strong> que notaràs al teu cos durant i després del ball, i relaciona cadascun amb la variable homeostàtica que el cos intenta regular:</p>
+    <ul style="margin-left: 30px; line-height: 2;">
+      <li>💦 <em>Sudoració → regula la ______</em></li>
+      <li>💨 <em>Respiració accelerada → regula el ______ i el ______</em></li>
+      <li>❤️ <em>Taquicàrdia → regula el ______ als músculs</em></li>
+    </ul>
+    <p style="margin-top: 15px; font-style: italic; color: #6a1b9a;">💡 Pista: temperatura, CO₂, O₂, oxigen/nutrients.</p>
+  </div>
+
+  <div class="activity">
+    <h3>🩰 Connexió amb la tècnica</h3>
+    <p>Per què són tan importants l’<strong>escalfament</strong> abans de ballar i la <strong>tornada a la calma</strong> després? Relaciona-ho amb el que has après sobre l’homeòstasi:</p>
+    <ul style="margin-left: 30px; line-height: 2;">
+      <li><strong>Escalfament:</strong> prepara el cos per a la ______ del medi intern.</li>
+      <li><strong>Tornada a la calma:</strong> permet ______ les condicions homeostàtiques.</li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  🩰 Fisiologia aplicada a la Dansa | Homeòstasi i Moviment
+</footer>
+
+</div>
+
+
+</div><div class="lang-copy" id="lang-en">
+<div class="container">
+
+<header>
+  <h1>🏠 Homeostasis and Movement</h1>
+  <p>How does your body maintain balance while you dance?</p>
+</header>
+
+<div class="section">
+  <h2>💧 What are we made of?</h2>
+  <p>Your body is approximately <span class="highlight">60% water</span>. This water is divided into two main compartments.</p>
+  
+  <div class="analogy">
+    <strong>🧠 Analogy:</strong> Imagine your body as a city. Inside each house (cell) there is water (intracellular fluid). Between the houses there are streets and rivers (extracellular fluid). For the city to function, the streets must be clean and have the right flow.
+  </div>
+
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value">60-65%</div>
+      <div class="label">Intracellular Fluid (ICF)<br><small>Inside the cells</small></div>
+    </div>
+    <div class="value-card">
+      <div class="value">35-40%</div>
+      <div class="label">Extracellular Fluid (ECF)<br><small>Outside the cells</small></div>
+    </div>
+  </div>
+
+  <p>The <strong>Extracellular Fluid (ECF)</strong> is the "internal environment" where your cells live. It is like water in a fish tank: if it becomes dirty or its temperature changes, the fish (cells) suffer.</p>
+</div>
+
+<div class="section">
+  <h2>⚖️ What is Homeostasis?</h2>
+  <p><strong>Homeostasis</strong> means "staying the same". It is your body’s ability to keep the internal environment (ECF) stable within precise ranges, even when the outside world changes.</p>
+
+  <div class="analogy">
+    <strong>🧠 Analogy:</strong> It is like the thermostat in your home. If it is cold outside, the heating turns on to keep the indoor temperature at 21°C. Your body does the same with many variables.
+  </div>
+
+  <h3>📊 Normal resting values</h3>
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value">7,35-7,45</div>
+      <div class="label">Blood pH</div>
+    </div>
+    <div class="value-card">
+      <div class="value">75-110</div>
+      <div class="label">Glucosa (mg/dL)</div>
+    </div>
+    <div class="value-card">
+      <div class="value">36-37,5°C</div>
+      <div class="label">Temperatura</div>
+    </div>
+    <div class="value-card">
+      <div class="value">120/80</div>
+      <div class="label">Blood pressure (mmHg)</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>🎭 Homeostasis in Movement</h2>
+  <p>When you dance, you <strong>disrupt the balance</strong> of the internal environment. Your muscles use more oxygen, generate more heat, produce more CO₂ and use glucose. Your body must work harder to restore balance.</p>
+
+  <div class="dance-example">
+    <strong>💃 Dance example:</strong> Durante un <em>grand allegro</em> con muchos <em>grand jetés</em>, tu temperatura sube, sudas, tu corazón late más rápido y respiras más deprisa. These are all <strong>homeostatic responses</strong> to cool you down, deliver oxygen to the muscles and remove CO₂.
+  </div>
+
+  <h3>🔄 The movement cycle</h3>
+  <div class="diagram">
+    <div class="flow">
+      <div class="flow-item">🧘 Rest (homeostasis)</div>
+      <div class="flow-arrow">➡️</div>
+      <div class="flow-item">💃 Movement (disruption)</div>
+      <div class="flow-arrow">➡️</div>
+      <div class="flow-item">🔄 Body responses</div>
+      <div class="flow-arrow">➡️</div>
+      <div class="flow-item">🧘 New balance</div>
+    </div>
+  </div>
+
+  <p>That is why <strong>rest</strong> after dancing is so important: this is when the body restores homeostatic conditions and adapts (improves its capacity for next time).</p>
+</div>
+
+<div class="section">
+  <h2>🎛️ Regulatory Systems</h2>
+  <p>Two major systems control homeostasis:</p>
+
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value" style="font-size:1.3em;">⚡ Nervous System</div>
+      <div class="label"><strong>Fast</strong> and precise responses<br><small>e.g. contracting a muscle, pulling your hand away from fire</small></div>
+    </div>
+    <div class="value-card">
+      <div class="value" style="font-size:1.3em;">🧪 Endocrine System</div>
+      <div class="label"><strong>Slow</strong> and long-lasting responses<br><small>e.g. adrenaline, insulin, growth hormones</small></div>
+    </div>
+  </div>
+
+  <div class="dance-example">
+    <strong>💃 Dance example:</strong> Before going on stage, your <strong>nervous system</strong> activates the muscles for the first step. Your <strong>endocrine system</strong> releases adrenaline that keeps you alert throughout the performance.
+  </div>
+</div>
+
+<div class="section">
+  <h2>📈 Positive Feedback</h2>
+  <p>Most body processes use <strong>negative feedback</strong> (if something rises, the body lowers it). But some processes use <strong>positive feedback</strong>: the response <em>amplifies</em> the stimulus until a process is completed.</p>
+
+  <div class="analogy">
+    <strong>🧠 Analogy:</strong> It is like the effect of a microphone near a speaker: the sound becomes increasingly amplified until an event is completed (and then it stops).
+  </div>
+
+  <div class="dance-example">
+    <strong>💃 Dance example:</strong> <strong>Childbirth</strong> is the classic example: contractions cause more contractions until birth. In dance, an example could be the <strong>build-up toward a choreographic climax</strong>: the music increases in intensity, emotion grows, movements become larger, and this feeds back into expression until the climax.
+  </div>
+</div>
+
+<div class="section">
+  <h2>🎯 Activities</h2>
+  
+  <div class="activity">
+    <h3>❓ Question 1: What is homeostasis?</h3>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f1')">a) Dancing without getting tired</div>
+    <div class="quiz-option" onclick="checkAnswer(this, true, 'f1')">b) Keeping the internal environment stable even when the outside changes</div>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f1')">c) Always having relaxed muscles</div>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f1')">d) Sweating a lot during exercise</div>
+    <div class="feedback" id="f1"></div>
+  </div>
+
+  <div class="activity">
+    <h3>❓ Question 2: During a <em>grand allegro</em>, what happens?</h3>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f2')">a) The internal environment remains completely stable</div>
+    <div class="quiz-option" onclick="checkAnswer(this, true, 'f2')">b) Balance is disrupted and the body activates responses to restore it</div>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f2')">c) The body stops to protect itself</div>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f2')">d) Only the nervous system works</div>
+    <div class="feedback" id="f2"></div>
+  </div>
+
+  <div class="activity">
+    <h3>🎭 Practical reflection</h3>
+    <p>Imagine you are dancing an intense 2-minute variation. Think of <strong>3 changes</strong> you will notice in your body during and after the dance, and relate each one to the homeostatic variable your body is trying to regulate:</p>
+    <ul style="margin-left: 30px; line-height: 2;">
+      <li>💦 <em>Sweating → regulates ______</em></li>
+      <li>💨 <em>Faster breathing → regulates ______ and ______</em></li>
+      <li>❤️ <em>Increased heart rate → regulates ______ to the muscles</em></li>
+    </ul>
+    <p style="margin-top: 15px; font-style: italic; color: #6a1b9a;">💡 Hint: temperature, CO₂, O₂, oxygen/nutrients.</p>
+  </div>
+
+  <div class="activity">
+    <h3>🩰 Connection with technique</h3>
+    <p>Why are the <strong>warm-up</strong> before dancing and the <strong>cool-down</strong> afterwards so important? Relate this to what you have learned about homeostasis:</p>
+    <ul style="margin-left: 30px; line-height: 2;">
+      <li><strong>Warm-up:</strong> prepares the body for the ______ of the internal environment.</li>
+      <li><strong>Cool-down:</strong> allows the body to ______ homeostatic conditions.</li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  🩰 Physiology Applied to Dance | Homeostasis and Movement
+</footer>
+
+</div>
+
+
+</div>
+<script>
+function showLang(lang){document.querySelectorAll('.lang-copy').forEach(e=>e.classList.toggle('active',e.id==='lang-'+lang));document.querySelectorAll('.language-bar button').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));document.documentElement.lang=lang;localStorage.setItem('homeostasis-language',lang);}
+function checkAnswer(el,isCorrect,feedbackId){const box=el.closest('.activity');const feedback=box.querySelector('.feedback');const siblings=box.querySelectorAll('.quiz-option');siblings.forEach(s=>s.style.pointerEvents='none');if(isCorrect){el.classList.add('correct');feedback.className='feedback show ok';const lang=document.documentElement.lang;feedback.textContent=lang==='ca'?'✅ Correcte! Has entès el concepte.':lang==='en'?'✅ Correct! You understood the concept.':'✅ ¡Correcto! Has entendido el concepto.';}else{el.classList.add('incorrect');feedback.className='feedback show bad';const lang=document.documentElement.lang;feedback.textContent=lang==='ca'?'❌ No és correcte. Revisa la secció i torna-ho a intentar.':lang==='en'?'❌ Incorrect. Review the section and try again.':'❌ No es correcto. Revisa la sección y vuelve a intentarlo.';setTimeout(()=>{siblings.forEach(s=>{s.style.pointerEvents='auto';s.classList.remove('incorrect')});feedback.className='feedback'},2000)}}
+showLang(localStorage.getItem('homeostasis-language')||'es');
+</script>
+</body>
+</html>

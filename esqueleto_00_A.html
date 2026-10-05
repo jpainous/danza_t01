@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Esqueleto en la Danza (Parte 1) - Un órgano vivo</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+body {
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+min-height: 100vh;
+padding: 20px;
+}
+.container {
+max-width: 1100px;
+margin: 0 auto;
+background: #fff;
+border-radius: 20px;
+box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+overflow: hidden;
+}
+header {
+background: linear-gradient(90deg, #1e3c72, #2a5298);
+color: white;
+padding: 35px;
+text-align: center;
+position: relative;
+}
+header h1 { font-size: 2.1em; margin-bottom: 10px; }
+header p { opacity: 0.95; font-size: 1.1em; }
+header .subtitle { font-size: 0.95em; opacity: 0.85; margin-top: 8px; font-style: italic; }
+
+/* Selector d'idioma */
+.lang-selector {
+position: absolute;
+top: 15px;
+right: 20px;
+display: flex;
+gap: 6px;
+background: rgba(255,255,255,0.15);
+padding: 6px;
+border-radius: 25px;
+backdrop-filter: blur(10px);
+}
+.lang-btn {
+background: transparent;
+border: 2px solid transparent;
+color: white;
+padding: 6px 14px;
+border-radius: 20px;
+cursor: pointer;
+font-size: 0.85em;
+font-weight: 600;
+transition: all 0.3s;
+}
+.lang-btn:hover { background: rgba(255,255,255,0.2); }
+.lang-btn.active {
+background: white;
+color: #1e3c72;
+border-color: white;
+}
+
+.nav-tabs {
+display: flex;
+background: #f8f9fa;
+flex-wrap: wrap;
+border-bottom: 3px solid #dee2e6;
+position: sticky;
+top: 0;
+z-index: 100;
+}
+.nav-tabs button {
+flex: 1;
+min-width: 140px;
+padding: 14px 10px;
+background: transparent;
+border: none;
+cursor: pointer;
+font-size: 0.9em;
+font-weight: 600;
+color: #666;
+transition: all 0.3s;
+border-bottom: 4px solid transparent;
+}
+.nav-tabs button:hover { background: #e9ecef; color: #2a5298; }
+.nav-tabs button.active {
+color: #2a5298;
+border-bottom-color: #2a5298;
+background: white;
+}
+.slide { display: none; padding: 30px; min-height: 600px; }
+.slide.active { display: block; animation: fadeIn 0.5s; }
+@keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+.slide h2 {
+color: #1e3c72;
+margin-bottom: 20px;
+font-size: 1.7em;
+border-bottom: 3px solid #2a5298;
+padding-bottom: 10px;
+}
+.reminder-box {
+background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+border-left: 5px solid #fbc02d;
+padding: 18px;
+margin: 20px 0;
+border-radius: 10px;
+}
+.reminder-box h4 {
+color: #f57f17;
+margin-bottom: 10px;
+font-size: 1.1em;
+}
+.intro-box {
+background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+border-left: 5px solid #1976d2;
+padding: 22px;
+margin: 20px 0;
+border-radius: 10px;
+line-height: 1.7;
+}
+.intro-box h3 {
+color: #1565c0;
+margin-bottom: 12px;
+font-size: 1.25em;
+}
+.concept-card {
+background: white;
+border: 3px solid #2a5298;
+border-radius: 15px;
+padding: 25px;
+margin: 20px 0;
+box-shadow: 0 5px 20px rgba(42,82,152,0.15);
+}
+.concept-card h3 {
+color: #2a5298;
+font-size: 1.35em;
+margin-bottom: 15px;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.how-it-works {
+background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+padding: 20px;
+border-radius: 10px;
+margin: 15px 0;
+border-left: 5px solid #f57c00;
+}
+.how-it-works h4 {
+color: #e65100;
+margin-bottom: 12px;
+font-size: 1.15em;
+}
+.how-it-works ul {
+margin-left: 25px;
+line-height: 1.8;
+}
+.dance-box {
+background: linear-gradient(135deg, #fff5e6 0%, #ffe8cc 100%);
+padding: 20px;
+border-radius: 10px;
+margin: 15px 0;
+border: 2px dashed #f39c12;
+}
+.dance-box h4 {
+color: #e67e22;
+margin-bottom: 12px;
+font-size: 1.15em;
+}
+.dance-box ul {
+margin-left: 25px;
+line-height: 1.8;
+}
+.practical-activity {
+background: linear-gradient(135deg, #e8f8f5 0%, #d5f5e3 100%);
+padding: 22px;
+border-radius: 15px;
+margin: 20px 0;
+border: 2px solid #1abc9c;
+}
+.practical-activity h4 {
+color: #16a085;
+font-size: 1.2em;
+margin-bottom: 12px;
+}
+.activity-steps {
+margin-left: 25px;
+line-height: 1.9;
+}
+.activity-steps li {
+margin-bottom: 8px;
+}
+.activity-steps strong {
+color: #16a085;
+}
+.diagram-container {
+background: white;
+border: 2px solid #dee2e6;
+border-radius: 10px;
+padding: 20px;
+margin: 20px 0;
+text-align: center;
+}
+.diagram-container svg {
+max-width: 100%;
+height: auto;
+}
+.diagram-container h4 {
+color: #2a5298;
+margin-bottom: 15px;
+font-size: 1.1em;
+}
+.tip-box {
+background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+padding: 16px;
+border-radius: 10px;
+margin: 15px 0;
+border-left: 5px solid #9b59b6;
+}
+.tip-box h4 {
+color: #8e44ad;
+margin-bottom: 8px;
+font-size: 1.05em;
+}
+.highlight {
+background: linear-gradient(120deg, #ffeaa7 0%, #ffeaa7 100%);
+padding: 2px 8px;
+border-radius: 4px;
+font-weight: 600;
+}
+.emoji { font-size: 1.2em; margin-right: 6px; }
+.btn {
+background: linear-gradient(90deg, #2a5298, #1e3c72);
+color: white;
+border: none;
+padding: 12px 30px;
+border-radius: 25px;
+font-size: 1em;
+font-weight: 600;
+cursor: pointer;
+margin: 10px 5px;
+transition: all 0.3s;
+box-shadow: 0 4px 12px rgba(42,82,152,0.3);
+}
+.btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 6px 16px rgba(42,82,152,0.4);
+}
+.quiz-container {
+background: white;
+border: 2px solid #e4e8ec;
+border-radius: 15px;
+padding: 25px;
+margin: 20px 0;
+}
+.quiz-container h3 {
+color: #2a5298;
+margin-bottom: 18px;
+font-size: 1.25em;
+}
+.question-box {
+background: #f8f9fa;
+border-left: 5px solid #2a5298;
+padding: 16px;
+margin-bottom: 16px;
+border-radius: 8px;
+}
+.question-box p {
+font-weight: 600;
+margin-bottom: 12px;
+font-size: 1em;
+color: #2c3e50;
+}
+.options {
+display: flex;
+flex-direction: column;
+gap: 8px;
+}
+.options label {
+background: white;
+border: 2px solid #dee2e6;
+padding: 12px 16px;
+border-radius: 8px;
+cursor: pointer;
+transition: all 0.2s;
+display: flex;
+align-items: center;
+font-size: 0.93em;
+}
+.options label:hover {
+border-color: #2a5298;
+background: #e3f2fd;
+}
+.options input { margin-right: 12px; }
+.options label.correct {
+background: #d4edda;
+border-color: #28a745;
+color: #155724;
+}
+.options label.incorrect {
+background: #f8d7da;
+border-color: #dc3545;
+color: #721c24;
+}
+.feedback {
+margin-top: 18px;
+padding: 18px;
+border-radius: 10px;
+display: none;
+font-weight: 600;
+line-height: 1.6;
+}
+.feedback.show { display: block; animation: fadeIn 0.3s; }
+.feedback.success { background: #d4edda; color: #155724; border: 2px solid #28a745; }
+.feedback.error { background: #f8d7da; color: #721c24; border: 2px solid #dc3545; }
+@media (max-width: 768px) {
+header h1 { font-size: 1.6em; }
+.slide { padding: 20px; }
+.concept-card { padding: 18px; }
+.lang-selector { position: static; margin: 0 auto 15px auto; justify-content: center; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<div class="lang-selector">
+<button class="lang-btn active" onclick="setLanguage('es', this)">🇪🇸 ES</button>
+<button class="lang-btn" onclick="setLanguage('ca', this)">🏴 CA</button>
+<button class="lang-btn" onclick="setLanguage('en', this)">🇬🇧 EN</button>
+</div>
+<h1 data-i18n="main_title">🦴 El Esqueleto en la Danza</h1>
+<p data-i18n="main_subtitle">Parte 1: Un órgano vivo y en movimiento</p>
+<div class="subtitle" data-i18n="main_tagline">Cómo tus huesos se adaptan, se mueven y te ayudan a bailar mejor</div>
+</header>
+
+<div class="nav-tabs">
+<button class="active" onclick="showSlide(0, this)" data-i18n="tab1">🦴 Esqueleto vivo</button>
+<button onclick="showSlide(1, this)" data-i18n="tab2">🔄 Hueso que se adapta</button>
+<button onclick="showSlide(2, this)" data-i18n="tab3">⚖️ Palancas del cuerpo</button>
+<button onclick="showSlide(3, this)" data-i18n="tab4">🎯 Quiz</button>
+</div>
+
+<!-- SLIDE 1 -->
+<div class="slide active">
+<h2 data-i18n="s1_title">🦴 El esqueleto: mucho más que un "andamio"</h2>
+<div class="reminder-box">
+<h4 data-i18n="s1_reminder_title">💡 Recordatorio</h4>
+<p data-i18n="s1_reminder_text">Cuando piensas en el esqueleto, ¿qué te viene a la cabeza? ¿Un armazón rígido e inerte como el de un esqueleto de Halloween? <strong>¡Error!</strong> Tus huesos son <strong>órganos vivos</strong> que crecen, se reparan, se adaptan y trabajan constantemente. Vamos a descubrirlo.</p>
+</div>
+<div class="intro-box">
+<h3 data-i18n="s1_intro_title">🤔 ¿Qué hace que el hueso esté "vivo"?</h3>
+<p data-i18n="s1_intro_text">Un hueso no es como una piedra. Es un tejido que:</p>
+<ul style="margin-left: 25px; margin-top: 10px; line-height: 1.8;">
+<li data-i18n="s1_li1"><strong>Se renueva constantemente:</strong> Cada 10 años, ¡tienes un esqueleto completamente nuevo!</li>
+<li data-i18n="s1_li2"><strong>Se adapta al esfuerzo:</strong> Se hace más fuerte donde más lo necesitas</li>
+<li data-i18n="s1_li3"><strong>Guarda minerales:</strong> Es el "almacén" de calcio de tu cuerpo</li>
+<li data-i18n="s1_li4"><strong>Fabrica sangre:</strong> Dentro de algunos huesos se producen las células de la sangre</li>
+</ul>
+</div>
+<div class="concept-card">
+<h3><span class="emoji">🏗️</span> <span data-i18n="s1_concept_title">¿Cómo se renueva un hueso?</span></h3>
+<div class="how-it-works">
+<h4 data-i18n="s1_how_title">👷 El equipo de "obra" del hueso</h4>
+<p data-i18n="s1_how_text">Imagina que tu hueso es una casa que se está reformando constantemente. Hay dos tipos de "trabajadores":</p>
+<ul>
+<li data-i18n="s1_how_li1"><strong>Los "destructores" (osteoclastos):</strong> Retiran el hueso viejo o dañado. Son como los albañiles que derriban una pared.</li>
+<li data-i18n="s1_how_li2"><strong>Los "constructores" (osteoblastos):</strong> Construyen hueso nuevo. Son como los albañiles que levantan la pared nueva.</li>
+</ul>
+<p style="margin-top: 12px;" data-i18n="s1_how_end">Este proceso se llama <span class="highlight">remodelación ósea</span> y ocurre durante toda tu vida.</p>
+</div>
+</div>
+<div class="diagram-container">
+<h4 data-i18n="s1_diagram_title">🔄 Ciclo de renovación del hueso</h4>
+<svg viewBox="0 0 700 280">
+<text x="350" y="25" text-anchor="middle" font-size="15" font-weight="bold" fill="#2a5298" data-i18n-svg="diagram1_title">Ciclo de remodelación ósea</text>
+<g transform="translate(30, 50)">
+<rect x="0" y="0" width="180" height="100" fill="#ffebee" stroke="#e74c3c" stroke-width="2" rx="10"/>
+<text x="90" y="30" text-anchor="middle" font-size="12" font-weight="bold" fill="#c0392b" data-i18n-svg="diagram1_step1">1. DESTRUCCIÓN</text>
+<text x="90" y="55" text-anchor="middle" font-size="10" fill="#7f8c8d" data-i18n-svg="diagram1_desc1a">Los "destructores"</text>
+<text x="90" y="70" text-anchor="middle" font-size="10" fill="#7f8c8d" data-i18n-svg="diagram1_desc1b">retiran hueso viejo</text>
+<text x="90" y="90" text-anchor="middle" font-size="9" fill="#e74c3c" font-weight="bold">🔨 Osteoclastos</text>
+</g>
+<line x1="220" y1="100" x2="270" y2="100" stroke="#7f8c8d" stroke-width="3" marker-end="url(#arrow)"/>
+<g transform="translate(280, 50)">
+<rect x="0" y="0" width="180" height="100" fill="#e8f5e9" stroke="#27ae60" stroke-width="2" rx="10"/>
+<text x="90" y="30" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e7d32" data-i18n-svg="diagram1_step2">2. CONSTRUCCIÓN</text>
+<text x="90" y="55" text-anchor="middle" font-size="10" fill="#7f8c8d" data-i18n-svg="diagram1_desc2a">Los "constructores"</text>
+<text x="90" y="70" text-anchor="middle" font-size="10" fill="#7f8c8d" data-i18n-svg="diagram1_desc2b">hacen hueso nuevo</text>
+<text x="90" y="90" text-anchor="middle" font-size="9" fill="#27ae60" font-weight="bold">🧱 Osteoblastos</text>
+</g>
+<line x1="470" y1="100" x2="520" y2="100" stroke="#7f8c8d" stroke-width="3" marker-end="url(#arrow)"/>
+<g transform="translate(530, 50)">
+<rect x="0" y="0" width="150" height="100" fill="#e3f2fd" stroke="#2a5298" stroke-width="2" rx="10"/>
+<text x="75" y="30" text-anchor="middle" font-size="12" font-weight="bold" fill="#1565c0" data-i18n-svg="diagram1_step3">3. HUESO NUEVO</text>
+<text x="75" y="55" text-anchor="middle" font-size="10" fill="#7f8c8d" data-i18n-svg="diagram1_desc3a">Más fuerte y</text>
+<text x="75" y="70" text-anchor="middle" font-size="10" fill="#7f8c8d" data-i18n-svg="diagram1_desc3b">adaptado</text>
+<text x="75" y="90" text-anchor="middle" font-size="11" fill="#2a5298" font-weight="bold">💪</text>
+</g>
+<path d="M 605 150 Q 605 230 350 230 Q 120 230 120 150" stroke="#7f8c8d" stroke-width="2" fill="none" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+<text x="350" y="260" text-anchor="middle" font-size="10" fill="#7f8c8d" data-i18n-svg="diagram1_loop">El ciclo continúa toda la vida</text>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+<polygon points="0 0, 10 3, 0 6" fill="#7f8c8d"/>
+</marker>
+</defs>
+</svg>
+</div>
+<div class="dance-box">
+<h4><span class="emoji">💃</span> <span data-i18n="s1_dance_title">¿Por qué es importante esto para un bailarín?</span></h4>
+<ul>
+<li data-i18n="s1_dance_li1"><strong>Tus huesos responden al entrenamiento:</strong> Cuanto más bailas (con impacto controlado), más fuertes se hacen</li>
+<li data-i18n="s1_dance_li2"><strong>El descanso es clave:</strong> Los "constructores" trabajan mejor cuando descansas</li>
+<li data-i18n="s1_dance_li3"><strong>La nutrición importa:</strong> Necesitas calcio y vitamina D para que los "constructores" tengan materiales</li>
+<li data-i18n="s1_dance_li4"><strong>Las lesiones se reparan:</strong> Si te haces una pequeña fractura, tu cuerpo la arregla solo (si le das tiempo)</li>
+</ul>
+</div>
+<div class="practical-activity">
+<h4><span class="emoji">🎭</span> <span data-i18n="s1_activity_title">Actividad: "Siente tus huesos vivos"</span></h4>
+<p><strong data-i18n="s1_activity_obj_label">Objetivo:</strong> <span data-i18n="s1_activity_obj">Comprobar que los huesos no son rígidos como piedras</span></p>
+<ol class="activity-steps">
+<li data-i18n="s1_activity_step1"><strong>Toca tu tibia</strong> (el hueso de la espinilla). ¿Es duro? Sí, pero no como una piedra.</li>
+<li data-i18n="s1_activity_step2"><strong>Haz un pequeño salto</strong> y aterriza suavemente. ¿Sientes cómo el hueso "absorbe" el impacto? No se rompe porque está vivo y se adapta.</li>
+<li data-i18n="s1_activity_step3"><strong>Reflexiona:</strong> Si tus huesos fueran como piedras, se romperían con cada salto. Al ser tejidos vivos, se flexionan un poquito y se reparan.</li>
+<li data-i18n="s1_activity_step4"><strong>Comparte:</strong> ¿Conoces a alguien que se haya roto un hueso? ¿Sabes que al cabo de unas semanas se regenera solo? Eso es porque está vivo.</li>
+</ol>
+</div>
+<div class="tip-box">
+<h4 data-i18n="s1_tip_title">✨ Dato curioso</h4>
+<p data-i18n="s1_tip_text">Los astronautas que pasan meses en el espacio (sin gravedad) <strong>pierden densidad ósea</strong> porque sus huesos no reciben la "señal" de tener que ser fuertes. Cuando vuelven a la Tierra, sus huesos son más débiles. ¡Esto demuestra que el hueso se adapta al uso que le damos!</p>
+</div>
+</div>
+
+<!-- SLIDE 2 -->
+<div class="slide">
+<h2 data-i18n="s2_title">🔄 El hueso que se adapta: la Ley de Wolff</h2>
+<div class="reminder-box">
+<h4 data-i18n="s2_reminder_title">💡 Recordatorio</h4>
+<p data-i18n="s2_reminder_text">Acabamos de ver que el hueso se renueva constantemente. Ahora vamos a descubrir <strong>cómo decide dónde hacerse más fuerte</strong>. La respuesta es sencilla: <strong>se fortalece donde más lo usas</strong>.</p>
+</div>
+<div class="concept-card">
+<h3><span class="emoji">📜</span> <span data-i18n="s2_concept_title">¿Qué dice la Ley de Wolff?</span></h3>
+<div class="intro-box">
+<p data-i18n="s2_intro_text1">En 1892, un médico llamado <strong>Julius Wolff</strong> descubrió algo muy importante:</p>
+<p style="margin-top: 12px; font-size: 1.1em; text-align: center; font-style: italic; color: #1565c0;" data-i18n="s2_quote">"El hueso se adapta a las cargas que recibe. Donde hay más presión, se hace más fuerte. Donde no se usa, se debilita."</p>
+</div>
+<div class="how-it-works">
+<h4 data-i18n="s2_how_title">🔍 ¿Cómo funciona en la práctica?</h4>
+<ul>
+<li data-i18n="s2_how_li1"><strong>Cuando bailas y saltas:</strong> Tus huesos reciben "golpecitos" de impacto. Los "constructores" (osteoblastos) reciben la señal: <em>"¡Oye, aquí necesitamos más hueso!"</em> y añaden material.</li>
+<li data-i18n="s2_how_li2"><strong>Cuando no te mueves mucho:</strong> Los "destructores" (osteoclastos) retiran hueso porque el cuerpo piensa: <em>"Si no se usa, no lo necesitamos"</em>.</li>
+<li data-i18n="s2_how_li3"><strong>Resultado:</strong> Un bailarín tiene huesos más densos y fuertes que una persona sedentaria.</li>
+</ul>
+</div>
+</div>
+<div class="diagram-container">
+<h4 data-i18n="s2_diagram_title">📐 Comparación: bailarín vs. persona sedentaria</h4>
+<svg viewBox="0 0 700 260">
+<g transform="translate(50, 30)">
+<rect x="0" y="0" width="280" height="200" fill="#e8f5e9" stroke="#27ae60" stroke-width="3" rx="10"/>
+<text x="140" y="30" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e7d32" data-i18n-svg="diagram2_dancer">BAILARÍN</text>
+<rect x="80" y="50" width="120" height="120" fill="#27ae60" opacity="0.8" rx="5"/>
+<text x="140" y="100" text-anchor="middle" font-size="11" fill="white" font-weight="bold" data-i18n-svg="diagram2_dense1">HUESO</text>
+<text x="140" y="115" text-anchor="middle" font-size="11" fill="white" font-weight="bold" data-i18n-svg="diagram2_dense2">DENSO</text>
+<text x="140" y="135" text-anchor="middle" font-size="10" fill="white" data-i18n-svg="diagram2_strong">💪 Fuerte</text>
+<text x="140" y="190" text-anchor="middle" font-size="10" fill="#2e7d32" data-i18n-svg="diagram2_jump">Saltos → más hueso</text>
+</g>
+<g transform="translate(370, 30)">
+<rect x="0" y="0" width="280" height="200" fill="#ffebee" stroke="#e74c3c" stroke-width="3" rx="10"/>
+<text x="140" y="30" text-anchor="middle" font-size="14" font-weight="bold" fill="#c0392b" data-i18n-svg="diagram2_sedentary">SEDENTARIO</text>
+<rect x="80" y="50" width="120" height="120" fill="#e74c3c" opacity="0.4" rx="5"/>
+<text x="140" y="100" text-anchor="middle" font-size="11" fill="#c0392b" font-weight="bold" data-i18n-svg="diagram2_less1">HUESO</text>
+<text x="140" y="115" text-anchor="middle" font-size="11" fill="#c0392b" font-weight="bold" data-i18n-svg="diagram2_less2">MENOS DENSO</text>
+<text x="140" y="135" text-anchor="middle" font-size="10" fill="#c0392b" data-i18n-svg="diagram2_weak">😔 Débil</text>
+<text x="140" y="190" text-anchor="middle" font-size="10" fill="#c0392b" data-i18n-svg="diagram2_nouse">Sin uso → menos hueso</text>
+</g>
+</svg>
+</div>
+<div class="dance-box">
+<h4><span class="emoji">💃</span> <span data-i18n="s2_dance_title">Aplicación en la danza</span></h4>
+<ul>
+<li data-i18n="s2_dance_li1"><strong>Los saltos fortalecen los huesos:</strong> Cada <em>grand jeté</em>, cada <em>sauté</em>, envía una señal a tus huesos para que se hagan más fuertes.</li>
+<li data-i18n="s2_dance_li2"><strong>Los relevés también:</strong> Al ponerte de puntas, los huesos del pie reciben carga y se adaptan.</li>
+<li data-i18n="s2_dance_li3"><strong>La danza es mejor que la natación para los huesos:</strong> La natación no tiene impacto, así que no estimula tanto la formación de hueso.</li>
+<li data-i18n="s2_dance_li4"><strong>Pero ojo:</strong> El exceso de impacto sin descanso puede causar fracturas por estrés (lo veremos en la Parte 3).</li>
+</ul>
+</div>
+<div class="practical-activity">
+<h4><span class="emoji">🎭</span> <span data-i18n="s2_activity_title">Actividad: "Comparando deportes"</span></h4>
+<p><strong data-i18n="s2_activity_obj_label">Objetivo:</strong> <span data-i18n="s2_activity_obj">Entender qué deportes fortalecen más los huesos</span></p>
+<ol class="activity-steps">
+<li data-i18n="s2_activity_step1"><strong>Imagina 3 personas:</strong>
+<ul>
+<li data-i18n="s2_activity_pA">Persona A: Bailarina (salta y hace relevés)</li>
+<li data-i18n="s2_activity_pB">Persona B: Nadadora (se mueve mucho pero sin impacto)</li>
+<li data-i18n="s2_activity_pC">Persona C: Sedentaria (no hace deporte)</li>
+</ul>
+</li>
+<li data-i18n="s2_activity_step2"><strong>Pregunta:</strong> ¿Quién tendrá los huesos más fuertes? ¿Por qué?</li>
+<li data-i18n="s2_activity_step3"><strong>Respuesta:</strong> La bailarina, porque sus huesos reciben impacto y se adaptan (Ley de Wolff). La nadadora tiene músculos fuertes pero huesos menos densos. La sedentaria tiene los huesos más débiles.</li>
+<li data-i18n="s2_activity_step4"><strong>Reflexión:</strong> ¿Esto significa que la natación es mala? ¡No! Es excelente para el corazón y los músculos. Solo que para los huesos, el impacto controlado es mejor.</li>
+</ol>
+</div>
+<div class="tip-box">
+<h4 data-i18n="s2_tip_title">✨ Consejo para bailarines</h4>
+<p data-i18n="s2_tip_intro">Para que tus huesos se fortalezcan bien:</p>
+<ul style="margin-left: 25px; margin-top: 8px; line-height: 1.7;">
+<li data-i18n="s2_tip_li1">Entrena con <strong>impacto controlado</strong> (saltos, relevés)</li>
+<li data-i18n="s2_tip_li2">Descansa bien (los "constructores" trabajan de noche)</li>
+<li data-i18n="s2_tip_li3">Come alimentos con <strong>calcio</strong> (lácteos, brócoli, almendras)</li>
+<li data-i18n="s2_tip_li4">Toma el <strong>sol</strong> un ratito cada día (para la vitamina D)</li>
+</ul>
+</div>
+</div>
+
+<!-- SLIDE 3 -->
+<div class="slide">
+<h2 data-i18n="s3_title">⚖️ El esqueleto como sistema de palancas</h2>
+<div class="reminder-box">
+<h4 data-i18n="s3_reminder_title">💡 Recordatorio</h4>
+<p data-i18n="s3_reminder_text">Tus huesos no solo son fuertes: también son <strong>palancas</strong>. Una palanca es una barra rígida que se apoya en un punto (articulación) y permite mover una carga con menos esfuerzo. ¡Tus huesos funcionan igual!</p>
+</div>
+<div class="concept-card">
+<h3><span class="emoji">🔧</span> <span data-i18n="s3_concept_title">¿Qué es una palanca en el cuerpo?</span></h3>
+<div class="how-it-works">
+<h4 data-i18n="s3_how_title">📐 Las 3 partes de una palanca</h4>
+<ul>
+<li data-i18n="s3_how_li1"><strong>El punto de apoyo (articulación):</strong> Donde se "apoya" la palanca. Ejemplo: la rodilla.</li>
+<li data-i18n="s3_how_li2"><strong>La fuerza (músculo):</strong> Lo que hace el esfuerzo. Ejemplo: el cuádriceps.</li>
+<li data-i18n="s3_how_li3"><strong>La carga (peso a mover):</strong> Lo que queremos mover. Ejemplo: el peso de la pierna o del cuerpo.</li>
+</ul>
+</div>
+<div class="intro-box" style="margin-top: 15px;">
+<h4 data-i18n="s3_types_title">🎯 Hay 3 tipos de palancas en el cuerpo</h4>
+<p data-i18n="s3_types_text">Cada una tiene ventajas diferentes:</p>
+</div>
+</div>
+<div class="diagram-container">
+<h4 data-i18n="s3_diagram_title">📐 Los 3 tipos de palancas</h4>
+<svg viewBox="0 0 700 400">
+<g transform="translate(30, 30)">
+<rect x="0" y="0" width="200" height="110" fill="#e3f2fd" stroke="#1976d2" stroke-width="2" rx="10"/>
+<text x="100" y="25" text-anchor="middle" font-size="13" font-weight="bold" fill="#1565c0" data-i18n-svg="diag3_t1">TIPO 1</text>
+<text x="100" y="45" text-anchor="middle" font-size="10" fill="#7f8c8d" data-i18n-svg="diag3_t1_desc">Apoyo en el medio</text>
+<line x1="20" y1="75" x2="180" y2="75" stroke="#2a5298" stroke-width="4"/>
+<circle cx="100" cy="75" r="8" fill="#e74c3c"/>
+<text x="100" y="100" text-anchor="middle" font-size="9" fill="#e74c3c" data-i18n-svg="diag3_fulcrum">Apoyo</text>
+<text x="30" y="70" text-anchor="middle" font-size="9" fill="#2a5298" data-i18n-svg="diag3_force">Fuerza</text>
+<text x="170" y="70" text-anchor="middle" font-size="9" fill="#2a5298" data-i18n-svg="diag3_load">Carga</text>
+<text x="100" y="130" text-anchor="middle" font-size="10" fill="#1565c0" font-weight="bold" data-i18n-svg="diag3_t1_ex">Ejemplo: la cabeza</text>
+</g>
+<g transform="translate(250, 30)">
+<rect x="0" y="0" width="200" height="110" fill="#e8f5e9" stroke="#27ae60" stroke-width="2" rx="10"/>
+<text x="100" y="25" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e7d32" data-i18n-svg="diag3_t2">TIPO 2</text>
+<text x="100" y="45" text-anchor="middle" font-size="10" fill="#7f8c8d" data-i18n-svg="diag3_t2_desc">Carga en el medio</text>
+<line x1="20" y1="75" x2="180" y2="75" stroke="#2a5298" stroke-width="4"/>
+<circle cx="20" cy="75" r="8" fill="#e74c3c"/>
+<text x="20" y="100" text-anchor="middle" font-size="9" fill="#e74c3c" data-i18n-svg="diag3_fulcrum2">Apoyo</text>
+<circle cx="100" cy="75" r="8" fill="#f39c12"/>
+<text x="100" y="100" text-anchor="middle" font-size="9" fill="#f39c12" data-i18n-svg="diag3_load2">Carga</text>
+<text x="170" y="70" text-anchor="middle" font-size="9" fill="#2a5298" data-i18n-svg="diag3_force2">Fuerza</text>
+<text x="100" y="130" text-anchor="middle" font-size="10" fill="#2e7d32" font-weight="bold" data-i18n-svg="diag3_t2_ex">Ejemplo: relevé</text>
+</g>
+<g transform="translate(470, 30)">
+<rect x="0" y="0" width="200" height="110" fill="#fff3e0" stroke="#f57c00" stroke-width="2" rx="10"/>
+<text x="100" y="25" text-anchor="middle" font-size="13" font-weight="bold" fill="#e65100" data-i18n-svg="diag3_t3">TIPO 3</text>
+<text x="100" y="45" text-anchor="middle" font-size="10" fill="#7f8c8d" data-i18n-svg="diag3_t3_desc">Fuerza en el medio</text>
+<line x1="20" y1="75" x2="180" y2="75" stroke="#2a5298" stroke-width="4"/>
+<circle cx="20" cy="75" r="8" fill="#e74c3c"/>
+<text x="20" y="100" text-anchor="middle" font-size="9" fill="#e74c3c" data-i18n-svg="diag3_fulcrum3">Apoyo</text>
+<circle cx="100" cy="75" r="8" fill="#9b59b6"/>
+<text x="100" y="100" text-anchor="middle" font-size="9" fill="#9b59b6" data-i18n-svg="diag3_force3">Fuerza</text>
+<text x="170" y="70" text-anchor="middle" font-size="9" fill="#2a5298" data-i18n-svg="diag3_load3">Carga</text>
+<text x="100" y="130" text-anchor="middle" font-size="10" fill="#e65100" font-weight="bold" data-i18n-svg="diag3_t3_ex">Ejemplo: brazo</text>
+</g>
+<g transform="translate(30, 180)">
+<rect x="0" y="0" width="640" height="200" fill="#f8f9fa" stroke="#dee2e6" stroke-width="2" rx="10"/>
+<text x="320" y="25" text-anchor="middle" font-size="13" font-weight="bold" fill="#2a5298" data-i18n-svg="diag3_comp_title">Comparación de los 3 tipos</text>
+<text x="100" y="55" text-anchor="middle" font-size="11" font-weight="bold" fill="#1565c0" data-i18n-svg="diag3_h1">Tipo 1</text>
+<text x="320" y="55" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e7d32" data-i18n-svg="diag3_h2">Tipo 2</text>
+<text x="540" y="55" text-anchor="middle" font-size="11" font-weight="bold" fill="#e65100" data-i18n-svg="diag3_h3">Tipo 3</text>
+<text x="100" y="80" text-anchor="middle" font-size="10" fill="#333" data-i18n-svg="diag3_balance">Equilibrio</text>
+<text x="320" y="80" text-anchor="middle" font-size="10" fill="#333" data-i18n-svg="diag3_strength">Fuerza</text>
+<text x="540" y="80" text-anchor="middle" font-size="10" fill="#333" data-i18n-svg="diag3_speed">Velocidad</text>
+<text x="100" y="110" text-anchor="middle" font-size="10" fill="#333" data-i18n-svg="diag3_ex1">Ej: cabeza</text>
+<text x="320" y="110" text-anchor="middle" font-size="10" fill="#333" data-i18n-svg="diag3_ex2">Ej: relevé</text>
+<text x="540" y="110" text-anchor="middle" font-size="10" fill="#333" data-i18n-svg="diag3_ex3">Ej: brazo</text>
+<text x="100" y="140" text-anchor="middle" font-size="10" fill="#333" data-i18n-svg="diag3_bal2">Equilibra</text>
+<text x="320" y="140" text-anchor="middle" font-size="10" fill="#333" data-i18n-svg="diag3_lift">Levanta mucho</text>
+<text x="540" y="140" text-anchor="middle" font-size="10" fill="#333" data-i18n-svg="diag3_fast">Se mueve rápido</text>
+<text x="100" y="170" text-anchor="middle" font-size="10" fill="#333" data-i18n-svg="diag3_bal3">poco peso</text>
+<text x="320" y="170" text-anchor="middle" font-size="10" fill="#333" data-i18n-svg="diag3_lift2">con poco esfuerzo</text>
+<text x="540" y="170" text-anchor="middle" font-size="10" fill="#333" data-i18n-svg="diag3_fast2">pero con más esfuerzo</text>
+</g>
+</svg>
+</div>
+<div class="dance-box">
+<h4><span class="emoji">💃</span> <span data-i18n="s3_dance_title">Ejemplos en la danza</span></h4>
+<ul>
+<li data-i18n="s3_dance_li1"><strong>Tipo 1 (equilibrio):</strong> Cuando mantienes la cabeza erguida durante un giro. La articulación del cuello es el punto de apoyo, los músculos del cuello hacen fuerza a un lado y el peso de la cabeza al otro.</li>
+<li data-i18n="s3_dance_li2"><strong>Tipo 2 (fuerza):</strong> El <em>relevé</em>. El apoyo está en la punta del pie, la carga es tu peso corporal (en medio), y la fuerza la hacen los gemelos. ¡Por eso puedes levantar todo tu peso con relativamente poco esfuerzo!</li>
+<li data-i18n="s3_dance_li3"><strong>Tipo 3 (velocidad):</strong> Cuando mueves el brazo rápidamente en un <em>port de bras</em>. El codo es el apoyo, el bíceps hace fuerza en medio, y la mano (carga) se mueve muy rápido. Pierdes fuerza pero ganas velocidad y amplitud.</li>
+</ul>
+</div>
+<div class="practical-activity">
+<h4><span class="emoji">🎭</span> <span data-i18n="s3_activity_title">Actividad: "Siente las palancas"</span></h4>
+<p><strong data-i18n="s3_activity_obj_label">Objetivo:</strong> <span data-i18n="s3_activity_obj">Experimentar los 3 tipos de palancas con tu cuerpo</span></p>
+<ol class="activity-steps">
+<li data-i18n="s3_activity_step1"><strong>Palanca Tipo 1 (cabeza):</strong>
+<ul>
+<li data-i18n="s3_activity_step1a">Inclina la cabeza hacia atrás lentamente</li>
+<li data-i18n="s3_activity_step1b">Siente cómo los músculos de la nuca hacen fuerza</li>
+<li data-i18n="s3_activity_step1c">La articulación del cuello es el punto de apoyo</li>
+</ul>
+</li>
+<li data-i18n="s3_activity_step2"><strong>Palanca Tipo 2 (relevé):</strong>
+<ul>
+<li data-i18n="s3_activity_step2a">Ponte de puntas (relevé) lentamente</li>
+<li data-i18n="s3_activity_step2b">Siente cómo los gemelos (pantorrillas) levantan todo tu peso</li>
+<li data-i18n="s3_activity_step2c">¡Es una palanca de fuerza! Por eso puedes aguantar bastante tiempo</li>
+</ul>
+</li>
+<li data-i18n="s3_activity_step3"><strong>Palanca Tipo 3 (brazo):</strong>
+<ul>
+<li data-i18n="s3_activity_step3a">Flexiona el codo llevando la mano al hombro</li>
+<li data-i18n="s3_activity_step3b">Toca el bíceps: está duro (hace fuerza)</li>
+<li data-i18n="s3_activity_step3c">La mano se mueve rápido y lejos, pero el bíceps tiene que hacer bastante fuerza</li>
+</ul>
+</li>
+<li data-i18n="s3_activity_step4"><strong>Reflexión:</strong> ¿Qué palanca te ha resultado más fácil? ¿Cuál más difícil? ¿Por qué?</li>
+</ol>
+</div>
+<div class="tip-box">
+<h4 data-i18n="s3_tip_title">✨ ¿Por qué algunos bailarines tienen "más facilidad"?</h4>
+<p data-i18n="s3_tip_text">La <strong>longitud de los huesos</strong> (brazos, piernas) varía entre personas. Esto cambia la "longitud de la palanca":</p>
+<ul style="margin-left: 25px; margin-top: 8px; line-height: 1.7;">
+<li data-i18n="s3_tip_li1"><strong>Piernas largas:</strong> Más amplitud en los movimientos, pero requieren más fuerza para levantarlas</li>
+<li data-i18n="s3_tip_li2"><strong>Piernas cortas:</strong> Menos amplitud, pero más facilidad para saltos rápidos</li>
+<li data-i18n="s3_tip_li3"><strong>¡No hay mejor ni peor!</strong> Cada cuerpo tiene sus ventajas. Un buen bailarín aprovecha lo que tiene.</li>
+</ul>
+</div>
+</div>
+
+<!-- SLIDE 4 -->
+<div class="slide">
+<h2 data-i18n="s4_title">🎯 Quiz: Comprueba lo aprendido</h2>
+<div class="quiz-container">
+<h3 data-i18n="s4_quiz_title">Preguntas sobre el esqueleto vivo</h3>
+<div id="quizContainer"></div>
+<button class="btn" onclick="checkQuiz()" data-i18n="s4_check_btn">Comprobar respuestas</button>
+<button class="btn" style="background: #6c757d;" onclick="resetQuiz()" data-i18n="s4_reset_btn">Reiniciar</button>
+<div class="feedback" id="fbQuiz"></div>
+</div>
+<div class="practical-activity">
+<h4><span class="emoji">🎭</span> <span data-i18n="s4_activity_title">Actividad final: "Mi esqueleto bailarín"</span></h4>
+<p><strong data-i18n="s4_activity_obj_label">Objetivo:</strong> <span data-i18n="s4_activity_obj">Aplicar lo aprendido a tu propio cuerpo</span></p>
+<ol class="activity-steps">
+<li data-i18n="s4_activity_step1"><strong>Observa:</strong> Mira tus pies. ¿Ves que los huesos son más pequeños y numerosos? Están diseñados para soportar todo tu peso y adaptarse al suelo.</li>
+<li data-i18n="s4_activity_step2"><strong>Experimenta:</strong> Haz 10 relevés. Siente cómo los huesos del pie reciben la carga. Según la Ley de Wolff, se están haciendo más fuertes.</li>
+<li data-i18n="s4_activity_step3"><strong>Reflexiona:</strong> ¿Qué tipo de palanca es un <em>grand plié</em>? (Pista: la rodilla es el punto de apoyo, el cuádriceps hace fuerza, y el peso del cuerpo es la carga).</li>
+<li data-i18n="s4_activity_step4"><strong>Compromiso:</strong> Escribe 3 cosas que harás para cuidar tus huesos (descanso, calcio, sol, entrenamiento progresivo...).</li>
+</ol>
+</div>
+</div>
+</div>
+
+<script>
+// ==================== SISTEMA DE TRADUCCIONS ====================
+const translations = {
+es: {
+main_title: "🦴 El Esqueleto en la Danza",
+main_subtitle: "Parte 1: Un órgano vivo y en movimiento",
+main_tagline: "Cómo tus huesos se adaptan, se mueven y te ayudan a bailar mejor",
+tab1: "🦴 Esqueleto vivo",
+tab2: "🔄 Hueso que se adapta",
+tab3: "⚖️ Palancas del cuerpo",
+tab4: "🎯 Quiz",
+s1_title: "🦴 El esqueleto: mucho más que un \"andamio\"",
+s1_reminder_title: "💡 Recordatorio",
+s1_reminder_text: "Cuando piensas en el esqueleto, ¿qué te viene a la cabeza? ¿Un armazón rígido e inerte como el de un esqueleto de Halloween? <strong>¡Error!</strong> Tus huesos son <strong>órganos vivos</strong> que crecen, se reparan, se adaptan y trabajan constantemente. Vamos a descubrirlo.",
+s1_intro_title: "🤔 ¿Qué hace que el hueso esté \"vivo\"?",
+s1_intro_text: "Un hueso no es como una piedra. Es un tejido que:",
+s1_li1: "<strong>Se renueva constantemente:</strong> Cada 10 años, ¡tienes un esqueleto completamente nuevo!</li>",
+s1_li2: "<strong>Se adapta al esfuerzo:</strong> Se hace más fuerte donde más lo necesitas",
+s1_li3: "<strong>Guarda minerales:</strong> Es el \"almacén\" de calcio de tu cuerpo",
+s1_li4: "<strong>Fabrica sangre:</strong> Dentro de algunos huesos se producen las células de la sangre",
+s1_concept_title: "¿Cómo se renueva un hueso?",
+s1_how_title: "👷 El equipo de \"obra\" del hueso",
+s1_how_text: "Imagina que tu hueso es una casa que se está reformando constantemente. Hay dos tipos de \"trabajadores\":",
+s1_how_li1: "<strong>Los \"destructores\" (osteoclastos):</strong> Retiran el hueso viejo o dañado. Son como los albañiles que derriban una pared.",
+s1_how_li2: "<strong>Los \"constructores\" (osteoblastos):</strong> Construyen hueso nuevo. Son como los albañiles que levantan la pared nueva.",
+s1_how_end: "Este proceso se llama <span class=\"highlight\">remodelación ósea</span> y ocurre durante toda tu vida.",
+s1_diagram_title: "🔄 Ciclo de renovación del hueso",
+s1_dance_title: "¿Por qué es importante esto para un bailarín?",
+s1_dance_li1: "<strong>Tus huesos responden al entrenamiento:</strong> Cuanto más bailas (con impacto controlado), más fuertes se hacen",
+s1_dance_li2: "<strong>El descanso es clave:</strong> Los \"constructores\" trabajan mejor cuando descansas",
+s1_dance_li3: "<strong>La nutrición importa:</strong> Necesitas calcio y vitamina D para que los \"constructores\" tengan materiales",
+s1_dance_li4: "<strong>Las lesiones se reparan:</strong> Si te haces una pequeña fractura, tu cuerpo la arregla solo (si le das tiempo)",
+s1_activity_title: "Actividad: \"Siente tus huesos vivos\"",
+s1_activity_obj_label: "Objetivo:",
+s1_activity_obj: "Comprobar que los huesos no son rígidos como piedras",
+s1_activity_step1: "<strong>Toca tu tibia</strong> (el hueso de la espinilla). ¿Es duro? Sí, pero no como una piedra.",
+s1_activity_step2: "<strong>Haz un pequeño salto</strong> y aterriza suavemente. ¿Sientes cómo el hueso \"absorbe\" el impacto? No se rompe porque está vivo y se adapta.",
+s1_activity_step3: "<strong>Reflexiona:</strong> Si tus huesos fueran como piedras, se romperían con cada salto. Al ser tejidos vivos, se flexionan un poquito y se reparan.",
+s1_activity_step4: "<strong>Comparte:</strong> ¿Conoces a alguien que se haya roto un hueso? ¿Sabes que al cabo de unas semanas se regenera solo? Eso es porque está vivo.",
+s1_tip_title: "✨ Dato curioso",
+s1_tip_text: "Los astronautas que pasan meses en el espacio (sin gravedad) <strong>pierden densidad ósea</strong> porque sus huesos no reciben la \"señal\" de tener que ser fuertes. Cuando vuelven a la Tierra, sus huesos son más débiles. ¡Esto demuestra que el hueso se adapta al uso que le damos!",
+s2_title: "🔄 El hueso que se adapta: la Ley de Wolff",
+s2_reminder_title: "💡 Recordatorio",
+s2_reminder_text: "Acabamos de ver que el hueso se renueva constantemente. Ahora vamos a descubrir <strong>cómo decide dónde hacerse más fuerte</strong>. La respuesta es sencilla: <strong>se fortalece donde más lo usas</strong>.",
+s2_concept_title: "¿Qué dice la Ley de Wolff?",
+s2_intro_text1: "En 1892, un médico llamado <strong>Julius Wolff</strong> descubrió algo muy importante:",
+s2_quote: "\"El hueso se adapta a las cargas que recibe. Donde hay más presión, se hace más fuerte. Donde no se usa, se debilita.\"",
+s2_how_title: "🔍 ¿Cómo funciona en la práctica?",
+s2_how_li1: "<strong>Cuando bailas y saltas:</strong> Tus huesos reciben \"golpecitos\" de impacto. Los \"constructores\" (osteoblastos) reciben la señal: <em>\"¡Oye, aquí necesitamos más hueso!\"</em> y añaden material.",
+s2_how_li2: "<strong>Cuando no te mueves mucho:</strong> Los \"destructores\" (osteoclastos) retiran hueso porque el cuerpo piensa: <em>\"Si no se usa, no lo necesitamos\"</em>.",
+s2_how_li3: "<strong>Resultado:</strong> Un bailarín tiene huesos más densos y fuertes que una persona sedentaria.",
+s2_diagram_title: "📐 Comparación: bailarín vs. persona sedentaria",
+s2_dance_title: "Aplicación en la danza",
+s2_dance_li1: "<strong>Los saltos fortalecen los huesos:</strong> Cada <em>grand jeté</em>, cada <em>sauté</em>, envía una señal a tus huesos para que se hagan más fuertes.",
+s2_dance_li2: "<strong>Los relevés también:</strong> Al ponerte de puntas, los huesos del pie reciben carga y se adaptan.",
+s2_dance_li3: "<strong>La danza es mejor que la natación para los huesos:</strong> La natación no tiene impacto, así que no estimula tanto la formación de hueso.",
+s2_dance_li4: "<strong>Pero ojo:</strong> El exceso de impacto sin descanso puede causar fracturas por estrés (lo veremos en la Parte 3).",
+s2_activity_title: "Actividad: \"Comparando deportes\"",
+s2_activity_obj_label: "Objetivo:",
+s2_activity_obj: "Entender qué deportes fortalecen más los huesos",
+s2_activity_step1: "<strong>Imagina 3 personas:</strong>",
+s2_activity_pA: "Persona A: Bailarina (salta y hace relevés)",
+s2_activity_pB: "Persona B: Nadadora (se mueve mucho pero sin impacto)",
+s2_activity_pC: "Persona C: Sedentaria (no hace deporte)",
+s2_activity_step2: "<strong>Pregunta:</strong> ¿Quién tendrá los huesos más fuertes? ¿Por qué?",
+s2_activity_step3: "<strong>Respuesta:</strong> La bailarina, porque sus huesos reciben impacto y se adaptan (Ley de Wolff). La nadadora tiene músculos fuertes pero huesos menos densos. La sedentaria tiene los huesos más débiles.",
+s2_activity_step4: "<strong>Reflexión:</strong> ¿Esto significa que la natación es mala? ¡No! Es excelente para el corazón y los músculos. Solo que para los huesos, el impacto controlado es mejor.",
+s2_tip_title: "✨ Consejo para bailarines",
+s2_tip_intro: "Para que tus huesos se fortalezcan bien:",
+s2_tip_li1: "Entrena con <strong>impacto controlado</strong> (saltos, relevés)",
+s2_tip_li2: "Descansa bien (los \"constructores\" trabajan de noche)",
+s2_tip_li3: "Come alimentos con <strong>calcio</strong> (lácteos, brócoli, almendras)",
+s2_tip_li4: "Toma el <strong>sol</strong> un ratito cada día (para la vitamina D)",
+s3_title: "⚖️ El esqueleto como sistema de palancas",
+s3_reminder_title: "💡 Recordatorio",
+s3_reminder_text: "Tus huesos no solo son fuertes: también son <strong>palancas</strong>. Una palanca es una barra rígida que se apoya en un punto (articulación) y permite mover una carga con menos esfuerzo. ¡Tus huesos funcionan igual!",
+s3_concept_title: "¿Qué es una palanca en el cuerpo?",
+s3_how_title: "📐 Las 3 partes de una palanca",
+s3_how_li1: "<strong>El punto de apoyo (articulación):</strong> Donde se \"apoya\" la palanca. Ejemplo: la rodilla.",
+s3_how_li2: "<strong>La fuerza (músculo):</strong> Lo que hace el esfuerzo. Ejemplo: el cuádriceps.",
+s3_how_li3: "<strong>La carga (peso a mover):</strong> Lo que queremos mover. Ejemplo: el peso de la pierna o del cuerpo.",
+s3_types_title: "🎯 Hay 3 tipos de palancas en el cuerpo",
+s3_types_text: "Cada una tiene ventajas diferentes:",
+s3_diagram_title: "📐 Los 3 tipos de palancas",
+s3_dance_title: "Ejemplos en la danza",
+s3_dance_li1: "<strong>Tipo 1 (equilibrio):</strong> Cuando mantienes la cabeza erguida durante un giro. La articulación del cuello es el punto de apoyo, los músculos del cuello hacen fuerza a un lado y el peso de la cabeza al otro.",
+s3_dance_li2: "<strong>Tipo 2 (fuerza):</strong> El <em>relevé</em>. El apoyo está en la punta del pie, la carga es tu peso corporal (en medio), y la fuerza la hacen los gemelos. ¡Por eso puedes levantar todo tu peso con relativamente poco esfuerzo!",
+s3_dance_li3: "<strong>Tipo 3 (velocidad):</strong> Cuando mueves el brazo rápidamente en un <em>port de bras</em>. El codo es el apoyo, el bíceps hace fuerza en medio, y la mano (carga) se mueve muy rápido. Pierdes fuerza pero ganas velocidad y amplitud.",
+s3_activity_title: "Actividad: \"Siente las palancas\"",
+s3_activity_obj_label: "Objetivo:",
+s3_activity_obj: "Experimentar los 3 tipos de palancas con tu cuerpo",
+s3_activity_step1: "<strong>Palanca Tipo 1 (cabeza):</strong>",
+s3_activity_step1a: "Inclina la cabeza hacia atrás lentamente",
+s3_activity_step1b: "Siente cómo los músculos de la nuca hacen fuerza",
+s3_activity_step1c: "La articulación del cuello es el punto de apoyo",
+s3_activity_step2: "<strong>Palanca Tipo 2 (relevé):</strong>",
+s3_activity_step2a: "Ponte de puntas (relevé) lentamente",
+s3_activity_step2b: "Siente cómo los gemelos (pantorrillas) levantan todo tu peso",
+s3_activity_step2c: "¡Es una palanca de fuerza! Por eso puedes aguantar bastante tiempo",
+s3_activity_step3: "<strong>Palanca Tipo 3 (brazo):</strong>",
+s3_activity_step3a: "Flexiona el codo llevando la mano al hombro",
+s3_activity_step3b: "Toca el bíceps: está duro (hace fuerza)",
+s3_activity_step3c: "La mano se mueve rápido y lejos, pero el bíceps tiene que hacer bastante fuerza",
+s3_activity_step4: "<strong>Reflexión:</strong> ¿Qué palanca te ha resultado más fácil? ¿Cuál más difícil? ¿Por qué?",
+s3_tip_title: "✨ ¿Por qué algunos bailarines tienen \"más facilidad\"?",
+s3_tip_text: "La <strong>longitud de los huesos</strong> (brazos, piernas) varía entre personas. Esto cambia la \"longitud de la palanca\":",
+s3_tip_li1: "<strong>Piernas largas:</strong> Más amplitud en los movimientos, pero requieren más fuerza para levantarlas",
+s3_tip_li2: "<strong>Piernas cortas:</strong> Menos amplitud, pero más facilidad para saltos rápidos",
+s3_tip_li3: "<strong>¡No hay mejor ni peor!</strong> Cada cuerpo tiene sus ventajas. Un buen bailarín aprovecha lo que tiene.",
+s4_title: "🎯 Quiz: Comprueba lo aprendido",
+s4_quiz_title: "Preguntas sobre el esqueleto vivo",
+s4_check_btn: "Comprobar respuestas",
+s4_reset_btn: "Reiniciar",
+s4_activity_title: "Actividad final: \"Mi esqueleto bailarín\"",
+s4_activity_obj_label: "Objetivo:",
+s4_activity_obj: "Aplicar lo aprendido a tu propio cuerpo",
+s4_activity_step1: "<strong>Observa:</strong> Mira tus pies. ¿Ves que los huesos son más pequeños y numerosos? Están diseñados para soportar todo tu peso y adaptarse al suelo.",
+s4_activity_step2: "<strong>Experimenta:</strong> Haz 10 relevés. Siente cómo los huesos del pie reciben la carga. Según la Ley de Wolff, se están haciendo más fuertes.",
+s4_activity_step3: "<strong>Reflexiona:</strong> ¿Qué tipo de palanca es un <em>grand plié</em>? (Pista: la rodilla es el punto de apoyo, el cuádriceps hace fuerza, y el peso del cuerpo es la carga).",
+s4_activity_step4: "<strong>Compromiso:</strong> Escribe 3 cosas que harás para cuidar tus huesos (descanso, calcio, sol, entrenamiento progresivo...)."
+},
+ca: {
+main_title: "🦴 L'Esquelet en la Dansa",
+main_subtitle: "Part 1: Un òrgan viu i en moviment",
+main_tagline: "Com els teus ossos s'adapten, es mouen i t'ajuden a ballar millor",
+tab1: "🦴 Esquelet viu",
+tab2: "🔄 Os que s'adapta",
+tab3: "⚖️ Palanques del cos",
+tab4: "🎯 Quiz",
+s1_title: "🦴 L'esquelet: molt més que un \"bastida\"",
+s1_reminder_title: "💡 Recordatori",
+s1_reminder_text: "Quan penses en l'esquelet, què et ve al cap? Una estructura rígida i inert com la d'un esquelet de Halloween? <strong>Errada!</strong> Els teus ossos són <strong>òrgans vius</strong> que creixen, es reparen, s'adapten i treballen constantment. Anem a descobrir-ho.",
+s1_intro_title: "🤔 Què fa que l'os estigui \"viu\"?",
+s1_intro_text: "Un os no és com una pedra. És un teixit que:",
+s1_li1: "<strong>Es renova constantment:</strong> Cada 10 anys, tens un esquelet completament nou!</li>",
+s1_li2: "<strong>S'adapta a l'esforç:</strong> Es fa més fort on més el necessites",
+s1_li3: "<strong>Guarda minerals:</strong> És el \"magatzem\" de calci del teu cos",
+s1_li4: "<strong>Fabrica sang:</strong> Dins d'alguns ossos es produeixen les cèl·lules de la sang",
+s1_concept_title: "Com es renova un os?",
+s1_how_title: "👷 L'equip d'\"obra\" de l'os",
+s1_how_text: "Imagina que el teu os és una casa que s'està reformant constantment. Hi ha dos tipus de \"treballadors\":",
+s1_how_li1: "<strong>Els \"destructors\" (osteoclasts):</strong> Retiren l'os vell o danyat. Són com els paletes que enderroquen una paret.",
+s1_how_li2: "<strong>Els \"constructors\" (osteoblasts):</strong> Construeixen os nou. Són com els paletes que aixequen la paret nova.",
+s1_how_end: "Aquest procés s'anomena <span class=\"highlight\">remodelació òssia</span> i ocorre durant tota la teva vida.",
+s1_diagram_title: "🔄 Cicle de renovació de l'os",
+s1_dance_title: "Per què és important això per a un ballarí?",
+s1_dance_li1: "<strong>Els teus ossos responen a l'entrenament:</strong> Com més balles (amb impacte controlat), més forts es fan",
+s1_dance_li2: "<strong>El descans és clau:</strong> Els \"constructors\" treballen millor quan descansen",
+s1_dance_li3: "<strong>La nutrició importa:</strong> Necessites calci i vitamina D perquè els \"constructors\" tinguin materials",
+s1_dance_li4: "<strong>Les lesions es reparen:</strong> Si et fas una petita fractura, el teu cos l'arregla sol (si li dones temps)",
+s1_activity_title: "Activitat: \"Sent els teus ossos vius\"",
+s1_activity_obj_label: "Objectiu:",
+s1_activity_obj: "Comprovar que els ossos no són rígids com pedres",
+s1_activity_step1: "<strong>Toca la teva tíbia</strong> (l'os de la canyella). És dur? Sí, però no com una pedra.",
+s1_activity_step2: "<strong>Fes un petit salt</strong> i aterrissa suaument. Sents com l'os \"absorbeix\" l'impacte? No es trenca perquè està viu i s'adapta.",
+s1_activity_step3: "<strong>Reflexiona:</strong> Si els teus ossos fossin com pedres, es trencarien amb cada salt. En ser teixits vius, es flexionen una miqueta i es reparen.",
+s1_activity_step4: "<strong>Comparteix:</strong> Coneixes algú que s'hagi trencat un os? Saps que al cap d'unes setmanes es regenera sol? Això és perquè està viu.",
+s1_tip_title: "✨ Dada curiosa",
+s1_tip_text: "Els astronautes que passen mesos a l'espai (sense gravetat) <strong>perden densitat òssia</strong> perquè els seus ossos no reben el \"senyal\" d'haver de ser forts. Quan tornen a la Terra, els seus ossos són més febles. Això demostra que l'os s'adapta a l'ús que li donem!",
+s2_title: "🔄 L'os que s'adapta: la Llei de Wolff",
+s2_reminder_title: "💡 Recordatori",
+s2_reminder_text: "Acabem de veure que l'os es renova constantment. Ara descobrirem <strong>com decideix on fer-se més fort</strong>. La resposta és senzilla: <strong>s'enforteix on més l'uses</strong>.",
+s2_concept_title: "Què diu la Llei de Wolff?",
+s2_intro_text1: "El 1892, un metge anomenat <strong>Julius Wolff</strong> va descobrir una cosa molt important:",
+s2_quote: "\"L'os s'adapta a les càrregues que rep. On hi ha més pressió, es fa més fort. On no s'usa, es debilita.\"",
+s2_how_title: "🔍 Com funciona a la pràctica?",
+s2_how_li1: "<strong>Quan balles i saltes:</strong> Els teus ossos reben \"copets\" d'impacte. Els \"constructors\" (osteoblasts) reben el senyal: <em>\"Ei, aquí necessitem més os!\"</em> i hi afegeixen material.",
+s2_how_li2: "<strong>Quan no et mous gaire:</strong> Els \"destructors\" (osteoclasts) retiren os perquè el cos pensa: <em>\"Si no s'usa, no el necessitem\"</em>.",
+s2_how_li3: "<strong>Resultat:</strong> Un ballarí té ossos més densos i forts que una persona sedentària.",
+s2_diagram_title: "📐 Comparació: ballarí vs. persona sedentària",
+s2_dance_title: "Aplicació a la dansa",
+s2_dance_li1: "<strong>Els salts enforteixen els ossos:</strong> Cada <em>grand jeté</em>, cada <em>sauté</em>, envia un senyal als teus ossos perquè es facin més forts.",
+s2_dance_li2: "<strong>Els relevés també:</strong> En posar-te de puntetes, els ossos del peu reben càrrega i s'adapten.",
+s2_dance_li3: "<strong>La dansa és millor que la natació per als ossos:</strong> La natació no té impacte, així que no estimula tant la formació d'os.",
+s2_dance_li4: "<strong>Però compte:</strong> L'excés d'impacte sense descans pot causar fractures per estrès (ho veurem a la Part 3).",
+s2_activity_title: "Activitat: \"Comparant esports\"",
+s2_activity_obj_label: "Objectiu:",
+s2_activity_obj: "Entendre quins esports enforteixen més els ossos",
+s2_activity_step1: "<strong>Imagina 3 persones:</strong>",
+s2_activity_pA: "Persona A: Ballarina (salta i fa relevés)",
+s2_activity_pB: "Persona B: Nedadora (es mou molt però sense impacte)",
+s2_activity_pC: "Persona C: Sedentària (no fa esport)",
+s2_activity_step2: "<strong>Pregunta:</strong> Qui tindrà els ossos més forts? Per què?",
+s2_activity_step3: "<strong>Resposta:</strong> La ballarina, perquè els seus ossos reben impacte i s'adapten (Llei de Wolff). La nedadora té músculs forts però ossos menys densos. La sedentària té els ossos més febles.",
+s2_activity_step4: "<strong>Reflexió:</strong> Això vol dir que la natació és dolenta? No! És excel·lent per al cor i els músculs. Només que per als ossos, l'impacte controlat és millor.",
+s2_tip_title: "✨ Consell per a ballarins",
+s2_tip_intro: "Perquè els teus ossos s'enforteixin bé:",
+s2_tip_li1: "Entrena amb <strong>impacte controlat</strong> (salts, relevés)",
+s2_tip_li2: "Descansa bé (els \"constructors\" treballen de nit)",
+s2_tip_li3: "Menja aliments amb <strong>calci</strong> (làctics, bròquil, ametlles)",
+s2_tip_li4: "Pren el <strong>sol</strong> una estoneta cada dia (per a la vitamina D)",
+s3_title: "⚖️ L'esquelet com a sistema de palanques",
+s3_reminder_title: "💡 Recordatori",
+s3_reminder_text: "Els teus ossos no només són forts: també són <strong>palanques</strong>. Una palanca és una barra rígida que es recolza en un punt (articulació) i permet moure una càrrega amb menys esforç. Els teus ossos funcionen igual!",
+s3_concept_title: "Què és una palanca al cos?",
+s3_how_title: "📐 Les 3 parts d'una palanca",
+s3_how_li1: "<strong>El punt de recolzament (articulació):</strong> On es \"recolza\" la palanca. Exemple: el genoll.",
+s3_how_li2: "<strong>La força (múscul):</strong> El que fa l'esforç. Exemple: el quàdriceps.",
+s3_how_li3: "<strong>La càrrega (pes a moure):</strong> El que volem moure. Exemple: el pes de la cama o del cos.",
+s3_types_title: "🎯 Hi ha 3 tipus de palanques al cos",
+s3_types_text: "Cada una té avantatges diferents:",
+s3_diagram_title: "📐 Els 3 tipus de palanques",
+s3_dance_title: "Exemples a la dansa",
+s3_dance_li1: "<strong>Tipus 1 (equilibri):</strong> Quan mantens el cap dret durant un gir. L'articulació del coll és el punt de recolzament, els músculs del coll fan força a un costat i el pes del cap a l'altre.",
+s3_dance_li2: "<strong>Tipus 2 (força):</strong> El <em>relevé</em>. El recolzament està a la punta del peu, la càrrega és el teu pes corporal (al mig), i la força la fan els bessons. Per això pots aixecar tot el teu pes amb relativament poc esforç!",
+s3_dance_li3: "<strong>Tipus 3 (velocitat):</strong> Quan mous el braç ràpidament en un <em>port de bras</em>. El colze és el recolzament, el bíceps fa força al mig, i la mà (càrrega) es mou molt ràpid. Perds força però guanyes velocitat i amplitud.",
+s3_activity_title: "Activitat: \"Sent les palanques\"",
+s3_activity_obj_label: "Objectiu:",
+s3_activity_obj: "Experimentar els 3 tipus de palanques amb el teu cos",
+s3_activity_step1: "<strong>Palanca Tipus 1 (cap):</strong>",
+s3_activity_step1a: "Inclina el cap cap enrere lentament",
+s3_activity_step1b: "Sent com els músculs del clatell fan força",
+s3_activity_step1c: "L'articulació del coll és el punt de recolzament",
+s3_activity_step2: "<strong>Palanca Tipus 2 (relevé):</strong>",
+s3_activity_step2a: "Posa't de puntetes (relevé) lentament",
+s3_activity_step2b: "Sent com els bessons (panxells) aixequen tot el teu pes",
+s3_activity_step2c: "És una palanca de força! Per això pots aguantar bastant de temps",
+s3_activity_step3: "<strong>Palanca Tipus 3 (braç):</strong>",
+s3_activity_step3a: "Flexiona el colze portant la mà a l'espatlla",
+s3_activity_step3b: "Toca el bíceps: està dur (fa força)",
+s3_activity_step3c: "La mà es mou ràpid i lluny, però el bíceps ha de fer bastanta força",
+s3_activity_step4: "<strong>Reflexió:</strong> Quina palanca t'ha resultat més fàcil? Quina més difícil? Per què?",
+s3_tip_title: "✨ Per què alguns ballarins tenen \"més facilitat\"?",
+s3_tip_text: "La <strong>longitud dels ossos</strong> (braços, cames) varia entre persones. Això canvia la \"longitud de la palanca\":",
+s3_tip_li1: "<strong>Cames llargues:</strong> Més amplitud en els moviments, però requereixen més força per aixecar-les",
+s3_tip_li2: "<strong>Cames curtes:</strong> Menys amplitud, però més facilitat per a salts ràpids",
+s3_tip_li3: "<strong>No hi ha millor ni pitjor!</strong> Cada cos té els seus avantatges. Un bon ballarí aprofita el que té.",
+s4_title: "🎯 Quiz: Comprova el que has après",
+s4_quiz_title: "Preguntes sobre l'esquelet viu",
+s4_check_btn: "Comprova les respostes",
+s4_reset_btn: "Reinicia",
+s4_activity_title: "Activitat final: \"El meu esquelet ballarí\"",
+s4_activity_obj_label: "Objectiu:",
+s4_activity_obj: "Aplicar el que has après al teu propi cos",
+s4_activity_step1: "<strong>Observa:</strong> Mira els teus peus. Veus que els ossos són més petits i nombrosos? Estan dissenyats per suportar tot el teu pes i adaptar-se al terra.",
+s4_activity_step2: "<strong>Experimenta:</strong> Fes 10 relevés. Sent com els ossos del peu reben la càrrega. Segons la Llei de Wolff, s'estan fent més forts.",
+s4_activity_step3: "<strong>Reflexiona:</strong> Quin tipus de palanca és un <em>grand plié</em>? (Pista: el genoll és el punt de recolzament, el quàdriceps fa força, i el pes del cos és la càrrega).",
+s4_activity_step4: "<strong>Compromís:</strong> Escriu 3 coses que faràs per cuidar els teus ossos (descans, calci, sol, entrenament progressiu...)."
+},
+en: {
+main_title: "🦴 The Skeleton in Dance",
+main_subtitle: "Part 1: A living and moving organ",
+main_tagline: "How your bones adapt, move, and help you dance better",
+tab1: "🦴 Living skeleton",
+tab2: "🔄 Adapting bone",
+tab3: "⚖️ Body levers",
+tab4: "🎯 Quiz",
+s1_title: "🦴 The skeleton: much more than a \"scaffold\"",
+s1_reminder_title: "💡 Reminder",
+s1_reminder_text: "When you think of the skeleton, what comes to mind? A rigid, lifeless frame like a Halloween skeleton? <strong>Wrong!</strong> Your bones are <strong>living organs</strong> that grow, repair, adapt, and work constantly. Let's discover how.",
+s1_intro_title: "🤔 What makes bone \"alive\"?",
+s1_intro_text: "A bone is not like a stone. It is a tissue that:",
+s1_li1: "<strong>Renews itself constantly:</strong> Every 10 years, you have a completely new skeleton!</li>",
+s1_li2: "<strong>Adapts to effort:</strong> Gets stronger where you need it most",
+s1_li3: "<strong>Stores minerals:</strong> It's your body's calcium \"warehouse\"",
+s1_li4: "<strong>Makes blood:</strong> Inside some bones, blood cells are produced",
+s1_concept_title: "How does a bone renew itself?",
+s1_how_title: "👷 The bone's \"construction crew\"",
+s1_how_text: "Imagine your bone is a house being constantly renovated. There are two types of \"workers\":",
+s1_how_li1: "<strong>The \"destroyers\" (osteoclasts):</strong> Remove old or damaged bone. Like builders tearing down a wall.",
+s1_how_li2: "<strong>The \"builders\" (osteoblasts):</strong> Build new bone. Like builders raising a new wall.",
+s1_how_end: "This process is called <span class=\"highlight\">bone remodeling</span> and happens throughout your life.",
+s1_diagram_title: "🔄 Bone renewal cycle",
+s1_dance_title: "Why is this important for a dancer?",
+s1_dance_li1: "<strong>Your bones respond to training:</strong> The more you dance (with controlled impact), the stronger they become",
+s1_dance_li2: "<strong>Rest is key:</strong> The \"builders\" work best when you rest",
+s1_dance_li3: "<strong>Nutrition matters:</strong> You need calcium and vitamin D so the \"builders\" have materials",
+s1_dance_li4: "<strong>Injuries repair themselves:</strong> If you get a small fracture, your body fixes it on its own (if you give it time)",
+s1_activity_title: "Activity: \"Feel your living bones\"",
+s1_activity_obj_label: "Goal:",
+s1_activity_obj: "Verify that bones are not rigid like stones",
+s1_activity_step1: "<strong>Touch your tibia</strong> (shin bone). Is it hard? Yes, but not like a stone.",
+s1_activity_step2: "<strong>Do a small jump</strong> and land softly. Do you feel how the bone \"absorbs\" the impact? It doesn't break because it's alive and adapts.",
+s1_activity_step3: "<strong>Reflect:</strong> If your bones were like stones, they'd break with every jump. Being living tissues, they flex a little and repair themselves.",
+s1_activity_step4: "<strong>Share:</strong> Do you know anyone who has broken a bone? Did you know that after a few weeks it regenerates on its own? That's because it's alive.",
+s1_tip_title: "✨ Fun fact",
+s1_tip_text: "Astronauts who spend months in space (without gravity) <strong>lose bone density</strong> because their bones don't receive the \"signal\" to stay strong. When they return to Earth, their bones are weaker. This proves that bone adapts to how we use it!",
+s2_title: "🔄 The adapting bone: Wolff's Law",
+s2_reminder_title: "💡 Reminder",
+s2_reminder_text: "We've just seen that bone renews itself constantly. Now let's discover <strong>how it decides where to get stronger</strong>. The answer is simple: <strong>it strengthens where you use it most</strong>.",
+s2_concept_title: "What does Wolff's Law say?",
+s2_intro_text1: "In 1892, a doctor named <strong>Julius Wolff</strong> discovered something very important:",
+s2_quote: "\"Bone adapts to the loads placed upon it. Where there is more pressure, it gets stronger. Where it is not used, it weakens.\"",
+s2_how_title: "🔍 How does it work in practice?",
+s2_how_li1: "<strong>When you dance and jump:</strong> Your bones receive little impact \"taps\". The \"builders\" (osteoblasts) receive the signal: <em>\"Hey, we need more bone here!\"</em> and add material.",
+s2_how_li2: "<strong>When you don't move much:</strong> The \"destroyers\" (osteoclasts) remove bone because the body thinks: <em>\"If it's not used, we don't need it\"</em>.",
+s2_how_li3: "<strong>Result:</strong> A dancer has denser, stronger bones than a sedentary person.",
+s2_diagram_title: "📐 Comparison: dancer vs. sedentary person",
+s2_dance_title: "Application in dance",
+s2_dance_li1: "<strong>Jumps strengthen bones:</strong> Every <em>grand jeté</em>, every <em>sauté</em>, sends a signal to your bones to get stronger.",
+s2_dance_li2: "<strong>Relevés too:</strong> When you go up on your toes, the foot bones receive load and adapt.",
+s2_dance_li3: "<strong>Dance is better than swimming for bones:</strong> Swimming has no impact, so it doesn't stimulate bone formation as much.",
+s2_dance_li4: "<strong>But beware:</strong> Excess impact without rest can cause stress fractures (we'll see this in Part 3).",
+s2_activity_title: "Activity: \"Comparing sports\"",
+s2_activity_obj_label: "Goal:",
+s2_activity_obj: "Understand which sports strengthen bones the most",
+s2_activity_step1: "<strong>Imagine 3 people:</strong>",
+s2_activity_pA: "Person A: Dancer (jumps and does relevés)",
+s2_activity_pB: "Person B: Swimmer (moves a lot but without impact)",
+s2_activity_pC: "Person C: Sedentary (doesn't exercise)",
+s2_activity_step2: "<strong>Question:</strong> Who will have the strongest bones? Why?",
+s2_activity_step3: "<strong>Answer:</strong> The dancer, because her bones receive impact and adapt (Wolff's Law). The swimmer has strong muscles but less dense bones. The sedentary person has the weakest bones.",
+s2_activity_step4: "<strong>Reflection:</strong> Does this mean swimming is bad? No! It's excellent for the heart and muscles. It's just that for bones, controlled impact is better.",
+s2_tip_title: "✨ Tip for dancers",
+s2_tip_intro: "For your bones to get strong:",
+s2_tip_li1: "Train with <strong>controlled impact</strong> (jumps, relevés)",
+s2_tip_li2: "Rest well (the \"builders\" work at night)",
+s2_tip_li3: "Eat foods with <strong>calcium</strong> (dairy, broccoli, almonds)",
+s2_tip_li4: "Get some <strong>sun</strong> every day (for vitamin D)",
+s3_title: "⚖️ The skeleton as a lever system",
+s3_reminder_title: "💡 Reminder",
+s3_reminder_text: "Your bones are not only strong: they are also <strong>levers</strong>. A lever is a rigid bar that rests on a point (joint) and allows you to move a load with less effort. Your bones work the same way!",
+s3_concept_title: "What is a lever in the body?",
+s3_how_title: "📐 The 3 parts of a lever",
+s3_how_li1: "<strong>The fulcrum (joint):</strong> Where the lever \"rests\". Example: the knee.",
+s3_how_li2: "<strong>The force (muscle):</strong> What does the work. Example: the quadriceps.",
+s3_how_li3: "<strong>The load (weight to move):</strong> What we want to move. Example: the weight of the leg or body.",
+s3_types_title: "🎯 There are 3 types of levers in the body",
+s3_types_text: "Each one has different advantages:",
+s3_diagram_title: "📐 The 3 types of levers",
+s3_dance_title: "Examples in dance",
+s3_dance_li1: "<strong>Type 1 (balance):</strong> When you keep your head upright during a turn. The neck joint is the fulcrum, the neck muscles exert force on one side and the head's weight on the other.",
+s3_dance_li2: "<strong>Type 2 (force):</strong> The <em>relevé</em>. The fulcrum is on the tip of the foot, the load is your body weight (in the middle), and the calves do the work. That's why you can lift your whole body weight with relatively little effort!",
+s3_dance_li3: "<strong>Type 3 (speed):</strong> When you move your arm quickly in a <em>port de bras</em>. The elbow is the fulcrum, the biceps exerts force in the middle, and the hand (load) moves very fast. You lose force but gain speed and range.",
+s3_activity_title: "Activity: \"Feel the levers\"",
+s3_activity_obj_label: "Goal:",
+s3_activity_obj: "Experience the 3 types of levers with your body",
+s3_activity_step1: "<strong>Lever Type 1 (head):</strong>",
+s3_activity_step1a: "Tilt your head back slowly",
+s3_activity_step1b: "Feel how the neck muscles exert force",
+s3_activity_step1c: "The neck joint is the fulcrum",
+s3_activity_step2: "<strong>Lever Type 2 (relevé):</strong>",
+s3_activity_step2a: "Go up on your toes (relevé) slowly",
+s3_activity_step2b: "Feel how the calves lift your whole weight",
+s3_activity_step2c: "It's a force lever! That's why you can hold it for quite a while",
+s3_activity_step3: "<strong>Lever Type 3 (arm):</strong>",
+s3_activity_step3a: "Bend your elbow bringing your hand to your shoulder",
+s3_activity_step3b: "Touch your biceps: it's hard (exerting force)",
+s3_activity_step3c: "The hand moves fast and far, but the biceps has to work quite hard",
+s3_activity_step4: "<strong>Reflection:</strong> Which lever was easiest for you? Which was hardest? Why?",
+s3_tip_title: "✨ Why do some dancers have \"more ease\"?",
+s3_tip_text: "The <strong>length of the bones</strong> (arms, legs) varies between people. This changes the \"lever length\":",
+s3_tip_li1: "<strong>Long legs:</strong> More range in movements, but require more strength to lift them",
+s3_tip_li2: "<strong>Short legs:</strong> Less range, but easier for quick jumps",
+s3_tip_li3: "<strong>There's no better or worse!</strong> Every body has its advantages. A good dancer makes the most of what they have.",
+s4_title: "🎯 Quiz: Check what you've learned",
+s4_quiz_title: "Questions about the living skeleton",
+s4_check_btn: "Check answers",
+s4_reset_btn: "Reset",
+s4_activity_title: "Final activity: \"My dancing skeleton\"",
+s4_activity_obj_label: "Goal:",
+s4_activity_obj: "Apply what you've learned to your own body",
+s4_activity_step1: "<strong>Observe:</strong> Look at your feet. Do you see that the bones are smaller and more numerous? They are designed to support your whole weight and adapt to the ground.",
+s4_activity_step2: "<strong>Experiment:</strong> Do 10 relevés. Feel how the foot bones receive the load. According to Wolff's Law, they are getting stronger.",
+s4_activity_step3: "<strong>Reflect:</strong> What type of lever is a <em>grand plié</em>? (Hint: the knee is the fulcrum, the quadriceps exerts force, and the body weight is the load).",
+s4_activity_step4: "<strong>Commit:</strong> Write down 3 things you will do to take care of your bones (rest, calcium, sun, progressive training...)."
+}
+};
+
+// Traduccions dels SVG (diagramas)
+const svgTranslations = {
+es: {
+diagram1_title: "Ciclo de remodelación ósea",
+diagram1_step1: "1. DESTRUCCIÓN", diagram1_desc1a: "Los \"destructores\"", diagram1_desc1b: "retiran hueso viejo",
+diagram1_step2: "2. CONSTRUCCIÓN", diagram1_desc2a: "Los \"constructores\"", diagram1_desc2b: "hacen hueso nuevo",
+diagram1_step3: "3. HUESO NUEVO", diagram1_desc3a: "Más fuerte y", diagram1_desc3b: "adaptado",
+diagram1_loop: "El ciclo continúa toda la vida",
+diagram2_dancer: "BAILARÍN", diagram2_dense1: "HUESO", diagram2_dense2: "DENSO", diagram2_strong: "💪 Fuerte", diagram2_jump: "Saltos → más hueso",
+diagram2_sedentary: "SEDENTARIO", diagram2_less1: "HUESO", diagram2_less2: "MENOS DENSO", diagram2_weak: "😔 Débil", diagram2_nouse: "Sin uso → menos hueso",
+diag3_t1: "TIPO 1", diag3_t1_desc: "Apoyo en el medio", diag3_fulcrum: "Apoyo", diag3_force: "Fuerza", diag3_load: "Carga", diag3_t1_ex: "Ejemplo: la cabeza",
+diag3_t2: "TIPO 2", diag3_t2_desc: "Carga en el medio", diag3_fulcrum2: "Apoyo", diag3_load2: "Carga", diag3_force2: "Fuerza", diag3_t2_ex: "Ejemplo: relevé",
+diag3_t3: "TIPO 3", diag3_t3_desc: "Fuerza en el medio", diag3_fulcrum3: "Apoyo", diag3_force3: "Fuerza", diag3_load3: "Carga", diag3_t3_ex: "Ejemplo: brazo",
+diag3_comp_title: "Comparación de los 3 tipos", diag3_h1: "Tipo 1", diag3_h2: "Tipo 2", diag3_h3: "Tipo 3",
+diag3_balance: "Equilibrio", diag3_strength: "Fuerza", diag3_speed: "Velocidad",
+diag3_ex1: "Ej: cabeza", diag3_ex2: "Ej: relevé", diag3_ex3: "Ej: brazo",
+diag3_bal2: "Equilibra", diag3_lift: "Levanta mucho", diag3_fast: "Se mueve rápido",
+diag3_bal3: "poco peso", diag3_lift2: "con poco esfuerzo", diag3_fast2: "pero con más esfuerzo"
+},
+ca: {
+diagram1_title: "Cicle de remodelació òssia",
+diagram1_step1: "1. DESTRUCCIÓ", diagram1_desc1a: "Els \"destructors\"", diagram1_desc1b: "retiren os vell",
+diagram1_step2: "2. CONSTRUCCIÓ", diagram1_desc2a: "Els \"constructors\"", diagram1_desc2b: "fan os nou",
+diagram1_step3: "3. OS NOU", diagram1_desc3a: "Més fort i", diagram1_desc3b: "adaptat",
+diagram1_loop: "El cicle continua tota la vida",
+diagram2_dancer: "BALLARÍ", diagram2_dense1: "OS", diagram2_dense2: "DENS", diagram2_strong: "💪 Fort", diagram2_jump: "Salts → més os",
+diagram2_sedentary: "SEDENTARI", diagram2_less1: "OS", diagram2_less2: "MENYS DENS", diagram2_weak: "😔 Feble", diagram2_nouse: "Sense ús → menys os",
+diag3_t1: "TIPUS 1", diag3_t1_desc: "Recolzament al mig", diag3_fulcrum: "Recolzament", diag3_force: "Força", diag3_load: "Càrrega", diag3_t1_ex: "Exemple: el cap",
+diag3_t2: "TIPUS 2", diag3_t2_desc: "Càrrega al mig", diag3_fulcrum2: "Recolzament", diag3_load2: "Càrrega", diag3_force2: "Força", diag3_t2_ex: "Exemple: relevé",
+diag3_t3: "TIPUS 3", diag3_t3_desc: "Força al mig", diag3_fulcrum3: "Recolzament", diag3_force3: "Força", diag3_load3: "Càrrega", diag3_t3_ex: "Exemple: braç",
+diag3_comp_title: "Comparació dels 3 tipus", diag3_h1: "Tipus 1", diag3_h2: "Tipus 2", diag3_h3: "Tipus 3",
+diag3_balance: "Equilibri", diag3_strength: "Força", diag3_speed: "Velocitat",
+diag3_ex1: "Ex: cap", diag3_ex2: "Ex: relevé", diag3_ex3: "Ex: braç",
+diag3_bal2: "Equilibra", diag3_lift: "Aixeca molt", diag3_fast: "Es mou ràpid",
+diag3_bal3: "poc pes", diag3_lift2: "amb poc esforç", diag3_fast2: "però amb més esforç"
+},
+en: {
+diagram1_title: "Bone remodeling cycle",
+diagram1_step1: "1. DESTRUCTION", diagram1_desc1a: "The \"destroyers\"", diagram1_desc1b: "remove old bone",
+diagram1_step2: "2. CONSTRUCTION", diagram1_desc2a: "The \"builders\"", diagram1_desc2b: "make new bone",
+diagram1_step3: "3. NEW BONE", diagram1_desc3a: "Stronger and", diagram1_desc3b: "adapted",
+diagram1_loop: "The cycle continues throughout life",
+diagram2_dancer: "DANCER", diagram2_dense1: "DENSE", diagram2_dense2: "BONE", diagram2_strong: "💪 Strong", diagram2_jump: "Jumps → more bone",
+diagram2_sedentary: "SEDENTARY", diagram2_less1: "LESS", diagram2_less2: "DENSE BONE", diagram2_weak: "😔 Weak", diagram2_nouse: "No use → less bone",
+diag3_t1: "TYPE 1", diag3_t1_desc: "Fulcrum in middle", diag3_fulcrum: "Fulcrum", diag3_force: "Force", diag3_load: "Load", diag3_t1_ex: "Example: head",
+diag3_t2: "TYPE 2", diag3_t2_desc: "Load in middle", diag3_fulcrum2: "Fulcrum", diag3_load2: "Load", diag3_force2: "Force", diag3_t2_ex: "Example: relevé",
+diag3_t3: "TYPE 3", diag3_t3_desc: "Force in middle", diag3_fulcrum3: "Fulcrum", diag3_force3: "Force", diag3_load3: "Load", diag3_t3_ex: "Example: arm",
+diag3_comp_title: "Comparison of the 3 types", diag3_h1: "Type 1", diag3_h2: "Type 2", diag3_h3: "Type 3",
+diag3_balance: "Balance", diag3_strength: "Strength", diag3_speed: "Speed",
+diag3_ex1: "Ex: head", diag3_ex2: "Ex: relevé", diag3_ex3: "Ex: arm",
+diag3_bal2: "Balances", diag3_lift: "Lifts a lot", diag3_fast: "Moves fast",
+diag3_bal3: "light load", diag3_lift2: "with little effort", diag3_fast2: "but with more effort"
+}
+};
+
+// Preguntes del quiz per idioma
+const quizByLang = {
+es: [
+{ q: "¿Por qué decimos que el hueso es un tejido 'vivo'?", opts: ["Porque duele cuando te golpeas", "Porque se renueva constantemente y se adapta al uso", "Porque tiene sangre por dentro", "Porque se mueve con los músculos"], correct: 1 },
+{ q: "¿Qué dice la Ley de Wolff?", opts: ["Que los huesos no se pueden romper", "Que el hueso se fortalece donde recibe más carga", "Que todos los huesos son iguales de fuertes", "Que el ejercicio debilita los huesos"], correct: 1 },
+{ q: "¿Por qué una bailarina tiene los huesos más fuertes que una nadadora?", opts: ["Porque la bailarina come más calcio", "Porque la natación no tiene impacto y no estimula tanto el hueso", "Porque la bailarina es más joven", "Porque los huesos de la bailarina son más grandes"], correct: 1 },
+{ q: "En un relevé, ¿qué tipo de palanca utilizas?", opts: ["Tipo 1 (equilibrio)", "Tipo 2 (fuerza)", "Tipo 3 (velocidad)", "No es una palanca"], correct: 1 },
+{ q: "¿Qué necesitan los 'constructores' de hueso (osteoblastos) para trabajar bien?", opts: ["Solo ejercicio intenso", "Calcio, vitamina D, ejercicio y descanso", "Solo descansar mucho", "Solo comer mucho"], correct: 1 },
+{ q: "¿Qué tipo de palanca es el movimiento del brazo al hacer un port de bras?", opts: ["Tipo 1 (equilibrio)", "Tipo 2 (fuerza)", "Tipo 3 (velocidad y amplitud)", "No es una palanca"], correct: 2 }
+],
+ca: [
+{ q: "Per què diem que l'os és un teixit 'viu'?", opts: ["Perquè fa mal quan et colpeges", "Perquè es renova constantment i s'adapta a l'ús", "Perquè té sang a dins", "Perquè es mou amb els músculs"], correct: 1 },
+{ q: "Què diu la Llei de Wolff?", opts: ["Que els ossos no es poden trencar", "Que l'os s'enforteix on rep més càrrega", "Que tots els ossos són igual de forts", "Que l'exercici debilita els ossos"], correct: 1 },
+{ q: "Per què una ballarina té els ossos més forts que una nedadora?", opts: ["Perquè la ballarina menja més calci", "Perquè la natació no té impacte i no estimula tant l'os", "Perquè la ballarina és més jove", "Perquè els ossos de la ballarina són més grans"], correct: 1 },
+{ q: "En un relevé, quin tipus de palanca utilitzes?", opts: ["Tipus 1 (equilibri)", "Tipus 2 (força)", "Tipus 3 (velocitat)", "No és una palanca"], correct: 1 },
+{ q: "Què necessiten els 'constructors' d'os (osteoblasts) per treballar bé?", opts: ["Només exercici intens", "Calci, vitamina D, exercici i descans", "Només descansar molt", "Només menjar molt"], correct: 1 },
+{ q: "Quin tipus de palanca és el moviment del braç en fer un port de bras?", opts: ["Tipus 1 (equilibri)", "Tipus 2 (força)", "Tipus 3 (velocitat i amplitud)", "No és una palanca"], correct: 2 }
+],
+en: [
+{ q: "Why do we say that bone is a 'living' tissue?", opts: ["Because it hurts when you hit it", "Because it renews constantly and adapts to use", "Because it has blood inside", "Because it moves with the muscles"], correct: 1 },
+{ q: "What does Wolff's Law say?", opts: ["That bones cannot break", "That bone strengthens where it receives more load", "That all bones are equally strong", "That exercise weakens bones"], correct: 1 },
+{ q: "Why does a dancer have stronger bones than a swimmer?", opts: ["Because the dancer eats more calcium", "Because swimming has no impact and doesn't stimulate bone as much", "Because the dancer is younger", "Because the dancer's bones are bigger"], correct: 1 },
+{ q: "In a relevé, what type of lever do you use?", opts: ["Type 1 (balance)", "Type 2 (force)", "Type 3 (speed)", "It's not a lever"], correct: 1 },
+{ q: "What do bone 'builders' (osteoblasts) need to work well?", opts: ["Only intense exercise", "Calcium, vitamin D, exercise and rest", "Only lots of rest", "Only lots of food"], correct: 1 },
+{ q: "What type of lever is the arm movement when doing a port de bras?", opts: ["Type 1 (balance)", "Type 2 (force)", "Type 3 (speed and range)", "It's not a lever"], correct: 2 }
+]
+};
+
+// Missatges de feedback per idioma
+const feedbackMsgs = {
+es: {
+perfect: (s,t) => `🏆 ¡Excelente! ${s}/${t}. Entiendes muy bien cómo funciona el esqueleto.`,
+good: (s,t) => `👍 Bien: ${s}/${t}. Repasa los conceptos fallados.`,
+bad: (s,t) => `📚 ${s}/${t}. Vuelve a leer los apartados y reinténtalo.`
+},
+ca: {
+perfect: (s,t) => `🏆 Excel·lent! ${s}/${t}. Entens molt bé com funciona l'esquelet.`,
+good: (s,t) => `👍 Bé: ${s}/${t}. Repassa els conceptes fallats.`,
+bad: (s,t) => `📚 ${s}/${t}. Torna a llegir els apartats i reintenta-ho.`
+},
+en: {
+perfect: (s,t) => `🏆 Excellent! ${s}/${t}. You understand very well how the skeleton works.`,
+good: (s,t) => `👍 Good: ${s}/${t}. Review the failed concepts.`,
+bad: (s,t) => `📚 ${s}/${t}. Go back and read the sections again and try again.`
+}
+};
+
+let currentLang = 'es';
+
+function setLanguage(lang, btn) {
+currentLang = lang;
+document.documentElement.lang = lang;
+// Actualitza botons d'idioma
+document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+if (btn) btn.classList.add('active');
+else document.querySelector(`.lang-btn[onclick*="'${lang}'"]`).classList.add('active');
+
+// Actualitza tots els elements amb data-i18n
+document.querySelectorAll('[data-i18n]').forEach(el => {
+const key = el.getAttribute('data-i18n');
+if (translations[lang] && translations[lang][key]) {
+el.innerHTML = translations[lang][key];
+}
+});
+
+// Actualitza SVGs
+document.querySelectorAll('[data-i18n-svg]').forEach(el => {
+const key = el.getAttribute('data-i18n-svg');
+if (svgTranslations[lang] && svgTranslations[lang][key]) {
+el.textContent = svgTranslations[lang][key];
+}
+});
+
+// Re-renderitza el quiz
+renderQuiz();
+// Neteja feedback anterior
+document.getElementById('fbQuiz').classList.remove('show');
+}
+
+function showSlide(i, btn) {
+document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+document.querySelectorAll('.slide')[i].classList.add('active');
+btn.classList.add('active');
+window.scrollTo(0, 0);
+}
+
+function renderQuiz() {
+const cont = document.getElementById('quizContainer');
+cont.innerHTML = '';
+const data = quizByLang[currentLang];
+data.forEach((item, qi) => {
+let html = `<div class="question-box"><p>${qi+1}. ${item.q}</p><div class="options">`;
+item.opts.forEach((opt, oi) => {
+html += `<label><input type="radio" name="q${qi}" value="${oi}"> ${opt}</label>`;
+});
+html += `</div></div>`;
+cont.innerHTML += html;
+});
+}
+
+function checkQuiz() {
+const data = quizByLang[currentLang];
+const msgs = feedbackMsgs[currentLang];
+let score = 0;
+data.forEach((item, qi) => {
+const sel = document.querySelector(`input[name="q${qi}"]:checked`);
+const labels = document.querySelectorAll(`input[name="q${qi}"]`);
+labels.forEach(l => l.parentElement.classList.remove('correct','incorrect'));
+if (sel) {
+const val = parseInt(sel.value);
+if (val === item.correct) {
+sel.parentElement.classList.add('correct');
+score++;
+} else {
+sel.parentElement.classList.add('incorrect');
+labels[item.correct].parentElement.classList.add('correct');
+}
+} else {
+labels[item.correct].parentElement.classList.add('correct');
+}
+});
+const fb = document.getElementById('fbQuiz');
+fb.classList.add('show');
+if (score === data.length) {
+fb.className = 'feedback show success';
+fb.innerHTML = msgs.perfect(score, data.length);
+} else if (score >= 4) {
+fb.className = 'feedback show';
+fb.style.background = '#fff3cd';
+fb.style.color = '#856404';
+fb.style.border = '2px solid #ffc107';
+fb.innerHTML = msgs.good(score, data.length);
+} else {
+fb.className = 'feedback show error';
+fb.innerHTML = msgs.bad(score, data.length);
+}
+}
+
+function resetQuiz() {
+document.querySelectorAll('#quizContainer input').forEach(i => { i.checked = false; i.parentElement.classList.remove('correct','incorrect'); });
+document.getElementById('fbQuiz').classList.remove('show');
+}
+
+// Inicialitza
+renderQuiz();
+</script>
+</body>
+</html>

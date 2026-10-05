@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-translate="pageTitle">Los Músculos Trabajan en Equipo - Danza</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+body {
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+min-height: 100vh;
+padding: 20px;
+}
+.container {
+max-width: 1200px;
+margin: 0 auto;
+background: #fff;
+border-radius: 20px;
+box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+overflow: hidden;
+}
+header {
+background: linear-gradient(90deg, #1e3c72, #2a5298);
+color: white;
+padding: 40px;
+text-align: center;
+position: relative;
+}
+header h1 { font-size: 2.3em; margin-bottom: 10px; }
+header p { opacity: 0.9; font-size: 1.15em; }
+.language-selector {
+position: absolute;
+top: 20px;
+right: 20px;
+display: flex;
+gap: 8px;
+}
+.lang-btn {
+padding: 8px 16px;
+border: 2px solid white;
+background: transparent;
+color: white;
+border-radius: 20px;
+cursor: pointer;
+font-size: 0.9em;
+font-weight: 600;
+transition: all 0.3s;
+}
+.lang-btn:hover { background: rgba(255,255,255,0.2); }
+.lang-btn.active { background: white; color: #2a5298; }
+.nav-tabs {
+display: flex;
+background: #f8f9fa;
+flex-wrap: wrap;
+border-bottom: 3px solid #dee2e6;
+}
+.nav-tabs button {
+flex: 1;
+min-width: 140px;
+padding: 15px 10px;
+background: transparent;
+border: none;
+cursor: pointer;
+font-size: 0.9em;
+font-weight: 600;
+color: #666;
+transition: all 0.3s;
+border-bottom: 4px solid transparent;
+}
+.nav-tabs button:hover { background: #e9ecef; color: #2a5298; }
+.nav-tabs button.active {
+color: #2a5298;
+border-bottom-color: #2a5298;
+background: white;
+}
+.slide { display: none; padding: 30px; min-height: 600px; }
+.slide.active { display: block; animation: fadeIn 0.5s; }
+@keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+.slide h2 {
+color: #1e3c72;
+margin-bottom: 20px;
+font-size: 1.8em;
+border-bottom: 3px solid #2a5298;
+padding-bottom: 10px;
+}
+.concept-card {
+background: white;
+border: 3px solid #2a5298;
+border-radius: 15px;
+padding: 30px;
+margin: 25px 0;
+box-shadow: 0 5px 20px rgba(42,82,152,0.15);
+}
+.concept-card h3 {
+color: #2a5298;
+font-size: 1.5em;
+margin-bottom: 15px;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.info-box {
+background: #f8f9fa;
+padding: 20px;
+border-radius: 10px;
+margin: 15px 0;
+border-left: 5px solid #2a5298;
+line-height: 1.7;
+}
+.muscle-team {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 20px;
+margin: 20px 0;
+}
+.team-member {
+background: white;
+border: 2px solid #dee2e6;
+border-radius: 10px;
+padding: 20px;
+text-align: center;
+transition: all 0.3s;
+}
+.team-member:hover {
+transform: translateY(-5px);
+box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+.team-member.agonist { border-color: #e74c3c; background: #ffebee; }
+.team-member.antagonist { border-color: #3498db; background: #e3f2fd; }
+.team-member.synergist { border-color: #9b59b6; background: #f3e5f5; }
+.team-member.stabilizer { border-color: #f39c12; background: #fff3e0; }
+.team-member h4 { font-size: 1.2em; margin-bottom: 10px; }
+.team-member.agonist h4 { color: #c0392b; }
+.team-member.antagonist h4 { color: #2980b9; }
+.team-member.synergist h4 { color: #8e44ad; }
+.team-member.stabilizer h4 { color: #d68910; }
+.role-icon { font-size: 2.5em; margin-bottom: 10px; }
+.diagram-container {
+background: white;
+border: 2px solid #dee2e6;
+border-radius: 10px;
+padding: 20px;
+margin: 20px 0;
+text-align: center;
+}
+.diagram-container svg { max-width: 100%; height: auto; }
+.dance-example {
+background: linear-gradient(135deg, #fff5e6 0%, #ffe8cc 100%);
+padding: 20px;
+border-radius: 10px;
+margin: 15px 0;
+border: 2px dashed #f39c12;
+}
+.dance-example h4 { color: #e67e22; margin-bottom: 12px; font-size: 1.2em; }
+.practical-activity {
+background: linear-gradient(135deg, #e8f8f5 0%, #d5f5e3 100%);
+padding: 22px;
+border-radius: 15px;
+margin: 20px 0;
+border: 2px solid #1abc9c;
+}
+.practical-activity h4 { color: #16a085; font-size: 1.2em; margin-bottom: 12px; }
+.activity-steps { margin-left: 25px; line-height: 1.9; }
+.activity-steps li { margin-bottom: 8px; }
+.btn {
+background: linear-gradient(90deg, #2a5298, #1e3c72);
+color: white;
+border: none;
+padding: 14px 35px;
+border-radius: 30px;
+font-size: 1.05em;
+font-weight: 600;
+cursor: pointer;
+margin: 10px 5px;
+transition: all 0.3s;
+box-shadow: 0 4px 15px rgba(42,82,152,0.3);
+}
+.btn:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(42,82,152,0.4); }
+.btn-secondary { background: #6c757d; }
+.feedback {
+margin-top: 20px;
+padding: 20px;
+border-radius: 10px;
+text-align: center;
+font-weight: 600;
+display: none;
+}
+.feedback.show { display: block; animation: fadeIn 0.3s; }
+.feedback.success { background: #d4edda; color: #155724; border: 2px solid #28a745; }
+.feedback.error { background: #f8d7da; color: #721c24; border: 2px solid #dc3545; }
+.feedback.info { background: #d1ecf1; color: #0c5460; border: 2px solid #17a2b8; }
+.emoji { font-size: 1.3em; margin-right: 8px; }
+@media (max-width: 768px) {
+header h1 { font-size: 1.7em; }
+.slide { padding: 20px; }
+.concept-card { padding: 20px; }
+.language-selector { position: static; margin-top: 15px; justify-content: center; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<div class="language-selector">
+<button class="lang-btn active" onclick="changeLanguage('es')">ES</button>
+<button class="lang-btn" onclick="changeLanguage('ca')">CA</button>
+<button class="lang-btn" onclick="changeLanguage('en')">EN</button>
+</div>
+<h1 data-translate="mainTitle">💪 Los Músculos Trabajan en Equipo</h1>
+<p data-translate="mainSubtitle">Coordinación muscular en la danza</p>
+</header>
+<div class="nav-tabs">
+<button class="active" onclick="showSlide(0, this)" data-translate="navIntro">📚 Introducción</button>
+<button onclick="showSlide(1, this)" data-translate="navTeam">👥 El Equipo Muscular</button>
+<button onclick="showSlide(2, this)" data-translate="navDance">🩰 Ejemplos en Danza</button>
+<button onclick="showSlide(3, this)" data-translate="navActivities">🎯 Actividades</button>
+<button onclick="showSlide(4, this)" data-translate="navQuiz">📊 Quiz</button>
+</div>
+
+<!-- SLIDE 1: INTRODUCCIÓN -->
+<div class="slide active">
+<h2 data-translate="slide1Title">🎭 Introducción: El Trabajo en Equipo Muscular</h2>
+<div class="info-box">
+<h4 data-translate="slide1KeyTitle">🎯 Concepto clave</h4>
+<p data-translate="slide1KeyText">Los músculos <strong>NUNCA trabajan solos</strong>. Cada movimiento de danza requiere la coordinación perfecta de múltiples músculos que desempeñan roles diferentes pero complementarios.</p>
+</div>
+<div class="concept-card">
+<h3><span class="emoji">🤝</span> <span data-translate="slide1WhyTitle">¿Por qué trabajan en equipo?</span></h3>
+<p data-translate="slide1WhyIntro">Imagina un equipo de ballet:</p>
+<ul style="margin-left: 25px; line-height: 1.8;">
+<li><strong data-translate="slide1Role1Title">Primer bailarín:</strong> <span data-translate="slide1Role1Text">Ejecuta el movimiento principal (agonista)</span></li>
+<li><strong data-translate="slide1Role2Title">Bailarín opuesto:</strong> <span data-translate="slide1Role2Text">Se relaja para permitir el movimiento (antagonista)</span></li>
+<li><strong data-translate="slide1Role3Title">Cuerpo de baile:</strong> <span data-translate="slide1Role3Text">Ayuda y estabiliza (sinergistas)</span></li>
+<li><strong data-translate="slide1Role4Title">Director de escena:</strong> <span data-translate="slide1Role4Text">Mantiene todo estable (estabilizadores)</span></li>
+</ul>
+<p style="margin-top: 15px;"><strong data-translate="slide1WhyEnd">¡Así funciona tu cuerpo!</strong></p>
+</div>
+<div class="diagram-container">
+<h4 data-translate="slide1DiagramTitle">📐 Esquema del equipo muscular</h4>
+<svg viewBox="0 0 800 400">
+<text x="400" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#2a5298" data-translate="svgCoordTitle">Coordinación Muscular en un Movimiento</text>
+<g transform="translate(100, 80)">
+<rect x="0" y="0" width="150" height="100" fill="#ffebee" stroke="#e74c3c" stroke-width="3" rx="10"/>
+<text x="75" y="35" text-anchor="middle" font-size="14" font-weight="bold" fill="#c0392b" data-translate="svgAgonist">AGONISTA</text>
+<text x="75" y="55" text-anchor="middle" font-size="11" fill="#c0392b" data-translate="svgPrimeMover">Prime mover</text>
+<text x="75" y="75" text-anchor="middle" font-size="10" fill="#7f8c8d" data-translate="svgContracts">Se contrae</text>
+<text x="75" y="90" text-anchor="middle" font-size="10" fill="#7f8c8d" data-translate="svgGenerates">genera movimiento</text>
+<circle cx="75" cy="120" r="15" fill="#e74c3c"/>
+<text x="75" y="125" text-anchor="middle" font-size="12" fill="white" font-weight="bold">1</text>
+</g>
+<g transform="translate(550, 80)">
+<rect x="0" y="0" width="150" height="100" fill="#e3f2fd" stroke="#3498db" stroke-width="3" rx="10"/>
+<text x="75" y="35" text-anchor="middle" font-size="14" font-weight="bold" fill="#2980b9" data-translate="svgAntagonist">ANTAGONISTA</text>
+<text x="75" y="55" text-anchor="middle" font-size="11" fill="#2980b9" data-translate="svgOpponent">Oponente</text>
+<text x="75" y="75" text-anchor="middle" font-size="10" fill="#7f8c8d" data-translate="svgRelaxes">Se relaja</text>
+<text x="75" y="90" text-anchor="middle" font-size="10" fill="#7f8c8d" data-translate="svgAllows">permite movimiento</text>
+<circle cx="75" cy="120" r="15" fill="#3498db"/>
+<text x="75" y="125" text-anchor="middle" font-size="12" fill="white" font-weight="bold">2</text>
+</g>
+<g transform="translate(200, 240)">
+<rect x="0" y="0" width="150" height="90" fill="#f3e5f5" stroke="#9b59b6" stroke-width="3" rx="10"/>
+<text x="75" y="30" text-anchor="middle" font-size="14" font-weight="bold" fill="#8e44ad" data-translate="svgSynergist">SINERGISTA</text>
+<text x="75" y="50" text-anchor="middle" font-size="10" fill="#7f8c8d" data-translate="svgHelps">Ayuda al agonista</text>
+<text x="75" y="65" text-anchor="middle" font-size="10" fill="#7f8c8d" data-translate="svgImproves">Mejora eficiencia</text>
+<text x="75" y="80" text-anchor="middle" font-size="10" fill="#7f8c8d" data-translate="svgStabilizesJoint">Estabiliza articulación</text>
+<circle cx="75" cy="110" r="15" fill="#9b59b6"/>
+<text x="75" y="115" text-anchor="middle" font-size="12" fill="white" font-weight="bold">3</text>
+</g>
+<g transform="translate(450, 240)">
+<rect x="0" y="0" width="150" height="90" fill="#fff3e0" stroke="#f39c12" stroke-width="3" rx="10"/>
+<text x="75" y="30" text-anchor="middle" font-size="14" font-weight="bold" fill="#d68910" data-translate="svgStabilizer">ESTABILIZADOR</text>
+<text x="75" y="50" text-anchor="middle" font-size="10" fill="#7f8c8d" data-translate="svgFixesBase">Fija la base</text>
+<text x="75" y="65" text-anchor="middle" font-size="10" fill="#7f8c8d" data-translate="svgMaintainsPosture">Mantiene postura</text>
+<text x="75" y="80" text-anchor="middle" font-size="10" fill="#7f8c8d" data-translate="svgAllowsPrecision">Permite precisión</text>
+<circle cx="75" cy="110" r="15" fill="#f39c12"/>
+<text x="75" y="115" text-anchor="middle" font-size="12" fill="white" font-weight="bold">4</text>
+</g>
+<path d="M 250 130 Q 325 130 400 100 Q 475 70 550 130" stroke="#7f8c8d" stroke-width="2" fill="none" stroke-dasharray="5,3"/>
+<text x="400" y="95" text-anchor="middle" font-size="9" fill="#7f8c8d" data-translate="svgCoordination">Coordinación</text>
+</svg>
+</div>
+<div class="practical-activity">
+<h4><span class="emoji">🎭</span> <span data-translate="slide1ActivityTitle">Actividad de exploración: "Siente el equipo"</span></h4>
+<ol class="activity-steps">
+<li><strong data-translate="slide1ActStep1">Ejercicio:</strong> <span data-translate="slide1ActStep1Text">Flexiona el codo lentamente llevando la mano al hombro.</span></li>
+<li><strong data-translate="slide1ActStep2">Toca con la otra mano:</strong>
+<ul>
+<li><span data-translate="slide1ActStep2a">Bíceps (parte frontal del brazo): Se pone duro →</span> <strong>AGONISTA</strong></li>
+<li><span data-translate="slide1ActStep2b">Tríceps (parte posterior): Se pone blando →</span> <strong>ANTAGONISTA</strong></li>
+</ul>
+</li>
+<li><strong data-translate="slide1ActStep3">Reflexión:</strong> <span data-translate="slide1ActStep3Text">Mientras uno trabaja, el otro descansa. ¡Es un equipo!</span></li>
+</ol>
+</div>
+</div>
+
+<!-- SLIDE 2: EL EQUIPO MUSCULAR -->
+<div class="slide">
+<h2 data-translate="slide2Title">👥 Los 4 Roles del Equipo Muscular</h2>
+<div class="muscle-team">
+<div class="team-member agonist">
+<div class="role-icon">💪</div>
+<h4>AGONISTA</h4>
+<p><strong data-translate="slide2PrimeMover">Prime mover</strong></p>
+<p data-translate="slide2AgonistText">El músculo principal que genera el movimiento deseado. Se contrae activamente.</p>
+<p style="margin-top: 10px; font-size: 0.9em; color: #7f8c8d;"><em data-translate="slide2AgonistEx">Ejemplo: Bíceps en flexión de codo</em></p>
+</div>
+<div class="team-member antagonist">
+<div class="role-icon">🔄</div>
+<h4>ANTAGONISTA</h4>
+<p><strong data-translate="slide2Opponent">Oponente</strong></p>
+<p data-translate="slide2AntagonistText">Se relaja para permitir el movimiento. Actúa en dirección opuesta al agonista.</p>
+<p style="margin-top: 10px; font-size: 0.9em; color: #7f8c8d;"><em data-translate="slide2AntagonistEx">Ejemplo: Tríceps en flexión de codo</em></p>
+</div>
+<div class="team-member synergist">
+<div class="role-icon">🤝</div>
+<h4>SINERGISTA</h4>
+<p><strong data-translate="slide2Helper">Ayudante</strong></p>
+<p data-translate="slide2SynergistText">Asiste al agonista mejorando la eficiencia del movimiento o estabilizando la articulación.</p>
+<p style="margin-top: 10px; font-size: 0.9em; color: #7f8c8d;"><em data-translate="slide2SynergistEx">Ejemplo: Braquial ayuda al bíceps</em></p>
+</div>
+<div class="team-member stabilizer">
+<div class="role-icon">🏛️</div>
+<h4>ESTABILIZADOR</h4>
+<p><strong data-translate="slide2FixedBase">Base fija</strong></p>
+<p data-translate="slide2StabilizerText">Mantiene estable la parte del cuerpo para que el movimiento sea preciso y controlado.</p>
+<p style="margin-top: 10px; font-size: 0.9em; color: #7f8c8d;"><em data-translate="slide2StabilizerEx">Ejemplo: Core en elevación de brazos</em></p>
+</div>
+</div>
+<div class="concept-card">
+<h3><span class="emoji">🧠</span> <span data-translate="slide2InhibitionTitle">Inhibición Recíproca</span></h3>
+<div class="info-box">
+<p data-translate="slide2InhibitionText">Cuando el agonista se contrae, el sistema nervioso <strong>inhibe automáticamente</strong> al antagonista. Esto es un <strong>reflejo neural</strong> que permite el movimiento fluido.</p>
+<p style="margin-top: 10px;"><strong data-translate="slide2InhibitionDance">Importante en danza:</strong> <span data-translate="slide2InhibitionDanceText">Si el antagonista no se relaja completamente, el movimiento será tenso y limitado.</span></p>
+</div>
+</div>
+<div class="diagram-container">
+<h4 data-translate="slide2DiagramTitle">📐 Ejemplo: Flexión de codo</h4>
+<svg viewBox="0 0 600 350">
+<rect x="250" y="50" width="100" height="250" fill="#f5d5cb" stroke="#d4a59a" stroke-width="2" rx="10"/>
+<text x="300" y="180" text-anchor="middle" font-size="12" fill="#7f8c8d" data-translate="svgArm">Brazo</text>
+<path d="M 260 80 Q 240 150 260 200 L 300 200 Q 320 150 300 80 Z" fill="#e74c3c" opacity="0.8"/>
+<text x="280" y="150" text-anchor="middle" font-size="11" fill="white" font-weight="bold">BÍCEPS</text>
+<text x="280" y="165" text-anchor="middle" font-size="9" fill="white" data-translate="svgAgonistLabel">(Agonista)</text>
+<text x="280" y="50" text-anchor="middle" font-size="10" fill="#e74c3c" font-weight="bold" data-translate="svgContracts">Se contrae</text>
+<path d="M 300 80 Q 340 150 340 200 L 300 200 Z" fill="#3498db" opacity="0.5"/>
+<text x="320" y="150" text-anchor="middle" font-size="11" fill="white" font-weight="bold">TRÍCEPS</text>
+<text x="320" y="165" text-anchor="middle" font-size="9" fill="white" data-translate="svgAntagonistLabel">(Antagonista)</text>
+<text x="320" y="50" text-anchor="middle" font-size="10" fill="#3498db" font-weight="bold" data-translate="svgRelaxes">Se relaja</text>
+<path d="M 380 280 Q 420 200 380 120" stroke="#2a5298" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+<text x="430" y="200" font-size="11" fill="#2a5298" font-weight="bold" data-translate="svgMovement">Movimiento</text>
+<rect x="260" y="250" width="80" height="80" fill="#f5d5cb" stroke="#d4a59a" stroke-width="2" rx="5"/>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+<polygon points="0 0, 10 3, 0 6" fill="#2a5298"/>
+</marker>
+</defs>
+</svg>
+</div>
+</div>
+
+<!-- SLIDE 3: EJEMPLOS EN DANZA -->
+<div class="slide">
+<h2 data-translate="slide3Title">🩰 Ejemplos de Equipos Musculares en Danza</h2>
+<div class="dance-example">
+<h4><span class="emoji">🦵</span> <span data-translate="slide3Ex1Title">1. PLIÉ (Flexión de rodilla)</span></h4>
+<div class="muscle-team">
+<div class="team-member agonist">
+<h4 data-translate="slide3Agonists">AGONISTAS</h4>
+<ul style="text-align: left; margin-left: 20px; font-size: 0.95em;">
+<li data-translate="slide3Ex1Ag1">Cuádriceps (excéntrico)</li>
+<li data-translate="slide3Ex1Ag2">Glúteos</li>
+<li data-translate="slide3Ex1Ag3">Isquiotibiales</li>
+</ul>
+</div>
+<div class="team-member antagonist">
+<h4 data-translate="slide3Antagonists">ANTAGONISTAS</h4>
+<ul style="text-align: left; margin-left: 20px; font-size: 0.95em;">
+<li data-translate="slide3Ex1Ant1">Gemelos (relajación parcial)</li>
+<li data-translate="slide3Ex1Ant2">Sóleo</li>
+</ul>
+</div>
+<div class="team-member stabilizer">
+<h4 data-translate="slide3Stabilizers">ESTABILIZADORES</h4>
+<ul style="text-align: left; margin-left: 20px; font-size: 0.95em;">
+<li data-translate="slide3Ex1St1">Core (abdomen/espalda)</li>
+<li data-translate="slide3Ex1St2">Aductores</li>
+<li data-translate="slide3Ex1St3">Tibial anterior</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="dance-example" style="background: linear-gradient(135deg, #e8f8f5 0%, #d5f5e3 100%); border-color: #1abc9c;">
+<h4><span class="emoji">🩰</span> <span data-translate="slide3Ex2Title">2. RELEVÉ (Elevación sobre puntas)</span></h4>
+<div class="muscle-team">
+<div class="team-member agonist">
+<h4 data-translate="slide3Agonists">AGONISTAS</h4>
+<ul style="text-align: left; margin-left: 20px; font-size: 0.95em;">
+<li data-translate="slide3Ex2Ag1">Gemelos (concéntrico)</li>
+<li data-translate="slide3Ex2Ag2">Sóleo</li>
+<li data-translate="slide3Ex2Ag3">Tibial posterior</li>
+</ul>
+</div>
+<div class="team-member antagonist">
+<h4 data-translate="slide3Antagonists">ANTAGONISTAS</h4>
+<ul style="text-align: left; margin-left: 20px; font-size: 0.95em;">
+<li data-translate="slide3Ex2Ant1">Tibial anterior</li>
+<li data-translate="slide3Ex2Ant2">Extensores de dedos</li>
+</ul>
+</div>
+<div class="team-member stabilizer">
+<h4 data-translate="slide3Stabilizers">ESTABILIZADORES</h4>
+<ul style="text-align: left; margin-left: 20px; font-size: 0.95em;">
+<li data-translate="slide3Ex2St1">Peroneos (estabilidad tobillo)</li>
+<li data-translate="slide3Ex2St2">Core</li>
+<li data-translate="slide3Ex2St3">Cuádriceps</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="dance-example" style="background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); border-color: #9b59b6;">
+<h4><span class="emoji">🦵</span> <span data-translate="slide3Ex3Title">3. ARABESQUE (Extensión de pierna atrás)</span></h4>
+<div class="muscle-team">
+<div class="team-member agonist">
+<h4 data-translate="slide3Agonists">AGONISTAS</h4>
+<ul style="text-align: left; margin-left: 20px; font-size: 0.95em;">
+<li data-translate="slide3Ex3Ag1">Glúteo mayor</li>
+<li data-translate="slide3Ex3Ag2">Isquiotibiales</li>
+<li data-translate="slide3Ex3Ag3">Erectores espinales</li>
+</ul>
+</div>
+<div class="team-member antagonist">
+<h4 data-translate="slide3Antagonists">ANTAGONISTAS</h4>
+<ul style="text-align: left; margin-left: 20px; font-size: 0.95em;">
+<li data-translate="slide3Ex3Ant1">Psoas ilíaco</li>
+<li data-translate="slide3Ex3Ant2">Recto femoral</li>
+<li data-translate="slide3Ex3Ant3">Abdominales</li>
+</ul>
+</div>
+<div class="team-member synergist">
+<h4 data-translate="slide3Synergists">SINERGISTAS</h4>
+<ul style="text-align: left; margin-left: 20px; font-size: 0.95em;">
+<li data-translate="slide3Ex3Sy1">Aductores</li>
+<li data-translate="slide3Ex3Sy2">Rotadores externos</li>
+</ul>
+</div>
+<div class="team-member stabilizer">
+<h4 data-translate="slide3Stabilizers">ESTABILIZADORES</h4>
+<ul style="text-align: left; margin-left: 20px; font-size: 0.95em;">
+<li data-translate="slide3Ex3St1">Core profundo</li>
+<li data-translate="slide3Ex3St2">Cuádriceps (pierna apoyo)</li>
+<li data-translate="slide3Ex3St3">Multífidos</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="diagram-container">
+<h4 data-translate="slide3DiagramTitle">📐 Arabesque: Coordinación muscular</h4>
+<svg viewBox="0 0 700 400">
+<rect x="300" y="80" width="60" height="150" fill="#f5d5cb" stroke="#d4a59a" stroke-width="2" rx="5"/>
+<text x="330" y="160" text-anchor="middle" font-size="10" fill="#7f8c8d" data-translate="svgTorso">Tronco</text>
+<rect x="310" y="230" width="40" height="120" fill="#f5d5cb" stroke="#d4a59a" stroke-width="2" rx="5"/>
+<text x="330" y="295" text-anchor="middle" font-size="9" fill="#7f8c8d" data-translate="svgSupport">Apoyo</text>
+<rect x="360" y="140" width="100" height="35" fill="#f5d5cb" stroke="#d4a59a" stroke-width="2" rx="5" transform="rotate(-10 360 140)"/>
+<text x="410" y="165" text-anchor="middle" font-size="9" fill="#7f8c8d" data-translate="svgRaised">Elevada</text>
+<line x1="300" y1="100" x2="250" y2="130" stroke="#f5d5cb" stroke-width="12" stroke-linecap="round"/>
+<line x1="360" y1="100" x2="410" y2="130" stroke="#f5d5cb" stroke-width="12" stroke-linecap="round"/>
+<ellipse cx="340" cy="220" rx="25" ry="20" fill="#e74c3c" opacity="0.8"/>
+<text x="340" y="225" text-anchor="middle" font-size="8" fill="white" font-weight="bold" data-translate="svgGlute">GLÚTEO</text>
+<text x="340" y="250" text-anchor="middle" font-size="9" fill="#e74c3c" font-weight="bold" data-translate="svgAgonistLabel">Agonista</text>
+<ellipse cx="320" cy="190" rx="15" ry="20" fill="#3498db" opacity="0.6"/>
+<text x="320" y="195" text-anchor="middle" font-size="7" fill="white">PSOAS</text>
+<text x="320" y="220" text-anchor="middle" font-size="9" fill="#3498db" font-weight="bold" data-translate="svgAntagonistLabel">Antagonista</text>
+<rect x="305" y="120" width="50" height="60" fill="#f39c12" opacity="0.5"/>
+<text x="330" y="155" text-anchor="middle" font-size="8" fill="white" font-weight="bold">CORE</text>
+<text x="330" y="195" text-anchor="middle" font-size="9" fill="#f39c12" font-weight="bold" data-translate="svgStabilizerLabel">Estabilizador</text>
+<text x="350" y="380" text-anchor="middle" font-size="11" fill="#2a5298" font-weight="bold" data-translate="svgArabesqueCoord">Coordinación en Arabesque</text>
+</svg>
+</div>
+</div>
+
+<!-- SLIDE 4: ACTIVIDADES -->
+<div class="slide">
+<h2 data-translate="slide4Title">🎯 Actividades Prácticas: Siente el Equipo</h2>
+<div class="practical-activity">
+<h4><span class="emoji">🎭</span> <span data-translate="slide4Act1Title">Actividad 1: "Agonista vs Antagonista"</span></h4>
+<p><strong data-translate="slide4Act1Obj">Objetivo:</strong> <span data-translate="slide4Act1ObjText">Percibir la contracción y relajación de pares musculares</span></p>
+<ol class="activity-steps">
+<li><strong data-translate="slide4Act1ExA">Ejercicio A - Brazo:</strong>
+<ul>
+<li data-translate="slide4Act1ExA1">Flexiona el codo lentamente (3 segundos)</li>
+<li data-translate="slide4Act1ExA2">Toca el bíceps: está DURO (agonista contrayéndose)</li>
+<li data-translate="slide4Act1ExA3">Toca el tríceps: está BLANDO (antagonista relajándose)</li>
+<li data-translate="slide4Act1ExA4">Extiende el codo lentamente</li>
+<li data-translate="slide4Act1ExA5">¡Ahora se invierten los roles!</li>
+</ul>
+</li>
+<li><strong data-translate="slide4Act1ExB">Ejercicio B - Pierna:</strong>
+<ul>
+<li data-translate="slide4Act1ExB1">Siéntate en el suelo, eleva una pierna estirada</li>
+<li data-translate="slide4Act1ExB2">Toca el cuádriceps (frente del muslo): DURO</li>
+<li data-translate="slide4Act1ExB3">Toca los isquiotibiales (detrás): BLANDO</li>
+</ul>
+</li>
+<li><strong data-translate="slide4Act1Ref">Reflexión:</strong> <span data-translate="slide4Act1RefText">¿Percibes cómo siempre hay un músculo que trabaja y otro que descansa?</span></li>
+</ol>
+</div>
+<div class="practical-activity" style="background: linear-gradient(135deg, #fff5e6 0%, #ffe8cc 100%); border-color: #f39c12;">
+<h4><span class="emoji">🎭</span> <span data-translate="slide4Act2Title">Actividad 2: "Estabilizadores invisibles"</span></h4>
+<p><strong data-translate="slide4Act2Obj">Objetivo:</strong> <span data-translate="slide4Act2ObjText">Descubrir los músculos que trabajan sin que los veamos</span></p>
+<ol class="activity-steps">
+<li><strong data-translate="slide4Act2ExA">Ejercicio A:</strong> <span data-translate="slide4Act2ExAText">De pie, eleva un brazo lateralmente hasta 90°.</span>
+<ul>
+<li data-translate="slide4Act2ExA1">¿Qué músculo trabaja obvio? → Deltoides (agonista)</li>
+<li data-translate="slide4Act2ExA2">Ahora concéntrate en: ¿Qué mantiene tu tronco recto? → Core (estabilizador)</li>
+<li data-translate="slide4Act2ExA3">¿Qué evita que te caigas hacia el lado? → Cuadrado lumbar + oblicuos</li>
+</ul>
+</li>
+<li><strong data-translate="slide4Act2ExB">Ejercicio B:</strong> <span data-translate="slide4Act2ExBText">Mantén un relevé sobre una pierna.</span>
+<ul>
+<li data-translate="slide4Act2ExB1">Agonistas: Gemelos</li>
+<li data-translate="slide4Act2ExB2">Estabilizadores: Peroneos (tobillo), glúteo medio (cadera), core</li>
+<li data-translate="slide4Act2ExB3">Sin los estabilizadores, ¡te caerías!</li>
+</ul>
+</li>
+<li><strong data-translate="slide4Act2Ref">Reflexión:</strong> <span data-translate="slide4Act2RefText">Los estabilizadores son "héroes invisibles" que permiten la precisión.</span></li>
+</ol>
+</div>
+<div class="practical-activity" style="background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); border-color: #9b59b6;">
+<h4><span class="emoji">🎭</span> <span data-translate="slide4Act3Title">Actividad 3: "Co-contracción"</span></h4>
+<p><strong data-translate="slide4Act3Obj">Objetivo:</strong> <span data-translate="slide4Act3ObjText">Experimentar cuando agonista y antagonista trabajan juntos</span></p>
+<ol class="activity-steps">
+<li><strong data-translate="slide4Act3Sit1">Situación normal:</strong> <span data-translate="slide4Act3Sit1Text">Flexiona el codo rápido.</span>
+<ul>
+<li data-translate="slide4Act3Sit1a">Bíceps: Se contrae</li>
+<li data-translate="slide4Act3Sit1b">Tríceps: Se relaja completamente</li>
+</ul>
+</li>
+<li><strong data-translate="slide4Act3Sit2">Co-contracción:</strong> <span data-translate="slide4Act3Sit2Text">Flexiona el codo pero RESISTE con la otra mano.</span>
+<ul>
+<li data-translate="slide4Act3Sit2a">¡Ambos músculos están DUROS!</li>
+<li data-translate="slide4Act3Sit2b">Bíceps quiere flexionar, tríceps quiere evitarlo</li>
+<li data-translate="slide4Act3Sit2c">Resultado: El codo NO se mueve, pero ambos trabajan</li>
+</ul>
+</li>
+<li><strong data-translate="slide4Act3App">Aplicación en danza:</strong>
+<ul>
+<li data-translate="slide4Act3App1">En posiciones estáticas (arabesque mantenido)</li>
+<li data-translate="slide4Act3App2">En movimientos muy controlados (adagio)</li>
+<li data-translate="slide4Act3App3">Para proteger articulaciones en aterrizajes</li>
+</ul>
+</li>
+<li><strong data-translate="slide4Act3Ref">Reflexión:</strong> <span data-translate="slide4Act3RefText">La co-contracción genera estabilidad pero cansa más. Úsala solo cuando necesites control máximo.</span></li>
+</ol>
+</div>
+<div class="practical-activity" style="background: linear-gradient(135deg, #e8f8f5 0%, #d5f5e3 100%); border-color: #1abc9c;">
+<h4><span class="emoji">🎭</span> <span data-translate="slide4Act4Title">Actividad 4: "Análisis de movimiento en parejas"</span></h4>
+<p><strong data-translate="slide4Act4Obj">Objetivo:</strong> <span data-translate="slide4Act4ObjText">Identificar los 4 roles musculares en un movimiento de danza</span></p>
+<ol class="activity-steps">
+<li><strong data-translate="slide4Act4Step1">En parejas:</strong> <span data-translate="slide4Act4Step1Text">Uno ejecuta, otro analiza.</span></li>
+<li><strong data-translate="slide4Act4Step2">Movimiento:</strong> <span data-translate="slide4Act4Step2Text">Grand battement hacia adelante.</span></li>
+<li><strong data-translate="slide4Act4Step3">El analista identifica:</strong>
+<ul>
+<li data-translate="slide4Act4Step3a">✅ Agonistas: ¿Qué músculos elevan la pierna? (Psoas, recto femoral)</li>
+<li data-translate="slide4Act4Step3b">✅ Antagonistas: ¿Qué músculos se relajan? (Glúteos, isquiotibiales)</li>
+<li data-translate="slide4Act4Step3c">✅ Sinergistas: ¿Qué músculos ayudan? (Aductores, tensor de fascia lata)</li>
+<li data-translate="slide4Act4Step3d">✅ Estabilizadores: ¿Qué mantiene el equilibrio? (Core, cuádriceps pierna apoyo)</li>
+</ul>
+</li>
+<li><strong data-translate="slide4Act4Step4">Intercambio:</strong> <span data-translate="slide4Act4Step4Text">Cambiad de roles con otro movimiento (pirueta, salto, etc.)</span></li>
+<li><strong data-translate="slide4Act4Step5">Puesta en común:</strong> <span data-translate="slide4Act4Step5Text">Comparad vuestras observaciones.</span></li>
+</ol>
+</div>
+<div class="concept-card">
+<h3><span class="emoji">💡</span> <span data-translate="slide4TipsTitle">Consejos para optimizar el trabajo en equipo</span></h3>
+<ul style="margin-left: 25px; line-height: 1.8;">
+<li><strong data-translate="slide4Tip1Title">Estira los antagonistas:</strong> <span data-translate="slide4Tip1Text">Si están tensos, limitan el movimiento del agonista.</span></li>
+<li><strong data-translate="slide4Tip2Title">Fortalece estabilizadores:</strong> <span data-translate="slide4Tip2Text">No solo trabajes los músculos "visibles".</span></li>
+<li><strong data-translate="slide4Tip3Title">Entrena la coordinación:</strong> <span data-translate="slide4Tip3Text">La técnica de danza es entrenar al sistema nervioso para coordinar el equipo.</span></li>
+<li><strong data-translate="slide4Tip4Title">Escucha el dolor:</strong> <span data-translate="slide4Tip4Text">Si un músculo duele, todo el equipo se descompensa.</span></li>
+</ul>
+</div>
+</div>
+
+<!-- SLIDE 5: QUIZ -->
+<div class="slide">
+<h2 data-translate="slide5Title">📊 Quiz: Evalúa tu comprensión</h2>
+<div style="background: white; border: 2px solid #e4e8ec; border-radius: 15px; padding: 30px; margin: 20px 0;">
+<h3 style="color: #2a5298; margin-bottom: 20px; font-size: 1.3em;" data-translate="slide5QuizTitle">Preguntas sobre el equipo muscular</h3>
+<div id="quizContainer"></div>
+<button class="btn" onclick="checkQuiz()" data-translate="slide5CheckBtn">Comprobar respuestas</button>
+<button class="btn btn-secondary" onclick="resetQuiz()" data-translate="slide5ResetBtn">Reiniciar</button>
+<div class="feedback" id="fbQuiz"></div>
+</div>
+</div>
+</div>
+
+<script>
+// ============ SISTEMA DE TRADUCCIONES ============
+const translations = {
+es: {
+pageTitle: "Los Músculos Trabajan en Equipo - Danza",
+mainTitle: "💪 Los Músculos Trabajan en Equipo",
+mainSubtitle: "Coordinación muscular en la danza",
+navIntro: "📚 Introducción", navTeam: "👥 El Equipo Muscular", navDance: "🩰 Ejemplos en Danza",
+navActivities: "🎯 Actividades", navQuiz: "📊 Quiz",
+slide1Title: "🎭 Introducción: El Trabajo en Equipo Muscular",
+slide1KeyTitle: "🎯 Concepto clave",
+slide1KeyText: 'Los músculos <strong>NUNCA trabajan solos</strong>. Cada movimiento de danza requiere la coordinación perfecta de múltiples músculos que desempeñan roles diferentes pero complementarios.',
+slide1WhyTitle: "¿Por qué trabajan en equipo?",
+slide1WhyIntro: "Imagina un equipo de ballet:",
+slide1Role1Title: "Primer bailarín:", slide1Role1Text: "Ejecuta el movimiento principal (agonista)",
+slide1Role2Title: "Bailarín opuesto:", slide1Role2Text: "Se relaja para permitir el movimiento (antagonista)",
+slide1Role3Title: "Cuerpo de baile:", slide1Role3Text: "Ayuda y estabiliza (sinergistas)",
+slide1Role4Title: "Director de escena:", slide1Role4Text: "Mantiene todo estable (estabilizadores)",
+slide1WhyEnd: "¡Así funciona tu cuerpo!",
+slide1DiagramTitle: "📐 Esquema del equipo muscular",
+svgCoordTitle: "Coordinación Muscular en un Movimiento",
+svgAgonist: "AGONISTA", svgPrimeMover: "Prime mover", svgContracts: "Se contrae", svgGenerates: "genera movimiento",
+svgAntagonist: "ANTAGONISTA", svgOpponent: "Oponente", svgRelaxes: "Se relaja", svgAllows: "permite movimiento",
+svgSynergist: "SINERGISTA", svgHelps: "Ayuda al agonista", svgImproves: "Mejora eficiencia", svgStabilizesJoint: "Estabiliza articulación",
+svgStabilizer: "ESTABILIZADOR", svgFixesBase: "Fija la base", svgMaintainsPosture: "Mantiene postura", svgAllowsPrecision: "Permite precisión",
+svgCoordination: "Coordinación",
+slide1ActivityTitle: 'Actividad de exploración: "Siente el equipo"',
+slide1ActStep1: "Ejercicio:", slide1ActStep1Text: "Flexiona el codo lentamente llevando la mano al hombro.",
+slide1ActStep2: "Toca con la otra mano:",
+slide1ActStep2a: "Bíceps (parte frontal del brazo): Se pone duro →",
+slide1ActStep2b: "Tríceps (parte posterior): Se pone blando →",
+slide1ActStep3: "Reflexión:", slide1ActStep3Text: "Mientras uno trabaja, el otro descansa. ¡Es un equipo!",
+slide2Title: "👥 Los 4 Roles del Equipo Muscular",
+slide2PrimeMover: "Prime mover",
+slide2AgonistText: "El músculo principal que genera el movimiento deseado. Se contrae activamente.",
+slide2AgonistEx: "Ejemplo: Bíceps en flexión de codo",
+slide2Opponent: "Oponente",
+slide2AntagonistText: "Se relaja para permitir el movimiento. Actúa en dirección opuesta al agonista.",
+slide2AntagonistEx: "Ejemplo: Tríceps en flexión de codo",
+slide2Helper: "Ayudante",
+slide2SynergistText: "Asiste al agonista mejorando la eficiencia del movimiento o estabilizando la articulación.",
+slide2SynergistEx: "Ejemplo: Braquial ayuda al bíceps",
+slide2FixedBase: "Base fija",
+slide2StabilizerText: "Mantiene estable la parte del cuerpo para que el movimiento sea preciso y controlado.",
+slide2StabilizerEx: "Ejemplo: Core en elevación de brazos",
+slide2InhibitionTitle: "Inhibición Recíproca",
+slide2InhibitionText: 'Cuando el agonista se contrae, el sistema nervioso <strong>inhibe automáticamente</strong> al antagonista. Esto es un <strong>reflejo neural</strong> que permite el movimiento fluido.',
+slide2InhibitionDance: "Importante en danza:",
+slide2InhibitionDanceText: "Si el antagonista no se relaja completamente, el movimiento será tenso y limitado.",
+slide2DiagramTitle: "📐 Ejemplo: Flexión de codo",
+svgArm: "Brazo", svgAgonistLabel: "(Agonista)", svgAntagonistLabel: "(Antagonista)", svgMovement: "Movimiento",
+slide3Title: "🩰 Ejemplos de Equipos Musculares en Danza",
+slide3Ex1Title: "1. PLIÉ (Flexión de rodilla)",
+slide3Agonists: "AGONISTAS", slide3Antagonists: "ANTAGONISTAS", slide3Synergists: "SINERGISTAS", slide3Stabilizers: "ESTABILIZADORES",
+slide3Ex1Ag1: "Cuádriceps (excéntrico)", slide3Ex1Ag2: "Glúteos", slide3Ex1Ag3: "Isquiotibiales",
+slide3Ex1Ant1: "Gemelos (relajación parcial)", slide3Ex1Ant2: "Sóleo",
+slide3Ex1St1: "Core (abdomen/espalda)", slide3Ex1St2: "Aductores", slide3Ex1St3: "Tibial anterior",
+slide3Ex2Title: "2. RELEVÉ (Elevación sobre puntas)",
+slide3Ex2Ag1: "Gemelos (concéntrico)", slide3Ex2Ag2: "Sóleo", slide3Ex2Ag3: "Tibial posterior",
+slide3Ex2Ant1: "Tibial anterior", slide3Ex2Ant2: "Extensores de dedos",
+slide3Ex2St1: "Peroneos (estabilidad tobillo)", slide3Ex2St2: "Core", slide3Ex2St3: "Cuádriceps",
+slide3Ex3Title: "3. ARABESQUE (Extensión de pierna atrás)",
+slide3Ex3Ag1: "Glúteo mayor", slide3Ex3Ag2: "Isquiotibiales", slide3Ex3Ag3: "Erectores espinales",
+slide3Ex3Ant1: "Psoas ilíaco", slide3Ex3Ant2: "Recto femoral", slide3Ex3Ant3: "Abdominales",
+slide3Ex3Sy1: "Aductores", slide3Ex3Sy2: "Rotadores externos",
+slide3Ex3St1: "Core profundo", slide3Ex3St2: "Cuádriceps (pierna apoyo)", slide3Ex3St3: "Multífidos",
+slide3DiagramTitle: "📐 Arabesque: Coordinación muscular",
+svgTorso: "Tronco", svgSupport: "Apoyo", svgRaised: "Elevada", svgGlute: "GLÚTEO",
+svgStabilizerLabel: "Estabilizador", svgArabesqueCoord: "Coordinación en Arabesque",
+slide4Title: "🎯 Actividades Prácticas: Siente el Equipo",
+slide4Act1Title: 'Actividad 1: "Agonista vs Antagonista"',
+slide4Act1Obj: "Objetivo:", slide4Act1ObjText: "Percibir la contracción y relajación de pares musculares",
+slide4Act1ExA: "Ejercicio A - Brazo:",
+slide4Act1ExA1: "Flexiona el codo lentamente (3 segundos)",
+slide4Act1ExA2: "Toca el bíceps: está DURO (agonista contrayéndose)",
+slide4Act1ExA3: "Toca el tríceps: está BLANDO (antagonista relajándose)",
+slide4Act1ExA4: "Extiende el codo lentamente",
+slide4Act1ExA5: "¡Ahora se invierten los roles!",
+slide4Act1ExB: "Ejercicio B - Pierna:",
+slide4Act1ExB1: "Siéntate en el suelo, eleva una pierna estirada",
+slide4Act1ExB2: "Toca el cuádriceps (frente del muslo): DURO",
+slide4Act1ExB3: "Toca los isquiotibiales (detrás): BLANDO",
+slide4Act1Ref: "Reflexión:", slide4Act1RefText: "¿Percibes cómo siempre hay un músculo que trabaja y otro que descansa?",
+slide4Act2Title: 'Actividad 2: "Estabilizadores invisibles"',
+slide4Act2Obj: "Objetivo:", slide4Act2ObjText: "Descubrir los músculos que trabajan sin que los veamos",
+slide4Act2ExA: "Ejercicio A:", slide4Act2ExAText: "De pie, eleva un brazo lateralmente hasta 90°.",
+slide4Act2ExA1: "¿Qué músculo trabaja obvio? → Deltoides (agonista)",
+slide4Act2ExA2: "Ahora concéntrate en: ¿Qué mantiene tu tronco recto? → Core (estabilizador)",
+slide4Act2ExA3: "¿Qué evita que te caigas hacia el lado? → Cuadrado lumbar + oblicuos",
+slide4Act2ExB: "Ejercicio B:", slide4Act2ExBText: "Mantén un relevé sobre una pierna.",
+slide4Act2ExB1: "Agonistas: Gemelos",
+slide4Act2ExB2: "Estabilizadores: Peroneos (tobillo), glúteo medio (cadera), core",
+slide4Act2ExB3: "Sin los estabilizadores, ¡te caerías!",
+slide4Act2Ref: "Reflexión:", slide4Act2RefText: 'Los estabilizadores son "héroes invisibles" que permiten la precisión.',
+slide4Act3Title: 'Actividad 3: "Co-contracción"',
+slide4Act3Obj: "Objetivo:", slide4Act3ObjText: "Experimentar cuando agonista y antagonista trabajan juntos",
+slide4Act3Sit1: "Situación normal:", slide4Act3Sit1Text: "Flexiona el codo rápido.",
+slide4Act3Sit1a: "Bíceps: Se contrae", slide4Act3Sit1b: "Tríceps: Se relaja completamente",
+slide4Act3Sit2: "Co-contracción:", slide4Act3Sit2Text: "Flexiona el codo pero RESISTE con la otra mano.",
+slide4Act3Sit2a: "¡Ambos músculos están DUROS!",
+slide4Act3Sit2b: "Bíceps quiere flexionar, tríceps quiere evitarlo",
+slide4Act3Sit2c: "Resultado: El codo NO se mueve, pero ambos trabajan",
+slide4Act3App: "Aplicación en danza:",
+slide4Act3App1: "En posiciones estáticas (arabesque mantenido)",
+slide4Act3App2: "En movimientos muy controlados (adagio)",
+slide4Act3App3: "Para proteger articulaciones en aterrizajes",
+slide4Act3Ref: "Reflexión:", slide4Act3RefText: "La co-contracción genera estabilidad pero cansa más. Úsala solo cuando necesites control máximo.",
+slide4Act4Title: 'Actividad 4: "Análisis de movimiento en parejas"',
+slide4Act4Obj: "Objetivo:", slide4Act4ObjText: "Identificar los 4 roles musculares en un movimiento de danza",
+slide4Act4Step1: "En parejas:", slide4Act4Step1Text: "Uno ejecuta, otro analiza.",
+slide4Act4Step2: "Movimiento:", slide4Act4Step2Text: "Grand battement hacia adelante.",
+slide4Act4Step3: "El analista identifica:",
+slide4Act4Step3a: "✅ Agonistas: ¿Qué músculos elevan la pierna? (Psoas, recto femoral)",
+slide4Act4Step3b: "✅ Antagonistas: ¿Qué músculos se relajan? (Glúteos, isquiotibiales)",
+slide4Act4Step3c: "✅ Sinergistas: ¿Qué músculos ayudan? (Aductores, tensor de fascia lata)",
+slide4Act4Step3d: "✅ Estabilizadores: ¿Qué mantiene el equilibrio? (Core, cuádriceps pierna apoyo)",
+slide4Act4Step4: "Intercambio:", slide4Act4Step4Text: "Cambiad de roles con otro movimiento (pirueta, salto, etc.)",
+slide4Act4Step5: "Puesta en común:", slide4Act4Step5Text: "Comparad vuestras observaciones.",
+slide4TipsTitle: "Consejos para optimizar el trabajo en equipo",
+slide4Tip1Title: "Estira los antagonistas:", slide4Tip1Text: "Si están tensos, limitan el movimiento del agonista.",
+slide4Tip2Title: "Fortalece estabilizadores:", slide4Tip2Text: 'No solo trabajes los músculos "visibles".',
+slide4Tip3Title: "Entrena la coordinación:", slide4Tip3Text: "La técnica de danza es entrenar al sistema nervioso para coordinar el equipo.",
+slide4Tip4Title: "Escucha el dolor:", slide4Tip4Text: "Si un músculo duele, todo el equipo se descompensa.",
+slide5Title: "📊 Quiz: Evalúa tu comprensión",
+slide5QuizTitle: "Preguntas sobre el equipo muscular",
+slide5CheckBtn: "Comprobar respuestas", slide5ResetBtn: "Reiniciar",
+quizQ1: "En una flexión de codo, el bíceps actúa como:",
+quizQ1Opts: ["Antagonista", "Agonista (prime mover)", "Estabilizador", "Sinergista"],
+quizQ2: "¿Qué ocurre con el antagonista cuando el agonista se contrae?",
+quizQ2Opts: ["También se contrae", "Se relaja (inhibición recíproca)", "Permanece igual", "Se alarga activamente"],
+quizQ3: "En un relevé (elevación sobre puntas), los gemelos son:",
+quizQ3Opts: ["Antagonistas", "Estabilizadores", "Agonistas", "Sinergistas"],
+quizQ4: "¿Cuál es la función principal de los músculos estabilizadores?",
+quizQ4Opts: ["Generar el movimiento principal", "Relajarse para permitir el movimiento", "Mantener estable la base para permitir precisión", "Ayudar al agonista contrayéndose igual"],
+quizQ5: "En un arabesque, el glúteo mayor es:",
+quizQ5Opts: ["Antagonista (se relaja)", "Agonista (extiende la cadera)", "Solo estabilizador", "No participa"],
+quizQ6: "La co-contracción ocurre cuando:",
+quizQ6Opts: ["Solo el agonista trabaja", "Agonista y antagonista se contraen simultáneamente", "Todos los músculos se relajan", "Solo trabajan los estabilizadores"],
+quizQ7: "¿Por qué es importante estirar los antagonistas en danza?",
+quizQ7Opts: ["Para que sean más fuertes", "Para que no limiten el rango de movimiento del agonista", "Para que se contraigan más", "No es importante"],
+quizQ8: "En un plié, el cuádriceps trabaja de forma:",
+quizQ8Opts: ["Concéntrica (se acorta)", "Excéntrica (se alarga controlando la bajada)", "Isométrica (sin cambio de longitud)", "No trabaja"],
+quizPerfect: "🏆 ¡Excelente! {score}/{total}. Comprendes perfectamente el trabajo en equipo muscular.",
+quizGood: "👍 Muy bien: {score}/{total}. Repasa los conceptos fallados.",
+quizBad: "📚 {score}/{total}. Revisa las diapositivas de teoría.",
+alertSelect: "Por favor, responde todas las preguntas."
+},
+ca: {
+pageTitle: "Els Músculs Treballen en Equip - Dansa",
+mainTitle: "💪 Els Músculs Treballen en Equip",
+mainSubtitle: "Coordinació muscular en la dansa",
+navIntro: "📚 Introducció", navTeam: "👥 L'Equip Muscular", navDance: "🩰 Exemples en Dansa",
+navActivities: "🎯 Activitats", navQuiz: "📊 Quiz",
+slide1Title: "🎭 Introducció: El Treball en Equip Muscular",
+slide1KeyTitle: "🎯 Concepte clau",
+slide1KeyText: 'Els músculs <strong>MAI treballen sols</strong>. Cada moviment de dansa requereix la coordinació perfecta de múltiples músculs que desempenyen rols diferents però complementaris.',
+slide1WhyTitle: "Per què treballen en equip?",
+slide1WhyIntro: "Imagina un equip de ballet:",
+slide1Role1Title: "Primer ballarí:", slide1Role1Text: "Executa el moviment principal (agonista)",
+slide1Role2Title: "Ballarí oposat:", slide1Role2Text: "Es relaxa per permetre el moviment (antagonista)",
+slide1Role3Title: "Cos de ball:", slide1Role3Text: "Ajuda i estabilitza (sinergistes)",
+slide1Role4Title: "Director d'escena:", slide1Role4Text: "Manté tot estable (estabilitzadors)",
+slide1WhyEnd: "Així funciona el teu cos!",
+slide1DiagramTitle: "📐 Esquema de l'equip muscular",
+svgCoordTitle: "Coordinació Muscular en un Moviment",
+svgAgonist: "AGONISTA", svgPrimeMover: "Motor principal", svgContracts: "Es contreu", svgGenerates: "genera moviment",
+svgAntagonist: "ANTAGONISTA", svgOpponent: "Oponent", svgRelaxes: "Es relaxa", svgAllows: "permet moviment",
+svgSynergist: "SINERGISTA", svgHelps: "Ajuda l'agonista", svgImproves: "Millora eficiència", svgStabilizesJoint: "Estabilitza articulació",
+svgStabilizer: "ESTABILITZADOR", svgFixesBase: "Fixa la base", svgMaintainsPosture: "Manté postura", svgAllowsPrecision: "Permet precisió",
+svgCoordination: "Coordinació",
+slide1ActivityTitle: 'Activitat d\'exploració: "Sent l\'equip"',
+slide1ActStep1: "Exercici:", slide1ActStep1Text: "Flexiona el colze lentament portant la mà a l'espatlla.",
+slide1ActStep2: "Toca amb l'altra mà:",
+slide1ActStep2a: "Bíceps (part frontal del braç): Es posa dur →",
+slide1ActStep2b: "Tríceps (part posterior): Es posa tou →",
+slide1ActStep3: "Reflexió:", slide1ActStep3Text: "Mentre un treballa, l'altre descansa. És un equip!",
+slide2Title: "👥 Els 4 Rols de l'Equip Muscular",
+slide2PrimeMover: "Motor principal",
+slide2AgonistText: "El múscul principal que genera el moviment desitjat. Es contreu activament.",
+slide2AgonistEx: "Exemple: Bíceps en flexió de colze",
+slide2Opponent: "Oponent",
+slide2AntagonistText: "Es relaxa per permetre el moviment. Actua en direcció oposada a l'agonista.",
+slide2AntagonistEx: "Exemple: Tríceps en flexió de colze",
+slide2Helper: "Ajudant",
+slide2SynergistText: "Assisteix l'agonista millorant l'eficiència del moviment o estabilitzant l'articulació.",
+slide2SynergistEx: "Exemple: Braquial ajuda el bíceps",
+slide2FixedBase: "Base fixa",
+slide2StabilizerText: "Manté estable la part del cos perquè el moviment sigui precís i controlat.",
+slide2StabilizerEx: "Exemple: Core en elevació de braços",
+slide2InhibitionTitle: "Inhibició Recíproca",
+slide2InhibitionText: 'Quan l\'agonista es contreu, el sistema nerviós <strong>inhibeix automàticament</strong> l\'antagonista. Això és un <strong>reflex neural</strong> que permet el moviment fluid.',
+slide2InhibitionDance: "Important en dansa:",
+slide2InhibitionDanceText: "Si l'antagonista no es relaxa completament, el moviment serà tibat i limitat.",
+slide2DiagramTitle: "📐 Exemple: Flexió de colze",
+svgArm: "Braç", svgAgonistLabel: "(Agonista)", svgAntagonistLabel: "(Antagonista)", svgMovement: "Moviment",
+slide3Title: "🩰 Exemples d'Equips Musculars en Dansa",
+slide3Ex1Title: "1. PLIÉ (Flexió de genoll)",
+slide3Agonists: "AGONISTES", slide3Antagonists: "ANTAGONISTES", slide3Synergists: "SINERGISTES", slide3Stabilizers: "ESTABILITZADORS",
+slide3Ex1Ag1: "Quàdriceps (excèntric)", slide3Ex1Ag2: "Glutis", slide3Ex1Ag3: "Isquiotibials",
+slide3Ex1Ant1: "Bessons (relaxació parcial)", slide3Ex1Ant2: "Soli",
+slide3Ex1St1: "Core (abdomen/esquena)", slide3Ex1St2: "Aductors", slide3Ex1St3: "Tibial anterior",
+slide3Ex2Title: "2. RELEVÉ (Elevació sobre puntes)",
+slide3Ex2Ag1: "Bessons (concèntric)", slide3Ex2Ag2: "Soli", slide3Ex2Ag3: "Tibial posterior",
+slide3Ex2Ant1: "Tibial anterior", slide3Ex2Ant2: "Extensors dels dits",
+slide3Ex2St1: "Peronis (estabilitat turmell)", slide3Ex2St2: "Core", slide3Ex2St3: "Quàdriceps",
+slide3Ex3Title: "3. ARABESQUE (Extensió de cama enrere)",
+slide3Ex3Ag1: "Gluti major", slide3Ex3Ag2: "Isquiotibials", slide3Ex3Ag3: "Erectors espinals",
+slide3Ex3Ant1: "Psoes ilíac", slide3Ex3Ant2: "Recte femoral", slide3Ex3Ant3: "Abdominals",
+slide3Ex3Sy1: "Aductors", slide3Ex3Sy2: "Rotadors externs",
+slide3Ex3St1: "Core profund", slide3Ex3St2: "Quàdriceps (cama suport)", slide3Ex3St3: "Multífids",
+slide3DiagramTitle: "📐 Arabesque: Coordinació muscular",
+svgTorso: "Tronc", svgSupport: "Suport", svgRaised: "Elevada", svgGlute: "GLUTI",
+svgStabilizerLabel: "Estabilitzador", svgArabesqueCoord: "Coordinació en Arabesque",
+slide4Title: "🎯 Activitats Pràctiques: Sent l'Equip",
+slide4Act1Title: 'Activitat 1: "Agonista vs Antagonista"',
+slide4Act1Obj: "Objectiu:", slide4Act1ObjText: "Percebre la contracció i relaxació de parells musculars",
+slide4Act1ExA: "Exercici A - Braç:",
+slide4Act1ExA1: "Flexiona el colze lentament (3 segons)",
+slide4Act1ExA2: "Toca el bíceps: està DUR (agonista contraient-se)",
+slide4Act1ExA3: "Toca el tríceps: està TOU (antagonista relaxant-se)",
+slide4Act1ExA4: "Estén el colze lentament",
+slide4Act1ExA5: "Ara s'inverteixen els rols!",
+slide4Act1ExB: "Exercici B - Cama:",
+slide4Act1ExB1: "Seu a terra, eleva una cama estirada",
+slide4Act1ExB2: "Toca el quàdriceps (davant de la cuixa): DUR",
+slide4Act1ExB3: "Toca els isquiotibials (darrere): TOU",
+slide4Act1Ref: "Reflexió:", slide4Act1RefText: "Perceps com sempre hi ha un múscul que treballa i un altre que descansa?",
+slide4Act2Title: 'Activitat 2: "Estabilitzadors invisibles"',
+slide4Act2Obj: "Objectiu:", slide4Act2ObjText: "Descobrir els músculs que treballen sense que els vegem",
+slide4Act2ExA: "Exercici A:", slide4Act2ExAText: "Dret, eleva un braç lateralment fins a 90°.",
+slide4Act2ExA1: "Quin múscul treballa òbvi? → Deltoides (agonista)",
+slide4Act2ExA2: "Ara concentra't en: Què manté el teu tronc recte? → Core (estabilitzador)",
+slide4Act2ExA3: "Què evita que caiguis cap al costat? → Quadrat lumbar + oblics",
+slide4Act2ExB: "Exercici B:", slide4Act2ExBText: "Mantén un relevé sobre una cama.",
+slide4Act2ExB1: "Agonistes: Bessons",
+slide4Act2ExB2: "Estabilitzadors: Peronis (turmell), gluti mitjà (maluc), core",
+slide4Act2ExB3: "Sense els estabilitzadors, cauries!",
+slide4Act2Ref: "Reflexió:", slide4Act2RefText: 'Els estabilitzadors són "herois invisibles" que permeten la precisió.',
+slide4Act3Title: 'Activitat 3: "Co-contractació"',
+slide4Act3Obj: "Objectiu:", slide4Act3ObjText: "Experimentar quan agonista i antagonista treballen junts",
+slide4Act3Sit1: "Situació normal:", slide4Act3Sit1Text: "Flexiona el colze ràpid.",
+slide4Act3Sit1a: "Bíceps: Es contreu", slide4Act3Sit1b: "Tríceps: Es relaxa completament",
+slide4Act3Sit2: "Co-contractació:", slide4Act3Sit2Text: "Flexiona el colze però RESISTEIX amb l'altra mà.",
+slide4Act3Sit2a: "Tots dos músculs estan DURS!",
+slide4Act3Sit2b: "Bíceps vol flexionar, tríceps vol evitar-ho",
+slide4Act3Sit2c: "Resultat: El colze NO es mou, però tots dos treballen",
+slide4Act3App: "Aplicació en dansa:",
+slide4Act3App1: "En posicions estàtiques (arabesque mantingut)",
+slide4Act3App2: "En moviments molt controlats (adagio)",
+slide4Act3App3: "Per protegir articulacions en aterratges",
+slide4Act3Ref: "Reflexió:", slide4Act3RefText: "La co-contractació genera estabilitat però cansa més. Fes-la servir només quan necessitis control màxim.",
+slide4Act4Title: 'Activitat 4: "Anàlisi de moviment en parelles"',
+slide4Act4Obj: "Objectiu:", slide4Act4ObjText: "Identificar els 4 rols musculars en un moviment de dansa",
+slide4Act4Step1: "En parelles:", slide4Act4Step1Text: "Un executa, l'altre analitza.",
+slide4Act4Step2: "Moviment:", slide4Act4Step2Text: "Grand battement cap endavant.",
+slide4Act4Step3: "L'analista identifica:",
+slide4Act4Step3a: "✅ Agonistes: Quins músculs eleven la cama? (Psoes, recte femoral)",
+slide4Act4Step3b: "✅ Antagonistes: Quins músculs es relaxen? (Glutis, isquiotibials)",
+slide4Act4Step3c: "✅ Sinergistes: Quins músculs ajuden? (Aductors, tensor de la fàscia lata)",
+slide4Act4Step3d: "✅ Estabilitzadors: Què manté l'equilibri? (Core, quàdriceps cama suport)",
+slide4Act4Step4: "Intercanvi:", slide4Act4Step4Text: "Canvieu de rols amb un altre moviment (pirueta, salt, etc.)",
+slide4Act4Step5: "Posada en comú:", slide4Act4Step5Text: "Compareu les vostres observacions.",
+slide4TipsTitle: "Consells per optimitzar el treball en equip",
+slide4Tip1Title: "Estira els antagonistes:", slide4Tip1Text: "Si estan tensos, limiten el moviment de l'agonista.",
+slide4Tip2Title: "Enforteix estabilitzadors:", slide4Tip2Text: 'No només treballis els músculs "visibles".',
+slide4Tip3Title: "Entrena la coordinació:", slide4Tip3Text: "La tècnica de dansa és entrenar el sistema nerviós per coordinar l'equip.",
+slide4Tip4Title: "Escolta el dolor:", slide4Tip4Text: "Si un múscul fa mal, tot l'equip es descompensa.",
+slide5Title: "📊 Quiz: Avalua la teva comprensió",
+slide5QuizTitle: "Preguntes sobre l'equip muscular",
+slide5CheckBtn: "Comprovar respostes", slide5ResetBtn: "Reiniciar",
+quizQ1: "En una flexió de colze, el bíceps actua com:",
+quizQ1Opts: ["Antagonista", "Agonista (motor principal)", "Estabilitzador", "Sinergista"],
+quizQ2: "Què passa amb l'antagonista quan l'agonista es contreu?",
+quizQ2Opts: ["També es contreu", "Es relaxa (inhibició recíproca)", "Roman igual", "S'allarga activament"],
+quizQ3: "En un relevé (elevació sobre puntes), els bessons són:",
+quizQ3Opts: ["Antagonistes", "Estabilitzadors", "Agonistes", "Sinergistes"],
+quizQ4: "Quina és la funció principal dels músculs estabilitzadors?",
+quizQ4Opts: ["Generar el moviment principal", "Relaxar-se per permetre el moviment", "Mantenir estable la base per permetre precisió", "Ajudar l'agonista contraient-se igual"],
+quizQ5: "En un arabesque, el gluti major és:",
+quizQ5Opts: ["Antagonista (es relaxa)", "Agonista (estén el maluc)", "Només estabilitzador", "No participa"],
+quizQ6: "La co-contractació es produeix quan:",
+quizQ6Opts: ["Només l'agonista treballa", "Agonista i antagonista es contreuen simultàniament", "Tots els músculs es relaxen", "Només treballen els estabilitzadors"],
+quizQ7: "Per què és important estirar els antagonistes en dansa?",
+quizQ7Opts: ["Perquè siguin més forts", "Perquè no limitin el rang de moviment de l'agonista", "Perquè es contreugin més", "No és important"],
+quizQ8: "En un plié, el quàdriceps treballa de forma:",
+quizQ8Opts: ["Concèntrica (s'escurça)", "Excèntrica (s'allarga controlant la baixada)", "Isomètrica (sense canvi de longitud)", "No treballa"],
+quizPerfect: "🏆 Excel·lent! {score}/{total}. Comprens perfectament el treball en equip muscular.",
+quizGood: "👍 Molt bé: {score}/{total}. Repassa els conceptes fallats.",
+quizBad: "📚 {score}/{total}. Revisa les diapositives de teoria.",
+alertSelect: "Si us plau, respon totes les preguntes."
+},
+en: {
+pageTitle: "Muscles Work as a Team - Dance",
+mainTitle: "💪 Muscles Work as a Team",
+mainSubtitle: "Muscle coordination in dance",
+navIntro: "📚 Introduction", navTeam: "👥 The Muscle Team", navDance: "🩰 Dance Examples",
+navActivities: "🎯 Activities", navQuiz: "📊 Quiz",
+slide1Title: "🎭 Introduction: Muscular Teamwork",
+slide1KeyTitle: "🎯 Key concept",
+slide1KeyText: 'Muscles <strong>NEVER work alone</strong>. Every dance movement requires the perfect coordination of multiple muscles that play different but complementary roles.',
+slide1WhyTitle: "Why do they work as a team?",
+slide1WhyIntro: "Imagine a ballet company:",
+slide1Role1Title: "Principal dancer:", slide1Role1Text: "Executes the main movement (agonist)",
+slide1Role2Title: "Opposite dancer:", slide1Role2Text: "Relaxes to allow movement (antagonist)",
+slide1Role3Title: "Corps de ballet:", slide1Role3Text: "Helps and stabilizes (synergists)",
+slide1Role4Title: "Stage director:", slide1Role4Text: "Keeps everything stable (stabilizers)",
+slide1WhyEnd: "That's how your body works!",
+slide1DiagramTitle: "📐 Muscle team diagram",
+svgCoordTitle: "Muscle Coordination in a Movement",
+svgAgonist: "AGONIST", svgPrimeMover: "Prime mover", svgContracts: "Contracts", svgGenerates: "generates movement",
+svgAntagonist: "ANTAGONIST", svgOpponent: "Opponent", svgRelaxes: "Relaxes", svgAllows: "allows movement",
+svgSynergist: "SYNERGIST", svgHelps: "Helps the agonist", svgImproves: "Improves efficiency", svgStabilizesJoint: "Stabilizes joint",
+svgStabilizer: "STABILIZER", svgFixesBase: "Fixes the base", svgMaintainsPosture: "Maintains posture", svgAllowsPrecision: "Allows precision",
+svgCoordination: "Coordination",
+slide1ActivityTitle: 'Exploration activity: "Feel the team"',
+slide1ActStep1: "Exercise:", slide1ActStep1Text: "Slowly bend your elbow bringing your hand to your shoulder.",
+slide1ActStep2: "Touch with the other hand:",
+slide1ActStep2a: "Biceps (front of arm): Gets hard →",
+slide1ActStep2b: "Triceps (back): Gets soft →",
+slide1ActStep3: "Reflection:", slide1ActStep3Text: "While one works, the other rests. It's a team!",
+slide2Title: "👥 The 4 Roles of the Muscle Team",
+slide2PrimeMover: "Prime mover",
+slide2AgonistText: "The main muscle that generates the desired movement. It contracts actively.",
+slide2AgonistEx: "Example: Biceps in elbow flexion",
+slide2Opponent: "Opponent",
+slide2AntagonistText: "It relaxes to allow movement. It acts in the opposite direction to the agonist.",
+slide2AntagonistEx: "Example: Triceps in elbow flexion",
+slide2Helper: "Helper",
+slide2SynergistText: "It assists the agonist by improving movement efficiency or stabilizing the joint.",
+slide2SynergistEx: "Example: Brachialis helps the biceps",
+slide2FixedBase: "Fixed base",
+slide2StabilizerText: "It keeps the body part stable so the movement is precise and controlled.",
+slide2StabilizerEx: "Example: Core in arm elevation",
+slide2InhibitionTitle: "Reciprocal Inhibition",
+slide2InhibitionText: 'When the agonist contracts, the nervous system <strong>automatically inhibits</strong> the antagonist. This is a <strong>neural reflex</strong> that allows fluid movement.',
+slide2InhibitionDance: "Important in dance:",
+slide2InhibitionDanceText: "If the antagonist doesn't fully relax, the movement will be tense and limited.",
+slide2DiagramTitle: "📐 Example: Elbow flexion",
+svgArm: "Arm", svgAgonistLabel: "(Agonist)", svgAntagonistLabel: "(Antagonist)", svgMovement: "Movement",
+slide3Title: "🩰 Examples of Muscle Teams in Dance",
+slide3Ex1Title: "1. PLIÉ (Knee flexion)",
+slide3Agonists: "AGONISTS", slide3Antagonists: "ANTAGONISTS", slide3Synergists: "SYNERGISTS", slide3Stabilizers: "STABILIZERS",
+slide3Ex1Ag1: "Quadriceps (eccentric)", slide3Ex1Ag2: "Glutes", slide3Ex1Ag3: "Hamstrings",
+slide3Ex1Ant1: "Calves (partial relaxation)", slide3Ex1Ant2: "Soleus",
+slide3Ex1St1: "Core (abdomen/back)", slide3Ex1St2: "Adductors", slide3Ex1St3: "Anterior tibialis",
+slide3Ex2Title: "2. RELEVÉ (Rise on toes)",
+slide3Ex2Ag1: "Calves (concentric)", slide3Ex2Ag2: "Soleus", slide3Ex2Ag3: "Posterior tibialis",
+slide3Ex2Ant1: "Anterior tibialis", slide3Ex2Ant2: "Toe extensors",
+slide3Ex2St1: "Peroneals (ankle stability)", slide3Ex2St2: "Core", slide3Ex2St3: "Quadriceps",
+slide3Ex3Title: "3. ARABESQUE (Leg extension back)",
+slide3Ex3Ag1: "Gluteus maximus", slide3Ex3Ag2: "Hamstrings", slide3Ex3Ag3: "Spinal erectors",
+slide3Ex3Ant1: "Iliopsoas", slide3Ex3Ant2: "Rectus femoris", slide3Ex3Ant3: "Abdominals",
+slide3Ex3Sy1: "Adductors", slide3Ex3Sy2: "External rotators",
+slide3Ex3St1: "Deep core", slide3Ex3St2: "Quadriceps (support leg)", slide3Ex3St3: "Multifidus",
+slide3DiagramTitle: "📐 Arabesque: Muscle coordination",
+svgTorso: "Torso", svgSupport: "Support", svgRaised: "Raised", svgGlute: "GLUTE",
+svgStabilizerLabel: "Stabilizer", svgArabesqueCoord: "Coordination in Arabesque",
+slide4Title: "🎯 Practical Activities: Feel the Team",
+slide4Act1Title: 'Activity 1: "Agonist vs Antagonist"',
+slide4Act1Obj: "Objective:", slide4Act1ObjText: "Perceive the contraction and relaxation of muscle pairs",
+slide4Act1ExA: "Exercise A - Arm:",
+slide4Act1ExA1: "Slowly bend your elbow (3 seconds)",
+slide4Act1ExA2: "Touch the biceps: it's HARD (agonist contracting)",
+slide4Act1ExA3: "Touch the triceps: it's SOFT (antagonist relaxing)",
+slide4Act1ExA4: "Slowly extend the elbow",
+slide4Act1ExA5: "Now the roles reverse!",
+slide4Act1ExB: "Exercise B - Leg:",
+slide4Act1ExB1: "Sit on the floor, raise one straight leg",
+slide4Act1ExB2: "Touch the quadriceps (front of thigh): HARD",
+slide4Act1ExB3: "Touch the hamstrings (back): SOFT",
+slide4Act1Ref: "Reflection:", slide4Act1RefText: "Do you notice how there's always one muscle working and another resting?",
+slide4Act2Title: 'Activity 2: "Invisible stabilizers"',
+slide4Act2Obj: "Objective:", slide4Act2ObjText: "Discover the muscles that work without us seeing them",
+slide4Act2ExA: "Exercise A:", slide4Act2ExAText: "Standing, raise one arm laterally to 90°.",
+slide4Act2ExA1: "Which muscle obviously works? → Deltoid (agonist)",
+slide4Act2ExA2: "Now focus on: What keeps your torso straight? → Core (stabilizer)",
+slide4Act2ExA3: "What prevents you from falling to the side? → Quadratus lumborum + obliques",
+slide4Act2ExB: "Exercise B:", slide4Act2ExBText: "Hold a relevé on one leg.",
+slide4Act2ExB1: "Agonists: Calves",
+slide4Act2ExB2: "Stabilizers: Peroneals (ankle), gluteus medius (hip), core",
+slide4Act2ExB3: "Without stabilizers, you'd fall!",
+slide4Act2Ref: "Reflection:", slide4Act2RefText: 'Stabilizers are "invisible heroes" that allow precision.',
+slide4Act3Title: 'Activity 3: "Co-contraction"',
+slide4Act3Obj: "Objective:", slide4Act3ObjText: "Experience when agonist and antagonist work together",
+slide4Act3Sit1: "Normal situation:", slide4Act3Sit1Text: "Quickly bend your elbow.",
+slide4Act3Sit1a: "Biceps: Contracts", slide4Act3Sit1b: "Triceps: Relaxes completely",
+slide4Act3Sit2: "Co-contraction:", slide4Act3Sit2Text: "Bend your elbow but RESIST with the other hand.",
+slide4Act3Sit2a: "Both muscles are HARD!",
+slide4Act3Sit2b: "Biceps wants to flex, triceps wants to prevent it",
+slide4Act3Sit2c: "Result: The elbow DOESN'T move, but both work",
+slide4Act3App: "Application in dance:",
+slide4Act3App1: "In static positions (held arabesque)",
+slide4Act3App2: "In very controlled movements (adagio)",
+slide4Act3App3: "To protect joints in landings",
+slide4Act3Ref: "Reflection:", slide4Act3RefText: "Co-contraction generates stability but is more tiring. Use it only when you need maximum control.",
+slide4Act4Title: 'Activity 4: "Movement analysis in pairs"',
+slide4Act4Obj: "Objective:", slide4Act4ObjText: "Identify the 4 muscle roles in a dance movement",
+slide4Act4Step1: "In pairs:", slide4Act4Step1Text: "One performs, the other analyzes.",
+slide4Act4Step2: "Movement:", slide4Act4Step2Text: "Grand battement forward.",
+slide4Act4Step3: "The analyzer identifies:",
+slide4Act4Step3a: "✅ Agonists: Which muscles raise the leg? (Psoas, rectus femoris)",
+slide4Act4Step3b: "✅ Antagonists: Which muscles relax? (Glutes, hamstrings)",
+slide4Act4Step3c: "✅ Synergists: Which muscles help? (Adductors, tensor fasciae latae)",
+slide4Act4Step3d: "✅ Stabilizers: What maintains balance? (Core, quadriceps of support leg)",
+slide4Act4Step4: "Exchange:", slide4Act4Step4Text: "Switch roles with another movement (pirouette, jump, etc.)",
+slide4Act4Step5: "Sharing:", slide4Act4Step5Text: "Compare your observations.",
+slide4TipsTitle: "Tips to optimize teamwork",
+slide4Tip1Title: "Stretch the antagonists:", slide4Tip1Text: "If they're tense, they limit the agonist's movement.",
+slide4Tip2Title: "Strengthen stabilizers:", slide4Tip2Text: 'Don\'t just work the "visible" muscles.',
+slide4Tip3Title: "Train coordination:", slide4Tip3Text: "Dance technique is training the nervous system to coordinate the team.",
+slide4Tip4Title: "Listen to pain:", slide4Tip4Text: "If one muscle hurts, the whole team becomes unbalanced.",
+slide5Title: "📊 Quiz: Evaluate your understanding",
+slide5QuizTitle: "Questions about the muscle team",
+slide5CheckBtn: "Check answers", slide5ResetBtn: "Reset",
+quizQ1: "In elbow flexion, the biceps acts as:",
+quizQ1Opts: ["Antagonist", "Agonist (prime mover)", "Stabilizer", "Synergist"],
+quizQ2: "What happens to the antagonist when the agonist contracts?",
+quizQ2Opts: ["It also contracts", "It relaxes (reciprocal inhibition)", "It stays the same", "It actively lengthens"],
+quizQ3: "In a relevé (rise on toes), the calves are:",
+quizQ3Opts: ["Antagonists", "Stabilizers", "Agonists", "Synergists"],
+quizQ4: "What is the main function of stabilizer muscles?",
+quizQ4Opts: ["Generate the main movement", "Relax to allow movement", "Keep the base stable to allow precision", "Help the agonist by contracting equally"],
+quizQ5: "In an arabesque, the gluteus maximus is:",
+quizQ5Opts: ["Antagonist (relaxes)", "Agonist (extends the hip)", "Only a stabilizer", "Doesn't participate"],
+quizQ6: "Co-contraction occurs when:",
+quizQ6Opts: ["Only the agonist works", "Agonist and antagonist contract simultaneously", "All muscles relax", "Only stabilizers work"],
+quizQ7: "Why is it important to stretch antagonists in dance?",
+quizQ7Opts: ["To make them stronger", "So they don't limit the agonist's range of motion", "So they contract more", "It's not important"],
+quizQ8: "In a plié, the quadriceps works:",
+quizQ8Opts: ["Concentrically (shortens)", "Eccentrically (lengthens controlling the descent)", "Isometrically (no length change)", "Doesn't work"],
+quizPerfect: "🏆 Excellent! {score}/{total}. You perfectly understand muscular teamwork.",
+quizGood: "👍 Very good: {score}/{total}. Review the failed concepts.",
+quizBad: "📚 {score}/{total}. Review the theory slides.",
+alertSelect: "Please answer all questions."
+}
+};
+
+let currentLang = 'es';
+
+// Preguntes del quiz (estructura independent de l'idioma)
+const quizData = [
+{ qKey: "quizQ1", correct: 1 },
+{ qKey: "quizQ2", correct: 1 },
+{ qKey: "quizQ3", correct: 2 },
+{ qKey: "quizQ4", correct: 2 },
+{ qKey: "quizQ5", correct: 1 },
+{ qKey: "quizQ6", correct: 1 },
+{ qKey: "quizQ7", correct: 1 },
+{ qKey: "quizQ8", correct: 1 }
+];
+
+function changeLanguage(lang) {
+currentLang = lang;
+document.documentElement.lang = lang;
+// Actualitzar botons d'idioma
+document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+document.querySelector(`.lang-btn[onclick="changeLanguage('${lang}')"]`).classList.add('active');
+// Traduir tots els elements amb data-translate
+document.querySelectorAll('[data-translate]').forEach(el => {
+const key = el.getAttribute('data-translate');
+if (translations[lang][key]) {
+el.innerHTML = translations[lang][key];
+}
+});
+// Re-renderitzar el quiz amb el nou idioma
+renderQuiz();
+}
+
+function showSlide(i, btn) {
+document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+document.querySelectorAll('.slide')[i].classList.add('active');
+btn.classList.add('active');
+window.scrollTo(0, 0);
+}
+
+function renderQuiz() {
+const cont = document.getElementById('quizContainer');
+const t = translations[currentLang];
+cont.innerHTML = '';
+quizData.forEach((item, qi) => {
+const question = t[item.qKey];
+const opts = t[item.qKey + "Opts"];
+let html = `<div style="background: #f8f9fa; border-left: 5px solid #2a5298; padding: 18px; margin-bottom: 18px; border-radius: 8px;">
+<p style="font-weight: 600; margin-bottom: 12px; font-size: 1em; color: #2c3e50;">${qi+1}. ${question}</p>
+<div style="display: flex; flex-direction: column; gap: 8px;">`;
+opts.forEach((opt, oi) => {
+html += `<label style="background: white; border: 2px solid #dee2e6; padding: 12px 16px; border-radius: 8px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; font-size: 0.93em;">
+<input type="radio" name="q${qi}" value="${oi}" style="margin-right: 12px;"> ${opt}</label>`;
+});
+html += `</div></div>`;
+cont.innerHTML += html;
+});
+}
+
+function checkQuiz() {
+const t = translations[currentLang];
+let score = 0;
+let allAnswered = true;
+quizData.forEach((item, qi) => {
+const sel = document.querySelector(`input[name="q${qi}"]:checked`);
+const labels = document.querySelectorAll(`input[name="q${qi}"]`);
+labels.forEach(l => { l.parentElement.style.background = 'white'; l.parentElement.style.borderColor = '#dee2e6'; });
+if (sel) {
+const val = parseInt(sel.value);
+if (val === item.correct) {
+sel.parentElement.style.background = '#d4edda';
+sel.parentElement.style.borderColor = '#28a745';
+score++;
+} else {
+sel.parentElement.style.background = '#f8d7da';
+sel.parentElement.style.borderColor = '#dc3545';
+labels[item.correct].parentElement.style.background = '#d4edda';
+labels[item.correct].parentElement.style.borderColor = '#28a745';
+}
+} else {
+allAnswered = false;
+labels[item.correct].parentElement.style.background = '#d4edda';
+labels[item.correct].parentElement.style.borderColor = '#28a745';
+}
+});
+const fb = document.getElementById('fbQuiz');
+fb.classList.add('show');
+let msg = '';
+if (score === quizData.length) {
+fb.className = 'feedback show success';
+msg = t.quizPerfect.replace('{score}', score).replace('{total}', quizData.length);
+} else if (score >= 6) {
+fb.className = 'feedback show info';
+msg = t.quizGood.replace('{score}', score).replace('{total}', quizData.length);
+} else {
+fb.className = 'feedback show error';
+msg = t.quizBad.replace('{score}', score).replace('{total}', quizData.length);
+}
+fb.innerHTML = msg;
+}
+
+function resetQuiz() {
+document.querySelectorAll('#quizContainer input').forEach(i => {
+i.checked = false;
+i.parentElement.style.background = 'white';
+i.parentElement.style.borderColor = '#dee2e6';
+});
+document.getElementById('fbQuiz').classList.remove('show');
+}
+
+// Inicialitzar el quiz al carregar
+renderQuiz();
+</script>
+</body>
+</html>

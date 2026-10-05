@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reto de Propriocepción</title>
+<style>
+  body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; }
+  h1 { text-align: center; color: #8b5cf6; }
+  .container { max-width: 900px; margin: auto; position: relative; }
+  .escenario { background: #1e293b; padding: 25px; border-radius: 12px; margin-bottom: 20px; }
+  .escenario h3 { color: #8b5cf6; margin-top: 0; }
+  .pregunta { background: #0f172a; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #8b5cf6; }
+  .opciones { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 10px; }
+  .opcion { background: #334155; padding: 12px; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: all 0.2s; text-align: center; }
+  .opcion:hover { border-color: #8b5cf6; transform: translateY(-2px); }
+  .opcion.correcta { background: #14532d; border-color: #34d399; }
+  .opcion.incorrecta { background: #7f1d1d; border-color: #ef4444; }
+  .feedback { margin-top: 15px; padding: 12px; background: #334155; border-radius: 6px; min-height: 60px; }
+  button { background: #8b5cf6; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+  .progreso { text-align: center; color: #94a3b8; margin-bottom: 15px; }
+  
+  .language-selector {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    display: flex;
+    gap: 8px;
+  }
+  .language-selector button {
+    background: rgba(139,92,246,0.15);
+    border: 1px solid rgba(139,92,246,0.4);
+    color: #8b5cf6;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  .language-selector button:hover { background: rgba(139,92,246,0.3); }
+  .language-selector button.active { background: #8b5cf6; color: white; }
+  
+  @media (max-width: 600px) {
+    .language-selector { position: static; margin-bottom: 15px; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="language-selector">
+    <button class="active" onclick="setLanguage('es', this)">ES</button>
+    <button onclick="setLanguage('ca', this)">CA</button>
+    <button onclick="setLanguage('en', this)">EN</button>
+  </div>
+  <h1 data-i18n="title">🎯 Reto de Propriocepción y Planos</h1>
+  <div class="progreso" id="progreso"></div>
+  
+  <div id="contenido"></div>
+  
+  <div style="text-align:center; margin-top:20px;">
+    <button onclick="siguiente()" id="btnSig" style="display:none;" data-i18n="btn_next">Siguiente escenario →</button>
+    <button onclick="reiniciar()" data-i18n="btn_reset">🔄 Reiniciar</button>
+  </div>
+</div>
+
+<script>
+let currentLang = 'es';
+
+const translations = {
+  es: {
+    title: "🎯 Reto de Propriocepción y Planos",
+    btn_next: "Siguiente escenario →",
+    btn_reset: "🔄 Reiniciar",
+    progress: (a, t) => `Escenario ${a} de ${t}`,
+    situation: (n) => `Situación ${n}`,
+    q_receptor: "¿Qué receptor proprioceptivo se activa principalmente?",
+    q_plano: "¿En qué plano de movimiento se produce la acción?",
+    feedback_initial: "Selecciona una opción en cada pregunta.",
+    receptor_huso: "Huso muscular",
+    receptor_otg: "Órgano Tendinoso de Golgi",
+    receptor_articular: "Receptores articulares",
+    plano_sagital: "Sagital",
+    plano_coronal: "Coronal/Frontal",
+    plano_transversal: "Transversal",
+    perfect: "🎉 ¡Perfecto!",
+    partial: "⚠️ Parcial",
+    review: "❌ Revisa",
+    label_receptor: "Receptor:",
+    label_plano: "Plano:",
+    escenarios: [
+      {
+        situacion: 'Un gimnasta aterriza de un salto y su rodilla se flexiona bruscamente más de lo esperado.',
+        receptor: {correcta: 'Huso muscular', explicacion: 'El huso muscular detecta el cambio brusco de longitud y activa el reflejo miotático para contraer el músculo y proteger la articulación.'},
+        plano: {correcta: 'Sagital', explicacion: 'La flexión-extensión de rodilla ocurre en el plano sagital (eje transversal).'}
+      },
+      {
+        situacion: 'Un halterófilo levanta un peso extremo y el tendón del bíceps soporta una tensión peligrosa.',
+        receptor: {correcta: 'Órgano Tendinoso de Golgi', explicacion: 'El OTG detecta la tensión excesiva en el tendón y provoca la relajación refleja del músculo (autógena) para evitar su rotura.'},
+        plano: {correcta: 'Sagital', explicacion: 'La flexión de codo (levantar peso) ocurre en el plano sagital.'}
+      },
+      {
+        situacion: 'Un bailarín gira sobre sí mismo (pirueta) y debe mantener el equilibrio.',
+        receptor: {correcta: 'Receptores articulares', explicacion: 'Los receptores en cápsula y ligamentos informan de la posición exacta de las articulaciones durante la rotación.'},
+        plano: {correcta: 'Transversal', explicacion: 'Las rotaciones (interna/externa) ocurren en el plano transversal (eje longitudinal).'}
+      },
+      {
+        situacion: 'Un futbolista hace una finta abriendo la pierna hacia el lado.',
+        receptor: {correcta: 'Huso muscular', explicacion: 'El huso detecta la longitud y velocidad del estiramiento durante el movimiento lateral.'},
+        plano: {correcta: 'Coronal/Frontal', explicacion: 'La abducción-aducción ocurre en el plano coronal/frontal (eje anteroposterior).'}
+      },
+      {
+        situacion: 'Un anciano cierra los ojos y pierde el equilibrio al estar de pie.',
+        receptor: {correcta: 'Receptores articulares', explicacion: 'Sin la visión, el sistema depende de los receptores articulares y vestibulares para mantener la postura.'},
+        plano: {correcta: 'Transversal', explicacion: 'Los ajustes posturales para mantener el equilibrio implican rotaciones en el plano transversal.'}
+      }
+    ]
+  },
+  ca: {
+    title: "🎯 Repte de Propiocepció i Plans",
+    btn_next: "Següent escenari →",
+    btn_reset: "🔄 Reiniciar",
+    progress: (a, t) => `Escenari ${a} de ${t}`,
+    situation: (n) => `Situació ${n}`,
+    q_receptor: "Quin receptor propioceptiu s'activa principalment?",
+    q_plano: "En quin pla de moviment es produeix l'acció?",
+    feedback_initial: "Selecciona una opció a cada pregunta.",
+    receptor_huso: "Fus muscular",
+    receptor_otg: "Òrgan Tendinós de Golgi",
+    receptor_articular: "Receptors articulars",
+    plano_sagital: "Sagital",
+    plano_coronal: "Coronal/Frontal",
+    plano_transversal: "Transversal",
+    perfect: "🎉 Perfecte!",
+    partial: "⚠️ Parcial",
+    review: "❌ Revisa",
+    label_receptor: "Receptor:",
+    label_plano: "Pla:",
+    escenarios: [
+      {
+        situacion: "Un gimnasta aterra d'un salt i el seu genoll es flexiona bruscament més del previst.",
+        receptor: {correcta: 'Fus muscular', explicacion: "El fus muscular detecta el canvi brusc de longitud i activa el reflex miotàtic per contreure el múscul i protegir l'articulació."},
+        plano: {correcta: 'Sagital', explicacion: "La flexió-extensió de genoll ocorre en el pla sagital (eix transversal)."}
+      },
+      {
+        situacion: "Un halteròfil aixeca un pes extrem i el tendó del bíceps suporta una tensió perillosa.",
+        receptor: {correcta: 'Òrgan Tendinós de Golgi', explicacion: "L'OTG detecta la tensió excessiva al tendó i provoca la relaxació reflexa del múscul (autògena) per evitar-ne la ruptura."},
+        plano: {correcta: 'Sagital', explicacion: "La flexió de colze (aixecar pes) ocorre en el pla sagital."}
+      },
+      {
+        situacion: "Un ballarí gira sobre si mateix (pirueta) i ha de mantenir l'equilibri.",
+        receptor: {correcta: 'Receptors articulars', explicacion: "Els receptors a la càpsula i lligaments informen de la posició exacta de les articulacions durant la rotació."},
+        plano: {correcta: 'Transversal', explicacion: "Les rotacions (interna/externa) ocorren en el pla transversal (eix longitudinal)."}
+      },
+      {
+        situacion: "Un futbolista fa una finta obrint la cama cap al costat.",
+        receptor: {correcta: 'Fus muscular', explicacion: "El fus detecta la longitud i velocitat de l'estirament durant el moviment lateral."},
+        plano: {correcta: 'Coronal/Frontal', explicacion: "L'abducció-adducció ocorre en el pla coronal/frontal (eix anteroposterior)."}
+      },
+      {
+        situacion: "Una persona gran tanca els ulls i perd l'equilibri estant dreta.",
+        receptor: {correcta: 'Receptors articulars', explicacion: "Sense la visió, el sistema depèn dels receptors articulars i vestibulars per mantenir la postura."},
+        plano: {correcta: 'Transversal', explicacion: "Els ajustos posturals per mantenir l'equilibri impliquen rotacions en el pla transversal."}
+      }
+    ]
+  },
+  en: {
+    title: "🎯 Proprioception and Planes Challenge",
+    btn_next: "Next scenario →",
+    btn_reset: "🔄 Reset",
+    progress: (a, t) => `Scenario ${a} of ${t}`,
+    situation: (n) => `Situation ${n}`,
+    q_receptor: "Which proprioceptive receptor is mainly activated?",
+    q_plano: "In which plane of motion does the action occur?",
+    feedback_initial: "Select an option for each question.",
+    receptor_huso: "Muscle spindle",
+    receptor_otg: "Golgi Tendon Organ",
+    receptor_articular: "Joint receptors",
+    plano_sagital: "Sagittal",
+    plano_coronal: "Coronal/Frontal",
+    plano_transversal: "Transverse",
+    perfect: "🎉 Perfect!",
+    partial: "⚠️ Partial",
+    review: "❌ Review",
+    label_receptor: "Receptor:",
+    label_plano: "Plane:",
+    escenarios: [
+      {
+        situacion: "A gymnast lands from a jump and their knee flexes sharply more than expected.",
+        receptor: {correcta: 'Muscle spindle', explicacion: "The muscle spindle detects the sudden change in length and activates the myotatic reflex to contract the muscle and protect the joint."},
+        plano: {correcta: 'Sagittal', explicacion: "Knee flexion-extension occurs in the sagittal plane (transverse axis)."}
+      },
+      {
+        situacion: "A weightlifter lifts an extreme weight and the biceps tendon endures dangerous tension.",
+        receptor: {correcta: 'Golgi Tendon Organ', explicacion: "The GTO detects excessive tension in the tendon and causes reflex relaxation of the muscle (autogenic) to prevent rupture."},
+        plano: {correcta: 'Sagittal', explicacion: "Elbow flexion (lifting weight) occurs in the sagittal plane."}
+      },
+      {
+        situacion: "A dancer spins on themselves (pirouette) and must maintain balance.",
+        receptor: {correcta: 'Joint receptors', explicacion: "Receptors in the capsule and ligaments report the exact position of the joints during rotation."},
+        plano: {correcta: 'Transverse', explicacion: "Rotations (internal/external) occur in the transverse plane (longitudinal axis)."}
+      },
+      {
+        situacion: "A soccer player feints by opening the leg to the side.",
+        receptor: {correcta: 'Muscle spindle', explicacion: "The spindle detects the length and speed of the stretch during the lateral movement."},
+        plano: {correcta: 'Coronal/Frontal', explicacion: "Abduction-adduction occurs in the coronal/frontal plane (anteroposterior axis)."}
+      },
+      {
+        situacion: "An elderly person closes their eyes and loses balance while standing.",
+        receptor: {correcta: 'Joint receptors', explicacion: "Without vision, the system depends on joint and vestibular receptors to maintain posture."},
+        plano: {correcta: 'Transverse', explicacion: "Postural adjustments to maintain balance involve rotations in the transverse plane."}
+      }
+    ]
+  }
+};
+
+let actual = 0;
+let respondido = false;
+let respuestas = {receptor: null, plano: null};
+
+function setLanguage(lang, btn) {
+  currentLang = lang;
+  document.querySelectorAll('.language-selector button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key]) {
+      el.textContent = translations[lang][key];
+    }
+  });
+  
+  document.documentElement.lang = lang;
+  
+  // Reset to first scenario
+  actual = 0;
+  mostrar();
+}
+
+function mostrar() {
+  const t = translations[currentLang];
+  const e = t.escenarios[actual];
+  document.getElementById('progreso').textContent = t.progress(actual + 1, t.escenarios.length);
+  document.getElementById('btnSig').style.display = actual < t.escenarios.length - 1 ? 'inline-block' : 'none';
+  respondido = false;
+  respuestas = {receptor: null, plano: null};
+  
+  document.getElementById('contenido').innerHTML = `
+    <div class="escenario">
+      <h3>${t.situation(actual + 1)}</h3>
+      <div class="pregunta">${e.situacion}</div>
+      
+      <b>${t.q_receptor}</b>
+      <div class="opciones" id="opReceptor">
+        <div class="opcion" onclick="responder('receptor','${t.receptor_huso}')">${t.receptor_huso}</div>
+        <div class="opcion" onclick="responder('receptor','${t.receptor_otg}')">${t.receptor_otg}</div>
+        <div class="opcion" onclick="responder('receptor','${t.receptor_articular}')">${t.receptor_articular}</div>
+      </div>
+      
+      <div class="pregunta" style="margin-top:20px;">
+        <b>${t.q_plano}</b>
+        <div class="opciones" id="opPlano">
+          <div class="opcion" onclick="responder('plano','${t.plano_sagital}')">${t.plano_sagital}</div>
+          <div class="opcion" onclick="responder('plano','${t.plano_coronal}')">${t.plano_coronal}</div>
+          <div class="opcion" onclick="responder('plano','${t.plano_transversal}')">${t.plano_transversal}</div>
+        </div>
+      </div>
+      
+      <div class="feedback" id="feedback">${t.feedback_initial}</div>
+    </div>
+  `;
+}
+
+function responder(tipo, valor) {
+  if (respuestas[tipo] !== null) return;
+  respuestas[tipo] = valor;
+  
+  const t = translations[currentLang];
+  const e = t.escenarios[actual];
+  const opciones = document.querySelectorAll(`#op${tipo.charAt(0).toUpperCase()+tipo.slice(1)} .opcion`);
+  opciones.forEach(op => {
+    if (op.textContent === valor) {
+      op.classList.add(valor === e[tipo].correcta ? 'correcta' : 'incorrecta');
+    }
+  });
+  
+  if (respuestas.receptor && respuestas.plano) {
+    respondido = true;
+    const bien = (respuestas.receptor === e.receptor.correcta ? 1 : 0) + (respuestas.plano === e.plano.correcta ? 1 : 0);
+    const resultLabel = bien === 2 ? t.perfect : bien === 1 ? t.partial : t.review;
+    document.getElementById('feedback').innerHTML = `
+      <b>${resultLabel}</b><br>
+      <b>${t.label_receptor}</b> ${e.receptor.explicacion}<br>
+      <b>${t.label_plano}</b> ${e.plano.explicacion}
+    `;
+  }
+}
+
+function siguiente() {
+  const t = translations[currentLang];
+  if (actual < t.escenarios.length - 1) {
+    actual++;
+    mostrar();
+  }
+}
+
+function reiniciar() {
+  actual = 0;
+  mostrar();
+}
+
+setLanguage('es', document.querySelector('.language-selector button'));
+</script>
+</body>
+</html>

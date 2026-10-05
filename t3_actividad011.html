@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-translate="pageTitle">Rols Musculars en el Moviment</title>
+<style>
+body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; }
+h1 { text-align: center; color: #06b6d4; margin-bottom: 10px; }
+.language-selector {
+display: flex;
+justify-content: center;
+gap: 10px;
+margin-bottom: 20px;
+}
+.lang-btn {
+padding: 8px 18px;
+border: 2px solid #06b6d4;
+background: transparent;
+color: #06b6d4;
+border-radius: 20px;
+cursor: pointer;
+font-size: 0.9em;
+font-weight: 600;
+transition: all 0.3s;
+}
+.lang-btn:hover { background: rgba(6,182,212,0.2); }
+.lang-btn.active { background: #06b6d4; color: #0f172a; }
+.container { max-width: 1000px; margin: auto; }
+.movimiento { background: #1e293b; padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+.movimiento h3 { color: #06b6d4; margin-top: 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-top: 15px; }
+.musculo { background: #334155; padding: 12px; border-radius: 8px; text-align: center; }
+.musculo b { color: #fbbf24; display: block; margin-bottom: 8px; }
+select { width: 100%; padding: 8px; background: #0f172a; border: 1px solid #475569; border-radius: 6px; color: #e2e8f0; }
+.correcto { background: #14532d; border: 2px solid #34d399; }
+.incorrecto { background: #7f1d1d; border: 2px solid #ef4444; }
+button { background: #06b6d4; color: #0f172a; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 15px; margin: 5px; }
+button:hover { background: #0891b2; }
+.resultado { margin-top: 20px; padding: 15px; background: #1e293b; border-radius: 8px; text-align: center; min-height: 50px; }
+.leyenda { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px; padding: 15px; background: #1e293b; border-radius: 8px; justify-content: center; }
+.rol-tag { padding: 6px 12px; border-radius: 12px; font-size: 13px; font-weight: bold; }
+.agonista { background: #16a34a; color: white; }
+.antagonista { background: #dc2626; color: white; }
+.sinergista { background: #2563eb; color: white; }
+.estabilizador { background: #9333ea; color: white; }
+@media (max-width: 768px) {
+h1 { font-size: 1.5em; }
+.leyenda { flex-direction: column; align-items: center; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="language-selector">
+<button class="lang-btn active" onclick="changeLanguage('es')">ES</button>
+<button class="lang-btn" onclick="changeLanguage('ca')">CA</button>
+<button class="lang-btn" onclick="changeLanguage('en')">EN</button>
+</div>
+<h1 data-translate="mainTitle">🤸 Rols Musculars en el Moviment</h1>
+<div class="leyenda">
+<span class="rol-tag agonista" data-translate="legendAgonist">Agonista: ejecutor principal</span>
+<span class="rol-tag antagonista" data-translate="legendAntagonist">Antagonista: freno/acción opuesta</span>
+<span class="rol-tag sinergista" data-translate="legendSynergist">Sinergista: auxiliar</span>
+<span class="rol-tag estabilizador" data-translate="legendStabilizer">Estabilizador: fija la articulación</span>
+</div>
+<div id="movimientos"></div>
+<div style="text-align:center; margin-top:20px;">
+<button onclick="comprobar()" data-translate="btnCheck">✔ Comprobar</button>
+<button onclick="location.reload()" data-translate="btnReset">🔄 Reiniciar</button>
+</div>
+<div class="resultado" id="res"></div>
+</div>
+
+<script>
+// ============ SISTEMA DE TRADUCCIONES ============
+const translations = {
+es: {
+pageTitle: "Rols Musculars en el Moviment",
+mainTitle: "🤸 Rols Musculars en el Moviment",
+legendAgonist: "Agonista: ejecutor principal",
+legendAntagonist: "Antagonista: freno/acción opuesta",
+legendSynergist: "Sinergista: auxiliar",
+legendStabilizer: "Estabilizador: fija la articulación",
+btnCheck: "✔ Comprobar",
+btnReset: "🔄 Reiniciar",
+selectDefault: "-- Rol --",
+optAgonist: "Agonista",
+optAntagonist: "Antagonista",
+optSynergist: "Sinergista",
+optStabilizer: "Estabilizador",
+// Ejercicios
+ex1Name: "Flexión de codo (levantar una copa)",
+ex2Name: "Extensión de rodilla (patada frontal)",
+ex3Name: "Abducción de hombro (levantar brazo lateral)",
+ex4Name: "Flexión plantar (relevé en danza)",
+// Músculos ejercicio 1
+ex1m1: "Bíceps braquial",
+ex1m2: "Tríceps braquial",
+ex1m3: "Braquial",
+ex1m4: "Deltoides",
+// Músculos ejercicio 2
+ex2m1: "Cuádriceps",
+ex2m2: "Isquiotibiales",
+ex2m3: "Sartorio",
+ex2m4: "Glúteo medio",
+// Músculos ejercicio 3
+ex3m1: "Deltoides medio",
+ex3m2: "Pectoral mayor",
+ex3m3: "Supraespinoso",
+ex3m4: "Trapecio",
+// Músculos ejercicio 4
+ex4m1: "Gemelos",
+ex4m2: "Tibial anterior",
+ex4m3: "Sóleo",
+ex4m4: "Peroneos",
+// Feedback
+feedbackPerfect: "🎉 <b>¡Perfecto!</b> Has identificado correctamente todos los roles musculares ({aciertos}/{total}).",
+feedbackPartial: "Has acertado <b>{aciertos}/{total}</b>. Revisa los marcados en rojo. Recuerda: el <b>agonista</b> es el motor principal, el <b>antagonista</b> frena, el <b>sinergista</b> ayuda y el <b>estabilizador</b> fija."
+},
+ca: {
+pageTitle: "Rols Musculars en el Moviment",
+mainTitle: "🤸 Rols Musculars en el Moviment",
+legendAgonist: "Agonista: executor principal",
+legendAntagonist: "Antagonista: fre/acció oposada",
+legendSynergist: "Sinergista: auxiliar",
+legendStabilizer: "Estabilitzador: fixa l'articulació",
+btnCheck: "✔ Comprovar",
+btnReset: "🔄 Reiniciar",
+selectDefault: "-- Rol --",
+optAgonist: "Agonista",
+optAntagonist: "Antagonista",
+optSynergist: "Sinergista",
+optStabilizer: "Estabilitzador",
+// Exercicis
+ex1Name: "Flexió de colze (aixecar una copa)",
+ex2Name: "Extensió de genoll (puntada de peu frontal)",
+ex3Name: "Abducció d'espatlla (aixecar braç lateral)",
+ex4Name: "Flexió plantar (relevé en dansa)",
+// Músculs exercici 1
+ex1m1: "Bíceps braquial",
+ex1m2: "Tríceps braquial",
+ex1m3: "Braquial",
+ex1m4: "Deltoides",
+// Músculs exercici 2
+ex2m1: "Quàdriceps",
+ex2m2: "Isquiotibials",
+ex2m3: "Sartori",
+ex2m4: "Gluti mitjà",
+// Músculs exercici 3
+ex3m1: "Deltoides mitjà",
+ex3m2: "Pectoral major",
+ex3m3: "Supraespinós",
+ex3m4: "Trapezi",
+// Músculs exercici 4
+ex4m1: "Bessons",
+ex4m2: "Tibial anterior",
+ex4m3: "Soli",
+ex4m4: "Peronis",
+// Feedback
+feedbackPerfect: "🎉 <b>Perfecte!</b> Has identificat correctament tots els rols musculars ({aciertos}/{total}).",
+feedbackPartial: "Has encertat <b>{aciertos}/{total}</b>. Revisa els marcats en vermell. Recorda: l'<b>agonista</b> és el motor principal, l'<b>antagonista</b> frena, el <b>sinergista</b> ajuda i l'<b>estabilitzador</b> fixa."
+},
+en: {
+pageTitle: "Muscle Roles in Movement",
+mainTitle: "🤸 Muscle Roles in Movement",
+legendAgonist: "Agonist: main executor",
+legendAntagonist: "Antagonist: brake/opposite action",
+legendSynergist: "Synergist: assistant",
+legendStabilizer: "Stabilizer: fixes the joint",
+btnCheck: "✔ Check",
+btnReset: "🔄 Reset",
+selectDefault: "-- Role --",
+optAgonist: "Agonist",
+optAntagonist: "Antagonist",
+optSynergist: "Synergist",
+optStabilizer: "Stabilizer",
+// Exercises
+ex1Name: "Elbow flexion (lifting a cup)",
+ex2Name: "Knee extension (front kick)",
+ex3Name: "Shoulder abduction (lifting arm sideways)",
+ex4Name: "Plantar flexion (relevé in dance)",
+// Muscles exercise 1
+ex1m1: "Biceps brachii",
+ex1m2: "Triceps brachii",
+ex1m3: "Brachialis",
+ex1m4: "Deltoid",
+// Muscles exercise 2
+ex2m1: "Quadriceps",
+ex2m2: "Hamstrings",
+ex2m3: "Sartorius",
+ex2m4: "Gluteus medius",
+// Muscles exercise 3
+ex3m1: "Middle deltoid",
+ex3m2: "Pectoralis major",
+ex3m3: "Supraspinatus",
+ex3m4: "Trapezius",
+// Muscles exercise 4
+ex4m1: "Calves",
+ex4m2: "Anterior tibialis",
+ex4m3: "Soleus",
+ex4m4: "Peroneals",
+// Feedback
+feedbackPerfect: "🎉 <b>Perfect!</b> You have correctly identified all muscle roles ({aciertos}/{total}).",
+feedbackPartial: "You got <b>{aciertos}/{total}</b> correct. Review those marked in red. Remember: the <b>agonist</b> is the main motor, the <b>antagonist</b> brakes, the <b>synergist</b> assists, and the <b>stabilizer</b> fixes."
+}
+};
+
+let currentLang = 'es';
+
+// Datos de los ejercicios (estructura independiente del idioma)
+const ejercicios = [
+{
+nameKey: 'ex1Name',
+musculos: [
+{nombreKey: 'ex1m1', rol: 'agonista'},
+{nombreKey: 'ex1m2', rol: 'antagonista'},
+{nombreKey: 'ex1m3', rol: 'sinergista'},
+{nombreKey: 'ex1m4', rol: 'estabilizador'}
+]
+},
+{
+nameKey: 'ex2Name',
+musculos: [
+{nombreKey: 'ex2m1', rol: 'agonista'},
+{nombreKey: 'ex2m2', rol: 'antagonista'},
+{nombreKey: 'ex2m3', rol: 'sinergista'},
+{nombreKey: 'ex2m4', rol: 'estabilizador'}
+]
+},
+{
+nameKey: 'ex3Name',
+musculos: [
+{nombreKey: 'ex3m1', rol: 'agonista'},
+{nombreKey: 'ex3m2', rol: 'antagonista'},
+{nombreKey: 'ex3m3', rol: 'sinergista'},
+{nombreKey: 'ex3m4', rol: 'estabilizador'}
+]
+},
+{
+nameKey: 'ex4Name',
+musculos: [
+{nombreKey: 'ex4m1', rol: 'agonista'},
+{nombreKey: 'ex4m2', rol: 'antagonista'},
+{nombreKey: 'ex4m3', rol: 'sinergista'},
+{nombreKey: 'ex4m4', rol: 'estabilizador'}
+]
+}
+];
+
+function changeLanguage(lang) {
+currentLang = lang;
+document.documentElement.lang = lang;
+// Actualizar botones de idioma
+document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+document.querySelector(`.lang-btn[onclick="changeLanguage('${lang}')"]`).classList.add('active');
+// Traducir elementos estáticos
+document.querySelectorAll('[data-translate]').forEach(el => {
+const key = el.getAttribute('data-translate');
+if (translations[lang][key]) {
+el.innerHTML = translations[lang][key];
+}
+});
+// Re-renderizar ejercicios con el nuevo idioma
+renderEjercicios();
+}
+
+function renderEjercicios() {
+const cont = document.getElementById('movimientos');
+const t = translations[currentLang];
+cont.innerHTML = '';
+ejercicios.forEach((ej, i) => {
+const div = document.createElement('div');
+div.className = 'movimiento';
+const ejName = t[ej.nameKey];
+const musculosHTML = ej.musculos.map((m, j) => {
+const musName = t[m.nombreKey];
+return `
+<div class="musculo" data-ej="${i}" data-mus="${j}" data-correcto="${m.rol}">
+<b>${musName}</b>
+<select>
+<option value="">${t.selectDefault}</option>
+<option value="agonista">${t.optAgonist}</option>
+<option value="antagonista">${t.optAntagonist}</option>
+<option value="sinergista">${t.optSynergist}</option>
+<option value="estabilizador">${t.optStabilizer}</option>
+</select>
+</div>
+`;
+}).join('');
+div.innerHTML = `
+<h3>${i+1}. ${ejName}</h3>
+<div class="grid">
+${musculosHTML}
+</div>
+`;
+cont.appendChild(div);
+});
+}
+
+function comprobar() {
+const t = translations[currentLang];
+let aciertos = 0, total = 0;
+document.querySelectorAll('.musculo').forEach(m => {
+total++;
+const sel = m.querySelector('select').value;
+const correcto = m.dataset.correcto;
+m.classList.remove('correcto','incorrecto');
+if (sel === correcto) {
+m.classList.add('correcto');
+aciertos++;
+} else if (sel) {
+m.classList.add('incorrecto');
+}
+});
+const res = document.getElementById('res');
+if (aciertos === total) {
+res.innerHTML = t.feedbackPerfect.replace('{aciertos}', aciertos).replace('{total}', total);
+} else {
+res.innerHTML = t.feedbackPartial.replace('{aciertos}', aciertos).replace('{total}', total);
+}
+}
+
+// Inicializar al cargar
+renderEjercicios();
+</script>
+</body>
+</html>

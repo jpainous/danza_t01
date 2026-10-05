@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tejido Óseo y Recubrimientos (1) - El Periostio</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+body {
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+min-height: 100vh;
+padding: 20px;
+}
+.container {
+max-width: 1100px;
+margin: 0 auto;
+background: #fff;
+border-radius: 20px;
+box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+overflow: hidden;
+}
+header {
+background: linear-gradient(90deg, #1e3c72, #2a5298);
+color: white;
+padding: 35px;
+text-align: center;
+position: relative;
+}
+header h1 { font-size: 2.1em; margin-bottom: 10px; }
+header p { opacity: 0.95; font-size: 1.1em; }
+header .subtitle { font-size: 0.95em; opacity: 0.85; margin-top: 8px; font-style: italic; }
+
+/* Selector d'idioma */
+.lang-selector {
+position: absolute;
+top: 15px;
+right: 20px;
+display: flex;
+gap: 6px;
+background: rgba(255,255,255,0.15);
+padding: 6px;
+border-radius: 25px;
+backdrop-filter: blur(10px);
+}
+.lang-btn {
+background: transparent;
+border: 2px solid transparent;
+color: white;
+padding: 6px 14px;
+border-radius: 20px;
+cursor: pointer;
+font-size: 0.85em;
+font-weight: 600;
+transition: all 0.3s;
+}
+.lang-btn:hover { background: rgba(255,255,255,0.2); }
+.lang-btn.active {
+background: white;
+color: #1e3c72;
+border-color: white;
+}
+
+.nav-tabs {
+display: flex;
+background: #f8f9fa;
+flex-wrap: wrap;
+border-bottom: 3px solid #dee2e6;
+position: sticky;
+top: 0;
+z-index: 100;
+}
+.nav-tabs button {
+flex: 1;
+min-width: 140px;
+padding: 14px 10px;
+background: transparent;
+border: none;
+cursor: pointer;
+font-size: 0.9em;
+font-weight: 600;
+color: #666;
+transition: all 0.3s;
+border-bottom: 4px solid transparent;
+}
+.nav-tabs button:hover { background: #e9ecef; color: #2a5298; }
+.nav-tabs button.active {
+color: #2a5298;
+border-bottom-color: #2a5298;
+background: white;
+}
+.slide { display: none; padding: 30px; min-height: 600px; }
+.slide.active { display: block; animation: fadeIn 0.5s; }
+@keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+.slide h2 {
+color: #1e3c72;
+margin-bottom: 20px;
+font-size: 1.7em;
+border-bottom: 3px solid #2a5298;
+padding-bottom: 10px;
+}
+.reminder-box {
+background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+border-left: 5px solid #fbc02d;
+padding: 18px;
+margin: 20px 0;
+border-radius: 10px;
+}
+.reminder-box h4 {
+color: #f57f17;
+margin-bottom: 10px;
+font-size: 1.1em;
+}
+.intro-box {
+background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+border-left: 5px solid #1976d2;
+padding: 22px;
+margin: 20px 0;
+border-radius: 10px;
+line-height: 1.7;
+}
+.intro-box h3 {
+color: #1565c0;
+margin-bottom: 12px;
+font-size: 1.25em;
+}
+.concept-card {
+background: white;
+border: 3px solid #2a5298;
+border-radius: 15px;
+padding: 25px;
+margin: 20px 0;
+box-shadow: 0 5px 20px rgba(42,82,152,0.15);
+}
+.concept-card h3 {
+color: #2a5298;
+font-size: 1.35em;
+margin-bottom: 15px;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.how-it-works {
+background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+padding: 20px;
+border-radius: 10px;
+margin: 15px 0;
+border-left: 5px solid #f57c00;
+}
+.how-it-works h4 {
+color: #e65100;
+margin-bottom: 12px;
+font-size: 1.15em;
+}
+.how-it-works ul {
+margin-left: 25px;
+line-height: 1.8;
+}
+.dance-box {
+background: linear-gradient(135deg, #fff5e6 0%, #ffe8cc 100%);
+padding: 20px;
+border-radius: 10px;
+margin: 15px 0;
+border: 2px dashed #f39c12;
+}
+.dance-box h4 {
+color: #e67e22;
+margin-bottom: 12px;
+font-size: 1.15em;
+}
+.dance-box ul {
+margin-left: 25px;
+line-height: 1.8;
+}
+.practical-activity {
+background: linear-gradient(135deg, #e8f8f5 0%, #d5f5e3 100%);
+padding: 22px;
+border-radius: 15px;
+margin: 20px 0;
+border: 2px solid #1abc9c;
+}
+.practical-activity h4 {
+color: #16a085;
+font-size: 1.2em;
+margin-bottom: 12px;
+}
+.activity-steps {
+margin-left: 25px;
+line-height: 1.9;
+}
+.activity-steps li {
+margin-bottom: 8px;
+}
+.activity-steps strong {
+color: #16a085;
+}
+.diagram-container {
+background: white;
+border: 2px solid #dee2e6;
+border-radius: 10px;
+padding: 20px;
+margin: 20px 0;
+text-align: center;
+}
+.diagram-container svg {
+max-width: 100%;
+height: auto;
+}
+.diagram-container h4 {
+color: #2a5298;
+margin-bottom: 15px;
+font-size: 1.1em;
+}
+.tip-box {
+background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+padding: 16px;
+border-radius: 10px;
+margin: 15px 0;
+border-left: 5px solid #9b59b6;
+}
+.tip-box h4 {
+color: #8e44ad;
+margin-bottom: 8px;
+font-size: 1.05em;
+}
+.highlight {
+background: linear-gradient(120deg, #ffeaa7 0%, #ffeaa7 100%);
+padding: 2px 8px;
+border-radius: 4px;
+font-weight: 600;
+}
+.emoji { font-size: 1.2em; margin-right: 6px; }
+.btn {
+background: linear-gradient(90deg, #2a5298, #1e3c72);
+color: white;
+border: none;
+padding: 12px 30px;
+border-radius: 25px;
+font-size: 1em;
+font-weight: 600;
+cursor: pointer;
+margin: 10px 5px;
+transition: all 0.3s;
+box-shadow: 0 4px 12px rgba(42,82,152,0.3);
+}
+.btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 6px 16px rgba(42,82,152,0.4);
+}
+.quiz-container {
+background: white;
+border: 2px solid #e4e8ec;
+border-radius: 15px;
+padding: 25px;
+margin: 20px 0;
+}
+.quiz-container h3 {
+color: #2a5298;
+margin-bottom: 18px;
+font-size: 1.25em;
+}
+.question-box {
+background: #f8f9fa;
+border-left: 5px solid #2a5298;
+padding: 16px;
+margin-bottom: 16px;
+border-radius: 8px;
+}
+.question-box p {
+font-weight: 600;
+margin-bottom: 12px;
+font-size: 1em;
+color: #2c3e50;
+}
+.options {
+display: flex;
+flex-direction: column;
+gap: 8px;
+}
+.options label {
+background: white;
+border: 2px solid #dee2e6;
+padding: 12px 16px;
+border-radius: 8px;
+cursor: pointer;
+transition: all 0.2s;
+display: flex;
+align-items: center;
+font-size: 0.93em;
+}
+.options label:hover {
+border-color: #2a5298;
+background: #e3f2fd;
+}
+.options input { margin-right: 12px; }
+.options label.correct {
+background: #d4edda;
+border-color: #28a745;
+color: #155724;
+}
+.options label.incorrect {
+background: #f8d7da;
+border-color: #dc3545;
+color: #721c24;
+}
+.feedback {
+margin-top: 18px;
+padding: 18px;
+border-radius: 10px;
+display: none;
+font-weight: 600;
+line-height: 1.6;
+}
+.feedback.show { display: block; animation: fadeIn 0.3s; }
+.feedback.success { background: #d4edda; color: #155724; border: 2px solid #28a745; }
+.feedback.error { background: #f8d7da; color: #721c24; border: 2px solid #dc3545; }
+@media (max-width: 768px) {
+header h1 { font-size: 1.6em; }
+.slide { padding: 20px; }
+.concept-card { padding: 18px; }
+.lang-selector { position: static; margin: 0 auto 15px auto; justify-content: center; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<div class="lang-selector">
+<button class="lang-btn active" onclick="setLanguage('es', this)">🇪🇸 ES</button>
+<button class="lang-btn" onclick="setLanguage('ca', this)">🏴 CA</button>
+<button class="lang-btn" onclick="setLanguage('en', this)">🇬🇧 EN</button>
+</div>
+<h1 data-i18n="main_title">🦴 Tejido Óseo y Recubrimientos</h1>
+<p data-i18n="main_subtitle">Parte 1: El Periostio - La "piel viva" del hueso</p>
+<div class="subtitle" data-i18n="main_tagline">Por qué los huesos duelen, se reparan y crecen</div>
+</header>
+<div class="nav-tabs">
+<button class="active" onclick="showSlide(0, this)" data-i18n="tab1">🎯 Introducción</button>
+<button onclick="showSlide(1, this)" data-i18n="tab2">🩸 Nutrición del hueso</button>
+<button onclick="showSlide(2, this)" data-i18n="tab3">🔧 Reparación de fracturas</button>
+<button onclick="showSlide(3, this)" data-i18n="tab4">🎯 Quiz</button>
+</div>
+
+<!-- SLIDE 1: INTRODUCCIÓN -->
+<div class="slide active">
+<h2 data-i18n="s1_title">🎯 ¿Qué es el periostio?</h2>
+<div class="reminder-box">
+<h4 data-i18n="s1_reminder_title">💡 Recordatorio</h4>
+<p data-i18n="s1_reminder_text">En los archivos anteriores vimos que el hueso es un tejido vivo que se adapta, guarda calcio y fabrica sangre. Pero... <strong>¿cómo "respira" y se alimenta un hueso si parece una piedra?</strong> La respuesta está en el periostio.</p>
+</div>
+<div class="intro-box">
+<h3 data-i18n="s1_intro_title">🎯 Imagina que el hueso es una casa...</h3>
+<p data-i18n="s1_intro_text1">Si el hueso fuera una casa, el <span class="highlight">periostio</span> sería como la <strong>"piel" o "envoltorio" que la rodea</strong>. Pero no es una piel muerta como la cáscara de un huevo. Es un tejido <strong>vivo, con sangre, nervios y células que trabajan</strong>.</p>
+<p style="margin-top: 12px;" data-i18n="s1_intro_text2">Sin el periostio, el hueso sería como una piedra: no crecería, no se repararía y no sentiría dolor.</p>
+</div>
+<div class="concept-card">
+<h3><span class="emoji">🔬</span> <span data-i18n="s1_concept_title">¿Qué contiene el periostio?</span></h3>
+<div class="how-it-works">
+<h4 data-i18n="s1_how_title">🎁 Los 3 "tesoros" del periostio</h4>
+<ul>
+<li data-i18n="s1_how_li1"><strong>Vasos sanguíneos:</strong> Pequeños "tubos" por donde circula la sangre. Llevan oxígeno y nutrientes al hueso, y se llevan los desechos.</li>
+<li data-i18n="s1_how_li2"><strong>Nervios:</strong> "Cables" que envían información al cerebro. Por eso duele tanto cuando te golpeas un hueso: los nervios del periostio avisan del daño.</li>
+<li data-i18n="s1_how_li3"><strong>Células "reparadoras":</strong> Células especiales que se activan cuando hay una fractura y empiezan a construir hueso nuevo.</li>
+</ul>
+</div>
+</div>
+<div class="diagram-container">
+<h4 data-i18n="s1_diagram_title">📐 El periostio: la "piel" del hueso</h4>
+<svg viewBox="0 0 700 300">
+<rect x="150" y="80" width="400" height="140" fill="#f5f5f5" stroke="#999" stroke-width="2" rx="10"/>
+<text x="350" y="155" text-anchor="middle" font-size="14" fill="#666" font-weight="bold" data-i18n-svg="s1_bone">HUESO</text>
+<rect x="140" y="70" width="420" height="20" fill="#e74c3c" opacity="0.8" rx="5"/>
+<text x="350" y="85" text-anchor="middle" font-size="11" fill="white" font-weight="bold" data-i18n-svg="s1_periosteum">PERIOSTIO (capa viva)</text>
+<circle cx="200" cy="75" r="4" fill="#c0392b"/>
+<circle cx="300" cy="75" r="4" fill="#c0392b"/>
+<circle cx="400" cy="75" r="4" fill="#c0392b"/>
+<circle cx="500" cy="75" r="4" fill="#c0392b"/>
+<path d="M 220 75 Q 230 60 240 75" stroke="#f39c12" stroke-width="2" fill="none"/>
+<path d="M 320 75 Q 330 60 340 75" stroke="#f39c12" stroke-width="2" fill="none"/>
+<path d="M 420 75 Q 430 60 440 75" stroke="#f39c12" stroke-width="2" fill="none"/>
+<text x="100" y="100" font-size="10" fill="#c0392b" font-weight="bold" data-i18n-svg="s1_vessels_a">Vasos</text>
+<text x="100" y="115" font-size="10" fill="#c0392b" font-weight="bold" data-i18n-svg="s1_vessels_b">sanguíneos</text>
+<line x1="145" y1="105" x2="195" y2="75" stroke="#c0392b" stroke-width="1.5"/>
+<text x="100" y="140" font-size="10" fill="#f39c12" font-weight="bold" data-i18n-svg="s1_nerves">Nervios</text>
+<line x1="145" y1="140" x2="220" y2="75" stroke="#f39c12" stroke-width="1.5"/>
+<text x="550" y="100" font-size="10" fill="#2a5298" font-weight="bold" data-i18n-svg="s1_cells_a">Células</text>
+<text x="550" y="115" font-size="10" fill="#2a5298" font-weight="bold" data-i18n-svg="s1_cells_b">reparadoras</text>
+<line x1="555" y1="110" x2="500" y2="75" stroke="#2a5298" stroke-width="1.5"/>
+<text x="350" y="250" text-anchor="middle" font-size="12" fill="#2a5298" font-weight="bold" data-i18n-svg="s1_caption">El periostio rodea todo el hueso (excepto las articulaciones)</text>
+</svg>
+</div>
+<div class="dance-box">
+<h4><span class="emoji">💃</span> <span data-i18n="s1_dance_title">¿Por qué es importante para un bailarín?</span></h4>
+<ul>
+<li data-i18n="s1_dance_li1"><strong>Sin periostio, no hay crecimiento:</strong> Cuando eras pequeño/a y crecías, el periostio añadía hueso nuevo por fuera para que tus huesos se hicieran más gruesos y fuertes.</li>
+<li data-i18n="s1_dance_li2"><strong>Sin periostio, no hay reparación:</strong> Si te haces una pequeña fractura bailando, las células del periostio son las que empiezan a "pegar" los trozos.</li>
+<li data-i18n="s1_dance_li3"><strong>Sin periostio, no sentirías el dolor:</strong> Y el dolor es una señal de alarma que te dice "para, algo va mal".</li>
+</ul>
+</div>
+<div class="practical-activity">
+<h4><span class="emoji">🎭</span> <span data-i18n="s1_activity_title">Actividad: "Siente tu periostio"</span></h4>
+<p><strong data-i18n="s1_activity_obj_label">Objetivo:</strong> <span data-i18n="s1_activity_obj">Comprobar que el hueso tiene nervios y duele</span></p>
+<ol class="activity-steps">
+<li data-i18n="s1_activity_step1"><strong>Toca suavemente</strong> la parte frontal de tu espinilla (la tibia). ¿Notas algo? Es un hueso con muy poca grasa encima, así que el periostio está casi bajo la piel.</li>
+<li data-i18n="s1_activity_step2"><strong>Da un golpecito suave</strong> con el dedo. ¿Duele un poco? Esos son los nervios del periostio avisando.</li>
+<li data-i18n="s1_activity_step3"><strong>Compara:</strong> Toca tu muslo (que tiene mucha carne/músculo encima). Golpéalo suavemente. ¿Duele menos? Sí, porque el músculo "amortigua" y el periostio está más protegido.</li>
+<li data-i18n="s1_activity_step4"><strong>Reflexión:</strong> Por eso los golpes en la espinilla duelen tanto: el periostio está casi sin protección. ¡Y por eso los bailarines deben tener cuidado con los impactos en zonas donde el hueso está "al aire"!</li>
+</ol>
+</div>
+<div class="tip-box">
+<h4 data-i18n="s1_tip_title">✨ Dato curioso</h4>
+<p data-i18n="s1_tip_text">El periostio <strong>NO cubre las articulaciones</strong> (donde un hueso se une a otro). En esas zonas hay cartílago (lo veremos en el siguiente archivo). Por eso, cuando te duele una articulación, el dolor viene de otras estructuras, no del periostio.</p>
+</div>
+</div>
+
+<!-- SLIDE 2: NUTRICIÓN DEL HUESO -->
+<div class="slide">
+<h2 data-i18n="s2_title">🩸 Cómo se "alimenta" el hueso</h2>
+<div class="reminder-box">
+<h4 data-i18n="s2_reminder_title">💡 Recordatorio</h4>
+<p data-i18n="s2_reminder_text">Acabamos de ver que el periostio tiene vasos sanguíneos. Ahora vamos a descubrir <strong>por qué eso es tan importante</strong> y qué pasa si la sangre no llega bien al hueso.</p>
+</div>
+<div class="intro-box">
+<h3 data-i18n="s2_intro_title">🍽️ El hueso necesita "comer" y "respirar"</h3>
+<p data-i18n="s2_intro_text">Aunque parezca una piedra, el hueso es un tejido vivo que necesita:</p>
+<ul style="margin-left: 25px; margin-top: 10px; line-height: 1.8;">
+<li data-i18n="s2_intro_li1"><strong>Oxígeno:</strong> Para que las células puedan "quemar" nutrientes y tener energía.</li>
+<li data-i18n="s2_intro_li2"><strong>Nutrientes:</strong> Calcio, fósforo, proteínas, vitaminas...</li>
+<li data-i18n="s2_intro_li3"><strong>Eliminar desechos:</strong> Las células producen "basura" que hay que sacar.</li>
+</ul>
+<p style="margin-top: 12px;" data-i18n="s2_intro_end">Todo esto lo hace la <span class="highlight">sangre</span> que llega a través del periostio.</p>
+</div>
+<div class="concept-card">
+<h3><span class="emoji">🚚</span> <span data-i18n="s2_concept_title">La sangre como "servicio de reparto"</span></h3>
+<div class="how-it-works">
+<h4 data-i18n="s2_how_title">🔍 ¿Cómo llega la sangre al hueso?</h4>
+<ul>
+<li data-i18n="s2_how_li1"><strong>Desde el periostio:</strong> Los vasos sanguíneos entran en el hueso por pequeños "agujeritos" y llegan hasta las células más profundas.</li>
+<li data-i18n="s2_how_li2"><strong>Desde dentro:</strong> También hay vasos que vienen desde la médula ósea (la "fábrica de sangre" que vimos en el archivo 2).</li>
+<li data-i18n="s2_how_li3"><strong>Resultado:</strong> El hueso está bien "regado" por dentro y por fuera.</li>
+</ul>
+</div>
+<div class="intro-box" style="margin-top: 15px; background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); border-left-color: #e53935;">
+<h4 data-i18n="s2_warning_title">⚠️ ¿Qué pasa si no llega bien la sangre?</h4>
+<p data-i18n="s2_warning_text">Si por alguna razón la sangre no llega bien a una zona del hueso:</p>
+<ul style="margin-left: 25px; margin-top: 10px; line-height: 1.8;">
+<li data-i18n="s2_warning_li1">Las células se "asfixian" y mueren</li>
+<li data-i18n="s2_warning_li2">El hueso se debilita en esa zona</li>
+<li data-i18n="s2_warning_li3">Puede aparecer dolor y, en casos graves, el hueso puede "colapsar"</li>
+</ul>
+<p style="margin-top: 12px;" data-i18n="s2_warning_end">Por eso es importante <strong>moverse</strong>: el movimiento ayuda a que la sangre circule mejor.</p>
+</div>
+</div>
+<div class="diagram-container">
+<h4 data-i18n="s2_diagram_title">🔄 La sangre llega al hueso por dos caminos</h4>
+<svg viewBox="0 0 700 280">
+<rect x="200" y="50" width="300" height="180" fill="#f5f5f5" stroke="#999" stroke-width="2" rx="10"/>
+<text x="350" y="145" text-anchor="middle" font-size="14" fill="#666" font-weight="bold" data-i18n-svg="s2_bone">HUESO</text>
+<rect x="190" y="40" width="320" height="15" fill="#e74c3c" opacity="0.8" rx="5"/>
+<text x="350" y="52" text-anchor="middle" font-size="10" fill="white" font-weight="bold" data-i18n-svg="s2_periosteum">PERIOSTIO</text>
+<path d="M 250 55 L 250 100" stroke="#c0392b" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M 350 55 L 350 100" stroke="#c0392b" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M 450 55 L 450 100" stroke="#c0392b" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="150" y="80" font-size="10" fill="#c0392b" font-weight="bold" data-i18n-svg="s2_from_peri">Vasos desde</text>
+<text x="150" y="95" font-size="10" fill="#c0392b" font-weight="bold" data-i18n-svg="s2_from_peri2">el periostio</text>
+<rect x="250" y="160" width="200" height="50" fill="#f39c12" opacity="0.6" rx="5"/>
+<text x="350" y="190" text-anchor="middle" font-size="11" fill="white" font-weight="bold" data-i18n-svg="s2_marrow">MÉDULA ÓSEA</text>
+<path d="M 350 160 L 350 120" stroke="#e67e22" stroke-width="3" marker-end="url(#arrowOrange)"/>
+<text x="480" y="185" font-size="10" fill="#e67e22" font-weight="bold" data-i18n-svg="s2_from_marrow">Vasos desde</text>
+<text x="480" y="200" font-size="10" fill="#e67e22" font-weight="bold" data-i18n-svg="s2_from_marrow2">la médula</text>
+<circle cx="280" cy="110" r="6" fill="#9b59b6"/>
+<circle cx="350" cy="110" r="6" fill="#9b59b6"/>
+<circle cx="420" cy="110" r="6" fill="#9b59b6"/>
+<text x="350" y="250" text-anchor="middle" font-size="11" fill="#2a5298" font-weight="bold" data-i18n-svg="s2_caption">Las células del hueso reciben sangre por ambos lados</text>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+<polygon points="0 0, 10 3, 0 6" fill="#c0392b"/>
+</marker>
+<marker id="arrowOrange" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+<polygon points="0 0, 10 3, 0 6" fill="#e67e22"/>
+</marker>
+</defs>
+</svg>
+</div>
+<div class="dance-box">
+<h4><span class="emoji">💃</span> <span data-i18n="s2_dance_title">Aplicación en la danza</span></h4>
+<ul>
+<li data-i18n="s2_dance_li1"><strong>El calentamiento es clave:</strong> Cuando calientas antes de bailar, aumentas el flujo sanguíneo a todo el cuerpo, incluidos los huesos. Esto los prepara para el esfuerzo.</li>
+<li data-i18n="s2_dance_li2"><strong>El movimiento nutre el hueso:</strong> Cada vez que saltas o haces un relevé, la sangre circula mejor por los huesos de las piernas. ¡Estás "alimentando" tus huesos mientras bailas!</li>
+<li data-i18n="s2_dance_li3"><strong>El reposo prolongado es malo:</strong> Si estás mucho tiempo sin moverte (por una lesión, por ejemplo), la sangre circula peor y los huesos se debilitan. Por eso los médicos recomiendan moverse lo antes posible tras una lesión.</li>
+</ul>
+</div>
+<div class="practical-activity">
+<h4><span class="emoji">🎭</span> <span data-i18n="s2_activity_title">Actividad: "Siente cómo circula la sangre"</span></h4>
+<p><strong data-i18n="s2_activity_obj_label">Objetivo:</strong> <span data-i18n="s2_activity_obj">Comprobar cómo el movimiento aumenta el flujo sanguíneo</span></p>
+<ol class="activity-steps">
+<li data-i18n="s2_activity_step1"><strong>En reposo:</strong> Siéntate y toca tu espinilla. ¿La notas fría o templada? Probablemente fresca, porque la sangre no está circulando mucho por ahí.</li>
+<li data-i18n="s2_activity_step2"><strong>Después de moverte:</strong> Haz 20 relevés rápidos o salta en el sitio durante 30 segundos. Ahora toca tu espinilla otra vez. ¿La notas más caliente? ¡Es porque ha llegado más sangre!</li>
+<li data-i18n="s2_activity_step3"><strong>Reflexión:</strong> Ese calor es señal de que los nutrientes y el oxígeno están llegando mejor a tus huesos. Por eso el calentamiento es tan importante antes de bailar.</li>
+</ol>
+</div>
+<div class="tip-box">
+<h4 data-i18n="s2_tip_title">✨ Consejo para bailarines</h4>
+<p data-i18n="s2_tip_text">Si te has lesionado y tienes que estar en reposo, <strong>muévete lo que puedas</strong> (dentro de lo que te permita el médico). Incluso mover suavemente las articulaciones cercanas ayuda a que la sangre circule y los huesos no se debiliten tanto.</p>
+</div>
+</div>
+
+<!-- SLIDE 3: REPARACIÓN DE FRACTURAS -->
+<div class="slide">
+<h2 data-i18n="s3_title">🔧 Cómo se reparan las fracturas</h2>
+<div class="reminder-box">
+<h4 data-i18n="s3_reminder_title">💡 Recordatorio</h4>
+<p data-i18n="s3_reminder_text">Hemos visto que el periostio tiene células "reparadoras". Ahora vamos a descubrir <strong>cómo funcionan</strong> cuando te haces una fractura. ¡Es un proceso fascinante!</p>
+</div>
+<div class="intro-box">
+<h3 data-i18n="s3_intro_title">🎯 ¿Qué pasa cuando te rompes un hueso?</h3>
+<p data-i18n="s3_intro_text">Imagina que te haces una fractura bailando (por ejemplo, al aterrizar mal de un salto). Tu cuerpo pone en marcha un <span class="highlight">proceso de reparación</span> que tiene varias fases:</p>
+</div>
+<div class="concept-card">
+<h3><span class="emoji">🏗️</span> <span data-i18n="s3_concept_title">Las 4 fases de la reparación</span></h3>
+<div class="how-it-works">
+<h4 data-i18n="s3_how_title">📅 El proceso paso a paso</h4>
+<ul>
+<li data-i18n="s3_how_li1"><strong>Fase 1 (días 1-5): "Limpieza"</strong> - Las células del periostio y de la sangre acuden a la zona y "limpian" los trozos rotos. Se forma un hematoma (como un moretón interno).</li>
+<li data-i18n="s3_how_li2"><strong>Fase 2 (días 5-21): "Puente blando"</strong> - Las células del periostio empiezan a construir un "puente" de cartílago blando entre los dos trozos. Es como poner una escayola interna.</li>
+<li data-i18n="s3_how_li3"><strong>Fase 3 (semanas 3-12): "Puente duro"</strong> - Ese cartílago blando se va transformando en hueso duro. El "puente" se hace más fuerte.</li>
+<li data-i18n="s3_how_li4"><strong>Fase 4 (meses 3-12): "Remodelación"</strong> - El hueso nuevo se va "puliendo" y adaptando hasta que vuelve a ser como antes (o incluso más fuerte).</li>
+</ul>
+</div>
+</div>
+<div class="diagram-container">
+<h4 data-i18n="s3_diagram_title">🔄 Las 4 fases de reparación de una fractura</h4>
+<svg viewBox="0 0 700 320">
+<g transform="translate(30, 30)">
+<rect x="0" y="0" width="150" height="120" fill="#ffebee" stroke="#e53935" stroke-width="2" rx="10"/>
+<text x="75" y="25" text-anchor="middle" font-size="11" font-weight="bold" fill="#c62828" data-i18n-svg="s3_phase1">FASE 1</text>
+<text x="75" y="45" text-anchor="middle" font-size="10" fill="#7f8c8d" data-i18n-svg="s3_phase1_desc">Limpieza</text>
+<rect x="30" y="60" width="40" height="40" fill="#f5f5f5" stroke="#999" stroke-width="2"/>
+<rect x="80" y="60" width="40" height="40" fill="#f5f5f5" stroke="#999" stroke-width="2"/>
+<circle cx="75" cy="80" r="8" fill="#e53935" opacity="0.6"/>
+<text x="75" y="115" text-anchor="middle" font-size="9" fill="#c62828" data-i18n-svg="s3_phase1_time">Días 1-5</text>
+</g>
+<line x1="190" y1="90" x2="230" y2="90" stroke="#7f8c8d" stroke-width="2" marker-end="url(#arrowGray)"/>
+<g transform="translate(240, 30)">
+<rect x="0" y="0" width="150" height="120" fill="#fff3e0" stroke="#f57c00" stroke-width="2" rx="10"/>
+<text x="75" y="25" text-anchor="middle" font-size="11" font-weight="bold" fill="#e65100" data-i18n-svg="s3_phase2">FASE 2</text>
+<text x="75" y="45" text-anchor="middle" font-size="10" fill="#7f8c8d" data-i18n-svg="s3_phase2_desc">Puente blando</text>
+<rect x="30" y="60" width="40" height="40" fill="#f5f5f5" stroke="#999" stroke-width="2"/>
+<rect x="80" y="60" width="40" height="40" fill="#f5f5f5" stroke="#999" stroke-width="2"/>
+<ellipse cx="75" cy="80" rx="15" ry="10" fill="#f39c12" opacity="0.7"/>
+<text x="75" y="115" text-anchor="middle" font-size="9" fill="#e65100" data-i18n-svg="s3_phase2_time">Días 5-21</text>
+</g>
+<line x1="400" y1="90" x2="440" y2="90" stroke="#7f8c8d" stroke-width="2" marker-end="url(#arrowGray)"/>
+<g transform="translate(450, 30)">
+<rect x="0" y="0" width="150" height="120" fill="#e8f5e9" stroke="#388e3c" stroke-width="2" rx="10"/>
+<text x="75" y="25" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e7d32" data-i18n-svg="s3_phase3">FASE 3</text>
+<text x="75" y="45" text-anchor="middle" font-size="10" fill="#7f8c8d" data-i18n-svg="s3_phase3_desc">Puente duro</text>
+<rect x="30" y="60" width="40" height="40" fill="#f5f5f5" stroke="#999" stroke-width="2"/>
+<rect x="80" y="60" width="40" height="40" fill="#f5f5f5" stroke="#999" stroke-width="2"/>
+<ellipse cx="75" cy="80" rx="15" ry="10" fill="#95a5a6" opacity="0.8"/>
+<text x="75" y="115" text-anchor="middle" font-size="9" fill="#2e7d32" data-i18n-svg="s3_phase3_time">Semanas 3-12</text>
+</g>
+<line x1="610" y1="90" x2="650" y2="90" stroke="#7f8c8d" stroke-width="2" marker-end="url(#arrowGray)"/>
+<g transform="translate(30, 180)">
+<rect x="0" y="0" width="150" height="120" fill="#e3f2fd" stroke="#1976d2" stroke-width="2" rx="10"/>
+<text x="75" y="25" text-anchor="middle" font-size="11" font-weight="bold" fill="#1565c0" data-i18n-svg="s3_phase4">FASE 4</text>
+<text x="75" y="45" text-anchor="middle" font-size="10" fill="#7f8c8d" data-i18n-svg="s3_phase4_desc">Remodelación</text>
+<rect x="30" y="60" width="90" height="40" fill="#f5f5f5" stroke="#999" stroke-width="2"/>
+<line x1="75" y1="60" x2="75" y2="100" stroke="#1976d2" stroke-width="1" stroke-dasharray="3,3"/>
+<text x="75" y="115" text-anchor="middle" font-size="9" fill="#1565c0" data-i18n-svg="s3_phase4_time">Meses 3-12</text>
+</g>
+<defs>
+<marker id="arrowGray" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+<polygon points="0 0, 10 3, 0 6" fill="#7f8c8d"/>
+</marker>
+</defs>
+</svg>
+</div>
+<div class="dance-box">
+<h4><span class="emoji">💃</span> <span data-i18n="s3_dance_title">¿Qué significa esto para un bailarín?</span></h4>
+<ul>
+<li data-i18n="s3_dance_li1"><strong>Paciencia:</strong> Una fractura tarda meses en curarse del todo. No puedes "acelerar" el proceso. Si vuelves a bailar demasiado pronto, puedes romper el "puente" que se está formando.</li>
+<li data-i18n="s3_dance_li2"><strong>El periostio es clave:</strong> Sin él, la fractura no se repararía bien. Por eso las fracturas en zonas donde el periostio está dañado (por ejemplo, por una herida abierta) son más graves.</li>
+<li data-i18n="s3_dance_li3"><strong>El hueso puede quedar más fuerte:</strong> Si la fractura se cura bien, la zona reparada puede quedar incluso más fuerte que antes (porque se ha añadido hueso nuevo).</li>
+<li data-i18n="s3_dance_li4"><strong>La nutrición importa:</strong> Durante la reparación, necesitas más calcio, vitamina D y proteínas. Es el momento de cuidar la alimentación.</li>
+</ul>
+</div>
+<div class="practical-activity">
+<h4><span class="emoji">🎭</span> <span data-i18n="s3_activity_title">Actividad: "Simula la reparación"</span></h4>
+<p><strong data-i18n="s3_activity_obj_label">Objetivo:</strong> <span data-i18n="s3_activity_obj">Entender cómo se repara una fractura</span></p>
+<ol class="activity-steps">
+<li data-i18n="s3_activity_step1"><strong>Material:</strong> Consigue un palito de madera (como los de los polos) o un lápiz viejo.</li>
+<li data-i18n="s3_activity_step2"><strong>Rómpelo:</strong> Con cuidado, rómpelo por la mitad (pide ayuda a un adulto si es necesario).</li>
+<li data-i18n="s3_activity_step3"><strong>Simula las fases:</strong>
+<ul>
+<li data-i18n="s3_activity_step3a">Fase 1: Observa los dos trozos rotos. Imagina que tu cuerpo está "limpiando" los bordes.</li>
+<li data-i18n="s3_activity_step3b">Fase 2: Usa un poco de plastilina blanda para "unir" los dos trozos. Ese es el "puente blando" de cartílago.</li>
+<li data-i18n="s3_activity_step3c">Fase 3: Ahora usa pegamento fuerte o cinta adhesiva. Ese es el "puente duro" de hueso.</li>
+<li data-i18n="s3_activity_step3d">Fase 4: Imagina que con el tiempo, la unión se "puliría" y quedaría como antes.</li>
+</ul>
+</li>
+<li data-i18n="s3_activity_step4"><strong>Reflexión:</strong> ¿Cuánto tiempo crees que tarda tu cuerpo en hacer esto de verdad? (Respuesta: ¡meses! Por eso hay que tener paciencia).</li>
+</ol>
+</div>
+<div class="tip-box">
+<h4 data-i18n="s3_tip_title">✨ Dato curioso</h4>
+<p data-i18n="s3_tip_text">Los niños se curan las fracturas <strong>más rápido</strong> que los adultos porque su periostio es más grueso y tiene más células activas. Por eso, si un niño se rompe un hueso, puede estar curado en 4-6 semanas, mientras que un adulto puede tardar 8-12 semanas.</p>
+</div>
+</div>
+
+<!-- SLIDE 4: QUIZ -->
+<div class="slide">
+<h2 data-i18n="s4_title">🎯 Quiz: Comprueba lo aprendido</h2>
+<div class="quiz-container">
+<h3 data-i18n="s4_quiz_title">Preguntas sobre el periostio</h3>
+<div id="quizContainer"></div>
+<button class="btn" onclick="checkQuiz()" data-i18n="s4_check_btn">Comprobar respuestas</button>
+<button class="btn" style="background: #6c757d;" onclick="resetQuiz()" data-i18n="s4_reset_btn">Reiniciar</button>
+<div class="feedback" id="fbQuiz"></div>
+</div>
+<div class="practical-activity">
+<h4><span class="emoji">🎭</span> <span data-i18n="s4_activity_title">Actividad final: "Lo que he aprendido"</span></h4>
+<p><strong data-i18n="s4_activity_obj_label">Objetivo:</strong> <span data-i18n="s4_activity_obj">Resumir lo más importante</span></p>
+<ol class="activity-steps">
+<li data-i18n="s4_activity_step1"><strong>Escribe en tu cuaderno</strong> (o en tu móvil) 3 cosas que has aprendido sobre el periostio:
+<ul>
+<li data-i18n="s4_activity_step1a">Ejemplo: "El periostio es la 'piel' del hueso y tiene vasos sanguíneos, nervios y células reparadoras."</li>
+<li data-i18n="s4_activity_step1b">"Sin periostio, el hueso no podría crecer ni repararse."</li>
+<li data-i18n="s4_activity_step1c">"Cuando te haces una fractura, el periostio es clave para que se cure."</li>
+</ul>
+</li>
+<li data-i18n="s4_activity_step2"><strong>Comparte</strong> con un compañero/a una cosa que te haya sorprendido.</li>
+<li data-i18n="s4_activity_step3"><strong>Prepara</strong> para el siguiente archivo: hablaremos del endostio (el "periostio interior") y del cartílago articular.</li>
+</ol>
+</div>
+<div class="tip-box" style="margin-top: 20px;">
+<h4 data-i18n="s4_summary_title">🎓 Resumen clave</h4>
+<ul style="margin-left: 25px; line-height: 1.8;">
+<li data-i18n="s4_summary_li1"><strong>Periostio:</strong> Capa viva que rodea el hueso (excepto en las articulaciones)</li>
+<li data-i18n="s4_summary_li2"><strong>Funciones:</strong> Nutrir el hueso, permitir su crecimiento, reparar fracturas, sentir dolor</li>
+<li data-i18n="s4_summary_li3"><strong>Contiene:</strong> Vasos sanguíneos, nervios y células reparadoras</li>
+<li data-i18n="s4_summary_li4"><strong>Importancia en danza:</strong> Sin periostio, no podrías bailar (los huesos no se adaptarían ni repararían)</li>
+</ul>
+</div>
+</div>
+</div>
+
+<script>
+// ==================== SISTEMA DE TRADUCCIONS ====================
+const translations = {
+es: {
+main_title: "🦴 Tejido Óseo y Recubrimientos",
+main_subtitle: "Parte 1: El Periostio - La \"piel viva\" del hueso",
+main_tagline: "Por qué los huesos duelen, se reparan y crecen",
+tab1: "🎯 Introducción",
+tab2: "🩸 Nutrición del hueso",
+tab3: "🔧 Reparación de fracturas",
+tab4: "🎯 Quiz",
+s1_title: "🎯 ¿Qué es el periostio?",
+s1_reminder_title: "💡 Recordatorio",
+s1_reminder_text: "En los archivos anteriores vimos que el hueso es un tejido vivo que se adapta, guarda calcio y fabrica sangre. Pero... <strong>¿cómo \"respira\" y se alimenta un hueso si parece una piedra?</strong> La respuesta está en el periostio.",
+s1_intro_title: "🎯 Imagina que el hueso es una casa...",
+s1_intro_text1: "Si el hueso fuera una casa, el <span class=\"highlight\">periostio</span> sería como la <strong>\"piel\" o \"envoltorio\" que la rodea</strong>. Pero no es una piel muerta como la cáscara de un huevo. Es un tejido <strong>vivo, con sangre, nervios y células que trabajan</strong>.",
+s1_intro_text2: "Sin el periostio, el hueso sería como una piedra: no crecería, no se repararía y no sentiría dolor.",
+s1_concept_title: "¿Qué contiene el periostio?",
+s1_how_title: "🎁 Los 3 \"tesoros\" del periostio",
+s1_how_li1: "<strong>Vasos sanguíneos:</strong> Pequeños \"tubos\" por donde circula la sangre. Llevan oxígeno y nutrientes al hueso, y se llevan los desechos.",
+s1_how_li2: "<strong>Nervios:</strong> \"Cables\" que envían información al cerebro. Por eso duele tanto cuando te golpeas un hueso: los nervios del periostio avisan del daño.",
+s1_how_li3: "<strong>Células \"reparadoras\":</strong> Células especiales que se activan cuando hay una fractura y empiezan a construir hueso nuevo.",
+s1_diagram_title: "📐 El periostio: la \"piel\" del hueso",
+s1_dance_title: "¿Por qué es importante para un bailarín?",
+s1_dance_li1: "<strong>Sin periostio, no hay crecimiento:</strong> Cuando eras pequeño/a y crecías, el periostio añadía hueso nuevo por fuera para que tus huesos se hicieran más gruesos y fuertes.",
+s1_dance_li2: "<strong>Sin periostio, no hay reparación:</strong> Si te haces una pequeña fractura bailando, las células del periostio son las que empiezan a \"pegar\" los trozos.",
+s1_dance_li3: "<strong>Sin periostio, no sentirías el dolor:</strong> Y el dolor es una señal de alarma que te dice \"para, algo va mal\".",
+s1_activity_title: "Actividad: \"Siente tu periostio\"",
+s1_activity_obj_label: "Objetivo:",
+s1_activity_obj: "Comprobar que el hueso tiene nervios y duele",
+s1_activity_step1: "<strong>Toca suavemente</strong> la parte frontal de tu espinilla (la tibia). ¿Notas algo? Es un hueso con muy poca grasa encima, así que el periostio está casi bajo la piel.",
+s1_activity_step2: "<strong>Da un golpecito suave</strong> con el dedo. ¿Duele un poco? Esos son los nervios del periostio avisando.",
+s1_activity_step3: "<strong>Compara:</strong> Toca tu muslo (que tiene mucha carne/músculo encima). Golpéalo suavemente. ¿Duele menos? Sí, porque el músculo \"amortigua\" y el periostio está más protegido.",
+s1_activity_step4: "<strong>Reflexión:</strong> Por eso los golpes en la espinilla duelen tanto: el periostio está casi sin protección. ¡Y por eso los bailarines deben tener cuidado con los impactos en zonas donde el hueso está \"al aire\"!",
+s1_tip_title: "✨ Dato curioso",
+s1_tip_text: "El periostio <strong>NO cubre las articulaciones</strong> (donde un hueso se une a otro). En esas zonas hay cartílago (lo veremos en el siguiente archivo). Por eso, cuando te duele una articulación, el dolor viene de otras estructuras, no del periostio.",
+s2_title: "🩸 Cómo se \"alimenta\" el hueso",
+s2_reminder_title: "💡 Recordatorio",
+s2_reminder_text: "Acabamos de ver que el periostio tiene vasos sanguíneos. Ahora vamos a descubrir <strong>por qué eso es tan importante</strong> y qué pasa si la sangre no llega bien al hueso.",
+s2_intro_title: "🍽️ El hueso necesita \"comer\" y \"respirar\"",
+s2_intro_text: "Aunque parezca una piedra, el hueso es un tejido vivo que necesita:",
+s2_intro_li1: "<strong>Oxígeno:</strong> Para que las células puedan \"quemar\" nutrientes y tener energía.",
+s2_intro_li2: "<strong>Nutrientes:</strong> Calcio, fósforo, proteínas, vitaminas...",
+s2_intro_li3: "<strong>Eliminar desechos:</strong> Las células producen \"basura\" que hay que sacar.",
+s2_intro_end: "Todo esto lo hace la <span class=\"highlight\">sangre</span> que llega a través del periostio.",
+s2_concept_title: "La sangre como \"servicio de reparto\"",
+s2_how_title: "🔍 ¿Cómo llega la sangre al hueso?",
+s2_how_li1: "<strong>Desde el periostio:</strong> Los vasos sanguíneos entran en el hueso por pequeños \"agujeritos\" y llegan hasta las células más profundas.",
+s2_how_li2: "<strong>Desde dentro:</strong> También hay vasos que vienen desde la médula ósea (la \"fábrica de sangre\" que vimos en el archivo 2).",
+s2_how_li3: "<strong>Resultado:</strong> El hueso está bien \"regado\" por dentro y por fuera.",
+s2_warning_title: "⚠️ ¿Qué pasa si no llega bien la sangre?",
+s2_warning_text: "Si por alguna razón la sangre no llega bien a una zona del hueso:",
+s2_warning_li1: "Las células se \"asfixian\" y mueren",
+s2_warning_li2: "El hueso se debilita en esa zona",
+s2_warning_li3: "Puede aparecer dolor y, en casos graves, el hueso puede \"colapsar\"",
+s2_warning_end: "Por eso es importante <strong>moverse</strong>: el movimiento ayuda a que la sangre circule mejor.",
+s2_diagram_title: "🔄 La sangre llega al hueso por dos caminos",
+s2_dance_title: "Aplicación en la danza",
+s2_dance_li1: "<strong>El calentamiento es clave:</strong> Cuando calientas antes de bailar, aumentas el flujo sanguíneo a todo el cuerpo, incluidos los huesos. Esto los prepara para el esfuerzo.",
+s2_dance_li2: "<strong>El movimiento nutre el hueso:</strong> Cada vez que saltas o haces un relevé, la sangre circula mejor por los huesos de las piernas. ¡Estás \"alimentando\" tus huesos mientras bailas!",
+s2_dance_li3: "<strong>El reposo prolongado es malo:</strong> Si estás mucho tiempo sin moverte (por una lesión, por ejemplo), la sangre circula peor y los huesos se debilitan. Por eso los médicos recomiendan moverse lo antes posible tras una lesión.",
+s2_activity_title: "Actividad: \"Siente cómo circula la sangre\"",
+s2_activity_obj_label: "Objetivo:",
+s2_activity_obj: "Comprobar cómo el movimiento aumenta el flujo sanguíneo",
+s2_activity_step1: "<strong>En reposo:</strong> Siéntate y toca tu espinilla. ¿La notas fría o templada? Probablemente fresca, porque la sangre no está circulando mucho por ahí.",
+s2_activity_step2: "<strong>Después de moverte:</strong> Haz 20 relevés rápidos o salta en el sitio durante 30 segundos. Ahora toca tu espinilla otra vez. ¿La notas más caliente? ¡Es porque ha llegado más sangre!",
+s2_activity_step3: "<strong>Reflexión:</strong> Ese calor es señal de que los nutrientes y el oxígeno están llegando mejor a tus huesos. Por eso el calentamiento es tan importante antes de bailar.",
+s2_tip_title: "✨ Consejo para bailarines",
+s2_tip_text: "Si te has lesionado y tienes que estar en reposo, <strong>muévete lo que puedas</strong> (dentro de lo que te permita el médico). Incluso mover suavemente las articulaciones cercanas ayuda a que la sangre circule y los huesos no se debiliten tanto.",
+s3_title: "🔧 Cómo se reparan las fracturas",
+s3_reminder_title: "💡 Recordatorio",
+s3_reminder_text: "Hemos visto que el periostio tiene células \"reparadoras\". Ahora vamos a descubrir <strong>cómo funcionan</strong> cuando te haces una fractura. ¡Es un proceso fascinante!",
+s3_intro_title: "🎯 ¿Qué pasa cuando te rompes un hueso?",
+s3_intro_text: "Imagina que te haces una fractura bailando (por ejemplo, al aterrizar mal de un salto). Tu cuerpo pone en marcha un <span class=\"highlight\">proceso de reparación</span> que tiene varias fases:",
+s3_concept_title: "Las 4 fases de la reparación",
+s3_how_title: "📅 El proceso paso a paso",
+s3_how_li1: "<strong>Fase 1 (días 1-5): \"Limpieza\"</strong> - Las células del periostio y de la sangre acuden a la zona y \"limpian\" los trozos rotos. Se forma un hematoma (como un moretón interno).",
+s3_how_li2: "<strong>Fase 2 (días 5-21): \"Puente blando\"</strong> - Las células del periostio empiezan a construir un \"puente\" de cartílago blando entre los dos trozos. Es como poner una escayola interna.",
+s3_how_li3: "<strong>Fase 3 (semanas 3-12): \"Puente duro\"</strong> - Ese cartílago blando se va transformando en hueso duro. El \"puente\" se hace más fuerte.",
+s3_how_li4: "<strong>Fase 4 (meses 3-12): \"Remodelación\"</strong> - El hueso nuevo se va \"puliendo\" y adaptando hasta que vuelve a ser como antes (o incluso más fuerte).",
+s3_diagram_title: "🔄 Las 4 fases de reparación de una fractura",
+s3_dance_title: "¿Qué significa esto para un bailarín?",
+s3_dance_li1: "<strong>Paciencia:</strong> Una fractura tarda meses en curarse del todo. No puedes \"acelerar\" el proceso. Si vuelves a bailar demasiado pronto, puedes romper el \"puente\" que se está formando.",
+s3_dance_li2: "<strong>El periostio es clave:</strong> Sin él, la fractura no se repararía bien. Por eso las fracturas en zonas donde el periostio está dañado (por ejemplo, por una herida abierta) son más graves.",
+s3_dance_li3: "<strong>El hueso puede quedar más fuerte:</strong> Si la fractura se cura bien, la zona reparada puede quedar incluso más fuerte que antes (porque se ha añadido hueso nuevo).",
+s3_dance_li4: "<strong>La nutrición importa:</strong> Durante la reparación, necesitas más calcio, vitamina D y proteínas. Es el momento de cuidar la alimentación.",
+s3_activity_title: "Actividad: \"Simula la reparación\"",
+s3_activity_obj_label: "Objetivo:",
+s3_activity_obj: "Entender cómo se repara una fractura",
+s3_activity_step1: "<strong>Material:</strong> Consigue un palito de madera (como los de los polos) o un lápiz viejo.",
+s3_activity_step2: "<strong>Rómpelo:</strong> Con cuidado, rómpelo por la mitad (pide ayuda a un adulto si es necesario).",
+s3_activity_step3: "<strong>Simula las fases:</strong>",
+s3_activity_step3a: "Fase 1: Observa los dos trozos rotos. Imagina que tu cuerpo está \"limpiando\" los bordes.",
+s3_activity_step3b: "Fase 2: Usa un poco de plastilina blanda para \"unir\" los dos trozos. Ese es el \"puente blando\" de cartílago.",
+s3_activity_step3c: "Fase 3: Ahora usa pegamento fuerte o cinta adhesiva. Ese es el \"puente duro\" de hueso.",
+s3_activity_step3d: "Fase 4: Imagina que con el tiempo, la unión se \"puliría\" y quedaría como antes.",
+s3_activity_step4: "<strong>Reflexión:</strong> ¿Cuánto tiempo crees que tarda tu cuerpo en hacer esto de verdad? (Respuesta: ¡meses! Por eso hay que tener paciencia).",
+s3_tip_title: "✨ Dato curioso",
+s3_tip_text: "Los niños se curan las fracturas <strong>más rápido</strong> que los adultos porque su periostio es más grueso y tiene más células activas. Por eso, si un niño se rompe un hueso, puede estar curado en 4-6 semanas, mientras que un adulto puede tardar 8-12 semanas.",
+s4_title: "🎯 Quiz: Comprueba lo aprendido",
+s4_quiz_title: "Preguntas sobre el periostio",
+s4_check_btn: "Comprobar respuestas",
+s4_reset_btn: "Reiniciar",
+s4_activity_title: "Actividad final: \"Lo que he aprendido\"",
+s4_activity_obj_label: "Objetivo:",
+s4_activity_obj: "Resumir lo más importante",
+s4_activity_step1: "<strong>Escribe en tu cuaderno</strong> (o en tu móvil) 3 cosas que has aprendido sobre el periostio:",
+s4_activity_step1a: "Ejemplo: \"El periostio es la 'piel' del hueso y tiene vasos sanguíneos, nervios y células reparadoras.\"",
+s4_activity_step1b: "\"Sin periostio, el hueso no podría crecer ni repararse.\"",
+s4_activity_step1c: "\"Cuando te haces una fractura, el periostio es clave para que se cure.\"",
+s4_activity_step2: "<strong>Comparte</strong> con un compañero/a una cosa que te haya sorprendido.",
+s4_activity_step3: "<strong>Prepara</strong> para el siguiente archivo: hablaremos del endostio (el \"periostio interior\") y del cartílago articular.",
+s4_summary_title: "🎓 Resumen clave",
+s4_summary_li1: "<strong>Periostio:</strong> Capa viva que rodea el hueso (excepto en las articulaciones)",
+s4_summary_li2: "<strong>Funciones:</strong> Nutrir el hueso, permitir su crecimiento, reparar fracturas, sentir dolor",
+s4_summary_li3: "<strong>Contiene:</strong> Vasos sanguíneos, nervios y células reparadoras",
+s4_summary_li4: "<strong>Importancia en danza:</strong> Sin periostio, no podrías bailar (los huesos no se adaptarían ni repararían)"
+},
+ca: {
+main_title: "🦴 Teixit Ossi i Recobriments",
+main_subtitle: "Part 1: El Periosti - La \"pell viva\" de l'os",
+main_tagline: "Per què els ossos fan mal, es reparen i creixen",
+tab1: "🎯 Introducció",
+tab2: "🩸 Nutrició de l'os",
+tab3: "🔧 Reparació de fractures",
+tab4: "🎯 Quiz",
+s1_title: "🎯 Què és el periosti?",
+s1_reminder_title: "💡 Recordatori",
+s1_reminder_text: "Als arxius anteriors vam veure que l'os és un teixit viu que s'adapta, guarda calci i fabrica sang. Però... <strong>com \"respira\" i s'alimenta un os si sembla una pedra?</strong> La resposta està en el periosti.",
+s1_intro_title: "🎯 Imagina que l'os és una casa...",
+s1_intro_text1: "Si l'os fos una casa, el <span class=\"highlight\">periosti</span> seria com la <strong>\"pell\" o \"embolcall\" que l'envolta</strong>. Però no és una pell morta com la closca d'un ou. És un teixit <strong>viv, amb sang, nervis i cèl·lules que treballen</strong>.",
+s1_intro_text2: "Sense el periosti, l'os seria com una pedra: no creixeria, no es repararia i no sentiria dolor.",
+s1_concept_title: "Què conté el periosti?",
+s1_how_title: "🎁 Els 3 \"tresors\" del periosti",
+s1_how_li1: "<strong>Vasos sanguinis:</strong> Petits \"tubs\" per on circula la sang. Porten oxigen i nutrients a l'os, i s'emporten els residus.",
+s1_how_li2: "<strong>Nervis:</strong> \"Cables\" que envien informació al cervell. Per això fa tant mal quan et colpeges un os: els nervis del periosti avisen del dany.",
+s1_how_li3: "<strong>Cèl·lules \"reparadores\":</strong> Cèl·lules especials que s'activen quan hi ha una fractura i comencen a construir os nou.",
+s1_diagram_title: "📐 El periosti: la \"pell\" de l'os",
+s1_dance_title: "Per què és important per a un ballarí?",
+s1_dance_li1: "<strong>Sense periosti, no hi ha creixement:</strong> Quan eres petit/a i creixies, el periosti afegia os nou per fora perquè els teus ossos es fessin més gruixuts i forts.",
+s1_dance_li2: "<strong>Sense periosti, no hi ha reparació:</strong> Si et fas una petita fractura ballant, les cèl·lules del periosti són les que comencen a \"enganxar\" els trossos.",
+s1_dance_li3: "<strong>Sense periosti, no sentiries el dolor:</strong> I el dolor és un senyal d'alarma que et diu \"para, alguna cosa va malament\".",
+s1_activity_title: "Activitat: \"Sent el teu periosti\"",
+s1_activity_obj_label: "Objectiu:",
+s1_activity_obj: "Comprovar que l'os té nervis i fa mal",
+s1_activity_step1: "<strong>Toca suaument</strong> la part frontal de la teva canyella (la tíbia). Notes alguna cosa? És un os amb molt poc greix a sobre, així que el periosti està gairebé sota la pell.",
+s1_activity_step2: "<strong>Fa un copet suau</strong> amb el dit. Fa una mica de mal? Són els nervis del periosti avisant.",
+s1_activity_step3: "<strong>Compara:</strong> Toca la teva cuixa (que té molta carn/múscul a sobre). Colpeja-la suaument. Fa menys mal? Sí, perquè el múscul \"amorteix\" i el periosti està més protegit.",
+s1_activity_step4: "<strong>Reflexiona:</strong> Per això els cops a la canyella fan tant de mal: el periosti està gairebé sense protecció. I per això els ballarins han de tenir cura amb els impactes en zones on l'os està \"a l'aire\"!",
+s1_tip_title: "✨ Dada curiosa",
+s1_tip_text: "El periosti <strong>NO cobreix les articulacions</strong> (on un os s'uneix a un altre). En aquestes zones hi ha cartílag (ho veurem al següent arxiu). Per això, quan et fa mal una articulació, el dolor ve d'altres estructures, no del periosti.",
+s2_title: "🩸 Com s'\"alimenta\" l'os",
+s2_reminder_title: "💡 Recordatori",
+s2_reminder_text: "Acabem de veure que el periosti té vasos sanguinis. Ara descobrirem <strong>per què això és tan important</strong> i què passa si la sang no arriba bé a l'os.",
+s2_intro_title: "🍽️ L'os necessita \"menjar\" i \"respirar\"",
+s2_intro_text: "Encara que sembli una pedra, l'os és un teixit viu que necessita:",
+s2_intro_li1: "<strong>Oxigen:</strong> Perquè les cèl·lules puguin \"cremar\" nutrients i tenir energia.",
+s2_intro_li2: "<strong>Nutrients:</strong> Calci, fòsfor, proteïnes, vitamines...",
+s2_intro_li3: "<strong>Eliminar residus:</strong> Les cèl·lules produeixen \"escombraries\" que cal treure.",
+s2_intro_end: "Tot això ho fa la <span class=\"highlight\">sang</span> que arriba a través del periosti.",
+s2_concept_title: "La sang com a \"servei de repartiment\"",
+s2_how_title: "🔍 Com arriba la sang a l'os?",
+s2_how_li1: "<strong>Des del periosti:</strong> Els vasos sanguinis entren a l'os per petits \"foradets\" i arriben fins a les cèl·lules més profundes.",
+s2_how_li2: "<strong>Des de dins:</strong> També hi ha vasos que venen des de la medul·la òssia (la \"fàbrica de sang\" que vam veure a l'arxiu 2).",
+s2_how_li3: "<strong>Resultat:</strong> L'os està ben \"regat\" per dins i per fora.",
+s2_warning_title: "⚠️ Què passa si no arriba bé la sang?",
+s2_warning_text: "Si per alguna raó la sang no arriba bé a una zona de l'os:",
+s2_warning_li1: "Les cèl·lules s'\"ofeguen\" i moren",
+s2_warning_li2: "L'os es debilita en aquella zona",
+s2_warning_li3: "Pot aparèixer dolor i, en casos greus, l'os pot \"col·lapsar\"",
+s2_warning_end: "Per això és important <strong>mourer's</strong>: el moviment ajuda que la sang circuli millor.",
+s2_diagram_title: "🔄 La sang arriba a l'os per dos camins",
+s2_dance_title: "Aplicació a la dansa",
+s2_dance_li1: "<strong>L'escalfament és clau:</strong> Quan t'escalfes abans de ballar, augmentes el flux sanguini a tot el cos, inclosos els ossos. Això els prepara per a l'esforç.",
+s2_dance_li2: "<strong>El moviment nodreix l'os:</strong> Cada vegada que saltes o fas un relevé, la sang circula millor pels ossos de les cames. Estàs \"alimentant\" els teus ossos mentre balles!",
+s2_dance_li3: "<strong>El repòs perllongat és dolent:</strong> Si estàs molt de temps sense moure't (per una lesió, per exemple), la sang circula pitjor i els ossos es debiliten. Per això els metges recomanen moure's el més aviat possible després d'una lesió.",
+s2_activity_title: "Activitat: \"Sent com circula la sang\"",
+s2_activity_obj_label: "Objectiu:",
+s2_activity_obj: "Comprovar com el moviment augmenta el flux sanguini",
+s2_activity_step1: "<strong>En repòs:</strong> Seu i toca la teva canyella. La notes freda o temperada? Probablement fresca, perquè la sang no està circulant gaire per allà.",
+s2_activity_step2: "<strong>Després de moure't:</strong> Fes 20 relevés ràpids o salta al lloc durant 30 segons. Ara toca la teva canyella una altra vegada. La notes més calenta? És perquè ha arribat més sang!",
+s2_activity_step3: "<strong>Reflexió:</strong> Aquesta calor és senyal que els nutrients i l'oxigen estan arribant millor als teus ossos. Per això l'escalfament és tan important abans de ballar.",
+s2_tip_title: "✨ Consell per a ballarins",
+s2_tip_text: "Si t'has lesionat i has d'estar en repòs, <strong>mou-te el que puguis</strong> (dins del que et permeti el metge). Fins i tot moure suaument les articulacions properes ajuda que la sang circuli i els ossos no es debilitin tant.",
+s3_title: "🔧 Com es reparen les fractures",
+s3_reminder_title: "💡 Recordatori",
+s3_reminder_text: "Hem vist que el periosti té cèl·lules \"reparadores\". Ara descobrirem <strong>com funcionen</strong> quan et fas una fractura. És un procés fascinant!",
+s3_intro_title: "🎯 Què passa quan et trenques un os?",
+s3_intro_text: "Imagina que et fas una fractura ballant (per exemple, en aterrir malament d'un salt). El teu cos posa en marxa un <span class=\"highlight\">procés de reparació</span> que té diverses fases:",
+s3_concept_title: "Les 4 fases de la reparació",
+s3_how_title: "📅 El procés pas a pas",
+s3_how_li1: "<strong>Fase 1 (dies 1-5): \"Neteja\"</strong> - Les cèl·lules del periosti i de la sang acudeixen a la zona i \"netegen\" els trossos trencats. Es forma un hematoma (com un blau intern).",
+s3_how_li2: "<strong>Fase 2 (dies 5-21): \"Pont tou\"</strong> - Les cèl·lules del periosti comencen a construir un \"pont\" de cartílag tou entre els dos trossos. És com posar una enguixada interna.",
+s3_how_li3: "<strong>Fase 3 (setmanes 3-12): \"Pont dur\"</strong> - Aquell cartílag tou es va transformant en os dur. El \"pont\" es fa més fort.",
+s3_how_li4: "<strong>Fase 4 (mesos 3-12): \"Remodelació\"</strong> - L'os nou es va \"polint\" i adaptant fins que torna a ser com abans (o fins i tot més fort).",
+s3_diagram_title: "🔄 Les 4 fases de reparació d'una fractura",
+s3_dance_title: "Què significa això per a un ballarí?",
+s3_dance_li1: "<strong>Paciència:</strong> Una fractura triga mesos a curar-se del tot. No pots \"accelerar\" el procés. Si tornes a ballar massa aviat, pots trencar el \"pont\" que s'està formant.",
+s3_dance_li2: "<strong>El periosti és clau:</strong> Sense ell, la fractura no es repararia bé. Per això les fractures en zones on el periosti està danyat (per exemple, per una ferida oberta) són més greus.",
+s3_dance_li3: "<strong>L'os pot quedar més fort:</strong> Si la fractura es cura bé, la zona reparada pot quedar fins i tot més forta que abans (perquè s'ha afegit os nou).",
+s3_dance_li4: "<strong>La nutrició importa:</strong> Durant la reparació, necessites més calci, vitamina D i proteïnes. És el moment de cuidar l'alimentació.",
+s3_activity_title: "Activitat: \"Simula la reparació\"",
+s3_activity_obj_label: "Objectiu:",
+s3_activity_obj: "Entendre com es repara una fractura",
+s3_activity_step1: "<strong>Material:</strong> Aconsegueix un palito de fusta (com els dels pols) o un llapis vell.",
+s3_activity_step2: "<strong>Trenca'l:</strong> Amb cura, trenca'l per la meitat (demanar ajuda a un adult si és necessari).",
+s3_activity_step3: "<strong>Simula les fases:</strong>",
+s3_activity_step3a: "Fase 1: Observa els dos trossos trencats. Imagina que el teu cos està \"netejant\" les vores.",
+s3_activity_step3b: "Fase 2: Fes servir una mica de plastilina tova per \"unir\" els dos trossos. Aquest és el \"pont tou\" de cartílag.",
+s3_activity_step3c: "Fase 3: Ara fes servir pega forta o cinta adhesiva. Aquest és el \"pont dur\" d'os.",
+s3_activity_step3d: "Fase 4: Imagina que amb el temps, la unió es \"poliria\" i quedaria com abans.",
+s3_activity_step4: "<strong>Reflexió:</strong> Quant temps creus que triga el teu cos a fer això de veritat? (Resposta: mesos! Per això cal tenir paciència).",
+s3_tip_title: "✨ Dada curiosa",
+s3_tip_text: "Els nens es curen les fractures <strong>més ràpid</strong> que els adults perquè el seu periosti és més gruixut i té més cèl·lules actives. Per això, si un nen es trenca un os, pot estar curat en 4-6 setmanes, mentre que un adult pot tardar 8-12 setmanes.",
+s4_title: "🎯 Quiz: Comprova el que has après",
+s4_quiz_title: "Preguntes sobre el periosti",
+s4_check_btn: "Comprova les respostes",
+s4_reset_btn: "Reinicia",
+s4_activity_title: "Activitat final: \"El que he après\"",
+s4_activity_obj_label: "Objectiu:",
+s4_activity_obj: "Resumir el més important",
+s4_activity_step1: "<strong>Escriu al teu quadern</strong> (o al teu mòbil) 3 coses que has après sobre el periosti:",
+s4_activity_step1a: "Exemple: \"El periosti és la 'pell' de l'os i té vasos sanguinis, nervis i cèl·lules reparadores.\"",
+s4_activity_step1b: "\"Sense periosti, l'os no podria créixer ni reparar-se.\"",
+s4_activity_step1c: "\"Quan et fas una fractura, el periosti és clau perquè es curi.\"",
+s4_activity_step2: "<strong>Comparteix</strong> amb un company/a una cosa que t'hagi sorprès.",
+s4_activity_step3: "<strong>Prepara't</strong> per al següent arxiu: parlarem de l'endosti (el \"periosti interior\") i del cartílag articular.",
+s4_summary_title: "🎓 Resum clau",
+s4_summary_li1: "<strong>Periosti:</strong> Capa viva que envolta l'os (excepte a les articulacions)",
+s4_summary_li2: "<strong>Funcions:</strong> Nodrir l'os, permetre el seu creixement, reparar fractures, sentir dolor",
+s4_summary_li3: "<strong>Conté:</strong> Vasos sanguinis, nervis i cèl·lules reparadores",
+s4_summary_li4: "<strong>Importància en dansa:</strong> Sense periosti, no podries ballar (els ossos no s'adaptarien ni es repararien)"
+},
+en: {
+main_title: "🦴 Bone Tissue and Coverings",
+main_subtitle: "Part 1: The Periosteum - The \"living skin\" of the bone",
+main_tagline: "Why bones hurt, repair themselves, and grow",
+tab1: "🎯 Introduction",
+tab2: "🩸 Bone nutrition",
+tab3: "🔧 Fracture repair",
+tab4: "🎯 Quiz",
+s1_title: "🎯 What is the periosteum?",
+s1_reminder_title: "💡 Reminder",
+s1_reminder_text: "In the previous files we saw that bone is a living tissue that adapts, stores calcium, and makes blood. But... <strong>how does a bone \"breathe\" and feed itself if it looks like a stone?</strong> The answer is in the periosteum.",
+s1_intro_title: "🎯 Imagine the bone is a house...",
+s1_intro_text1: "If the bone were a house, the <span class=\"highlight\">periosteum</span> would be like the <strong>\"skin\" or \"wrapper\" that surrounds it</strong>. But it's not a dead skin like an eggshell. It's a <strong>living tissue, with blood, nerves, and working cells</strong>.",
+s1_intro_text2: "Without the periosteum, the bone would be like a stone: it wouldn't grow, repair itself, or feel pain.",
+s1_concept_title: "What does the periosteum contain?",
+s1_how_title: "🎁 The 3 \"treasures\" of the periosteum",
+s1_how_li1: "<strong>Blood vessels:</strong> Small \"tubes\" where blood circulates. They carry oxygen and nutrients to the bone, and take away waste.",
+s1_how_li2: "<strong>Nerves:</strong> \"Cables\" that send information to the brain. That's why it hurts so much when you hit a bone: the periosteum's nerves warn of damage.",
+s1_how_li3: "<strong>\"Repair\" cells:</strong> Special cells that activate when there's a fracture and start building new bone.",
+s1_diagram_title: "📐 The periosteum: the \"skin\" of the bone",
+s1_dance_title: "Why is this important for a dancer?",
+s1_dance_li1: "<strong>Without periosteum, there's no growth:</strong> When you were little and growing, the periosteum added new bone on the outside to make your bones thicker and stronger.",
+s1_dance_li2: "<strong>Without periosteum, there's no repair:</strong> If you get a small fracture dancing, the periosteum's cells are the ones that start \"gluing\" the pieces together.",
+s1_dance_li3: "<strong>Without periosteum, you wouldn't feel pain:</strong> And pain is a warning signal that tells you \"stop, something's wrong\".",
+s1_activity_title: "Activity: \"Feel your periosteum\"",
+s1_activity_obj_label: "Goal:",
+s1_activity_obj: "Verify that the bone has nerves and hurts",
+s1_activity_step1: "<strong>Gently touch</strong> the front of your shin (the tibia). Do you notice anything? It's a bone with very little fat on top, so the periosteum is almost under the skin.",
+s1_activity_step2: "<strong>Give it a soft tap</strong> with your finger. Does it hurt a little? Those are the periosteum's nerves warning.",
+s1_activity_step3: "<strong>Compare:</strong> Touch your thigh (which has a lot of flesh/muscle on top). Tap it softly. Does it hurt less? Yes, because the muscle \"cushions\" and the periosteum is more protected.",
+s1_activity_step4: "<strong>Reflection:</strong> That's why hits on the shin hurt so much: the periosteum is almost unprotected. And that's why dancers must be careful with impacts in areas where the bone is \"exposed\"!",
+s1_tip_title: "✨ Fun fact",
+s1_tip_text: "The periosteum <strong>does NOT cover the joints</strong> (where one bone meets another). In those areas there's cartilage (we'll see it in the next file). That's why, when a joint hurts, the pain comes from other structures, not the periosteum.",
+s2_title: "🩸 How the bone \"feeds\" itself",
+s2_reminder_title: "💡 Reminder",
+s2_reminder_text: "We've just seen that the periosteum has blood vessels. Now let's discover <strong>why that's so important</strong> and what happens if blood doesn't reach the bone properly.",
+s2_intro_title: "🍽️ The bone needs to \"eat\" and \"breathe\"",
+s2_intro_text: "Even though it looks like a stone, bone is a living tissue that needs:",
+s2_intro_li1: "<strong>Oxygen:</strong> So cells can \"burn\" nutrients and have energy.",
+s2_intro_li2: "<strong>Nutrients:</strong> Calcium, phosphorus, proteins, vitamins...",
+s2_intro_li3: "<strong>Remove waste:</strong> Cells produce \"garbage\" that needs to be taken away.",
+s2_intro_end: "All of this is done by the <span class=\"highlight\">blood</span> that arrives through the periosteum.",
+s2_concept_title: "Blood as a \"delivery service\"",
+s2_how_title: "🔍 How does blood reach the bone?",
+s2_how_li1: "<strong>From the periosteum:</strong> Blood vessels enter the bone through small \"holes\" and reach the deepest cells.",
+s2_how_li2: "<strong>From inside:</strong> There are also vessels that come from the bone marrow (the \"blood factory\" we saw in file 2).",
+s2_how_li3: "<strong>Result:</strong> The bone is well \"watered\" from inside and outside.",
+s2_warning_title: "⚠️ What happens if blood doesn't arrive well?",
+s2_warning_text: "If for some reason blood doesn't reach an area of the bone properly:",
+s2_warning_li1: "Cells \"suffocate\" and die",
+s2_warning_li2: "The bone weakens in that area",
+s2_warning_li3: "Pain may appear and, in severe cases, the bone can \"collapse\"",
+s2_warning_end: "That's why it's important to <strong>move</strong>: movement helps blood circulate better.",
+s2_diagram_title: "🔄 Blood reaches the bone through two paths",
+s2_dance_title: "Application in dance",
+s2_dance_li1: "<strong>Warm-up is key:</strong> When you warm up before dancing, you increase blood flow to the whole body, including bones. This prepares them for effort.",
+s2_dance_li2: "<strong>Movement nourishes the bone:</strong> Every time you jump or do a relevé, blood circulates better through the leg bones. You're \"feeding\" your bones while dancing!",
+s2_dance_li3: "<strong>Prolonged rest is bad:</strong> If you're a long time without moving (due to an injury, for example), blood circulates worse and bones weaken. That's why doctors recommend moving as soon as possible after an injury.",
+s2_activity_title: "Activity: \"Feel how blood circulates\"",
+s2_activity_obj_label: "Goal:",
+s2_activity_obj: "Verify how movement increases blood flow",
+s2_activity_step1: "<strong>At rest:</strong> Sit down and touch your shin. Do you feel it cold or warm? Probably cool, because blood isn't circulating much there.",
+s2_activity_step2: "<strong>After moving:</strong> Do 20 fast relevés or jump in place for 30 seconds. Now touch your shin again. Do you feel it warmer? That's because more blood has arrived!",
+s2_activity_step3: "<strong>Reflection:</strong> That heat is a sign that nutrients and oxygen are reaching your bones better. That's why warm-up is so important before dancing.",
+s2_tip_title: "✨ Tip for dancers",
+s2_tip_text: "If you're injured and have to rest, <strong>move as much as you can</strong> (within what your doctor allows). Even gently moving nearby joints helps blood circulate and bones not weaken as much.",
+s3_title: "🔧 How fractures are repaired",
+s3_reminder_title: "💡 Reminder",
+s3_reminder_text: "We've seen that the periosteum has \"repair\" cells. Now let's discover <strong>how they work</strong> when you get a fracture. It's a fascinating process!",
+s3_intro_title: "🎯 What happens when you break a bone?",
+s3_intro_text: "Imagine you get a fracture dancing (for example, landing badly from a jump). Your body starts a <span class=\"highlight\">repair process</span> that has several phases:",
+s3_concept_title: "The 4 phases of repair",
+s3_how_title: "📅 The process step by step",
+s3_how_li1: "<strong>Phase 1 (days 1-5): \"Cleaning\"</strong> - Periosteum and blood cells come to the area and \"clean\" the broken pieces. A hematoma forms (like an internal bruise).",
+s3_how_li2: "<strong>Phase 2 (days 5-21): \"Soft bridge\"</strong> - Periosteum cells start building a \"bridge\" of soft cartilage between the two pieces. It's like putting on an internal cast.",
+s3_how_li3: "<strong>Phase 3 (weeks 3-12): \"Hard bridge\"</strong> - That soft cartilage gradually transforms into hard bone. The \"bridge\" gets stronger.",
+s3_how_li4: "<strong>Phase 4 (months 3-12): \"Remodeling\"</strong> - The new bone is gradually \"polished\" and adapted until it's like before (or even stronger).",
+s3_diagram_title: "🔄 The 4 phases of fracture repair",
+s3_dance_title: "What does this mean for a dancer?",
+s3_dance_li1: "<strong>Patience:</strong> A fracture takes months to fully heal. You can't \"speed up\" the process. If you go back to dancing too soon, you can break the \"bridge\" that's forming.",
+s3_dance_li2: "<strong>The periosteum is key:</strong> Without it, the fracture wouldn't heal well. That's why fractures in areas where the periosteum is damaged (for example, by an open wound) are more serious.",
+s3_dance_li3: "<strong>The bone can end up stronger:</strong> If the fracture heals well, the repaired area can end up even stronger than before (because new bone has been added).",
+s3_dance_li4: "<strong>Nutrition matters:</strong> During repair, you need more calcium, vitamin D, and protein. It's time to take care of your diet.",
+s3_activity_title: "Activity: \"Simulate the repair\"",
+s3_activity_obj_label: "Goal:",
+s3_activity_obj: "Understand how a fracture is repaired",
+s3_activity_step1: "<strong>Material:</strong> Get a wooden stick (like popsicle sticks) or an old pencil.",
+s3_activity_step2: "<strong>Break it:</strong> Carefully break it in half (ask an adult for help if needed).",
+s3_activity_step3: "<strong>Simulate the phases:</strong>",
+s3_activity_step3a: "Phase 1: Look at the two broken pieces. Imagine your body is \"cleaning\" the edges.",
+s3_activity_step3b: "Phase 2: Use some soft clay to \"join\" the two pieces. That's the \"soft bridge\" of cartilage.",
+s3_activity_step3c: "Phase 3: Now use strong glue or adhesive tape. That's the \"hard bridge\" of bone.",
+s3_activity_step3d: "Phase 4: Imagine that over time, the joint would be \"polished\" and look like before.",
+s3_activity_step4: "<strong>Reflection:</strong> How long do you think your body takes to do this for real? (Answer: months! That's why you need patience).",
+s3_tip_title: "✨ Fun fact",
+s3_tip_text: "Children heal fractures <strong>faster</strong> than adults because their periosteum is thicker and has more active cells. That's why, if a child breaks a bone, they can be healed in 4-6 weeks, while an adult may take 8-12 weeks.",
+s4_title: "🎯 Quiz: Check what you've learned",
+s4_quiz_title: "Questions about the periosteum",
+s4_check_btn: "Check answers",
+s4_reset_btn: "Reset",
+s4_activity_title: "Final activity: \"What I've learned\"",
+s4_activity_obj_label: "Goal:",
+s4_activity_obj: "Summarize the most important things",
+s4_activity_step1: "<strong>Write in your notebook</strong> (or on your phone) 3 things you've learned about the periosteum:",
+s4_activity_step1a: "Example: \"The periosteum is the 'skin' of the bone and has blood vessels, nerves, and repair cells.\"",
+s4_activity_step1b: "\"Without periosteum, the bone couldn't grow or repair itself.\"",
+s4_activity_step1c: "\"When you get a fracture, the periosteum is key for it to heal.\"",
+s4_activity_step2: "<strong>Share</strong> with a classmate one thing that surprised you.",
+s4_activity_step3: "<strong>Prepare</strong> for the next file: we'll talk about the endosteum (the \"inner periosteum\") and articular cartilage.",
+s4_summary_title: "🎓 Key summary",
+s4_summary_li1: "<strong>Periosteum:</strong> Living layer that surrounds the bone (except at the joints)",
+s4_summary_li2: "<strong>Functions:</strong> Nourish the bone, allow its growth, repair fractures, feel pain",
+s4_summary_li3: "<strong>Contains:</strong> Blood vessels, nerves, and repair cells",
+s4_summary_li4: "<strong>Importance in dance:</strong> Without periosteum, you couldn't dance (bones wouldn't adapt or repair)"
+}
+};
+
+// Traduccions dels SVG (diagramas)
+const svgTranslations = {
+es: {
+s1_bone: "HUESO", s1_periosteum: "PERIOSTIO (capa viva)", s1_vessels_a: "Vasos", s1_vessels_b: "sanguíneos", s1_nerves: "Nervios", s1_cells_a: "Células", s1_cells_b: "reparadoras", s1_caption: "El periostio rodea todo el hueso (excepto las articulaciones)",
+s2_bone: "HUESO", s2_periosteum: "PERIOSTIO", s2_from_peri: "Vasos desde", s2_from_peri2: "el periostio", s2_marrow: "MÉDULA ÓSEA", s2_from_marrow: "Vasos desde", s2_from_marrow2: "la médula", s2_caption: "Las células del hueso reciben sangre por ambos lados",
+s3_phase1: "FASE 1", s3_phase1_desc: "Limpieza", s3_phase1_time: "Días 1-5",
+s3_phase2: "FASE 2", s3_phase2_desc: "Puente blando", s3_phase2_time: "Días 5-21",
+s3_phase3: "FASE 3", s3_phase3_desc: "Puente duro", s3_phase3_time: "Semanas 3-12",
+s3_phase4: "FASE 4", s3_phase4_desc: "Remodelación", s3_phase4_time: "Meses 3-12"
+},
+ca: {
+s1_bone: "OS", s1_periosteum: "PERIOSTI (capa viva)", s1_vessels_a: "Vasos", s1_vessels_b: "sanguinis", s1_nerves: "Nervis", s1_cells_a: "Cèl·lules", s1_cells_b: "reparadores", s1_caption: "El periosti envolta tot l'os (excepte les articulacions)",
+s2_bone: "OS", s2_periosteum: "PERIOSTI", s2_from_peri: "Vasos des del", s2_from_peri2: "periosti", s2_marrow: "MEDUL·LA ÒSSIA", s2_from_marrow: "Vasos des de", s2_from_marrow2: "la medul·la", s2_caption: "Les cèl·lules de l'os reben sang per ambdós costats",
+s3_phase1: "FASE 1", s3_phase1_desc: "Neteja", s3_phase1_time: "Dies 1-5",
+s3_phase2: "FASE 2", s3_phase2_desc: "Pont tou", s3_phase2_time: "Dies 5-21",
+s3_phase3: "FASE 3", s3_phase3_desc: "Pont dur", s3_phase3_time: "Setmanes 3-12",
+s3_phase4: "FASE 4", s3_phase4_desc: "Remodelació", s3_phase4_time: "Mesos 3-12"
+},
+en: {
+s1_bone: "BONE", s1_periosteum: "PERIOSTEUM (living layer)", s1_vessels_a: "Blood", s1_vessels_b: "vessels", s1_nerves: "Nerves", s1_cells_a: "Repair", s1_cells_b: "cells", s1_caption: "The periosteum surrounds the whole bone (except joints)",
+s2_bone: "BONE", s2_periosteum: "PERIOSTEUM", s2_from_peri: "Vessels from", s2_from_peri2: "the periosteum", s2_marrow: "BONE MARROW", s2_from_marrow: "Vessels from", s2_from_marrow2: "the marrow", s2_caption: "Bone cells receive blood from both sides",
+s3_phase1: "PHASE 1", s3_phase1_desc: "Cleaning", s3_phase1_time: "Days 1-5",
+s3_phase2: "PHASE 2", s3_phase2_desc: "Soft bridge", s3_phase2_time: "Days 5-21",
+s3_phase3: "PHASE 3", s3_phase3_desc: "Hard bridge", s3_phase3_time: "Weeks 3-12",
+s3_phase4: "PHASE 4", s3_phase4_desc: "Remodeling", s3_phase4_time: "Months 3-12"
+}
+};
+
+// Preguntes del quiz per idioma
+const quizByLang = {
+es: [
+{ q: "¿Qué es el periostio?", opts: ["La médula ósea que hay dentro del hueso", "La capa viva que rodea el hueso por fuera", "El cartílago de las articulaciones", "Un tipo de célula del hueso"], correct: 1 },
+{ q: "¿Por qué duele tanto cuando te golpeas un hueso?", opts: ["Porque el hueso es muy duro", "Porque el periostio tiene nervios que avisan del daño", "Porque se rompe el hueso", "Porque la sangre se acumula"], correct: 1 },
+{ q: "¿Qué necesita el hueso para mantenerse vivo?", opts: ["Solo calcio", "Sangre que le lleve oxígeno y nutrientes", "Solo movimiento", "Nada, es como una piedra"], correct: 1 },
+{ q: "¿Qué pasa si no llega bien la sangre a un hueso?", opts: ["Nada, el hueso sigue igual", "Las células se mueren y el hueso se debilita", "El hueso se hace más fuerte", "El hueso crece más"], correct: 1 },
+{ q: "¿Cuál es la primera fase cuando te haces una fractura?", opts: ["Se forma hueso nuevo inmediatamente", "Las células 'limpian' la zona y se forma un hematoma", "El hueso se suelda solo en un día", "No pasa nada, no duele"], correct: 1 },
+{ q: "¿Por qué el calentamiento es importante antes de bailar?", opts: ["Solo para no enfriar los músculos", "Porque aumenta el flujo sanguíneo y 'alimenta' los huesos", "Para estirar los ligamentos", "No es importante"], correct: 1 },
+{ q: "¿Dónde NO hay periostio?", opts: ["En la diáfisis (parte media) del hueso", "En las articulaciones (donde hay cartílago)", "En los huesos largos", "En los huesos cortos"], correct: 1 },
+{ q: "¿Por qué los niños se curan las fracturas más rápido que los adultos?", opts: ["Porque comen más", "Porque su periostio es más grueso y tiene más células activas", "Porque duermen más", "Porque sus huesos son más blandos"], correct: 1 }
+],
+ca: [
+{ q: "Què és el periosti?", opts: ["La medul·la òssia que hi ha dins de l'os", "La capa viva que envolta l'os per fora", "El cartílag de les articulacions", "Un tipus de cèl·lula de l'os"], correct: 1 },
+{ q: "Per què fa tant de mal quan et colpeges un os?", opts: ["Perquè l'os és molt dur", "Perquè el periosti té nervis que avisen del dany", "Perquè es trenca l'os", "Perquè la sang s'acumula"], correct: 1 },
+{ q: "Què necessita l'os per mantenir-se viu?", opts: ["Només calci", "Sang que li porti oxigen i nutrients", "Només moviment", "Res, és com una pedra"], correct: 1 },
+{ q: "Què passa si no arriba bé la sang a un os?", opts: ["Res, l'os segueix igual", "Les cèl·lules moren i l'os es debilita", "L'os es fa més fort", "L'os creix més"], correct: 1 },
+{ q: "Quina és la primera fase quan et fas una fractura?", opts: ["Es forma os nou immediatament", "Les cèl·lules 'netegen' la zona i es forma un hematoma", "L'os se solda sol en un dia", "No passa res, no fa mal"], correct: 1 },
+{ q: "Per què l'escalfament és important abans de ballar?", opts: ["Només per no refredar els músculs", "Perquè augmenta el flux sanguini i 'alimenta' els ossos", "Per estirar els lligaments", "No és important"], correct: 1 },
+{ q: "On NO hi ha periosti?", opts: ["A la diàfisi (part mitjana) de l'os", "A les articulacions (on hi ha cartílag)", "Als ossos llargs", "Als ossos curts"], correct: 1 },
+{ q: "Per què els nens es curen les fractures més ràpid que els adults?", opts: ["Perquè mengen més", "Perquè el seu periosti és més gruixut i té més cèl·lules actives", "Perquè dormen més", "Perquè els seus ossos són més tous"], correct: 1 }
+],
+en: [
+{ q: "What is the periosteum?", opts: ["The bone marrow inside the bone", "The living layer that surrounds the bone on the outside", "The cartilage of the joints", "A type of bone cell"], correct: 1 },
+{ q: "Why does it hurt so much when you hit a bone?", opts: ["Because the bone is very hard", "Because the periosteum has nerves that warn of damage", "Because the bone breaks", "Because blood accumulates"], correct: 1 },
+{ q: "What does the bone need to stay alive?", opts: ["Only calcium", "Blood that brings it oxygen and nutrients", "Only movement", "Nothing, it's like a stone"], correct: 1 },
+{ q: "What happens if blood doesn't reach a bone well?", opts: ["Nothing, the bone stays the same", "Cells die and the bone weakens", "The bone gets stronger", "The bone grows more"], correct: 1 },
+{ q: "What is the first phase when you get a fracture?", opts: ["New bone forms immediately", "Cells 'clean' the area and a hematoma forms", "The bone welds itself in one day", "Nothing happens, it doesn't hurt"], correct: 1 },
+{ q: "Why is warm-up important before dancing?", opts: ["Only to not cool down the muscles", "Because it increases blood flow and 'feeds' the bones", "To stretch the ligaments", "It's not important"], correct: 1 },
+{ q: "Where is there NO periosteum?", opts: ["In the diaphysis (middle part) of the bone", "In the joints (where there is cartilage)", "In long bones", "In short bones"], correct: 1 },
+{ q: "Why do children heal fractures faster than adults?", opts: ["Because they eat more", "Because their periosteum is thicker and has more active cells", "Because they sleep more", "Because their bones are softer"], correct: 1 }
+]
+};
+
+// Missatges de feedback per idioma
+const feedbackMsgs = {
+es: {
+perfect: (s,t) => `🏆 ¡Excelente! ${s}/${t}. Entiendes muy bien el periostio y sus funciones.`,
+good: (s,t) => `👍 Bien: ${s}/${t}. Repasa los conceptos fallados.`,
+bad: (s,t) => `📚 ${s}/${t}. Vuelve a leer los apartados y reinténtalo.`
+},
+ca: {
+perfect: (s,t) => `🏆 Excel·lent! ${s}/${t}. Entens molt bé el periosti i les seves funcions.`,
+good: (s,t) => `👍 Bé: ${s}/${t}. Repassa els conceptes fallats.`,
+bad: (s,t) => `📚 ${s}/${t}. Torna a llegir els apartats i reintenta-ho.`
+},
+en: {
+perfect: (s,t) => `🏆 Excellent! ${s}/${t}. You understand very well the periosteum and its functions.`,
+good: (s,t) => `👍 Good: ${s}/${t}. Review the failed concepts.`,
+bad: (s,t) => `📚 ${s}/${t}. Go back and read the sections again and try again.`
+}
+};
+
+let currentLang = 'es';
+
+function setLanguage(lang, btn) {
+currentLang = lang;
+document.documentElement.lang = lang;
+// Actualitza botons d'idioma
+document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+if (btn) btn.classList.add('active');
+else document.querySelector(`.lang-btn[onclick*="'${lang}'"]`).classList.add('active');
+
+// Actualitza tots els elements amb data-i18n
+document.querySelectorAll('[data-i18n]').forEach(el => {
+const key = el.getAttribute('data-i18n');
+if (translations[lang] && translations[lang][key]) {
+el.innerHTML = translations[lang][key];
+}
+});
+
+// Actualitza SVGs
+document.querySelectorAll('[data-i18n-svg]').forEach(el => {
+const key = el.getAttribute('data-i18n-svg');
+if (svgTranslations[lang] && svgTranslations[lang][key]) {
+el.textContent = svgTranslations[lang][key];
+}
+});
+
+// Re-renderitza el quiz
+renderQuiz();
+// Neteja feedback anterior
+document.getElementById('fbQuiz').classList.remove('show');
+}
+
+function showSlide(i, btn) {
+document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+document.querySelectorAll('.slide')[i].classList.add('active');
+btn.classList.add('active');
+window.scrollTo(0, 0);
+}
+
+function renderQuiz() {
+const cont = document.getElementById('quizContainer');
+cont.innerHTML = '';
+const data = quizByLang[currentLang];
+data.forEach((item, qi) => {
+let html = `<div class="question-box"><p>${qi+1}. ${item.q}</p><div class="options">`;
+item.opts.forEach((opt, oi) => {
+html += `<label><input type="radio" name="q${qi}" value="${oi}"> ${opt}</label>`;
+});
+html += `</div></div>`;
+cont.innerHTML += html;
+});
+}
+
+function checkQuiz() {
+const data = quizByLang[currentLang];
+const msgs = feedbackMsgs[currentLang];
+let score = 0;
+data.forEach((item, qi) => {
+const sel = document.querySelector(`input[name="q${qi}"]:checked`);
+const labels = document.querySelectorAll(`input[name="q${qi}"]`);
+labels.forEach(l => l.parentElement.classList.remove('correct','incorrect'));
+if (sel) {
+const val = parseInt(sel.value);
+if (val === item.correct) {
+sel.parentElement.classList.add('correct');
+score++;
+} else {
+sel.parentElement.classList.add('incorrect');
+labels[item.correct].parentElement.classList.add('correct');
+}
+} else {
+labels[item.correct].parentElement.classList.add('correct');
+}
+});
+const fb = document.getElementById('fbQuiz');
+fb.classList.add('show');
+if (score === data.length) {
+fb.className = 'feedback show success';
+fb.innerHTML = msgs.perfect(score, data.length);
+} else if (score >= 6) {
+fb.className = 'feedback show';
+fb.style.background = '#fff3cd';
+fb.style.color = '#856404';
+fb.style.border = '2px solid #ffc107';
+fb.innerHTML = msgs.good(score, data.length);
+} else {
+fb.className = 'feedback show error';
+fb.innerHTML = msgs.bad(score, data.length);
+}
+}
+
+function resetQuiz() {
+document.querySelectorAll('#quizContainer input').forEach(i => { i.checked = false; i.parentElement.classList.remove('correct','incorrect'); });
+document.getElementById('fbQuiz').classList.remove('show');
+}
+
+// Inicialitza
+renderQuiz();
+</script>
+</body>
+</html>

@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teixit Ossi i Recobriments (6) - Adaptació a la Càrrega</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+    position: relative;
+  }
+  header {
+    background: linear-gradient(90deg, #1e3c72, #2a5298);
+    color: white;
+    padding: 35px;
+    text-align: center;
+    position: relative;
+  }
+  header h1 { font-size: 2.1em; margin-bottom: 10px; }
+  header p { opacity: 0.95; font-size: 1.1em; }
+  header .subtitle { font-size: 0.95em; opacity: 0.85; margin-top: 8px; font-style: italic; }
+  
+  .lang-selector {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+  }
+  .lang-btn {
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.4);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85em;
+    transition: all 0.3s;
+  }
+  .lang-btn:hover { background: rgba(255,255,255,0.3); }
+  .lang-btn.active {
+    background: #fff;
+    color: #1e3c72;
+    border-color: #fff;
+  }
+  
+  .nav-tabs {
+    display: flex;
+    background: #f8f9fa;
+    flex-wrap: wrap;
+    border-bottom: 3px solid #dee2e6;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-tabs button {
+    flex: 1;
+    min-width: 140px;
+    padding: 14px 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #666;
+    transition: all 0.3s;
+    border-bottom: 4px solid transparent;
+  }
+  .nav-tabs button:hover { background: #e9ecef; color: #2a5298; }
+  .nav-tabs button.active {
+    color: #2a5298;
+    border-bottom-color: #2a5298;
+    background: white;
+  }
+  
+  .slide { display: none; padding: 30px; min-height: 600px; }
+  .slide.active { display: block; animation: fadeIn 0.5s; }
+  @keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+  
+  .slide h2 {
+    color: #1e3c72;
+    margin-bottom: 20px;
+    font-size: 1.7em;
+    border-bottom: 3px solid #2a5298;
+    padding-bottom: 10px;
+  }
+  
+  .reminder-box {
+    background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+    border-left: 5px solid #fbc02d;
+    padding: 18px;
+    margin: 20px 0;
+    border-radius: 10px;
+  }
+  
+  .reminder-box h4 {
+    color: #f57f17;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+  }
+  
+  .intro-box {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-left: 5px solid #1976d2;
+    padding: 22px;
+    margin: 20px 0;
+    border-radius: 10px;
+    line-height: 1.7;
+  }
+  
+  .intro-box h3 {
+    color: #1565c0;
+    margin-bottom: 12px;
+    font-size: 1.25em;
+  }
+  
+  .concept-card {
+    background: white;
+    border: 3px solid #2a5298;
+    border-radius: 15px;
+    padding: 25px;
+    margin: 20px 0;
+    box-shadow: 0 5px 20px rgba(42,82,152,0.15);
+  }
+  
+  .concept-card h3 {
+    color: #2a5298;
+    font-size: 1.35em;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .how-it-works {
+    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border-left: 5px solid #f57c00;
+  }
+  
+  .how-it-works h4 {
+    color: #e65100;
+    margin-bottom: 12px;
+    font-size: 1.15em;
+  }
+  
+  .how-it-works ul {
+    margin-left: 25px;
+    line-height: 1.8;
+  }
+  
+  .dance-box {
+    background: linear-gradient(135deg, #fff5e6 0%, #ffe8cc 100%);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border: 2px dashed #f39c12;
+  }
+  
+  .dance-box h4 {
+    color: #e67e22;
+    margin-bottom: 12px;
+    font-size: 1.15em;
+  }
+  
+  .dance-box ul {
+    margin-left: 25px;
+    line-height: 1.8;
+  }
+  
+  .practical-activity {
+    background: linear-gradient(135deg, #e8f8f5 0%, #d5f5e3 100%);
+    padding: 22px;
+    border-radius: 15px;
+    margin: 20px 0;
+    border: 2px solid #1abc9c;
+  }
+  
+  .practical-activity h4 {
+    color: #16a085;
+    font-size: 1.2em;
+    margin-bottom: 12px;
+  }
+  
+  .activity-steps {
+    margin-left: 25px;
+    line-height: 1.9;
+  }
+  
+  .activity-steps li {
+    margin-bottom: 8px;
+  }
+  
+  .activity-steps strong {
+    color: #16a085;
+  }
+  
+  .diagram-container {
+    background: white;
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  
+  .diagram-container svg {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .diagram-container h4 {
+    color: #2a5298;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+  }
+  
+  .tip-box {
+    background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+    padding: 16px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border-left: 5px solid #9b59b6;
+  }
+  
+  .tip-box h4 {
+    color: #8e44ad;
+    margin-bottom: 8px;
+    font-size: 1.05em;
+  }
+  
+  .warning-box {
+    background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+    padding: 18px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border-left: 5px solid #e53935;
+  }
+  
+  .warning-box h4 {
+    color: #c62828;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+  }
+  
+  .highlight {
+    background: linear-gradient(120deg, #ffeaa7 0%, #ffeaa7 100%);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  
+  .emoji { font-size: 1.2em; margin-right: 6px; }
+  
+  .btn {
+    background: linear-gradient(90deg, #2a5298, #1e3c72);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 10px 5px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(42,82,152,0.3);
+  }
+  
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(42,82,152,0.4);
+  }
+  
+  .quiz-container {
+    background: white;
+    border: 2px solid #e4e8ec;
+    border-radius: 15px;
+    padding: 25px;
+    margin: 20px 0;
+  }
+  
+  .quiz-container h3 {
+    color: #2a5298;
+    margin-bottom: 18px;
+    font-size: 1.25em;
+  }
+  
+  .question-box {
+    background: #f8f9fa;
+    border-left: 5px solid #2a5298;
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+  }
+  
+  .question-box p {
+    font-weight: 600;
+    margin-bottom: 12px;
+    font-size: 1em;
+    color: #2c3e50;
+  }
+  
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .options label {
+    background: white;
+    border: 2px solid #dee2e6;
+    padding: 12px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    font-size: 0.93em;
+  }
+  
+  .options label:hover {
+    border-color: #2a5298;
+    background: #e3f2fd;
+  }
+  
+  .options input { margin-right: 12px; }
+  
+  .options label.correct {
+    background: #d4edda;
+    border-color: #28a745;
+    color: #155724;
+  }
+  
+  .options label.incorrect {
+    background: #f8d7da;
+    border-color: #dc3545;
+    color: #721c24;
+  }
+  
+  .feedback {
+    margin-top: 18px;
+    padding: 18px;
+    border-radius: 10px;
+    display: none;
+    font-weight: 600;
+    line-height: 1.6;
+  }
+  
+  .feedback.show { display: block; animation: fadeIn 0.3s; }
+  .feedback.success { background: #d4edda; color: #155724; border: 2px solid #28a745; }
+  .feedback.error { background: #f8d7da; color: #721c24; border: 2px solid #dc3545; }
+  
+  @media (max-width: 768px) {
+    header h1 { font-size: 1.6em; }
+    .slide { padding: 20px; }
+    .concept-card { padding: 18px; }
+    .lang-selector { position: static; justify-content: center; margin-top: 15px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="lang-selector">
+      <button class="lang-btn active" onclick="setLang('ca')" id="btn-ca">CAT</button>
+      <button class="lang-btn" onclick="setLang('es')" id="btn-es">ESP</button>
+      <button class="lang-btn" onclick="setLang('en')" id="btn-en">ENG</button>
+    </div>
+    <h1 id="t-header-title">🦴 Teixit Ossi i Recobriments</h1>
+    <p id="t-header-sub">Part 6: L'Os s'Adapta a la Càrrega</p>
+    <div class="subtitle" id="t-header-subtitle">Mecanotransducció i la Llei de Wolff: com el ball esculpeix els teus ossos</div>
+  </header>
+
+  <div class="nav-tabs">
+    <button class="active" onclick="showSlide(0, this)" id="tab0">📡 Mecanotransducció</button>
+    <button onclick="showSlide(1, this)" id="tab1">📐 Llei de Wolff</button>
+    <button onclick="showSlide(2, this)" id="tab2">⚖️ La càrrega perfecta</button>
+    <button onclick="showSlide(3, this)" id="tab3">🎯 Quiz</button>
+  </div>
+
+  <!-- SLIDE 1: MECANOTRANSDUCCIÓ -->
+  <div class="slide active">
+    <h2 id="t-s1-h2">📡 Mecanotransducció: Com l'os "sent" el ball</h2>
+    <div id="s1-content"></div>
+  </div>
+
+  <!-- SLIDE 2: LLEI DE WOLFF -->
+  <div class="slide">
+    <h2 id="t-s2-h2">📐 La Llei de Wolff: L'os s'esculpeix sol</h2>
+    <div id="s2-content"></div>
+  </div>
+
+  <!-- SLIDE 3: LA CÀRREGA PERFECTA -->
+  <div class="slide">
+    <h2 id="t-s3-h2">⚖️ La "Zona Rínxols d'Or" de la càrrega òssia</h2>
+    <div id="s3-content"></div>
+  </div>
+
+  <!-- SLIDE 4: QUIZ -->
+  <div class="slide">
+    <h2 id="t-s4-h2">🎯 Quiz: Comprova el que has après</h2>
+    <div class="quiz-container">
+      <h3 id="t-s4-h3">Preguntes sobre adaptació a la càrrega</h3>
+      <div id="quizContainer"></div>
+      <button class="btn" onclick="checkQuiz()" id="t-btn-check">Comprovar respostes</button>
+      <button class="btn" style="background: #6c757d;" onclick="resetQuiz()" id="t-btn-reset">Reiniciar</button>
+      <div class="feedback" id="fbQuiz"></div>
+    </div>
+    <div id="finalActivity"></div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   TRADUCCIONS
+   ============================================================ */
+const I18N = {
+  ca: {
+    headerTitle: "🦴 Teixit Ossi i Recobriments",
+    headerSub: "Part 6: L'Os s'Adapta a la Càrrega",
+    headerSubtitle: "Mecanotransducció i la Llei de Wolff: com el ball esculpeix els teus ossos",
+    tabs: ["📡 Mecanotransducció","📐 Llei de Wolff","⚖️ La càrrega perfecta","🎯 Quiz"],
+    s1h2: "📡 Mecanotransducció: Com l'os \"sent\" el ball",
+    s2h2: "📐 La Llei de Wolff: L'os s'esculpeix sol",
+    s3h2: "⚖️ La \"Zona Rínxols d'Or\" de la càrrega òssia",
+    s4h2: "🎯 Quiz: Comprova el que has après",
+    s4h3: "Preguntes sobre adaptació a la càrrega",
+    btnCheck: "Comprovar respostes",
+    btnReset: "Reiniciar",
+    fbExcellent: (s,t) => `🏆 Excel·lent! ${s}/${t}. Domines la fisiologia de l'adaptació òssia.`,
+    fbGood: (s,t) => `👍 Bé: ${s}/${t}. Repassa els conceptes fallats.`,
+    fbBad: (s,t) => `📚 ${s}/${t}. Torna a llegir els apartats i reintenta-ho.`,
+    
+    slide1: {
+      reminderH4: "💡 Recordatori",
+      reminderP: "A l'arxiu 4 vam conèixer els <strong>osteòcits</strong>, els \"sensors\" de l'os. A l'arxiu 5 vam veure el cicle de <strong>remodelació</strong>. Ara unirem les peces: <strong>com sap l'os que has ballat i necessita fer-se més fort?</strong> La resposta és la mecanotransducció.",
+      introH3: "🎯 Què és la mecanotransducció?",
+      introP1: "És una paraula complicada per a un concepte senzill: <span class=\"highlight\">traduir una força mecànica (un salt, un gir) en un senyal biològic (una ordre per construir os)</span>.",
+      introP2: "És l'\"idioma\" que fa servir el teu cos per dir: \"Escolta, hem rebut un impacte, reforça aquesta zona!\"",
+      conceptH3: "El secret està en el líquid",
+      howH4: "Com \"sento\" els osteòcits?",
+      howUl: [
+        "<strong>Pas 1: L'os es doblega (una mica):</strong> Quan aterres d'un salt, el teu os es doblega de forma microscòpica. Sí, els ossos són lleugerament elàstics!",
+        "<strong>Pas 2: El líquid es mou:</strong> Dins de l'os compacte hi ha uns \"túnels\" (els canalicles que vam veure a l'arxiu 3) plens de líquid. En doblegar-se l'os, aquest líquid es desplaça, com aigua en una palla quan la prems.",
+        "<strong>Pas 3: Els osteòcits ho noten:</strong> Els osteòcits tenen uns \"pèls\" (cilis) que actuen com a antenes. Quan el líquid es mou, mou aquests pèls.",
+        "<strong>Pas 4: Envien el missatge:</strong> En moure's les antenes, l'osteòcit allibera substàncies químiques que diuen als osteoblasts: \"Construeix més os aquí!\""
+      ],
+      svgTitle: "📐 El procés de mecanotransducció",
+      svgLabels: {
+        bend: "1. L'os es doblega en aterrar",
+        canal: "Canalicle amb líquid",
+        flow: "2. El líquid es desplaça",
+        osteo: "Osteòcit",
+        signal: "3. Les \"antenes\" es mouen i envien el senyal"
+      },
+      danceH4: "💃 Aplicació en la dansa",
+      danceUl: [
+        "<strong>Sense impacte, no hi ha senyal:</strong> Si només fas moviments suaus a terra (sense salts), els osteòcits no reben prou \"sacsejada\" de líquid i no envien l'ordre de reforçar l'os.",
+        "<strong>Varietat de moviments:</strong> Diferents salts dobleguen l'os en diferents direccions. Això estimula els osteòcits des de diversos angles, creant un os més fort en 3D.",
+        "<strong>L'aigua és clau:</strong> Si estàs deshidratat/da, hi ha menys líquid als canalicles i el senyal arriba més fluix. Beu aigua!"
+      ],
+      activityH4: "🎭 Activitat: \"La regla de plàstic\"",
+      activityObj: "<strong>Objectiu:</strong> Sentir com es doblega un \"os\" i com es mouria el líquid a dins",
+      activitySteps: [
+        "<strong>Material:</strong> Un regle de plàstic transparent (o una palla transparent) i una mica d'aigua amb colorant alimentari.",
+        "<strong>Prepara:</strong> Si fas servir la palla, omple-la amb l'aigua acolorida i tapa els extrems amb plastilina.",
+        "<strong>Simula l'impacte:</strong> Doblega suaument el regle o la palla. <ul><li>Si fas servir la palla: Veuràs com l'aigua es mou d'un costat a l'altre en doblegar-la.</li><li>Si fas servir el regle: Imagina que a dins hi ha líquid movent-se.</li></ul>",
+        "<strong>Reflexió:</strong> Aquest moviment del líquid és exactament el que \"desperta\" els osteòcits quan aterres d'un <em>sauté</em>. Si no doblegues l'os (no hi ha impacte), el líquid no es mou i els osteòcits s'\"adormen\"."
+      ],
+      tipH4: "✨ Dada curiosa",
+      tipP: "Els astronautes a l'espai perden fins a un <strong>1-2% de densitat òssia per mes</strong>. Per què? Perquè a l'espai no hi ha gravetat. Els seus ossos no es dobleguen al caminar (perquè floten), el líquid dels canalicles no es mou, i els osteòcits \"pensen\" que no necessiten os. La gravetat és el millor amic dels teus ossos!"
+    },
+    slide2: {
+      reminderH4: "💡 Recordatori",
+      reminderP: "Ja coneixem la Llei de Wolff de forma bàsica (\"l'os es reforça on s'usa\"). Ara veurem <strong>com ho fa a nivell intern</strong> i per què és tan específica.",
+      introH3: "Especificitat de l'adaptació",
+      introP: "La Llei de Wolff no només diu que l'os es fa més fort. Diu que <span class=\"highlight\">s'adapta EXACTAMENT al tipus de força que rep</span>. No és una resposta general; és una resposta de precisió.",
+      conceptH3: "Com sap l'os cap a on créixer?",
+      howH4: "🕸️ Les trabècules segueixen les línies de força",
+      howP: "Recorda l'os esponjós i les seves trabècules (Arxiu 3). No estan posades a l'atzar:",
+      howUl: [
+        "<strong>Si la força sempre va de dalt a baix</strong> (com al saltar i aterrar): Les trabècules s'alineen en vertical, com columnes d'un edifici.",
+        "<strong>Si la força és torsional</strong> (com al girar en una pirueta): Les trabècules s'entrellaçen en espiral per resistir el gir.",
+        "<strong>Si la força desapareix</strong> (repòs al llit): Les trabècules que no s'usen es dissolen i desapareixen."
+      ],
+      svgTitle: "📊 Comparació: Os sedentari vs. Os de ballarí",
+      svgLabels: {
+        sedTitle: "SEDENTARI",
+        sedSub1: "Trabècules fines",
+        sedSub2: "Os fràgil",
+        danTitle: "BALLARÍ",
+        danLoad: "CÀRREGA",
+        danSub1: "Trabècules gruixudes",
+        danSub2: "Alineades amb la càrrega"
+      },
+      danceH4: "💃 Exemples reals en ballarins",
+      danceUl: [
+        "<strong>Ballarins de flamenc:</strong> Tenen els ossos del peu (metatarsians) i el turmell significativament més densos que la població general, adaptats al zapateado.",
+        "<strong>Ballarins de ballet:</strong> El coll del fèmur (maluc) s'adapta per suportar les rotacions extremes i el treball en mitja punta.",
+        "<strong>Ballarins de breakdance:</strong> Tenen els ossos dels canells i el radi (avantbraç) molt més densos pels suports invertits (freezes).",
+        "<strong>Unilateralitat:</strong> Si sempre gires cap al mateix costat, aquell costat de la teva columna i maluc tindrà un os lleugerament més dens. Per això és important ballar als dos costats!"
+      ],
+      activityH4: "🎭 Activitat: \"Observa les teves pròpies adaptacions\"",
+      activityObj: "<strong>Objectiu:</strong> Veure la Llei de Wolff al teu propi cos (a la pell, com a exemple visible)",
+      activitySteps: [
+        "<strong>Observa les teves mans:</strong> Si toques la guitarra, escrius molt o fas esport, tindràs \"durícies\" en zones específiques. La pell s'ha adaptat exactament on rep fricció.",
+        "<strong>Relació amb l'os:</strong> L'os fa el mateix, però per dins. On rep càrrega, es fa més dens (una \"durícia interna\").",
+        "<strong>Reflexió:</strong> Si deixessis de ballar durant 6 mesos, què passaria? (Les \"durícies\" de la pell se n'anirien, i les trabècules de l'os començarien a aprimar-se perquè ja no reben aquella càrrega específica)."
+      ],
+      tipH4: "✨ Dada curiosa",
+      tipP: "La Llei de Wolff també explica per què els <strong>tennistes professionals</strong> tenen l'os del braç de la raqueta fins a un <strong>30% més dens</strong> que el de l'altre braç. L'os sap exactament quin braç treballa més!"
+    },
+    slide3: {
+      reminderH4: "💡 Recordatori",
+      reminderP: "Ja sabem que l'os necessita càrrega per reforçar-se. Però... <strong>quanta càrrega?</strong> Més és sempre millor? La resposta és no. Existeix una \"zona perfecta\".",
+      introH3: "🎯 La corba d'adaptació òssia",
+      introP: "La relació entre la càrrega (entrenament) i la salut de l'os no és una línia recta. És una corba en forma d'U invertida. Hi ha un punt òptim: ni molt poc, ni massa.",
+      conceptH3: "🐻 Les 3 zones de la càrrega",
+      howH4: "En quina zona estàs?",
+      howUl: [
+        "<strong>Zona 1: Càrrega insuficient (Poca càrrega)</strong><br>L'os no rep senyals. Els osteoclasts guanyen als osteoblasts. L'os s'afebleix. (Exemple: repòs al llit, sedentarisme, o ballarines amb restricció calòrica severa).",
+        "<strong>Zona 2: Càrrega òptima (La zona Rínxols d'Or)</strong><br>L'estímul és suficient per activar els osteòcits, però no tant com per danyar l'os. Els osteoblasts construeixen més del que els osteoclasts destrueixen. L'os es reforça!",
+        "<strong>Zona 3: Càrrega excessiva (Massa càrrega)</strong><br>L'impacte és tan gran o tan freqüent que es produeixen més microesquerdes de les que el cos pot reparar. Els osteoclasts es tornen bojos intentant netejar tant dany. Resultat: fractures per estrès."
+      ],
+      svgTitle: "La corba d'adaptació de l'os",
+      svgLabels: {
+        xAxis: "QUANTITAT D'ENTRENAMENT (Càrrega)",
+        yAxis: "SALUT ÒSSIA",
+        zone1: "ZONA 1: Poca càrrega",
+        zone1sub: "Os feble",
+        zone2: "ZONA 2: Càrrega òptima",
+        zone2sub: "Os fort!",
+        zone3: "ZONA 3: Excés",
+        zone3sub: "Fractures",
+        maxPoint: "Punt màxim"
+      },
+      warningH4: "🚨 El perill de la Zona 3 per als ballarins",
+      warningP: "Les <strong>fractures per estrès</strong> (molt comunes en ballarins, especialment als metatarsians del peu i la tíbia) ocorren quan es creua accidentalment a la Zona 3. Això sol passar per:",
+      warningUl: [
+        "Augmentar la càrrega d'entrenament massa ràpid (ex: passar de 3 a 6 hores de classe de cop).",
+        "Canviar de superfície (ballar sempre en terra dur en lloc de terra de fusta/sprung floor).",
+        "No descansar prou entre sessions (la fase de formació de la remodelació necessita temps)."
+      ],
+      danceH4: "💃 Com mantenir-se a la Zona 2?",
+      danceUl: [
+        "<strong>Progressió lenta:</strong> Augmenta la intensitat o durada de l'entrenament a poc a poc (regla del 10%: no augmentis més del 10% per setmana).",
+        "<strong>Varietat:</strong> Alterna dies de molt impacte (salts) amb dies de menys impacte (terra, estiraments, tècnica de braços).",
+        "<strong>Terra adequat:</strong> Ballar sempre que puguis en terres amb absorció d'impacte (terres de dansa, fusta flotant). Evita el ciment o les rajoles dures.",
+        "<strong>Escolta els senyals:</strong> Un dolor que apareix en començar a ballar i desapareix en escalfar és un senyal d'alerta que estàs a prop de la Zona 3."
+      ],
+      activityH4: "🎭 Activitat: \"Troba la teva Zona 2\"",
+      activityObj: "<strong>Objectiu:</strong> Aprendre a dosificar la càrrega",
+      activitySteps: [
+        "<strong>Analitza la teva setmana:</strong> Dibuixa en un paper 7 dies. Marca amb colors: <ul><li>Verd: Dia de càrrega òptima (balles, però descanses bé).</li><li>Groc: Dia de càrrega baixa (descans actiu, estiraments).</li><li>Vermell: Dia de càrrega alta (molts salts, assaig llarg).</li></ul>",
+        "<strong>Regla d'or:</strong> Mai posis dos dies vermells seguits. Després d'un dia vermell, ha d'haver-hi un dia groc o verd perquè els osteoblasts puguin fer la fase de formació.",
+        "<strong>Reflexió:</strong> La teva setmana actual està a la Zona 2, o estàs passant massa temps a la Zona 1 (sedentarisme entre classes) o Zona 3 (sense dies de descans)?"
+      ],
+      tipH4: "✨ El principi dels \"100 salts\"",
+      tipP: "Estudis recents suggereixen que els osteòcits s'\"acostumen\" a la càrrega. Després d'uns <strong>40-100 impactes</strong> (salts) en una sessió, els osteòcits deixen d'enviar senyals de \"construir os\". Fer 500 salts seguits no construeix 5 vegades més os que fer 100! Per això és millor fer sessions curtes de salts repartides durant la setmana, que un dia maratonià."
+    },
+    slide4: {
+      quizData: [
+        { q: "Què és la mecanotransducció?",
+          opts: ["La reparació d'una fractura","La traducció d'una força mecànica en un senyal biològic per a l'os","El procés de digestió del calci","La contracció del múscul"], correct: 1 },
+        { q: "Què detecten els osteòcits quan aterres d'un salt?",
+          opts: ["Un augment de temperatura","El moviment del líquid dins dels canalicles","Un canvi en el color de l'os","L'arribada de sang nova"], correct: 1 },
+        { q: "Segons la Llei de Wolff, com s'adapten les trabècules de l'os?",
+          opts: ["Es fan més gruixudes en totes les direccions per igual","S'alineen seguint la direcció de les forces que rep l'os","Desapareixen completament","Es converteixen en os compacte"], correct: 1 },
+        { q: "Què passa si un ballarí fa 500 salts seguits sense descans?",
+          opts: ["Els seus ossos es fan 5 vegades més forts","Els osteòcits s'\"acostumen\" i deixen d'enviar senyals després d'uns 100 impactes","L'os es torna de cartílag","No passa res, és perfecte"], correct: 1 },
+        { q: "Què ocorre a la \"Zona 3\" de la corba de càrrega òssia?",
+          opts: ["L'os es manté igual","L'os es reforça al màxim","Hi ha massa càrrega, es produeixen més microdanys dels que es poden reparar (fractures per estrès)","L'os es fa més flexible"], correct: 2 },
+        { q: "Per què els astronautes perden densitat òssia a l'espai?",
+          opts: ["Perquè mengen pitjor","Perquè no hi ha gravetat, els seus ossos no es dobleguen i els osteòcits no reben senyal per construir os","Perquè fa molt fred","Perquè dormen massa"], correct: 1 },
+        { q: "Quina és la millor estratègia per reforçar els ossos segons la mecanotransducció?",
+          opts: ["Fer 1000 salts un sol dia a la setmana","Fer sessions curtes d'impacte repartides durant la setmana amb descansos","No saltar mai per no danyar l'os","Només estirar"], correct: 1 },
+        { q: "Si un ballarí només balla sobre una superfície molt dura (com ciment), quin risc augmenta?",
+          opts: ["Cap, l'os es fa més fort sempre","Passar a la \"Zona 3\" de càrrega excessiva i patir fractures per estrès","Que l'os es torni de goma","Que els músculs creixin massa"], correct: 1 }
+      ],
+      finalActivityH4: "🎭 Activitat final: \"Dissenya un entrenament intel·ligent per als teus ossos\"",
+      finalActivityObj: "<strong>Objectiu:</strong> Aplicar la mecanotransducció i la Llei de Wolff a la teva rutina",
+      finalActivitySteps: [
+        "<strong>Tria 3 exercicis</strong> de la teva classe de dansa que generin impacte controlat (ex: relevés, sautés, salts en primera).",
+        "<strong>Aplica la regla dels 100 impactes:</strong> En lloc de fer-los 200 vegades seguides, proposa fer 3 sèries de 30-40 repeticions, descansant entre elles.",
+        "<strong>Afegeix varietat:</strong> Inclou un exercici que carregui l'os en una direcció diferent (ex: salts laterals, no només cap endavant).",
+        "<strong>Planifica el descans:</strong> Assegura't que després d'aquest entrenament hi hagi almenys 24-48 hores abans de tornar a carregar aquests mateixos ossos amb intensitat."
+      ],
+      finalSummaryH4: "Resum clau dels 6 arxius",
+      finalSummaryUl: [
+        "<strong>Arxiu 1:</strong> El periosti nodreix, repara i sent el dolor.",
+        "<strong>Arxiu 2:</strong> L'endosti regula el calci i el cartílag necessita moviment per nodrir-se.",
+        "<strong>Arxiu 3:</strong> L'os compacte (fort) i l'esponjós (lleuger amb trabècules intel·ligents).",
+        "<strong>Arxiu 4:</strong> L'equip cel·lular (osteoblasts, osteoclasts, osteòcits).",
+        "<strong>Arxiu 5:</strong> El cicle de remodelació (les 4 fases i l'equilibri).",
+        "<strong>Arxiu 6:</strong> La mecanotransducció i la Llei de Wolff (l'os s'esculpeix segons el ball)."
+      ],
+      finalSummaryP: "Ara entens la fisiologia completa de com el ball construeix els teus ossos! 🦴💃"
+    }
+  },
+  es: {
+    headerTitle: "🦴 Tejido Óseo y Recubrimientos",
+    headerSub: "Parte 6: El Hueso se Adapta a la Carga",
+    headerSubtitle: "Mecanotransducción y la Ley de Wolff: cómo el baile esculpe tus huesos",
+    tabs: ["📡 Mecanotransducción","📐 Ley de Wolff","⚖️ La carga perfecta","🎯 Quiz"],
+    s1h2: "📡 Mecanotransducción: Cómo el hueso \"siente\" el baile",
+    s2h2: "📐 La Ley de Wolff: El hueso se esculpe solo",
+    s3h2: "⚖️ La \"Zona Ricitos de Oro\" de la carga ósea",
+    s4h2: "🎯 Quiz: Comprueba lo aprendido",
+    s4h3: "Preguntas sobre adaptación a la carga",
+    btnCheck: "Comprobar respuestas",
+    btnReset: "Reiniciar",
+    fbExcellent: (s,t) => `🏆 ¡Excelente! ${s}/${t}. Dominas la fisiología de la adaptación ósea.`,
+    fbGood: (s,t) => `👍 Bien: ${s}/${t}. Repasa los conceptos fallados.`,
+    fbBad: (s,t) => `📚 ${s}/${t}. Vuelve a leer los apartados y reinténtalo.`,
+    
+    slide1: {
+      reminderH4: "💡 Recordatorio",
+      reminderP: "En el archivo 4 conocimos a los <strong>osteocitos</strong>, los \"sensores\" del hueso. En el archivo 5 vimos el ciclo de <strong>remodelación</strong>. Ahora uniremos las piezas: <strong>¿cómo sabe el hueso que has bailado y necesita hacerse más fuerte?</strong> La respuesta es la mecanotransducción.",
+      introH3: "🎯 ¿Qué es la mecanotransducción?",
+      introP1: "Es una palabra complicada para un concepto sencillo: <span class=\"highlight\">traducir una fuerza mecánica (un salto, un giro) en una señal biológica (una orden para construir hueso)</span>.",
+      introP2: "Es el \"idioma\" que usa tu cuerpo para decir: \"Oye, hemos recibido un impacto, ¡fortalece esta zona!\"",
+      conceptH3: "El secreto está en el líquido",
+      howH4: "¿Cómo \"sienten\" los osteocitos?",
+      howUl: [
+        "<strong>Paso 1: El hueso se dobla (un poquito):</strong> Cuando aterrizas de un salto, tu hueso se dobla de forma microscópica. ¡Sí, los huesos son ligeramente elásticos!",
+        "<strong>Paso 2: El líquido se mueve:</strong> Dentro del hueso compacto hay unos \"túneles\" (los canalículos que vimos en el archivo 3) llenos de líquido. Al doblarse el hueso, este líquido se desplaza, como agua en una pajita cuando la aprietas.",
+        "<strong>Paso 3: Los osteocitos lo notan:</strong> Los osteocitos tienen unos \"pelitos\" (cilios) que actúan como antenas. Cuando el líquido se mueve, mueve estos pelitos.",
+        "<strong>Paso 4: Envían el mensaje:</strong> Al moverse las antenas, el osteocito libera sustancias químicas que dicen a los osteoblastos: \"¡Construye más hueso aquí!\""
+      ],
+      svgTitle: "📐 El proceso de mecanotransducción",
+      svgLabels: {
+        bend: "1. El hueso se dobla al aterrizar",
+        canal: "Canalículo con líquido",
+        flow: "2. El líquido se desplaza",
+        osteo: "Osteocito",
+        signal: "3. Las \"antenas\" se mueven y envían la señal"
+      },
+      danceH4: "💃 Aplicación en la danza",
+      danceUl: [
+        "<strong>Sin impacto, no hay señal:</strong> Si solo haces movimientos suaves en el suelo (sin saltos), los osteocitos no reciben suficiente \"sacudida\" de líquido y no envían la orden de fortalecer el hueso.",
+        "<strong>Variedad de movimientos:</strong> Diferentes saltos doblan el hueso en diferentes direcciones. Esto estimula a los osteocitos desde varios ángulos, creando un hueso más fuerte en 3D.",
+        "<strong>El agua es clave:</strong> Si estás deshidratado/a, hay menos líquido en los canalículos y la señal llega más débil. ¡Bebe agua!"
+      ],
+      activityH4: "🎭 Actividad: \"La regla de plástico\"",
+      activityObj: "<strong>Objetivo:</strong> Sentir cómo se dobla un \"hueso\" y cómo se movería el líquido dentro",
+      activitySteps: [
+        "<strong>Material:</strong> Una regla de plástico transparente (o una pajita transparente) y un poco de agua con colorante alimentario.",
+        "<strong>Prepara:</strong> Si usas la pajita, llénala con el agua coloreada y tapa los extremos con plastilina.",
+        "<strong>Simula el impacto:</strong> Dobla suavemente la regla o la pajita. <ul><li>Si usas la pajita: Verás cómo el agua se mueve de un lado a otro al doblarla.</li><li>Si usas la regla: Imagina que dentro hay líquido moviéndose.</li></ul>",
+        "<strong>Reflexión:</strong> Ese movimiento del líquido es exactamente lo que \"despierta\" a los osteocitos cuando aterrizas de un <em>sauté</em>. Si no doblas el hueso (no hay impacto), el líquido no se mueve y los osteocitos se \"duermen\"."
+      ],
+      tipH4: "✨ Dato curioso",
+      tipP: "Los astronautas en el espacio pierden hasta un <strong>1-2% de densidad ósea por mes</strong>. ¿Por qué? Porque en el espacio no hay gravedad. Sus huesos no se doblan al caminar (porque flotan), el líquido de los canalículos no se mueve, y los osteocitos \"piensan\" que no necesitan hueso. ¡La gravedad es el mejor amigo de tus huesos!"
+    },
+    slide2: {
+      reminderH4: "💡 Recordatorio",
+      reminderP: "Ya conocemos la Ley de Wolff de forma básica (\"el hueso se fortalece donde se usa\"). Ahora vamos a ver <strong>cómo lo hace a nivel interno</strong> y por qué es tan específica.",
+      introH3: "Especificidad de la adaptación",
+      introP: "La Ley de Wolff no solo dice que el hueso se hace más fuerte. Dice que <span class=\"highlight\">se adapta EXACTAMENTE al tipo de fuerza que recibe</span>. No es una respuesta general; es una respuesta de precisión.",
+      conceptH3: "¿Cómo sabe el hueso hacia dónde crecer?",
+      howH4: "🕸️ Las trabéculas siguen las líneas de fuerza",
+      howP: "Recuerda el hueso esponjoso y sus trabéculas (Archivo 3). No están puestas al azar:",
+      howUl: [
+        "<strong>Si la fuerza siempre va de arriba a abajo</strong> (como al saltar y aterrizar): Las trabéculas se alinean en vertical, como columnas de un edificio.",
+        "<strong>Si la fuerza es torsional</strong> (como al girar en una pirueta): Las trabéculas se entrelazan en espiral para resistir el giro.",
+        "<strong>Si la fuerza desaparece</strong> (reposo en cama): Las trabéculas que no se usan se disuelven y desaparecen."
+      ],
+      svgTitle: "📊 Comparación: Hueso sedentario vs. Hueso de bailarín",
+      svgLabels: {
+        sedTitle: "SEDENTARIO",
+        sedSub1: "Trabéculas finas",
+        sedSub2: "Hueso frágil",
+        danTitle: "BAILARÍN",
+        danLoad: "CARGA",
+        danSub1: "Trabéculas gruesas",
+        danSub2: "Alineadas con la carga"
+      },
+      danceH4: "💃 Ejemplos reales en bailarines",
+      danceUl: [
+        "<strong>Bailarines de flamenco:</strong> Tienen los huesos del pie (metatarsianos) y el tobillo significativamente más densos que la población general, adaptados al zapateo.",
+        "<strong>Bailarines de ballet:</strong> El cuello del fémur (cadera) se adapta para soportar las rotaciones extremas y el trabajo en media punta.",
+        "<strong>Bailarines de breakdance:</strong> Tienen los huesos de las muñecas y el radio (antebrazo) mucho más densos por los apoyos invertidos (freezes).",
+        "<strong>Unilateralidad:</strong> Si siempre giras hacia el mismo lado, ese lado de tu columna y cadera tendrá un hueso ligeramente más denso. ¡Por eso es importante bailar a ambos lados!"
+      ],
+      activityH4: "🎭 Actividad: \"Observa tus propias adaptaciones\"",
+      activityObj: "<strong>Objetivo:</strong> Ver la Ley de Wolff en tu propio cuerpo (en la piel, como ejemplo visible)",
+      activitySteps: [
+        "<strong>Observa tus manos:</strong> Si tocas la guitarra, escribes mucho o haces deporte, tendrás \"callos\" en zonas específicas. La piel se ha adaptado exactamente donde recibe fricción.",
+        "<strong>Relación con el hueso:</strong> El hueso hace lo mismo, pero por dentro. Donde recibe carga, se hace más denso (un \"callo interno\").",
+        "<strong>Reflexión:</strong> Si dejaras de bailar durante 6 meses, ¿qué pasaría? (Los \"callos\" de la piel se irían, y las trabéculas del hueso empezarían a afinarse porque ya no reciben esa carga específica)."
+      ],
+      tipH4: "✨ Dato curioso",
+      tipP: "La Ley de Wolff también explica por qué los <strong>tenistas profesionales</strong> tienen el hueso del brazo de la raqueta hasta un <strong>30% más denso</strong> que el del otro brazo. ¡El hueso sabe exactamente qué brazo trabaja más!"
+    },
+    slide3: {
+      reminderH4: "💡 Recordatorio",
+      reminderP: "Ya sabemos que el hueso necesita carga para fortalecerse. Pero... <strong>¿cuánta carga?</strong> ¿Más es siempre mejor? La respuesta es no. Existe una \"zona perfecta\".",
+      introH3: "🎯 La curva de adaptación ósea",
+      introP: "La relación entre la carga (entrenamiento) y la salud del hueso no es una línea recta. Es una curva en forma de U invertida. Hay un punto óptimo: ni muy poco, ni demasiado.",
+      conceptH3: "🐻 Las 3 zonas de la carga",
+      howH4: "¿En qué zona estás?",
+      howUl: [
+        "<strong>Zona 1: Carga insuficiente (Poca carga)</strong><br>El hueso no recibe señales. Los osteoclastos ganan a los osteoblastos. El hueso se debilita. (Ejemplo: reposo en cama, sedentarismo, o bailarinas con restricción calórica severa).",
+        "<strong>Zona 2: Carga óptima (La zona Ricitos de Oro)</strong><br>El estímulo es suficiente para activar a los osteocitos, pero no tanto como para dañar el hueso. Los osteoblastos construyen más de lo que los osteoclastos destruyen. ¡El hueso se fortalece!",
+        "<strong>Zona 3: Carga excesiva (Demasiada carga)</strong><br>El impacto es tan grande o tan frecuente que se producen más microgrietas de las que el cuerpo puede reparar. Los osteoclastos se vuelven locos intentando limpiar tanto daño. Resultado: fracturas por estrés."
+      ],
+      svgTitle: "La curva de adaptación del hueso",
+      svgLabels: {
+        xAxis: "CANTIDAD DE ENTRENAMIENTO (Carga)",
+        yAxis: "SALUD ÓSEA",
+        zone1: "ZONA 1: Poca carga",
+        zone1sub: "Hueso débil",
+        zone2: "ZONA 2: Carga óptima",
+        zone2sub: "¡Hueso fuerte!",
+        zone3: "ZONA 3: Exceso",
+        zone3sub: "Fracturas",
+        maxPoint: "Punto máximo"
+      },
+      warningH4: "🚨 El peligro de la Zona 3 para los bailarines",
+      warningP: "Las <strong>fracturas por estrés</strong> (muy comunes en bailarines, especialmente en los metatarsianos del pie y la tibia) ocurren cuando se cruzan accidentalmente a la Zona 3. Esto suele pasar por:",
+      warningUl: [
+        "Aumentar la carga de entrenamiento demasiado rápido (ej: pasar de 3 a 6 horas de clase de golpe).",
+        "Cambiar de superficie (bailar siempre en suelo duro en lugar de suelo de madera/sprung floor).",
+        "No descansar lo suficiente entre sesiones (la fase de formación de la remodelación necesita tiempo)."
+      ],
+      danceH4: "💃 ¿Cómo mantenerse en la Zona 2?",
+      danceUl: [
+        "<strong>Progresión lenta:</strong> Aumenta la intensidad o duración del entrenamiento poco a poco (regla del 10%: no aumentes más del 10% por semana).",
+        "<strong>Variedad:</strong> Alterna días de mucho impacto (saltos) con días de menos impacto (suelo, estiramientos, técnica de brazos).",
+        "<strong>Suelo adecuado:</strong> Baila siempre que puedas en suelos con absorción de impacto (suelos de danza, madera flotante). Evita el cemento o las baldosas duras.",
+        "<strong>Escucha las señales:</strong> Un dolor que aparece al empezar a bailar y desaparece al calentar es una señal de alerta de que estás cerca de la Zona 3."
+      ],
+      activityH4: "🎭 Actividad: \"Encuentra tu Zona 2\"",
+      activityObj: "<strong>Objetivo:</strong> Aprender a dosificar la carga",
+      activitySteps: [
+        "<strong>Analiza tu semana:</strong> Dibuja en un papel 7 días. Marca con colores: <ul><li>Verde: Día de carga óptima (bailas, pero descansas bien).</li><li>Amarillo: Día de carga baja (descanso activo, estiramientos).</li><li>Rojo: Día de carga alta (muchos saltos, ensayo largo).</li></ul>",
+        "<strong>Regla de oro:</strong> Nunca pongas dos días rojos seguidos. Después de un día rojo, debe haber un día amarillo o verde para que los osteoblastos puedan hacer la fase de formación.",
+        "<strong>Reflexión:</strong> ¿Tu semana actual está en la Zona 2, o estás pasando demasiado tiempo en la Zona 1 (sedentarismo entre clases) o Zona 3 (sin días de descanso)?"
+      ],
+      tipH4: "✨ El principio de los \"100 saltos\"",
+      tipP: "Estudios recientes sugieren que los osteocitos se \"acostumbran\" a la carga. Después de unos <strong>40-100 impactos</strong> (saltos) en una sesión, los osteocitos dejan de enviar señales de \"construir hueso\". ¡Hacer 500 saltos seguidos no construye 5 veces más hueso que hacer 100! Por eso es mejor hacer sesiones cortas de saltos repartidas en la semana, que un día maratónico."
+    },
+    slide4: {
+      quizData: [
+        { q: "¿Qué es la mecanotransducción?",
+          opts: ["La reparación de una fractura","La traducción de una fuerza mecánica en una señal biológica para el hueso","El proceso de digestión del calcio","La contracción del músculo"], correct: 1 },
+        { q: "¿Qué detectan los osteocitos cuando aterrizas de un salto?",
+          opts: ["Un aumento de temperatura","El movimiento del líquido dentro de los canalículos","Un cambio en el color del hueso","La llegada de sangre nueva"], correct: 1 },
+        { q: "Según la Ley de Wolff, ¿cómo se adaptan las trabéculas del hueso?",
+          opts: ["Se hacen más gruesas en todas las direcciones por igual","Se alinean siguiendo la dirección de las fuerzas que recibe el hueso","Desaparecen completamente","Se convierten en hueso compacto"], correct: 1 },
+        { q: "¿Qué pasa si un bailarín hace 500 saltos seguidos sin descanso?",
+          opts: ["Sus huesos se hacen 5 veces más fuertes","Los osteocitos se 'acostumbran' y dejan de enviar señales después de unos 100 impactos","El hueso se vuelve de cartílago","No pasa nada, es perfecto"], correct: 1 },
+        { q: "¿Qué ocurre en la 'Zona 3' de la curva de carga ósea?",
+          opts: ["El hueso se mantiene igual","El hueso se fortalece al máximo","Hay demasiada carga, se producen más microdaños de los que se pueden reparar (fracturas por estrés)","El hueso se hace más flexible"], correct: 2 },
+        { q: "¿Por qué los astronautas pierden densidad ósea en el espacio?",
+          opts: ["Porque comen peor","Porque no hay gravedad, sus huesos no se doblan y los osteocitos no reciben señal para construir hueso","Porque hace mucho frío","Porque duermen demasiado"], correct: 1 },
+        { q: "¿Cuál es la mejor estrategia para fortalecer los huesos según la mecanotransducción?",
+          opts: ["Hacer 1000 saltos un solo día a la semana","Hacer sesiones cortas de impacto repartidas a lo largo de la semana con descansos","No saltar nunca para no dañar el hueso","Solo estirar"], correct: 1 },
+        { q: "Si un bailarín solo baila sobre una superficie muy dura (como cemento), ¿qué riesgo aumenta?",
+          opts: ["Ninguno, el hueso se hace más fuerte siempre","Pasar a la 'Zona 3' de carga excesiva y sufrir fracturas por estrés","Que el hueso se vuelva de goma","Que los músculos crezcan demasiado"], correct: 1 }
+      ],
+      finalActivityH4: "🎭 Actividad final: \"Diseña un entrenamiento inteligente para tus huesos\"",
+      finalActivityObj: "<strong>Objetivo:</strong> Aplicar la mecanotransducción y la Ley de Wolff a tu rutina",
+      finalActivitySteps: [
+        "<strong>Elige 3 ejercicios</strong> de tu clase de danza que generen impacto controlado (ej: relevés, sautés, saltos en primera).",
+        "<strong>Aplica la regla de los 100 impactos:</strong> En lugar de hacerlos 200 veces seguidas, propón hacer 3 series de 30-40 repeticiones, descansando entre ellas.",
+        "<strong>Añade variedad:</strong> Incluye un ejercicio que cargue el hueso en una dirección diferente (ej: saltos laterales, no solo hacia adelante).",
+        "<strong>Planifica el descanso:</strong> Asegúrate de que después de este entrenamiento haya al menos 24-48 horas antes de volver a cargar esos mismos huesos con intensidad."
+      ],
+      finalSummaryH4: "Resumen clave de los 6 archivos",
+      finalSummaryUl: [
+        "<strong>Archivo 1:</strong> El periostio nutre, repara y siente el dolor.",
+        "<strong>Archivo 2:</strong> El endostio regula el calcio y el cartílago necesita movimiento para nutrirse.",
+        "<strong>Archivo 3:</strong> El hueso compacto (fuerte) y el esponjoso (ligero con trabéculas inteligentes).",
+        "<strong>Archivo 4:</strong> El equipo celular (osteoblastos, osteoclastos, osteocitos).",
+        "<strong>Archivo 5:</strong> El ciclo de remodelación (las 4 fases y el equilibrio).",
+        "<strong>Archivo 6:</strong> La mecanotransducción y la Ley de Wolff (el hueso se esculpe según el baile)."
+      ],
+      finalSummaryP: "¡Ahora entiendes la fisiología completa de cómo el baile construye tus huesos! 🦴💃"
+    }
+  },
+  en: {
+    headerTitle: "🦴 Bone Tissue and Coverings",
+    headerSub: "Part 6: Bone Adapts to Load",
+    headerSubtitle: "Mechanotransduction and Wolff's Law: how dance sculpts your bones",
+    tabs: ["📡 Mechanotransduction","📐 Wolff's Law","⚖️ The perfect load","🎯 Quiz"],
+    s1h2: "📡 Mechanotransduction: How bone \"feels\" dance",
+    s2h2: "📐 Wolff's Law: Bone sculpts itself",
+    s3h2: "⚖️ The \"Goldilocks Zone\" of bone loading",
+    s4h2: "🎯 Quiz: Check what you've learned",
+    s4h3: "Questions on load adaptation",
+    btnCheck: "Check answers",
+    btnReset: "Reset",
+    fbExcellent: (s,t) => `🏆 Excellent! ${s}/${t}. You master the physiology of bone adaptation.`,
+    fbGood: (s,t) => `👍 Good: ${s}/${t}. Review the concepts you missed.`,
+    fbBad: (s,t) => `📚 ${s}/${t}. Re-read the sections and try again.`,
+    
+    slide1: {
+      reminderH4: "💡 Reminder",
+      reminderP: "In file 4 we met the <strong>osteocytes</strong>, the bone's \"sensors\". In file 5 we saw the <strong>remodelling</strong> cycle. Now we will connect the pieces: <strong>how does bone know you have danced and needs to become stronger?</strong> The answer is mechanotransduction.",
+      introH3: "🎯 What is mechanotransduction?",
+      introP1: "It is a complicated word for a simple concept: <span class=\"highlight\">translating a mechanical force (a jump, a turn) into a biological signal (an order to build bone)</span>.",
+      introP2: "It is the \"language\" your body uses to say: \"Hey, we received an impact, strengthen this area!\"",
+      conceptH3: "The secret is in the fluid",
+      howH4: "How do osteocytes \"feel\"?",
+      howUl: [
+        "<strong>Step 1: The bone bends (a little):</strong> When you land from a jump, your bone bends microscopically. Yes, bones are slightly elastic!",
+        "<strong>Step 2: The fluid moves:</strong> Inside compact bone there are \"tunnels\" (the canaliculi we saw in file 3) filled with fluid. When the bone bends, this fluid moves, like water in a straw when you squeeze it.",
+        "<strong>Step 3: The osteocytes notice:</strong> Osteocytes have \"hairs\" (cilia) that act as antennas. When the fluid moves, it moves these hairs.",
+        "<strong>Step 4: They send the message:</strong> When the antennas move, the osteocyte releases chemical substances that tell the osteoblasts: \"Build more bone here!\""
+      ],
+      svgTitle: "📐 The mechanotransduction process",
+      svgLabels: {
+        bend: "1. The bone bends on landing",
+        canal: "Canaliculus with fluid",
+        flow: "2. The fluid moves",
+        osteo: "Osteocyte",
+        signal: "3. The \"antennas\" move and send the signal"
+      },
+      danceH4: "💃 Application in dance",
+      danceUl: [
+        "<strong>No impact, no signal:</strong> If you only do gentle movements on the floor (no jumps), the osteocytes do not receive enough fluid \"shake\" and do not send the order to strengthen bone.",
+        "<strong>Variety of movements:</strong> Different jumps bend the bone in different directions. This stimulates the osteocytes from several angles, creating a stronger bone in 3D.",
+        "<strong>Water is key:</strong> If you are dehydrated, there is less fluid in the canaliculi and the signal arrives weaker. Drink water!"
+      ],
+      activityH4: "🎭 Activity: \"The plastic ruler\"",
+      activityObj: "<strong>Objective:</strong> Feel how a \"bone\" bends and how the fluid inside would move",
+      activitySteps: [
+        "<strong>Material:</strong> A transparent plastic ruler (or a transparent straw) and a little water with food colouring.",
+        "<strong>Prepare:</strong> If you use the straw, fill it with coloured water and seal the ends with plasticine.",
+        "<strong>Simulate the impact:</strong> Gently bend the ruler or straw. <ul><li>If you use the straw: You will see how the water moves from one side to the other as you bend it.</li><li>If you use the ruler: Imagine there is fluid moving inside.</li></ul>",
+        "<strong>Reflection:</strong> That fluid movement is exactly what \"wakes up\" the osteocytes when you land from a <em>sauté</em>. If you do not bend the bone (no impact), the fluid does not move and the osteocytes \"fall asleep\"."
+      ],
+      tipH4: "✨ Fun fact",
+      tipP: "Astronauts in space lose up to <strong>1-2% of bone density per month</strong>. Why? Because in space there is no gravity. Their bones do not bend when walking (because they float), the fluid in the canaliculi does not move, and the osteocytes \"think\" they do not need bone. Gravity is your bones' best friend!"
+    },
+    slide2: {
+      reminderH4: "💡 Reminder",
+      reminderP: "We already know Wolff's Law in a basic form (\"bone strengthens where it is used\"). Now we will see <strong>how it does this internally</strong> and why it is so specific.",
+      introH3: "Specificity of adaptation",
+      introP: "Wolff's Law does not just say that bone becomes stronger. It says that it <span class=\"highlight\">adapts EXACTLY to the type of force it receives</span>. It is not a general response; it is a precision response.",
+      conceptH3: "How does bone know where to grow?",
+      howH4: "🕸️ Trabeculae follow lines of force",
+      howP: "Remember spongy bone and its trabeculae (File 3). They are not placed at random:",
+      howUl: [
+        "<strong>If the force always goes from top to bottom</strong> (as in jumping and landing): The trabeculae align vertically, like columns of a building.",
+        "<strong>If the force is torsional</strong> (as in turning in a pirouette): The trabeculae interlace in a spiral to resist the turn.",
+        "<strong>If the force disappears</strong> (bed rest): The trabeculae that are not used dissolve and disappear."
+      ],
+      svgTitle: "📊 Comparison: Sedentary bone vs. Dancer's bone",
+      svgLabels: {
+        sedTitle: "SEDENTARY",
+        sedSub1: "Thin trabeculae",
+        sedSub2: "Fragile bone",
+        danTitle: "DANCER",
+        danLoad: "LOAD",
+        danSub1: "Thick trabeculae",
+        danSub2: "Aligned with load"
+      },
+      danceH4: "💃 Real examples in dancers",
+      danceUl: [
+        "<strong>Flamenco dancers:</strong> They have significantly denser foot bones (metatarsals) and ankles than the general population, adapted to zapateado.",
+        "<strong>Ballet dancers:</strong> The femoral neck (hip) adapts to withstand extreme rotations and demi-pointe work.",
+        "<strong>Breakdancers:</strong> They have much denser wrist and radius (forearm) bones due to inverted supports (freezes).",
+        "<strong>Unilaterality:</strong> If you always turn to the same side, that side of your spine and hip will have slightly denser bone. That is why it is important to dance on both sides!"
+      ],
+      activityH4: "🎭 Activity: \"Observe your own adaptations\"",
+      activityObj: "<strong>Objective:</strong> See Wolff's Law in your own body (on the skin, as a visible example)",
+      activitySteps: [
+        "<strong>Observe your hands:</strong> If you play guitar, write a lot or play sports, you will have \"calluses\" in specific areas. The skin has adapted exactly where it receives friction.",
+        "<strong>Relation to bone:</strong> Bone does the same, but on the inside. Where it receives load, it becomes denser (an \"internal callus\").",
+        "<strong>Reflection:</strong> If you stopped dancing for 6 months, what would happen? (The skin \"calluses\" would go away, and the bone trabeculae would begin to thin because they no longer receive that specific load)."
+      ],
+      tipH4: "✨ Fun fact",
+      tipP: "Wolff's Law also explains why <strong>professional tennis players</strong> have up to <strong>30% denser bone</strong> in their racket arm than in the other arm. Bone knows exactly which arm works more!"
+    },
+    slide3: {
+      reminderH4: "💡 Reminder",
+      reminderP: "We already know that bone needs load to strengthen. But... <strong>how much load?</strong> Is more always better? The answer is no. There is a \"perfect zone\".",
+      introH3: "🎯 The bone adaptation curve",
+      introP: "The relationship between load (training) and bone health is not a straight line. It is an inverted U-shaped curve. There is an optimal point: neither too little nor too much.",
+      conceptH3: "🐻 The 3 zones of loading",
+      howH4: "Which zone are you in?",
+      howUl: [
+        "<strong>Zone 1: Insufficient load (Low load)</strong><br>Bone receives no signals. Osteoclasts win over osteoblasts. Bone weakens. (Example: bed rest, sedentary lifestyle, or dancers with severe caloric restriction).",
+        "<strong>Zone 2: Optimal load (The Goldilocks zone)</strong><br>The stimulus is enough to activate the osteocytes, but not so much as to damage the bone. Osteoblasts build more than osteoclasts destroy. Bone strengthens!",
+        "<strong>Zone 3: Excessive load (Too much load)</strong><br>The impact is so great or so frequent that more microcracks are produced than the body can repair. Osteoclasts go crazy trying to clean up so much damage. Result: stress fractures."
+      ],
+      svgTitle: "The bone adaptation curve",
+      svgLabels: {
+        xAxis: "AMOUNT OF TRAINING (Load)",
+        yAxis: "BONE HEALTH",
+        zone1: "ZONE 1: Low load",
+        zone1sub: "Weak bone",
+        zone2: "ZONE 2: Optimal load",
+        zone2sub: "Strong bone!",
+        zone3: "ZONE 3: Excess",
+        zone3sub: "Fractures",
+        maxPoint: "Maximum point"
+      },
+      warningH4: "🚨 The danger of Zone 3 for dancers",
+      warningP: "<strong>Stress fractures</strong> (very common in dancers, especially in the metatarsals of the foot and the tibia) occur when you accidentally cross into Zone 3. This usually happens because of:",
+      warningUl: [
+        "Increasing training load too quickly (e.g. going from 3 to 6 hours of class at once).",
+        "Changing surface (always dancing on hard floor instead of wood/sprung floor).",
+        "Not resting enough between sessions (the formation phase of remodelling needs time)."
+      ],
+      danceH4: "💃 How to stay in Zone 2?",
+      danceUl: [
+        "<strong>Slow progression:</strong> Increase intensity or duration of training little by little (10% rule: do not increase more than 10% per week).",
+        "<strong>Variety:</strong> Alternate days of high impact (jumps) with days of lower impact (floor, stretching, arm technique).",
+        "<strong>Adequate floor:</strong> Dance whenever possible on floors with impact absorption (dance floors, floating wood). Avoid concrete or hard tiles.",
+        "<strong>Listen to the signals:</strong> Pain that appears when you start dancing and disappears during warm-up is a warning sign that you are close to Zone 3."
+      ],
+      activityH4: "🎭 Activity: \"Find your Zone 2\"",
+      activityObj: "<strong>Objective:</strong> Learn to dose the load",
+      activitySteps: [
+        "<strong>Analyse your week:</strong> Draw 7 days on paper. Mark with colours: <ul><li>Green: Optimal load day (you dance, but rest well).</li><li>Yellow: Low load day (active rest, stretching).</li><li>Red: High load day (many jumps, long rehearsal).</li></ul>",
+        "<strong>Golden rule:</strong> Never put two red days in a row. After a red day, there must be a yellow or green day so that the osteoblasts can do the formation phase.",
+        "<strong>Reflection:</strong> Is your current week in Zone 2, or are you spending too much time in Zone 1 (sedentary between classes) or Zone 3 (no rest days)?"
+      ],
+      tipH4: "✨ The \"100 jumps\" principle",
+      tipP: "Recent studies suggest that osteocytes \"get used\" to load. After about <strong>40-100 impacts</strong> (jumps) in a session, osteocytes stop sending \"build bone\" signals. Doing 500 jumps in a row does not build 5 times more bone than doing 100! That is why it is better to do short jump sessions spread through the week than one marathon day."
+    },
+    slide4: {
+      quizData: [
+        { q: "What is mechanotransduction?",
+          opts: ["The repair of a fracture","The translation of a mechanical force into a biological signal for bone","The process of calcium digestion","Muscle contraction"], correct: 1 },
+        { q: "What do osteocytes detect when you land from a jump?",
+          opts: ["A temperature increase","The movement of fluid inside the canaliculi","A change in bone colour","The arrival of new blood"], correct: 1 },
+        { q: "According to Wolff's Law, how do bone trabeculae adapt?",
+          opts: ["They become thicker in all directions equally","They align following the direction of the forces the bone receives","They disappear completely","They turn into compact bone"], correct: 1 },
+        { q: "What happens if a dancer does 500 jumps in a row without rest?",
+          opts: ["Their bones become 5 times stronger","Osteocytes 'get used' and stop sending signals after about 100 impacts","The bone turns into cartilage","Nothing happens, it is perfect"], correct: 1 },
+        { q: "What happens in 'Zone 3' of the bone loading curve?",
+          opts: ["Bone stays the same","Bone strengthens to the maximum","There is too much load, more microdamage is produced than can be repaired (stress fractures)","Bone becomes more flexible"], correct: 2 },
+        { q: "Why do astronauts lose bone density in space?",
+          opts: ["Because they eat worse","Because there is no gravity, their bones do not bend and osteocytes receive no signal to build bone","Because it is very cold","Because they sleep too much"], correct: 1 },
+        { q: "What is the best strategy to strengthen bones according to mechanotransduction?",
+          opts: ["Doing 1000 jumps on a single day of the week","Doing short impact sessions spread through the week with rest","Never jumping to avoid damaging bone","Only stretching"], correct: 1 },
+        { q: "If a dancer only dances on a very hard surface (like concrete), what risk increases?",
+          opts: ["None, bone always gets stronger","Entering 'Zone 3' of excessive load and suffering stress fractures","Bone turning into rubber","Muscles growing too much"], correct: 1 }
+      ],
+      finalActivityH4: "🎭 Final activity: \"Design a smart workout for your bones\"",
+      finalActivityObj: "<strong>Objective:</strong> Apply mechanotransduction and Wolff's Law to your routine",
+      finalActivitySteps: [
+        "<strong>Choose 3 exercises</strong> from your dance class that generate controlled impact (e.g. relevés, sautés, first-position jumps).",
+        "<strong>Apply the 100-impact rule:</strong> Instead of doing them 200 times in a row, propose doing 3 sets of 30-40 repetitions, resting between them.",
+        "<strong>Add variety:</strong> Include an exercise that loads the bone in a different direction (e.g. lateral jumps, not only forward).",
+        "<strong>Plan rest:</strong> Make sure that after this workout there are at least 24-48 hours before loading those same bones intensely again."
+      ],
+      finalSummaryH4: "Key summary of the 6 files",
+      finalSummaryUl: [
+        "<strong>File 1:</strong> The periosteum nourishes, repairs and feels pain.",
+        "<strong>File 2:</strong> The endosteum regulates calcium and cartilage needs movement to be nourished.",
+        "<strong>File 3:</strong> Compact bone (strong) and spongy bone (light with intelligent trabeculae).",
+        "<strong>File 4:</strong> The cellular team (osteoblasts, osteoclasts, osteocytes).",
+        "<strong>File 5:</strong> The remodelling cycle (the 4 phases and balance).",
+        "<strong>File 6:</strong> Mechanotransduction and Wolff's Law (bone sculpts itself according to dance)."
+      ],
+      finalSummaryP: "Now you understand the complete physiology of how dance builds your bones! 🦴💃"
+    }
+  }
+};
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+let currentLang = 'ca';
+
+function showSlide(i, btn) {
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.slide')[i].classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  const t = I18N[lang];
+  
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + lang).classList.add('active');
+  
+  document.getElementById('t-header-title').textContent = t.headerTitle;
+  document.getElementById('t-header-sub').textContent = t.headerSub;
+  document.getElementById('t-header-subtitle').textContent = t.headerSubtitle;
+  t.tabs.forEach((tab, i) => { document.getElementById('tab' + i).textContent = tab; });
+  
+  document.getElementById('t-s1-h2').textContent = t.s1h2;
+  document.getElementById('t-s2-h2').textContent = t.s2h2;
+  document.getElementById('t-s3-h2').textContent = t.s3h2;
+  document.getElementById('t-s4-h2').textContent = t.s4h2;
+  document.getElementById('t-s4-h3').textContent = t.s4h3;
+  document.getElementById('t-btn-check').textContent = t.btnCheck;
+  document.getElementById('t-btn-reset').textContent = t.btnReset;
+  
+  renderSlide1(t.slide1);
+  renderSlide2(t.slide2);
+  renderSlide3(t.slide3);
+  renderSlide4(t.slide4);
+}
+
+/* ---------- SLIDE 1 ---------- */
+function renderSlide1(d) {
+  document.getElementById('s1-content').innerHTML = `
+    <div class="reminder-box">
+      <h4>${d.reminderH4}</h4>
+      <p>${d.reminderP}</p>
+    </div>
+    
+    <div class="intro-box">
+      <h3>${d.introH3}</h3>
+      <p>${d.introP1}</p>
+      <p style="margin-top: 12px;">${d.introP2}</p>
+    </div>
+    
+    <div class="concept-card">
+      <h3><span class="emoji"></span> ${d.conceptH3}</h3>
+      <div class="how-it-works">
+        <h4>${d.howH4}</h4>
+        <ul>${d.howUl.map(x => `<li>${x}</li>`).join('')}</ul>
+      </div>
+    </div>
+    
+    <div class="diagram-container">
+      <h4>${d.svgTitle}</h4>
+      <svg viewBox="0 0 700 280">
+        <path d="M 50 100 Q 350 120 650 100" stroke="#bdc3c7" stroke-width="20" fill="none"/>
+        <text x="350" y="60" text-anchor="middle" font-size="12" fill="#7f8c8d" font-weight="bold">${d.svgLabels.bend}</text>
+        
+        <rect x="150" y="140" width="400" height="40" fill="#e3f2fd" stroke="#1976d2" stroke-width="2" rx="5"/>
+        <text x="350" y="165" text-anchor="middle" font-size="11" fill="#1565c0" font-weight="bold">${d.svgLabels.canal}</text>
+        
+        <line x1="200" y1="160" x2="280" y2="160" stroke="#3498db" stroke-width="3" marker-end="url(#arrowBlue)"/>
+        <line x1="420" y1="160" x2="500" y2="160" stroke="#3498db" stroke-width="3" marker-end="url(#arrowBlue)"/>
+        <text x="350" y="200" text-anchor="middle" font-size="11" fill="#3498db" font-weight="bold">${d.svgLabels.flow}</text>
+        
+        <g transform="translate(320, 210)">
+          <ellipse cx="30" cy="20" rx="25" ry="15" fill="#9b59b6" opacity="0.8"/>
+          <text x="30" y="25" text-anchor="middle" font-size="9" fill="white">${d.svgLabels.osteo}</text>
+          <line x1="10" y1="15" x2="0" y2="5" stroke="#9b59b6" stroke-width="2"/>
+          <line x1="20" y1="10" x2="15" y2="0" stroke="#9b59b6" stroke-width="2"/>
+          <line x1="40" y1="10" x2="45" y2="0" stroke="#9b59b6" stroke-width="2"/>
+          <line x1="50" y1="15" x2="60" y2="5" stroke="#9b59b6" stroke-width="2"/>
+        </g>
+        <text x="350" y="265" text-anchor="middle" font-size="11" fill="#8e44ad" font-weight="bold">${d.svgLabels.signal}</text>
+        
+        <defs>
+          <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+            <polygon points="0 0, 10 3, 0 6" fill="#3498db"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+    
+    <div class="dance-box">
+      <h4><span class="emoji">💃</span> ${d.danceH4}</h4>
+      <ul>${d.danceUl.map(x => `<li>${x}</li>`).join('')}</ul>
+    </div>
+    
+    <div class="practical-activity">
+      <h4><span class="emoji">🎭</span> ${d.activityH4}</h4>
+      <p>${d.activityObj}</p>
+      <ol class="activity-steps">${d.activitySteps.map(x => `<li>${x}</li>`).join('')}</ol>
+    </div>
+    
+    <div class="tip-box">
+      <h4>${d.tipH4}</h4>
+      <p>${d.tipP}</p>
+    </div>
+  `;
+}
+
+/* ---------- SLIDE 2 ---------- */
+function renderSlide2(d) {
+  document.getElementById('s2-content').innerHTML = `
+    <div class="reminder-box">
+      <h4>${d.reminderH4}</h4>
+      <p>${d.reminderP}</p>
+    </div>
+    
+    <div class="intro-box">
+      <h3>${d.introH3}</h3>
+      <p>${d.introP}</p>
+    </div>
+    
+    <div class="concept-card">
+      <h3><span class="emoji">🧭</span> ${d.conceptH3}</h3>
+      <div class="how-it-works">
+        <h4>${d.howH4}</h4>
+        <p>${d.howP}</p>
+        <ul>${d.howUl.map(x => `<li>${x}</li>`).join('')}</ul>
+      </div>
+    </div>
+    
+    <div class="diagram-container">
+      <h4>${d.svgTitle}</h4>
+      <svg viewBox="0 0 700 280">
+        <g transform="translate(50, 30)">
+          <rect x="0" y="0" width="250" height="220" fill="#f8f9fa" stroke="#dee2e6" stroke-width="2" rx="10"/>
+          <text x="125" y="25" text-anchor="middle" font-size="12" font-weight="bold" fill="#7f8c8d">${d.svgLabels.sedTitle}</text>
+          
+          <line x1="40" y1="50" x2="80" y2="90" stroke="#bdc3c7" stroke-width="2"/>
+          <line x1="80" y1="50" x2="120" y2="90" stroke="#bdc3c7" stroke-width="2"/>
+          <line x1="120" y1="50" x2="160" y2="90" stroke="#bdc3c7" stroke-width="2"/>
+          <line x1="160" y1="50" x2="200" y2="90" stroke="#bdc3c7" stroke-width="2"/>
+          <line x1="40" y1="90" x2="80" y2="130" stroke="#bdc3c7" stroke-width="2"/>
+          <line x1="80" y1="90" x2="120" y2="130" stroke="#bdc3c7" stroke-width="2"/>
+          <line x1="120" y1="90" x2="160" y2="130" stroke="#bdc3c7" stroke-width="2"/>
+          <line x1="160" y1="90" x2="200" y2="130" stroke="#bdc3c7" stroke-width="2"/>
+          <line x1="40" y1="130" x2="80" y2="170" stroke="#bdc3c7" stroke-width="2"/>
+          <line x1="80" y1="130" x2="120" y2="170" stroke="#bdc3c7" stroke-width="2"/>
+          <line x1="120" y1="130" x2="160" y2="170" stroke="#bdc3c7" stroke-width="2"/>
+          <line x1="160" y1="130" x2="200" y2="170" stroke="#bdc3c7" stroke-width="2"/>
+          
+          <text x="125" y="205" text-anchor="middle" font-size="10" fill="#7f8c8d">${d.svgLabels.sedSub1}</text>
+          <text x="125" y="220" text-anchor="middle" font-size="10" fill="#7f8c8d">${d.svgLabels.sedSub2}</text>
+        </g>
+        
+        <g transform="translate(400, 30)">
+          <rect x="0" y="0" width="250" height="220" fill="#e8f5e9" stroke="#27ae60" stroke-width="2" rx="10"/>
+          <text x="125" y="25" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e7d32">${d.svgLabels.danTitle}</text>
+          
+          <line x1="125" y1="35" x2="125" y2="50" stroke="#e74c3c" stroke-width="3" marker-end="url(#arrowRed)"/>
+          <text x="125" y="30" text-anchor="middle" font-size="9" fill="#e74c3c" font-weight="bold">${d.svgLabels.danLoad}</text>
+          
+          <line x1="60" y1="50" x2="60" y2="170" stroke="#27ae60" stroke-width="5"/>
+          <line x1="100" y1="50" x2="100" y2="170" stroke="#27ae60" stroke-width="5"/>
+          <line x1="140" y1="50" x2="140" y2="170" stroke="#27ae60" stroke-width="5"/>
+          <line x1="180" y1="50" x2="180" y2="170" stroke="#27ae60" stroke-width="5"/>
+          
+          <line x1="60" y1="90" x2="180" y2="90" stroke="#27ae60" stroke-width="3"/>
+          <line x1="60" y1="130" x2="180" y2="130" stroke="#27ae60" stroke-width="3"/>
+          
+          <text x="125" y="205" text-anchor="middle" font-size="10" fill="#2e7d32" font-weight="bold">${d.svgLabels.danSub1}</text>
+          <text x="125" y="220" text-anchor="middle" font-size="10" fill="#2e7d32" font-weight="bold">${d.svgLabels.danSub2}</text>
+        </g>
+        
+        <defs>
+          <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+            <polygon points="0 0, 10 3, 0 6" fill="#e74c3c"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+    
+    <div class="dance-box">
+      <h4><span class="emoji">💃</span> ${d.danceH4}</h4>
+      <ul>${d.danceUl.map(x => `<li>${x}</li>`).join('')}</ul>
+    </div>
+    
+    <div class="practical-activity">
+      <h4><span class="emoji">🎭</span> ${d.activityH4}</h4>
+      <p>${d.activityObj}</p>
+      <ol class="activity-steps">${d.activitySteps.map(x => `<li>${x}</li>`).join('')}</ol>
+    </div>
+    
+    <div class="tip-box">
+      <h4>${d.tipH4}</h4>
+      <p>${d.tipP}</p>
+    </div>
+  `;
+}
+
+/* ---------- SLIDE 3 ---------- */
+function renderSlide3(d) {
+  document.getElementById('s3-content').innerHTML = `
+    <div class="reminder-box">
+      <h4>${d.reminderH4}</h4>
+      <p>${d.reminderP}</p>
+    </div>
+    
+    <div class="intro-box">
+      <h3>${d.introH3}</h3>
+      <p>${d.introP}</p>
+    </div>
+    
+    <div class="concept-card">
+      <h3><span class="emoji">🐻</span> ${d.conceptH3}</h3>
+      <div class="how-it-works">
+        <h4>${d.howH4}</h4>
+        <ul>${d.howUl.map(x => `<li>${x}</li>`).join('')}</ul>
+      </div>
+    </div>
+    
+    <div class="diagram-container">
+      <h4>${d.svgTitle}</h4>
+      <svg viewBox="0 0 700 300">
+        <line x1="50" y1="250" x2="650" y2="250" stroke="#333" stroke-width="2"/>
+        <line x1="50" y1="250" x2="50" y2="50" stroke="#333" stroke-width="2"/>
+        
+        <text x="350" y="280" text-anchor="middle" font-size="12" fill="#333" font-weight="bold">${d.svgLabels.xAxis}</text>
+        <text x="20" y="150" text-anchor="middle" font-size="12" fill="#333" font-weight="bold" transform="rotate(-90 20 150)">${d.svgLabels.yAxis}</text>
+        
+        <path d="M 50 220 Q 200 230 350 100 Q 500 20 650 240" stroke="#2a5298" stroke-width="4" fill="none"/>
+        
+        <rect x="50" y="50" width="150" height="200" fill="#ffebee" opacity="0.3"/>
+        <text x="125" y="240" text-anchor="middle" font-size="10" fill="#c0392b" font-weight="bold">${d.svgLabels.zone1}</text>
+        <text x="125" y="255" text-anchor="middle" font-size="9" fill="#c0392b">${d.svgLabels.zone1sub}</text>
+        
+        <rect x="250" y="50" width="200" height="200" fill="#e8f5e9" opacity="0.5"/>
+        <text x="350" y="240" text-anchor="middle" font-size="10" fill="#27ae60" font-weight="bold">${d.svgLabels.zone2}</text>
+        <text x="350" y="255" text-anchor="middle" font-size="9" fill="#27ae60">${d.svgLabels.zone2sub}</text>
+        
+        <rect x="500" y="50" width="150" height="200" fill="#ffebee" opacity="0.3"/>
+        <text x="575" y="240" text-anchor="middle" font-size="10" fill="#c0392b" font-weight="bold">${d.svgLabels.zone3}</text>
+        <text x="575" y="255" text-anchor="middle" font-size="9" fill="#c0392b">${d.svgLabels.zone3sub}</text>
+        
+        <circle cx="350" cy="100" r="8" fill="#27ae60"/>
+        <text x="350" y="85" text-anchor="middle" font-size="10" fill="#27ae60" font-weight="bold">${d.svgLabels.maxPoint}</text>
+      </svg>
+    </div>
+    
+    <div class="warning-box">
+      <h4>${d.warningH4}</h4>
+      <p>${d.warningP}</p>
+      <ul style="margin-left: 25px; margin-top: 10px; line-height: 1.8;">
+        ${d.warningUl.map(x => `<li>${x}</li>`).join('')}
+      </ul>
+    </div>
+    
+    <div class="dance-box">
+      <h4><span class="emoji">💃</span> ${d.danceH4}</h4>
+      <ul>${d.danceUl.map(x => `<li>${x}</li>`).join('')}</ul>
+    </div>
+    
+    <div class="practical-activity">
+      <h4><span class="emoji">🎭</span> ${d.activityH4}</h4>
+      <p>${d.activityObj}</p>
+      <ol class="activity-steps">${d.activitySteps.map(x => `<li>${x}</li>`).join('')}</ol>
+    </div>
+    
+    <div class="tip-box">
+      <h4>${d.tipH4}</h4>
+      <p>${d.tipP}</p>
+    </div>
+  `;
+}
+
+/* ---------- SLIDE 4 (QUIZ) ---------- */
+function renderSlide4(d) {
+  renderQuiz(d.quizData);
+  document.getElementById('finalActivity').innerHTML = `
+    <div class="practical-activity">
+      <h4><span class="emoji"></span> ${d.finalActivityH4}</h4>
+      <p>${d.finalActivityObj}</p>
+      <ol class="activity-steps">${d.finalActivitySteps.map(x => `<li>${x}</li>`).join('')}</ol>
+    </div>
+    
+    <div class="tip-box" style="margin-top: 20px;">
+      <h4>${d.finalSummaryH4}</h4>
+      <ul style="margin-left: 25px; line-height: 1.8;">
+        ${d.finalSummaryUl.map(x => `<li>${x}</li>`).join('')}
+      </ul>
+      <p style="margin-top: 15px; text-align: center; font-size: 1.1em; color: #2a5298; font-weight: 600;">${d.finalSummaryP}</p>
+    </div>
+  `;
+}
+
+function renderQuiz(quizData) {
+  const cont = document.getElementById('quizContainer');
+  cont.innerHTML = '';
+  quizData.forEach((item, qi) => {
+    let html = `<div class="question-box"><p>${qi+1}. ${item.q}</p><div class="options">`;
+    item.opts.forEach((opt, oi) => {
+      html += `<label><input type="radio" name="q${qi}" value="${oi}"> ${opt}</label>`;
+    });
+    html += `</div></div>`;
+    cont.innerHTML += html;
+  });
+}
+
+function checkQuiz() {
+  const t = I18N[currentLang];
+  let score = 0;
+  t.slide4.quizData.forEach((item, qi) => {
+    const sel = document.querySelector(`input[name="q${qi}"]:checked`);
+    const labels = document.querySelectorAll(`input[name="q${qi}"]`);
+    labels.forEach(l => l.parentElement.classList.remove('correct','incorrect'));
+    if (sel) {
+      const val = parseInt(sel.value);
+      if (val === item.correct) {
+        sel.parentElement.classList.add('correct');
+        score++;
+      } else {
+        sel.parentElement.classList.add('incorrect');
+        labels[item.correct].parentElement.classList.add('correct');
+      }
+    } else {
+      labels[item.correct].parentElement.classList.add('correct');
+    }
+  });
+  const fb = document.getElementById('fbQuiz');
+  fb.classList.add('show');
+  const total = t.slide4.quizData.length;
+  if (score === total) {
+    fb.className = 'feedback show success';
+    fb.innerHTML = t.fbExcellent(score, total);
+  } else if (score >= 6) {
+    fb.className = 'feedback show';
+    fb.style.background = '#fff3cd';
+    fb.style.color = '#856404';
+    fb.style.border = '2px solid #ffc107';
+    fb.innerHTML = t.fbGood(score, total);
+  } else {
+    fb.className = 'feedback show error';
+    fb.innerHTML = t.fbBad(score, total);
+  }
+}
+
+function resetQuiz() {
+  document.querySelectorAll('#quizContainer input').forEach(i => { i.checked = false; i.parentElement.classList.remove('correct','incorrect'); });
+  document.getElementById('fbQuiz').classList.remove('show');
+}
+
+/* Inicialització */
+setLang('ca');
+</script>
+</body>
+</html>

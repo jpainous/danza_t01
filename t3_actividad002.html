@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relación Longitud-Tensión</title>
+<style>
+  body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; }
+  h1 { text-align: center; color: #a78bfa; }
+  .wrap { max-width: 1000px; margin: auto; display: flex; gap: 20px; flex-wrap: wrap; position: relative; }
+  .box { background: #1e293b; padding: 20px; border-radius: 12px; flex: 1; min-width: 300px; }
+  canvas { background: #0b1220; border-radius: 8px; cursor: crosshair; display: block; max-width: 100%; }
+  .lectura { margin-top: 15px; padding: 12px; background: #0f172a; border-radius: 6px; border-left: 4px solid #a78bfa; }
+  .box h3 { color: #c4b5fd; }
+  
+  .language-selector {
+    position: absolute;
+    top: -50px;
+    right: 0;
+    display: flex;
+    gap: 8px;
+  }
+  .language-selector button {
+    background: rgba(167,139,250,0.15);
+    border: 1px solid rgba(167,139,250,0.4);
+    color: #a78bfa;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  .language-selector button:hover {
+    background: rgba(167,139,250,0.3);
+  }
+  .language-selector button.active {
+    background: #a78bfa;
+    color: #0f172a;
+  }
+  
+  @media (max-width: 600px) {
+    .language-selector { position: static; margin-bottom: 15px; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<h1 data-i18n="title">📈 Relación Longitud-Tensión del Sarcómero</h1>
+<div class="wrap">
+  <div class="language-selector">
+    <button class="active" onclick="setLanguage('es', this)">ES</button>
+    <button onclick="setLanguage('ca', this)">CA</button>
+    <button onclick="setLanguage('en', this)">EN</button>
+  </div>
+  <div class="box">
+    <h3 data-i18n="box1_title">Arrastra el punto por la curva</h3>
+    <canvas id="graf" width="450" height="350"></canvas>
+    <div class="lectura" id="lectura"></div>
+  </div>
+  <div class="box">
+    <h3 data-i18n="box2_title">Solapamiento de miofilamentos</h3>
+    <canvas id="sarc" width="450" height="200"></canvas>
+    <div class="lectura" id="expl"></div>
+  </div>
+</div>
+
+<script>
+let currentLang = 'es';
+
+const translations = {
+  es: {
+    title: "📈 Relación Longitud-Tensión del Sarcómero",
+    box1_title: "Arrastra el punto por la curva",
+    box2_title: "Solapamiento de miofilamentos",
+    initial_lectura: "Longitud: — | Tensión: —",
+    initial_expl: "Mueve el punto para ver el estado del sarcómero.",
+    axis_tension: "Tensión activa",
+    axis_length: "Longitud del sarcómero →",
+    lectura_label: "Longitud",
+    tension_label: "Tensión activa",
+    state_short: "🔴 <b>MUY ACORTADO:</b> los filamentos finos se solapan entre sí y chocan con las líneas Z. Fuerza baja.",
+    state_optimal: "🟢 <b>LONGITUD ÓPTIMA:</b> solapamiento ideal actina-miosina. ¡Fuerza máxima!",
+    state_stretched: "🔵 <b>MUY ESTIRADO:</b> apenas hay solapamiento entre actina y miosina. Fuerza baja o nula."
+  },
+  ca: {
+    title: "📈 Relació Longitud-Tensió del Sarcòmer",
+    box1_title: "Arrossega el punt per la corba",
+    box2_title: "Solapament de miofilaments",
+    initial_lectura: "Longitud: — | Tensió: —",
+    initial_expl: "Mou el punt per veure l'estat del sarcòmer.",
+    axis_tension: "Tensió activa",
+    axis_length: "Longitud del sarcòmer →",
+    lectura_label: "Longitud",
+    tension_label: "Tensió activa",
+    state_short: "🔴 <b>MOLT ACURTAT:</b> els filaments prims se superposen entre si i xoquen amb les línies Z. Força baixa.",
+    state_optimal: "🟢 <b>LONGITUD ÒPTIMA:</b> solapament ideal actina-miosina. ¡Força màxima!",
+    state_stretched: "🔵 <b>MOLT ESTIRAT:</b> amb prou feines hi ha solapament entre actina i miosina. Força baixa o nul·la."
+  },
+  en: {
+    title: "📈 Sarcomere Length-Tension Relationship",
+    box1_title: "Drag the point along the curve",
+    box2_title: "Myofilament overlap",
+    initial_lectura: "Length: — | Tension: —",
+    initial_expl: "Move the point to see the sarcomere state.",
+    axis_tension: "Active tension",
+    axis_length: "Sarcomere length →",
+    lectura_label: "Length",
+    tension_label: "Active tension",
+    state_short: "🔴 <b>TOO SHORT:</b> thin filaments overlap each other and collide with Z-lines. Low force.",
+    state_optimal: "🟢 <b>OPTIMAL LENGTH:</b> ideal actin-myosin overlap. Maximum force!",
+    state_stretched: "🔵 <b>TOO STRETCHED:</b> barely any overlap between actin and myosin. Low or no force."
+  }
+};
+
+const graf = document.getElementById('graf');
+const gctx = graf.getContext('2d');
+const sarc = document.getElementById('sarc');
+const sctx = sarc.getContext('2d');
+
+// Curva teórica (x: 0-1 longitud relativa, y: 0-1 tensión)
+function tension(x) {
+  const peak = 0.5;
+  const sigma = 0.18;
+  return Math.exp(-Math.pow(x-peak,2)/(2*sigma*sigma));
+}
+
+let puntoX = 0.5;
+
+function setLanguage(lang, btn) {
+  currentLang = lang;
+  document.querySelectorAll('.language-selector button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key]) {
+      el.innerHTML = translations[lang][key];
+    }
+  });
+  
+  document.documentElement.lang = lang;
+  drawGraf();
+  drawSarc();
+}
+
+function drawGraf() {
+  const t = translations[currentLang];
+  gctx.clearRect(0,0,graf.width,graf.height);
+  const W = graf.width, H = graf.height;
+  const pad = 40;
+
+  // Ejes
+  gctx.strokeStyle = "#64748b"; gctx.lineWidth = 2;
+  gctx.beginPath();
+  gctx.moveTo(pad, pad); gctx.lineTo(pad, H-pad); gctx.lineTo(W-pad, H-pad);
+  gctx.stroke();
+
+  // Etiquetas
+  gctx.fillStyle = "#cbd5e1"; gctx.font = "13px sans-serif";
+  gctx.fillText(t.axis_tension, 10, 25);
+  gctx.fillText(t.axis_length, W-180, H-15);
+
+  // Curva
+  gctx.strokeStyle = "#a78bfa"; gctx.lineWidth = 3;
+  gctx.beginPath();
+  for (let i = 0; i <= 100; i++) {
+    const x = i/100;
+    const y = tension(x);
+    const px = pad + x*(W-2*pad);
+    const py = H - pad - y*(H-2*pad);
+    if (i===0) gctx.moveTo(px,py); else gctx.lineTo(px,py);
+  }
+  gctx.stroke();
+
+  // Punto
+  const px = pad + puntoX*(W-2*pad);
+  const py = H - pad - tension(puntoX)*(H-2*pad);
+  gctx.fillStyle = "#fbbf24";
+  gctx.beginPath(); gctx.arc(px,py,8,0,Math.PI*2); gctx.fill();
+
+  // Líneas guía
+  gctx.strokeStyle = "rgba(251,191,36,0.3)"; gctx.setLineDash([4,4]);
+  gctx.beginPath(); gctx.moveTo(px,py); gctx.lineTo(px,H-pad); gctx.stroke();
+  gctx.beginPath(); gctx.moveTo(px,py); gctx.lineTo(pad,py); gctx.stroke();
+  gctx.setLineDash([]);
+}
+
+function drawSarc() {
+  const t = translations[currentLang];
+  sctx.clearRect(0,0,sarc.width,sarc.height);
+  const W = sarc.width, H = sarc.height;
+  const y = H/2;
+
+  // Líneas Z
+  const lz1 = 30 + puntoX*50;
+  const lz2 = W - 30 - puntoX*50;
+  sctx.strokeStyle = "#22d3ee"; sctx.lineWidth = 3;
+  sctx.beginPath(); sctx.moveTo(lz1, 30); sctx.lineTo(lz1, H-30); sctx.stroke();
+  sctx.beginPath(); sctx.moveTo(lz2, 30); sctx.lineTo(lz2, H-30); sctx.stroke();
+
+  // Miosina (centro fijo)
+  sctx.fillStyle = "#64748b";
+  for (let x = 150; x < 300; x += 25) sctx.fillRect(x, y-30, 10, 60);
+
+  // Actina (desde las Z)
+  sctx.fillStyle = "#f472b6";
+  for (let x = lz1+5; x < lz1+120; x += 15) sctx.fillRect(x, y-20, 8, 40);
+  for (let x = lz2-120; x < lz2-5; x += 15) sctx.fillRect(x, y-20, 8, 40);
+
+  // Explicación
+  const tensionVal = tension(puntoX);
+  let msg = "";
+  if (puntoX < 0.3) msg = t.state_short;
+  else if (puntoX < 0.65) msg = t.state_optimal;
+  else msg = t.state_stretched;
+  
+  document.getElementById('expl').innerHTML = msg;
+  document.getElementById('lectura').innerHTML = 
+    `${t.lectura_label}: <b>${(puntoX*100).toFixed(0)}%</b> | ${t.tension_label}: <b>${(tensionVal*100).toFixed(0)}%</b>`;
+}
+
+graf.addEventListener('mousedown', e => {
+  const mover = ev => {
+    const rect = graf.getBoundingClientRect();
+    const x = ev.clientX - rect.left;
+    const W = graf.width, pad = 40;
+    puntoX = Math.max(0, Math.min(1, (x-pad)/(W-2*pad)));
+    drawGraf(); drawSarc();
+  };
+  mover(e);
+  document.addEventListener('mousemove', mover);
+  document.addEventListener('mouseup', () => document.removeEventListener('mousemove', mover), {once:true});
+});
+
+// Touch support for mobile
+graf.addEventListener('touchstart', e => {
+  e.preventDefault();
+  const mover = ev => {
+    const touch = ev.touches[0];
+    const rect = graf.getBoundingClientRect();
+    const x = touch.clientX - rect.left;
+    const W = graf.width, pad = 40;
+    puntoX = Math.max(0, Math.min(1, (x-pad)/(W-2*pad)));
+    drawGraf(); drawSarc();
+  };
+  mover(e);
+  const onMove = ev => { ev.preventDefault(); mover(ev); };
+  const onEnd = () => {
+    document.removeEventListener('touchmove', onMove);
+    document.removeEventListener('touchend', onEnd);
+  };
+  document.addEventListener('touchmove', onMove, {passive: false});
+  document.addEventListener('touchend', onEnd, {once: true});
+}, {passive: false});
+
+// Initialize with Spanish
+setLanguage('es', document.querySelector('.language-selector button'));
+</script>
+</body>
+</html>

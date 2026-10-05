@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teixit Ossi i Recobriments (4) - Cèl·lules de l'Os</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+    position: relative;
+  }
+  header {
+    background: linear-gradient(90deg, #1e3c72, #2a5298);
+    color: white;
+    padding: 35px;
+    text-align: center;
+    position: relative;
+  }
+  header h1 { font-size: 2.1em; margin-bottom: 10px; }
+  header p { opacity: 0.95; font-size: 1.1em; }
+  header .subtitle { font-size: 0.95em; opacity: 0.85; margin-top: 8px; font-style: italic; }
+  
+  .lang-selector {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+  }
+  .lang-btn {
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.4);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85em;
+    transition: all 0.3s;
+  }
+  .lang-btn:hover { background: rgba(255,255,255,0.3); }
+  .lang-btn.active {
+    background: #fff;
+    color: #1e3c72;
+    border-color: #fff;
+  }
+  
+  .nav-tabs {
+    display: flex;
+    background: #f8f9fa;
+    flex-wrap: wrap;
+    border-bottom: 3px solid #dee2e6;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-tabs button {
+    flex: 1;
+    min-width: 140px;
+    padding: 14px 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #666;
+    transition: all 0.3s;
+    border-bottom: 4px solid transparent;
+  }
+  .nav-tabs button:hover { background: #e9ecef; color: #2a5298; }
+  .nav-tabs button.active {
+    color: #2a5298;
+    border-bottom-color: #2a5298;
+    background: white;
+  }
+  
+  .slide { display: none; padding: 30px; min-height: 600px; }
+  .slide.active { display: block; animation: fadeIn 0.5s; }
+  @keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+  
+  .slide h2 {
+    color: #1e3c72;
+    margin-bottom: 20px;
+    font-size: 1.7em;
+    border-bottom: 3px solid #2a5298;
+    padding-bottom: 10px;
+  }
+  
+  .reminder-box {
+    background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+    border-left: 5px solid #fbc02d;
+    padding: 18px;
+    margin: 20px 0;
+    border-radius: 10px;
+  }
+  
+  .reminder-box h4 { color: #f57f17; margin-bottom: 10px; font-size: 1.1em; }
+  
+  .intro-box {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-left: 5px solid #1976d2;
+    padding: 22px;
+    margin: 20px 0;
+    border-radius: 10px;
+    line-height: 1.7;
+  }
+  
+  .intro-box h3 { color: #1565c0; margin-bottom: 12px; font-size: 1.25em; }
+  
+  .concept-card {
+    background: white;
+    border: 3px solid #2a5298;
+    border-radius: 15px;
+    padding: 25px;
+    margin: 20px 0;
+    box-shadow: 0 5px 20px rgba(42,82,152,0.15);
+  }
+  
+  .concept-card h3 {
+    color: #2a5298;
+    font-size: 1.35em;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .how-it-works {
+    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border-left: 5px solid #f57c00;
+  }
+  
+  .how-it-works h4 { color: #e65100; margin-bottom: 12px; font-size: 1.15em; }
+  .how-it-works ul { margin-left: 25px; line-height: 1.8; }
+  
+  .dance-box {
+    background: linear-gradient(135deg, #fff5e6 0%, #ffe8cc 100%);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border: 2px dashed #f39c12;
+  }
+  
+  .dance-box h4 { color: #e67e22; margin-bottom: 12px; font-size: 1.15em; }
+  .dance-box ul { margin-left: 25px; line-height: 1.8; }
+  
+  .practical-activity {
+    background: linear-gradient(135deg, #e8f8f5 0%, #d5f5e3 100%);
+    padding: 22px;
+    border-radius: 15px;
+    margin: 20px 0;
+    border: 2px solid #1abc9c;
+  }
+  
+  .practical-activity h4 { color: #16a085; font-size: 1.2em; margin-bottom: 12px; }
+  .activity-steps { margin-left: 25px; line-height: 1.9; }
+  .activity-steps li { margin-bottom: 8px; }
+  .activity-steps strong { color: #16a085; }
+  
+  .diagram-container {
+    background: white;
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  
+  .diagram-container svg { max-width: 100%; height: auto; }
+  .diagram-container h4 { color: #2a5298; margin-bottom: 15px; font-size: 1.1em; }
+  
+  .tip-box {
+    background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+    padding: 16px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border-left: 5px solid #9b59b6;
+  }
+  
+  .tip-box h4 { color: #8e44ad; margin-bottom: 8px; font-size: 1.05em; }
+  
+  .cell-card {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+  }
+  
+  .cell-item {
+    background: white;
+    border: 2px solid #dee2e6;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  
+  .cell-item:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
+  .cell-item .emoji-big { font-size: 3em; margin-bottom: 10px; }
+  .cell-item h4 { font-size: 1.2em; margin-bottom: 8px; }
+  
+  .cell-item.osteoblast { border-color: #27ae60; background: #e8f8f5; }
+  .cell-item.osteoblast h4 { color: #27ae60; }
+  .cell-item.osteoclast { border-color: #e74c3c; background: #fdedec; }
+  .cell-item.osteoclast h4 { color: #e74c3c; }
+  .cell-item.osteocyte { border-color: #3498db; background: #ebf5fb; }
+  .cell-item.osteocyte h4 { color: #3498db; }
+  .cell-item.progenitor { border-color: #f39c12; background: #fef9e7; }
+  .cell-item.progenitor h4 { color: #f39c12; }
+  
+  .highlight {
+    background: linear-gradient(120deg, #ffeaa7 0%, #ffeaa7 100%);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  
+  .emoji { font-size: 1.2em; margin-right: 6px; }
+  
+  .btn {
+    background: linear-gradient(90deg, #2a5298, #1e3c72);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 10px 5px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(42,82,152,0.3);
+  }
+  
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(42,82,152,0.4); }
+  
+  .quiz-container {
+    background: white;
+    border: 2px solid #e4e8ec;
+    border-radius: 15px;
+    padding: 25px;
+    margin: 20px 0;
+  }
+  
+  .quiz-container h3 { color: #2a5298; margin-bottom: 18px; font-size: 1.25em; }
+  
+  .question-box {
+    background: #f8f9fa;
+    border-left: 5px solid #2a5298;
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+  }
+  
+  .question-box p { font-weight: 600; margin-bottom: 12px; font-size: 1em; color: #2c3e50; }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  
+  .options label {
+    background: white;
+    border: 2px solid #dee2e6;
+    padding: 12px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    font-size: 0.93em;
+  }
+  
+  .options label:hover { border-color: #2a5298; background: #e3f2fd; }
+  .options input { margin-right: 12px; }
+  .options label.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+  .options label.incorrect { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+  
+  .feedback {
+    margin-top: 18px;
+    padding: 18px;
+    border-radius: 10px;
+    display: none;
+    font-weight: 600;
+    line-height: 1.6;
+  }
+  
+  .feedback.show { display: block; animation: fadeIn 0.3s; }
+  .feedback.success { background: #d4edda; color: #155724; border: 2px solid #28a745; }
+  .feedback.error { background: #f8d7da; color: #721c24; border: 2px solid #dc3545; }
+  
+  @media (max-width: 768px) {
+    header h1 { font-size: 1.6em; }
+    .slide { padding: 20px; }
+    .concept-card { padding: 18px; }
+    .cell-card { grid-template-columns: 1fr; }
+    .lang-selector { position: static; justify-content: center; margin-top: 15px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="lang-selector">
+      <button class="lang-btn active" onclick="setLang('ca')" id="btn-ca">CAT</button>
+      <button class="lang-btn" onclick="setLang('es')" id="btn-es">ESP</button>
+      <button class="lang-btn" onclick="setLang('en')" id="btn-en">ENG</button>
+    </div>
+    <h1 id="t-header-title">🦴 Teixit Ossi i Recobriments</h1>
+    <p id="t-header-sub">Part 4: Les Cèl·lules de l'Os</p>
+    <div class="subtitle" id="t-header-subtitle">L'equip d'"obrers" que construeix, destrueix i vigila el teu esquelet</div>
+  </header>
+
+  <div class="nav-tabs">
+    <button class="active" onclick="showSlide(0, this)" id="tab0">👷 Les 4 cèl·lules</button>
+    <button onclick="showSlide(1, this)" id="tab1">🏗️ Constructors i destructors</button>
+    <button onclick="showSlide(2, this)" id="tab2">👁️ Els sensors</button>
+    <button onclick="showSlide(3, this)" id="tab3">🎯 Quiz</button>
+  </div>
+
+  <div class="slide active">
+    <h2 id="t-s1-h2">👷 Les 4 cèl·lules de l'os</h2>
+    <div id="s1-content"></div>
+  </div>
+
+  <div class="slide">
+    <h2 id="t-s2-h2">🏗️ Constructors i destructors en acció</h2>
+    <div id="s2-content"></div>
+  </div>
+
+  <div class="slide">
+    <h2 id="t-s3-h2">👁️ Els osteòcits: els sensors de l'os</h2>
+    <div id="s3-content"></div>
+  </div>
+
+  <div class="slide">
+    <h2 id="t-s4-h2">🎯 Quiz: Comprova el que has après</h2>
+    <div class="quiz-container">
+      <h3 id="t-s4-h3">Preguntes sobre les cèl·lules de l'os</h3>
+      <div id="quizContainer"></div>
+      <button class="btn" onclick="checkQuiz()" id="t-btn-check">Comprovar respostes</button>
+      <button class="btn" style="background: #6c757d;" onclick="resetQuiz()" id="t-btn-reset">Reiniciar</button>
+      <div class="feedback" id="fbQuiz"></div>
+    </div>
+    <div id="finalActivity"></div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   TRADUCCIONS
+   ============================================================ */
+const I18N = {
+  ca: {
+    headerTitle: "🦴 Teixit Ossi i Recobriments",
+    headerSub: "Part 4: Les Cèl·lules de l'Os",
+    headerSubtitle: "L'equip d'\"obrers\" que construeix, destrueix i vigila el teu esquelet",
+    tabs: ["👷 Les 4 cèl·lules","🏗️ Constructors i destructors","👁️ Els sensors","🎯 Quiz"],
+    s1h2: "👷 Les 4 cèl·lules de l'os",
+    s2h2: "🏗️ Constructors i destructors en acció",
+    s3h2: "👁️ Els osteòcits: els sensors de l'os",
+    s4h2: "🎯 Quiz: Comprova el que has après",
+    s4h3: "Preguntes sobre les cèl·lules de l'os",
+    btnCheck: "Comprovar respostes",
+    btnReset: "Reiniciar",
+    fbExcellent: (s,t) => `🏆 Excel·lent! ${s}/${t}. Entens molt bé les cèl·lules de l'os i com treballen en equip.`,
+    fbGood: (s,t) => `👍 Bé: ${s}/${t}. Repassa els conceptes fallats.`,
+    fbBad: (s,t) => `📚 ${s}/${t}. Torna a llegir els apartats i reintenta-ho.`,
+    
+    slide1: {
+      reminderH4: "💡 Recordatori",
+      reminderP: "Als arxius anteriors vam veure que l'os és un teixit viu que s'adapta, es repara i es remodela. Però... <strong>qui fa tota aquesta feina?</strong> La resposta són les cèl·lules de l'os. Són com un equip d'obrers especialitzats.",
+      introH3: "Un equip de 4 especialistes",
+      introP: "L'os té <strong>4 tipus de cèl·lules</strong>, cadascuna amb una funció diferent. Treballen en equip per mantenir els teus ossos forts i sans:",
+      cells: [
+        { cls: "osteoblast", emoji: "🧱", title: "Osteoblasts", subtitle: "Els constructors", desc: "Fabriquen os nou" },
+        { cls: "osteoclast", emoji: "🔨", title: "Osteoclasts", subtitle: "Els destructors", desc: "Retiren os vell o danyat" },
+        { cls: "osteocyte", emoji: "👁️", title: "Osteòcits", subtitle: "Els sensors", desc: "Vigilen i dirigeixen l'obra" },
+        { cls: "progenitor", emoji: "🌱", title: "Cèl·lules osteoprogenitores", subtitle: "Les \"en pràctiques\"", desc: "Poden convertir-se en osteoblasts" }
+      ],
+      teamH3: "🤝 Com treballen en equip?",
+      teamH4: "Imagina una obra de construcció",
+      teamUl: [
+        "<strong>Els osteòcits (sensors):</strong> Són com els \"arquitectes\" que vigilen l'obra. Detecten on fa falta os nou o on cal treure el vell.",
+        "<strong>Els osteoclasts (destructors):</strong> Són l'\"equip de demolició\". Retiren l'os danyat o vell per fer espai.",
+        "<strong>Els osteoblasts (constructors):</strong> Són els \"paletes\". Construeixen os nou a l'espai que van deixar els osteoclasts.",
+        "<strong>Les cèl·lules osteoprogenitores:</strong> Són com els \"aprenents\". Quan calen més paletes, es converteixen en osteoblasts."
+      ],
+      svgTitle: "🔄 El cicle de treball de l'equip",
+      svgLabels: {
+        osteocyte: "OSTEÒCIT", detect: "1. Detecta",
+        osteoclast: "OSTEOCLAST", destroy: "2. Destrueix",
+        osteoblast: "OSTEOBLAST", build: "3. Construeix",
+        progenitor: "OSTEOPROGENITORA", reserve: "Reserva",
+        cycle: "El cicle continua",
+        convert: "Es converteix en osteoblast"
+      },
+      danceH4: "💃 Per què és important per a un ballarí?",
+      danceUl: [
+        "<strong>Quan balles:</strong> Els osteòcits detecten les forces del moviment i \"demanen\" més os. Els osteoblasts construeixen os nou i els teus ossos es fan més forts.",
+        "<strong>Quan descanses:</strong> Els osteoblasts segueixen treballant (construeixen os). Per això el descans és tan important: és quan es \"consolida\" l'os nou.",
+        "<strong>Quan et lesiones:</strong> Les cèl·lules osteoprogenitores s'activen i es converteixen en osteoblasts per reparar la fractura.",
+        "<strong>Si no menges bé:</strong> Els osteoclasts poden \"guanyar\" als osteoblasts → perds més os del que construeixes → ossos febles."
+      ],
+      activityH4: "🎭 Activitat: \"Joc de rols\"",
+      activityObj: "<strong>Objectiu:</strong> Entendre el treball en equip de les cèl·lules",
+      activitySteps: [
+        "<strong>En grup de 4:</strong> Cadascú representa una cèl·lula: <ul><li>Persona 1: Osteòcit (sensor) → observa i dona ordres</li><li>Persona 2: Osteoclast (destructor) → \"retira\" el vell</li><li>Persona 3: Osteoblast (constructor) → \"construeix\" el nou</li><li>Persona 4: Cèl·lula osteoprogenitora → espera per ajudar</li></ul>",
+        "<strong>Escenari:</strong> Imagineu que hi ha una petita fractura a l'os. <ul><li>L'osteòcit la detecta i avisa</li><li>L'osteoclast \"neteja\" la zona danyada</li><li>L'osteoblast construeix os nou</li><li>Si cal més ajuda, la cèl·lula osteoprogenitora es converteix en osteoblast</li></ul>",
+        "<strong>Reflexió:</strong> Què passaria si falta una de les cèl·lules? (Per exemple, si no hi ha osteoblasts, la fractura no es repara)."
+      ],
+      tipH4: "✨ Dada curiosa",
+      tipP: "En un adult sa, l'equilibri entre osteoblasts i osteoclasts és perfecte: es construeix tant os com es destrueix. Però amb l'edat, o si no menges bé, els osteoclasts poden \"guanyar\" → perds os. Per això és important cuidar els ossos des de jove."
+    },
+    slide2: {
+      reminderH4: "💡 Recordatori",
+      reminderP: "Acabem de veure les 4 cèl·lules de l'os. Ara aprofundirem en les dues més importants: els <strong>osteoblasts</strong> (constructors) i els <strong>osteoclasts</strong> (destructors). Són com el \"yin i el yang\" de l'os.",
+      introH3: "⚖️ L'equilibri perfecte",
+      introP: "Perquè els teus ossos estiguin sans, cal un <span class=\"highlight\">equilibri</span> entre construcció i destrucció:",
+      introUl: [
+        "<strong>Si construeixen més del que destrueixen:</strong> Els ossos es fan més densos i forts (això passa quan entrenes bé).",
+        "<strong>Si destrueixen més del que construeixen:</strong> Els ossos es tornen febles i fràgils (osteoporosi).",
+        "<strong>Si hi ha equilibri:</strong> Els ossos es mantenen sans (això és l'ideal)."
+      ],
+      blastsH3: "🧱 Els osteoblasts: els paletes",
+      blastsH4: "🔨 Com construeixen os?",
+      blastsUl: [
+        "<strong>Pas 1:</strong> Fabriquen <strong>col·lagen</strong> (una proteïna resistent, com els \"maons\" de l'os).",
+        "<strong>Pas 2:</strong> Afegeixen <strong>minerals</strong> (calci i fòsfor) al col·lagen (com el \"ciment\" que endureseix els maons).",
+        "<strong>Pas 3:</strong> L'os nou s'endureix i s'integra amb l'os vell.",
+        "<strong>Dada curiosa:</strong> Alguns osteoblasts queden \"atrapats\" a l'os que han construït i es converteixen en <strong>osteòcits</strong> (sensors). Els constructors es converteixen en vigilants!"
+      ],
+      clastsH3: "🔨 Els osteoclasts: l'equip de demolició",
+      clastsH4: "💥 Com destrueixen os?",
+      clastsUl: [
+        "<strong>Pas 1:</strong> S'\"enganxen\" a la superfície de l'os vell o danyat.",
+        "<strong>Pas 2:</strong> Creen un <strong>ambient àcid</strong> (com vinagre) que dissol els minerals de l'os.",
+        "<strong>Pas 3:</strong> Alliberen <strong>enzims</strong> (com \"tisores químiques\") que tallen el col·lagen.",
+        "<strong>Pas 4:</strong> L'os vell es \"desfà\" i els minerals (com el calci) tornen a la sang.",
+        "<strong>Dada curiosa:</strong> Els osteoclasts són cèl·lules GEGANTS (poden tenir fins a 20 nuclis). Són com \"tancs\" de la demolició."
+      ],
+      svgTitle: "⚖️ L'equilibri constructor/destructor",
+      svgLabels: {
+        osteoblasts: "🧱 Osteoblasts", build: "CONSTRUEIXEN",
+        osteoclasts: "🔨 Osteoclasts", destroy: "DESTRUEIXEN",
+        moreBuild: "Més construcció", moreBuildSub: "Ossos més forts", moreBuildTag: "✅ Ballarí entrenat",
+        balance: "Equilibri", balanceSub: "Ossos sans", balanceTag: "⚖️ Adult sa",
+        moreDestroy: "Més destrucció", moreDestroySub: "Ossos febles", moreDestroyTag: "❌ Osteoporosi"
+      },
+      danceH4: "💃 Aplicació en la dansa",
+      danceUl: [
+        "<strong>Entrenament correcte:</strong> Quan balles amb càrrega adequada (salts, relevés), els osteoblasts treballen més que els osteoclasts → els teus ossos es reforcen.",
+        "<strong>Entrenament excessiu:</strong> Si entrenes massa sense descansar, els osteoclasts poden \"guanyar\" perquè no hi ha temps perquè els osteoblasts construeixin → risc de fractures per estrès.",
+        "<strong>Dieta adequada:</strong> Els osteoblasts necessiten calci, vitamina D i proteïnes per construir os. Si no menges bé, no poden treballar bé.",
+        "<strong>Descans:</strong> Els osteoblasts treballen especialment bé durant el son (quan s'allibera l'hormona del creixement). Dormir bé és entrenar els ossos!"
+      ],
+      activityH4: "🎭 Activitat: \"Simula l'equilibri\"",
+      activityObj: "<strong>Objectiu:</strong> Entendre l'equilibri entre construcció i destrucció",
+      activitySteps: [
+        "<strong>Material:</strong> Plastilina de dos colors (verd per \"construir\", vermell per \"destruir\").",
+        "<strong>Escenari 1 (equilibri):</strong> Fes una boleta verda i una de vermella de la mateixa mida. Representen que construeixes i destrueixes la mateixa quantitat. Els teus ossos es mantenen igual.",
+        "<strong>Escenari 2 (més construcció):</strong> Fes una boleta verda gran i una de vermella petita. Representen que construeixes més del que destrueixes. Els teus ossos es reforcen (com quan entrenes bé).",
+        "<strong>Escenari 3 (més destrucció):</strong> Fes una boleta verda petita i una de vermella gran. Representen que destrueixes més del que construeixes. Els teus ossos s'afebleixen (com a l'osteoporosi o si no menges bé).",
+        "<strong>Reflexió:</strong> Quin escenari representa un ballarí que entrena bé, menja bé i descansa? I un que entrena massa i menja malament?"
+      ],
+      tipH4: "✨ Dada curiosa",
+      tipP: "Els osteoclasts, en destruir os, <strong>alliberen calci a la sang</strong>. Això és important perquè si no menges prou calci, el cos \"tira\" dels ossos per mantenir el calci de la sang (necessari perquè els músculs funcionin). Per això, si no menges calci, els teus ossos s'afebleixen encara que entrenis bé."
+    },
+    slide3: {
+      reminderH4: "💡 Recordatori",
+      reminderP: "Hem vist els osteoblasts (constructors) i osteoclasts (destructors). Però hi ha una cèl·lula que és igual d'important: l'<strong>osteòcit</strong>. És el \"director d'obra\" que decideix quan i on cal construir o destruir.",
+      introH3: "👁️ Què són els osteòcits?",
+      introP1: "Els <span class=\"highlight\">osteòcits</span> són osteoblasts que van quedar \"atrapats\" a l'os que ells mateixos van construir. En lloc de morir, es van adaptar i es van convertir en <strong>sensors</strong> que vigilen l'os des de dins.",
+      introP2: "Són les cèl·lules més nombroses de l'os adult i estan connectades entre si formant una <strong>xarxa de comunicació</strong>.",
+      conceptH3: "📡 Com funcionen els osteòcits?",
+      howH4: "🎯 Les 3 feines de l'osteòcit",
+      howUl: [
+        "<strong>1. Detecten forces mecàniques:</strong> Quan balles i els teus ossos reben impacte, els osteòcits \"senten\" la pressió. Són com petits \"acceleròmetres\" (com els del mòbil que detecten quan el mous).",
+        "<strong>2. Envien senyals químics:</strong> Quan detecten força, alliberen substàncies químiques que \"avisen\" els osteoblasts: \"Ei, aquí cal més os!\"",
+        "<strong>3. Regulen l'equilibri:</strong> Si detecten que hi ha massa os vell o danyat, avisen els osteoclasts perquè el retirin."
+      ],
+      svgTitle: "📡 L'osteòcit: sensor i director",
+      svgLabels: {
+        osteocyte: "OSTEÒCIT", other: "Osteòcit",
+        force: "FORÇA", signals: "Senyals", signals2: "químiques",
+        footer: "Xarxa d'osteòcits comunicats entre si"
+      },
+      importanceH3: "🎯 Per què són tan importants?",
+      importanceH4: "🧠 Els osteòcits són el \"cervell\" de l'os",
+      importanceUl: [
+        "<strong>Sense osteòcits:</strong> Els osteoblasts i osteoclasts no sabrien quan ni on treballar. Seria com una obra sense arquitecte.",
+        "<strong>Amb osteòcits:</strong> L'os s'adapta exactament a les forces que rep. Si balles molt, es reforça on més ho necessites.",
+        "<strong>Dada curiosa:</strong> Els osteòcits poden viure dècades dins de l'os. Són les cèl·lules més longeves del cos!"
+      ],
+      warningH4: "⚠️ Què passa si els osteòcits moren?",
+      warningP: "Si els osteòcits moren (per exemple, per falta de sang o per excés de càrrega sense descans):",
+      warningUl: [
+        "L'os perd el seu \"sistema de vigilància\"",
+        "Els osteoclasts poden destruir os sense control",
+        "Apareixen zones febles que es poden fracturar"
+      ],
+      warningP2: "Per això el <strong>descans</strong> és clau: dona temps als osteòcits a recuperar-se i seguir vigilant.",
+      danceH4: "💃 Els osteòcits en la dansa",
+      danceUl: [
+        "<strong>Quan fas un relevé:</strong> Els osteòcits dels ossos del peu detecten la pressió i envien senyals per reforçar aquella zona.",
+        "<strong>Quan saltes:</strong> Els osteòcits de les cames detecten l'impacte i \"demanen\" més os per a la propera vegada.",
+        "<strong>Quan descanses:</strong> Els osteòcits segueixen treballant, \"llegint\" els senyals i preparant la següent fase de construcció.",
+        "<strong>Si entrenes massa:</strong> Els osteòcits es \"esgoten\" i poden morir. Perds el sistema de vigilància i augmentes el risc de lesió."
+      ],
+      activityH4: "🎭 Activitat: \"Simula un osteòcit\"",
+      activityObj: "<strong>Objectiu:</strong> Entendre com els osteòcits detecten forces",
+      activitySteps: [
+        "<strong>Material:</strong> Una esponja de cuina i un got amb aigua.",
+        "<strong>Simula l'os:</strong> L'esponja representa l'os amb osteòcits a dins.",
+        "<strong>Simula la força:</strong> Prem l'esponja sota l'aigua. Veuràs que l'aigua es mou dins de l'esponja.",
+        "<strong>Relació amb l'osteòcit:</strong> Els osteòcits viuen en petits forats de l'os envoltats de líquid. Quan l'os rep una força, el líquid es mou i els osteòcits ho detecten (com tu detectes l'aigua moure's a l'esponja).",
+        "<strong>Reflexió:</strong> Si prems l'esponja molt fort o moltes vegades, què li passa? (Es deforma o es trenca). Així els passa als osteòcits si entrenes massa sense descans."
+      ],
+      tipH4: "✨ Dada curiosa",
+      tipP: "Els osteòcits tenen \"braços\" llargs (anomenats <strong>dendrites</strong>) que els connecten amb altres osteòcits. Formen una xarxa similar a les <strong>neurones del cervell</strong>. Per això alguns científics anomenen l'os \"el segon cervell\" del cos! Pot \"sentir\" i \"respondre\" a les forces sense que tu te n'adonis."
+    },
+    slide4: {
+      quizData: [
+        { q: "Quina és la funció dels osteoblasts?",
+          opts: ["Destruir os vell","Construir os nou","Detectar forces mecàniques","Convertir-se en osteòcits"], correct: 1 },
+        { q: "Com destrueixen l'os els osteoclasts?",
+          opts: ["El trenquen amb força mecànica","Creen un ambient àcid que dissol l'os","Se'l mengen com si fos menjar","El congelen fins que es trenca"], correct: 1 },
+        { q: "Què són els osteòcits?",
+          opts: ["Cèl·lules que construeixen os","Cèl·lules que destrueixen os","Osteoblasts que van quedar atrapats i es van convertir en sensors","Cèl·lules mare que es poden convertir en qualsevol cosa"], correct: 2 },
+        { q: "Què fan les cèl·lules osteoprogenitores?",
+          opts: ["Destrueixen os danyat","Detecten forces mecàniques","Es poden convertir en osteoblasts quan cal","Produeixen calci per a la sang"], correct: 2 },
+        { q: "Per què els osteòcits són importants per a un ballarí?",
+          opts: ["Perquè construeixen os directament","Perquè detecten les forces del ball i dirigeixen la construcció d'os nou","Perquè destrueixen l'os danyat","Perquè no són importants"], correct: 1 },
+        { q: "Què passa si hi ha més osteoclasts que osteoblasts?",
+          opts: ["Els ossos es fan més forts","Els ossos es mantenen igual","Els ossos s'afebleixen (pèrdua de densitat òssia)","Els ossos creixen més"], correct: 2 },
+        { q: "Per què el descans és important per a les cèl·lules de l'os?",
+          opts: ["Perquè les cèl·lules dormen","Perquè els osteoblasts treballen millor durant el descans i el son","Perquè els osteoclasts descansen","No és important"], correct: 1 },
+        { q: "Com es comuniquen els osteòcits entre si?",
+          opts: ["Pel sistema nerviós","Per la sang","Per petits \"túnels\" (canalicles) que els connecten","No es comuniquen"], correct: 2 }
+      ],
+      finalActivityH4: "🎭 Activitat final: \"L'equip complet\"",
+      finalActivityObj: "<strong>Objectiu:</strong> Integrar el que has après sobre les cèl·lules de l'os",
+      finalActivitySteps: [
+        "<strong>Crea un còmic</strong> (4 vinyetes) que expliqui la història d'una fractura reparada: <ul><li>Vinyeta 1: L'osteòcit detecta la fractura</li><li>Vinyeta 2: L'osteoclast neteja la zona</li><li>Vinyeta 3: L'osteoblast construeix os nou</li><li>Vinyeta 4: La cèl·lula osteoprogenitora ajuda si cal</li></ul>",
+        "<strong>Explica</strong> amb les teves paraules: Per què és important el descans perquè les cèl·lules de l'os treballin bé?",
+        "<strong>Reflexiona:</strong> Si fossis un osteòcit, què li \"diries\" a un ballarí que entrena massa sense descansar?",
+        "<strong>Prepara't</strong> per al següent arxiu: parlarem de la remodelació òssia (com tot aquest equip treballa en cicles al llarg de la vida)."
+      ],
+      finalSummaryH4: "🎓 Resum clau",
+      finalSummaryUl: [
+        "<strong>Osteoblasts:</strong> Construeixen os nou (necessiten calci, vitamina D i descans)",
+        "<strong>Osteoclasts:</strong> Destrueixen os vell (alliberen calci a la sang)",
+        "<strong>Osteòcits:</strong> Sensors que detecten forces i dirigeixen la feina",
+        "<strong>Cèl·lules osteoprogenitores:</strong> Reserva que es converteix en osteoblasts quan cal",
+        "<strong>Equilibri:</strong> La clau és que construcció = destrucció (o una mica més de construcció si entrenes bé)"
+      ]
+    }
+  },
+  es: {
+    headerTitle: "🦴 Tejido Óseo y Recubrimientos",
+    headerSub: "Parte 4: Las Células del Hueso",
+    headerSubtitle: "El equipo de \"obreros\" que construye, destruye y vigila tu esqueleto",
+    tabs: ["👷 Las 4 células","🏗️ Constructores y destructores","👁️ Los sensores","🎯 Quiz"],
+    s1h2: "👷 Las 4 células del hueso",
+    s2h2: "🏗️ Constructores y destructores en acción",
+    s3h2: "👁️ Los osteocitos: los sensores del hueso",
+    s4h2: "🎯 Quiz: Comprueba lo aprendido",
+    s4h3: "Preguntas sobre las células del hueso",
+    btnCheck: "Comprobar respuestas",
+    btnReset: "Reiniciar",
+    fbExcellent: (s,t) => `🏆 ¡Excelente! ${s}/${t}. Entiendes muy bien las células del hueso y cómo trabajan en equipo.`,
+    fbGood: (s,t) => `👍 Bien: ${s}/${t}. Repasa los conceptos fallados.`,
+    fbBad: (s,t) => `📚 ${s}/${t}. Vuelve a leer los apartados y reinténtalo.`,
+    
+    slide1: {
+      reminderH4: "💡 Recordatorio",
+      reminderP: "En los archivos anteriores vimos que el hueso es un tejido vivo que se adapta, se repara y se remodela. Pero... <strong>¿quién hace todo ese trabajo?</strong> La respuesta son las células del hueso. Son como un equipo de obreros especializados.",
+      introH3: "Un equipo de 4 especialistas",
+      introP: "El hueso tiene <strong>4 tipos de células</strong>, cada una con una función diferente. Trabajan en equipo para mantener tus huesos fuertes y sanos:",
+      cells: [
+        { cls: "osteoblast", emoji: "🧱", title: "Osteoblastos", subtitle: "Los constructores", desc: "Fabrican hueso nuevo" },
+        { cls: "osteoclast", emoji: "🔨", title: "Osteoclastos", subtitle: "Los destructores", desc: "Retiran hueso viejo o dañado" },
+        { cls: "osteocyte", emoji: "👁️", title: "Osteocitos", subtitle: "Los sensores", desc: "Vigilan y dirigen la obra" },
+        { cls: "progenitor", emoji: "🌱", title: "Células osteoprogenitoras", subtitle: "Las \"en prácticas\"", desc: "Pueden convertirse en osteoblastos" }
+      ],
+      teamH3: "🤝 ¿Cómo trabajan en equipo?",
+      teamH4: "Imagina una obra de construcción",
+      teamUl: [
+        "<strong>Los osteocitos (sensores):</strong> Son como los \"arquitectos\" que vigilan la obra. Detectan dónde hace falta hueso nuevo o dónde hay que quitar el viejo.",
+        "<strong>Los osteoclastos (destructores):</strong> Son el \"equipo de demolición\". Retiran el hueso dañado o viejo para hacer espacio.",
+        "<strong>Los osteoblastos (constructores):</strong> Son los \"albañiles\". Construyen hueso nuevo en el espacio que dejaron los osteoclastos.",
+        "<strong>Las células osteoprogenitoras:</strong> Son como los \"aprendices\". Cuando hacen falta más albañiles, se convierten en osteoblastos."
+      ],
+      svgTitle: "🔄 El ciclo de trabajo del equipo",
+      svgLabels: {
+        osteocyte: "OSTEOCITO", detect: "1. Detecta",
+        osteoclast: "OSTEOCLASTO", destroy: "2. Destruye",
+        osteoblast: "OSTEOBLASTO", build: "3. Construye",
+        progenitor: "OSTEOPROGENITORA", reserve: "Reserva",
+        cycle: "El ciclo continúa",
+        convert: "Se convierte en osteoblasto"
+      },
+      danceH4: "💃 ¿Por qué es importante para un bailarín?",
+      danceUl: [
+        "<strong>Cuando bailas:</strong> Los osteocitos detectan las fuerzas del movimiento y \"piden\" más hueso. Los osteoblastos construyen hueso nuevo y tus huesos se hacen más fuertes.",
+        "<strong>Cuando descansas:</strong> Los osteoblastos siguen trabajando (construyen hueso). Por eso el descanso es tan importante: es cuando se \"consolida\" el hueso nuevo.",
+        "<strong>Cuando te lesionas:</strong> Las células osteoprogenitoras se activan y se convierten en osteoblastos para reparar la fractura.",
+        "<strong>Si no comes bien:</strong> Los osteoclastos pueden \"ganar\" a los osteoblastos → pierdes más hueso del que construyes → huesos débiles."
+      ],
+      activityH4: "🎭 Actividad: \"Juego de roles\"",
+      activityObj: "<strong>Objetivo:</strong> Entender el trabajo en equipo de las células",
+      activitySteps: [
+        "<strong>En grupo de 4:</strong> Cada uno representa una célula: <ul><li>Persona 1: Osteocito (sensor) → observa y da órdenes</li><li>Persona 2: Osteoclasto (destructor) → \"retira\" lo viejo</li><li>Persona 3: Osteoblasto (constructor) → \"construye\" lo nuevo</li><li>Persona 4: Célula osteoprogenitora → espera para ayudar</li></ul>",
+        "<strong>Escenario:</strong> Imaginad que hay una pequeña fractura en el hueso. <ul><li>El osteocito la detecta y avisa</li><li>El osteoclasto \"limpia\" la zona dañada</li><li>El osteoblasto construye hueso nuevo</li><li>Si hace falta más ayuda, la célula osteoprogenitora se convierte en osteoblasto</li></ul>",
+        "<strong>Reflexión:</strong> ¿Qué pasaría si falta una de las células? (Por ejemplo, si no hay osteoblastos, la fractura no se repara)."
+      ],
+      tipH4: "✨ Dato curioso",
+      tipP: "En un adulto sano, el equilibrio entre osteoblastos y osteoclastos es perfecto: se construye tanto hueso como se destruye. Pero con la edad, o si no comes bien, los osteoclastos pueden \"ganar\" → pierdes hueso. Por eso es importante cuidar los huesos desde joven."
+    },
+    slide2: {
+      reminderH4: "💡 Recordatorio",
+      reminderP: "Acabamos de ver las 4 células del hueso. Ahora vamos a profundizar en las dos más importantes: los <strong>osteoblastos</strong> (constructores) y los <strong>osteoclastos</strong> (destructores). Son como el \"yin y el yang\" del hueso.",
+      introH3: "⚖️ El equilibrio perfecto",
+      introP: "Para que tus huesos estén sanos, necesita haber un <span class=\"highlight\">equilibrio</span> entre construcción y destrucción:",
+      introUl: [
+        "<strong>Si construyen más de lo que destruyen:</strong> Los huesos se hacen más densos y fuertes (esto pasa cuando entrenas bien).",
+        "<strong>Si destruyen más de lo que construyen:</strong> Los huesos se vuelven débiles y frágiles (osteoporosis).",
+        "<strong>Si hay equilibrio:</strong> Los huesos se mantienen sanos (esto es lo ideal)."
+      ],
+      blastsH3: "🧱 Los osteoblastos: los albañiles",
+      blastsH4: "🔨 ¿Cómo construyen hueso?",
+      blastsUl: [
+        "<strong>Paso 1:</strong> Fabrican <strong>colágeno</strong> (una proteína resistente, como los \"ladrillos\" del hueso).",
+        "<strong>Paso 2:</strong> Añaden <strong>minerales</strong> (calcio y fósforo) al colágeno (como el \"cemento\" que endurece los ladrillos).",
+        "<strong>Paso 3:</strong> El hueso nuevo se endurece y se integra con el hueso viejo.",
+        "<strong>Dato curioso:</strong> Algunos osteoblastos quedan \"atrapados\" en el hueso que han construido y se convierten en <strong>osteocitos</strong> (sensores). ¡Los constructores se convierten en vigilantes!"
+      ],
+      clastsH3: "🔨 Los osteoclastos: el equipo de demolición",
+      clastsH4: "💥 ¿Cómo destruyen hueso?",
+      clastsUl: [
+        "<strong>Paso 1:</strong> Se \"pegan\" a la superficie del hueso viejo o dañado.",
+        "<strong>Paso 2:</strong> Crean un <strong>ambiente ácido</strong> (como vinagre) que disuelve los minerales del hueso.",
+        "<strong>Paso 3:</strong> Liberan <strong>enzimas</strong> (como \"tijeras químicas\") que cortan el colágeno.",
+        "<strong>Paso 4:</strong> El hueso viejo se \"derrite\" y los minerales (como el calcio) vuelven a la sangre.",
+        "<strong>Dato curioso:</strong> Los osteoclastos son células GIGANTES (pueden tener hasta 20 núcleos). Son como \"tanques\" de la demolición."
+      ],
+      svgTitle: "⚖️ El equilibrio constructor/destructor",
+      svgLabels: {
+        osteoblasts: "🧱 Osteoblastos", build: "CONSTRUYEN",
+        osteoclasts: "🔨 Osteoclastos", destroy: "DESTRUYEN",
+        moreBuild: "Más construcción", moreBuildSub: "Huesos más fuertes", moreBuildTag: "✅ Bailarín entrenado",
+        balance: "Equilibrio", balanceSub: "Huesos sanos", balanceTag: "⚖️ Adulto sano",
+        moreDestroy: "Más destrucción", moreDestroySub: "Huesos débiles", moreDestroyTag: "❌ Osteoporosis"
+      },
+      danceH4: "💃 Aplicación en la danza",
+      danceUl: [
+        "<strong>Entrenamiento correcto:</strong> Cuando bailas con carga adecuada (saltos, relevés), los osteoblastos trabajan más que los osteoclastos → tus huesos se fortalecen.",
+        "<strong>Entrenamiento excesivo:</strong> Si entrenas demasiado sin descansar, los osteoclastos pueden \"ganar\" porque no hay tiempo para que los osteoblastos construyan → riesgo de fracturas por estrés.",
+        "<strong>Dieta adecuada:</strong> Los osteoblastos necesitan calcio, vitamina D y proteínas para construir hueso. Si no comes bien, no pueden trabajar bien.",
+        "<strong>Descanso:</strong> Los osteoblastos trabajan especialmente bien durante el sueño (cuando se libera la hormona del crecimiento). ¡Dormir bien es entrenar los huesos!"
+      ],
+      activityH4: "🎭 Actividad: \"Simula el equilibrio\"",
+      activityObj: "<strong>Objetivo:</strong> Entender el equilibrio entre construcción y destrucción",
+      activitySteps: [
+        "<strong>Material:</strong> Plastilina de dos colores (verde para \"construir\", rojo para \"destruir\").",
+        "<strong>Escenario 1 (equilibrio):</strong> Haz una bolita verde y una roja del mismo tamaño. Representan que construyes y destruyes la misma cantidad. Tus huesos se mantienen igual.",
+        "<strong>Escenario 2 (más construcción):</strong> Haz una bolita verde grande y una roja pequeña. Representan que construyes más de lo que destruyes. Tus huesos se fortalecen (como cuando entrenas bien).",
+        "<strong>Escenario 3 (más destrucción):</strong> Haz una bolita verde pequeña y una roja grande. Representan que destruyes más de lo que construyes. Tus huesos se debilitan (como en la osteoporosis o si no comes bien).",
+        "<strong>Reflexión:</strong> ¿Qué escenario representa a un bailarín que entrena bien, come bien y descansa? ¿Y a uno que entrena demasiado y come mal?"
+      ],
+      tipH4: "✨ Dato curioso",
+      tipP: "Los osteoclastos, al destruir hueso, <strong>liberan calcio a la sangre</strong>. Esto es importante porque si no comes suficiente calcio, el cuerpo \"tira\" de los huesos para mantener el calcio de la sangre (necesario para que los músculos funcionen). Por eso, si no comes calcio, tus huesos se debilitan aunque entrenes bien."
+    },
+    slide3: {
+      reminderH4: "💡 Recordatorio",
+      reminderP: "Hemos visto a los osteoblastos (constructores) y osteoclastos (destructores). Pero hay una célula que es igual de importante: el <strong>osteocito</strong>. Es el \"director de obra\" que decide cuándo y dónde hay que construir o destruir.",
+      introH3: "👁️ ¿Qué son los osteocitos?",
+      introP1: "Los <span class=\"highlight\">osteocitos</span> son osteoblastos que quedaron \"atrapados\" en el hueso que ellos mismos construyeron. En lugar de morir, se adaptaron y se convirtieron en <strong>sensores</strong> que vigilan el hueso desde dentro.",
+      introP2: "Son las células más numerosas del hueso adulto y están conectadas entre sí formando una <strong>red de comunicación</strong>.",
+      conceptH3: "📡 ¿Cómo funcionan los osteocitos?",
+      howH4: "🎯 Los 3 trabajos del osteocito",
+      howUl: [
+        "<strong>1. Detectan fuerzas mecánicas:</strong> Cuando bailas y tus huesos reciben impacto, los osteocitos \"sienten\" la presión. Son como pequeños \"acelerómetros\" (como los del móvil que detectan cuando lo mueves).",
+        "<strong>2. Envían señales químicas:</strong> Cuando detectan fuerza, liberan sustancias químicas que \"avisan\" a los osteoblastos: \"¡Ey, aquí hace falta más hueso!\"",
+        "<strong>3. Regulan el equilibrio:</strong> Si detectan que hay demasiado hueso viejo o dañado, avisan a los osteoclastos para que lo retiren."
+      ],
+      svgTitle: "📡 El osteocito: sensor y director",
+      svgLabels: {
+        osteocyte: "OSTEOCITO", other: "Osteocito",
+        force: "FUERZA", signals: "Señales", signals2: "químicas",
+        footer: "Red de osteocitos comunicados entre sí"
+      },
+      importanceH3: "🎯 ¿Por qué son tan importantes?",
+      importanceH4: "🧠 Los osteocitos son el \"cerebro\" del hueso",
+      importanceUl: [
+        "<strong>Sin osteocitos:</strong> Los osteoblastos y osteoclastos no sabrían cuándo ni dónde trabajar. Sería como una obra sin arquitecto.",
+        "<strong>Con osteocitos:</strong> El hueso se adapta exactamente a las fuerzas que recibe. Si bailas mucho, se fortalece donde más lo necesitas.",
+        "<strong>Dato curioso:</strong> Los osteocitos pueden vivir décadas dentro del hueso. ¡Son las células más longevas del cuerpo!"
+      ],
+      warningH4: "⚠️ ¿Qué pasa si los osteocitos mueren?",
+      warningP: "Si los osteocitos mueren (por ejemplo, por falta de sangre o por exceso de carga sin descanso):",
+      warningUl: [
+        "El hueso pierde su \"sistema de vigilancia\"",
+        "Los osteoclastos pueden destruir hueso sin control",
+        "Aparecen zonas débiles que pueden fracturarse"
+      ],
+      warningP2: "Por eso el <strong>descanso</strong> es clave: da tiempo a los osteocitos a recuperarse y seguir vigilando.",
+      danceH4: "💃 Los osteocitos en la danza",
+      danceUl: [
+        "<strong>Cuando haces un relevé:</strong> Los osteocitos de los huesos del pie detectan la presión y envían señales para fortalecer esa zona.",
+        "<strong>Cuando saltas:</strong> Los osteocitos de las piernas detectan el impacto y \"piden\" más hueso para la próxima vez.",
+        "<strong>Cuando descansas:</strong> Los osteocitos siguen trabajando, \"leyendo\" las señales y preparando la siguiente fase de construcción.",
+        "<strong>Si entrenas demasiado:</strong> Los osteocitos se \"agotan\" y pueden morir. Pierdes el sistema de vigilancia y aumentas el riesgo de lesión."
+      ],
+      activityH4: "🎭 Actividad: \"Simula un osteocito\"",
+      activityObj: "<strong>Objetivo:</strong> Entender cómo los osteocitos detectan fuerzas",
+      activitySteps: [
+        "<strong>Material:</strong> Una esponja de cocina y un vaso con agua.",
+        "<strong>Simula el hueso:</strong> La esponja representa el hueso con osteocitos dentro.",
+        "<strong>Simula la fuerza:</strong> Aprieta la esponja bajo el agua. Verás que el agua se mueve dentro de la esponja.",
+        "<strong>Relación con el osteocito:</strong> Los osteocitos viven en pequeños huecos del hueso rodeados de líquido. Cuando el hueso recibe una fuerza, el líquido se mueve y los osteocitos lo detectan (como tú detectas el agua moverse en la esponja).",
+        "<strong>Reflexión:</strong> Si aprietas la esponja muy fuerte o muchas veces, ¿qué le pasa? (Se deforma o se rompe). Así les pasa a los osteocitos si entrenas demasiado sin descanso."
+      ],
+      tipH4: "✨ Dato curioso",
+      tipP: "Los osteocitos tienen \"brazos\" largos (llamados <strong>dendritas</strong>) que los conectan con otros osteocitos. Forman una red similar a las <strong>neuronas del cerebro</strong>. ¡Por eso algunos científicos llaman al hueso \"el segundo cerebro\" del cuerpo! Puede \"sentir\" y \"responder\" a las fuerzas sin que tú te des cuenta."
+    },
+    slide4: {
+      quizData: [
+        { q: "¿Cuál es la función de los osteoblastos?",
+          opts: ["Destruir hueso viejo","Construir hueso nuevo","Detectar fuerzas mecánicas","Convertirse en osteocitos"], correct: 1 },
+        { q: "¿Cómo destruyen el hueso los osteoclastos?",
+          opts: ["Lo rompen con fuerza mecánica","Crean un ambiente ácido que disuelve el hueso","Lo comen como si fuera comida","Lo congelan hasta que se rompe"], correct: 1 },
+        { q: "¿Qué son los osteocitos?",
+          opts: ["Células que construyen hueso","Células que destruyen hueso","Osteoblastos que quedaron atrapados y se convirtieron en sensores","Células madre que pueden convertirse en cualquier cosa"], correct: 2 },
+        { q: "¿Qué hacen las células osteoprogenitoras?",
+          opts: ["Destruyen hueso dañado","Detectan fuerzas mecánicas","Pueden convertirse en osteoblastos cuando hace falta","Producen calcio para la sangre"], correct: 2 },
+        { q: "¿Por qué los osteocitos son importantes para un bailarín?",
+          opts: ["Porque construyen hueso directamente","Porque detectan las fuerzas del baile y dirigen la construcción de hueso nuevo","Porque destruyen el hueso dañado","Porque no son importantes"], correct: 1 },
+        { q: "¿Qué pasa si hay más osteoclastos que osteoblastos?",
+          opts: ["Los huesos se hacen más fuertes","Los huesos se mantienen igual","Los huesos se debilitan (pérdida de densidad ósea)","Los huesos crecen más"], correct: 2 },
+        { q: "¿Por qué el descanso es importante para las células del hueso?",
+          opts: ["Porque las células duermen","Porque los osteoblastos trabajan mejor durante el descanso y el sueño","Porque los osteoclastos descansan","No es importante"], correct: 1 },
+        { q: "¿Cómo se comunican los osteocitos entre sí?",
+          opts: ["Por el sistema nervioso","Por la sangre","Por pequeños 'túneles' (canalículos) que los conectan","No se comunican"], correct: 2 }
+      ],
+      finalActivityH4: "🎭 Actividad final: \"El equipo completo\"",
+      finalActivityObj: "<strong>Objetivo:</strong> Integrar lo aprendido sobre las células del hueso",
+      finalActivitySteps: [
+        "<strong>Crea un cómic</strong> (4 viñetas) que cuente la historia de una fractura reparada: <ul><li>Viñeta 1: El osteocito detecta la fractura</li><li>Viñeta 2: El osteoclasto limpia la zona</li><li>Viñeta 3: El osteoblasto construye hueso nuevo</li><li>Viñeta 4: La célula osteoprogenitora ayuda si hace falta</li></ul>",
+        "<strong>Explica</strong> con tus palabras: ¿Por qué es importante el descanso para que las células del hueso trabajen bien?",
+        "<strong>Reflexiona:</strong> Si fueras un osteocito, ¿qué le \"dirías\" a un bailarín que entrena demasiado sin descansar?",
+        "<strong>Prepárate</strong> para el siguiente archivo: hablaremos de la remodelación ósea (cómo todo este equipo trabaja en ciclos a lo largo de la vida)."
+      ],
+      finalSummaryH4: "🎓 Resumen clave",
+      finalSummaryUl: [
+        "<strong>Osteoblastos:</strong> Construyen hueso nuevo (necesitan calcio, vitamina D y descanso)",
+        "<strong>Osteoclastos:</strong> Destruyen hueso viejo (liberan calcio a la sangre)",
+        "<strong>Osteocitos:</strong> Sensores que detectan fuerzas y dirigen el trabajo",
+        "<strong>Células osteoprogenitoras:</strong> Reserva que se convierte en osteoblastos cuando hace falta",
+        "<strong>Equilibrio:</strong> La clave es que construcción = destrucción (o un poco más de construcción si entrenas bien)"
+      ]
+    }
+  },
+  en: {
+    headerTitle: "🦴 Bone Tissue and Coverings",
+    headerSub: "Part 4: Bone Cells",
+    headerSubtitle: "The team of \"workers\" that builds, destroys and monitors your skeleton",
+    tabs: ["👷 The 4 cells","🏗️ Builders and destroyers","👁️ The sensors","🎯 Quiz"],
+    s1h2: "👷 The 4 bone cells",
+    s2h2: "🏗️ Builders and destroyers in action",
+    s3h2: "👁️ Osteocytes: the bone sensors",
+    s4h2: "🎯 Quiz: Check what you've learned",
+    s4h3: "Questions about bone cells",
+    btnCheck: "Check answers",
+    btnReset: "Reset",
+    fbExcellent: (s,t) => `🏆 Excellent! ${s}/${t}. You understand bone cells and how they work as a team very well.`,
+    fbGood: (s,t) => `👍 Good: ${s}/${t}. Review the concepts you missed.`,
+    fbBad: (s,t) => `📚 ${s}/${t}. Re-read the sections and try again.`,
+    
+    slide1: {
+      reminderH4: "💡 Reminder",
+      reminderP: "In the previous files we saw that bone is a living tissue that adapts, repairs and remodels itself. But... <strong>who does all that work?</strong> The answer is bone cells. They are like a team of specialised workers.",
+      introH3: "A team of 4 specialists",
+      introP: "Bone has <strong>4 types of cells</strong>, each with a different function. They work as a team to keep your bones strong and healthy:",
+      cells: [
+        { cls: "osteoblast", emoji: "🧱", title: "Osteoblasts", subtitle: "The builders", desc: "Make new bone" },
+        { cls: "osteoclast", emoji: "🔨", title: "Osteoclasts", subtitle: "The destroyers", desc: "Remove old or damaged bone" },
+        { cls: "osteocyte", emoji: "👁️", title: "Osteocytes", subtitle: "The sensors", desc: "Monitor and direct the work" },
+        { cls: "progenitor", emoji: "🌱", title: "Osteoprogenitor cells", subtitle: "The \"trainees\"", desc: "Can become osteoblasts" }
+      ],
+      teamH3: "🤝 How do they work as a team?",
+      teamH4: "Imagine a construction site",
+      teamUl: [
+        "<strong>Osteocytes (sensors):</strong> They are like the \"architects\" who monitor the site. They detect where new bone is needed or where old bone should be removed.",
+        "<strong>Osteoclasts (destroyers):</strong> They are the \"demolition team\". They remove damaged or old bone to make space.",
+        "<strong>Osteoblasts (builders):</strong> They are the \"bricklayers\". They build new bone in the space left by the osteoclasts.",
+        "<strong>Osteoprogenitor cells:</strong> They are like the \"apprentices\". When more bricklayers are needed, they become osteoblasts."
+      ],
+      svgTitle: "🔄 The team's work cycle",
+      svgLabels: {
+        osteocyte: "OSTEOCYTE", detect: "1. Detects",
+        osteoclast: "OSTEOCLAST", destroy: "2. Destroys",
+        osteoblast: "OSTEOBLAST", build: "3. Builds",
+        progenitor: "OSTEOPROGENITOR", reserve: "Reserve",
+        cycle: "The cycle continues",
+        convert: "Becomes an osteoblast"
+      },
+      danceH4: "💃 Why is it important for a dancer?",
+      danceUl: [
+        "<strong>When you dance:</strong> Osteocytes detect the forces of movement and \"ask\" for more bone. Osteoblasts build new bone and your bones become stronger.",
+        "<strong>When you rest:</strong> Osteoblasts keep working (building bone). That is why rest is so important: it is when new bone is \"consolidated\".",
+        "<strong>When you get injured:</strong> Osteoprogenitor cells activate and become osteoblasts to repair the fracture.",
+        "<strong>If you don't eat well:</strong> Osteoclasts can \"win\" over osteoblasts → you lose more bone than you build → weak bones."
+      ],
+      activityH4: "🎭 Activity: \"Role play\"",
+      activityObj: "<strong>Objective:</strong> Understand the teamwork of the cells",
+      activitySteps: [
+        "<strong>In a group of 4:</strong> Each person represents a cell: <ul><li>Person 1: Osteocyte (sensor) → observes and gives orders</li><li>Person 2: Osteoclast (destroyer) → \"removes\" the old</li><li>Person 3: Osteoblast (builder) → \"builds\" the new</li><li>Person 4: Osteoprogenitor cell → waits to help</li></ul>",
+        "<strong>Scenario:</strong> Imagine there is a small fracture in the bone. <ul><li>The osteocyte detects it and alerts</li><li>The osteoclast \"cleans\" the damaged area</li><li>The osteoblast builds new bone</li><li>If more help is needed, the osteoprogenitor cell becomes an osteoblast</li></ul>",
+        "<strong>Reflection:</strong> What would happen if one of the cells were missing? (For example, if there were no osteoblasts, the fracture would not heal)."
+      ],
+      tipH4: "✨ Fun fact",
+      tipP: "In a healthy adult, the balance between osteoblasts and osteoclasts is perfect: as much bone is built as is destroyed. But with age, or if you don't eat well, osteoclasts can \"win\" → you lose bone. That is why it is important to take care of your bones from a young age."
+    },
+    slide2: {
+      reminderH4: "💡 Reminder",
+      reminderP: "We have just seen the 4 bone cells. Now we will go deeper into the two most important: the <strong>osteoblasts</strong> (builders) and the <strong>osteoclasts</strong> (destroyers). They are like the \"yin and yang\" of bone.",
+      introH3: "⚖️ The perfect balance",
+      introP: "For your bones to be healthy, there must be a <span class=\"highlight\">balance</span> between construction and destruction:",
+      introUl: [
+        "<strong>If they build more than they destroy:</strong> Bones become denser and stronger (this happens when you train well).",
+        "<strong>If they destroy more than they build:</strong> Bones become weak and fragile (osteoporosis).",
+        "<strong>If there is balance:</strong> Bones stay healthy (this is ideal)."
+      ],
+      blastsH3: "🧱 Osteoblasts: the bricklayers",
+      blastsH4: "🔨 How do they build bone?",
+      blastsUl: [
+        "<strong>Step 1:</strong> They make <strong>collagen</strong> (a resistant protein, like the \"bricks\" of bone).",
+        "<strong>Step 2:</strong> They add <strong>minerals</strong> (calcium and phosphorus) to the collagen (like the \"cement\" that hardens the bricks).",
+        "<strong>Step 3:</strong> The new bone hardens and integrates with the old bone.",
+        "<strong>Fun fact:</strong> Some osteoblasts get \"trapped\" in the bone they have built and become <strong>osteocytes</strong> (sensors). Builders become monitors!"
+      ],
+      clastsH3: "🔨 Osteoclasts: the demolition team",
+      clastsH4: "💥 How do they destroy bone?",
+      clastsUl: [
+        "<strong>Step 1:</strong> They \"stick\" to the surface of old or damaged bone.",
+        "<strong>Step 2:</strong> They create an <strong>acidic environment</strong> (like vinegar) that dissolves the bone minerals.",
+        "<strong>Step 3:</strong> They release <strong>enzymes</strong> (like \"chemical scissors\") that cut the collagen.",
+        "<strong>Step 4:</strong> The old bone \"melts\" and the minerals (like calcium) return to the blood.",
+        "<strong>Fun fact:</strong> Osteoclasts are GIANT cells (they can have up to 20 nuclei). They are like demolition \"tanks\"."
+      ],
+      svgTitle: "⚖️ The builder/destroyer balance",
+      svgLabels: {
+        osteoblasts: "🧱 Osteoblasts", build: "BUILD",
+        osteoclasts: "🔨 Osteoclasts", destroy: "DESTROY",
+        moreBuild: "More construction", moreBuildSub: "Stronger bones", moreBuildTag: "✅ Trained dancer",
+        balance: "Balance", balanceSub: "Healthy bones", balanceTag: "⚖️ Healthy adult",
+        moreDestroy: "More destruction", moreDestroySub: "Weak bones", moreDestroyTag: "❌ Osteoporosis"
+      },
+      danceH4: "💃 Application in dance",
+      danceUl: [
+        "<strong>Correct training:</strong> When you dance with adequate load (jumps, relevés), osteoblasts work more than osteoclasts → your bones strengthen.",
+        "<strong>Excessive training:</strong> If you train too much without resting, osteoclasts can \"win\" because there is no time for osteoblasts to build → risk of stress fractures.",
+        "<strong>Adequate diet:</strong> Osteoblasts need calcium, vitamin D and proteins to build bone. If you don't eat well, they cannot work well.",
+        "<strong>Rest:</strong> Osteoblasts work especially well during sleep (when growth hormone is released). Sleeping well is training your bones!"
+      ],
+      activityH4: "🎭 Activity: \"Simulate the balance\"",
+      activityObj: "<strong>Objective:</strong> Understand the balance between construction and destruction",
+      activitySteps: [
+        "<strong>Material:</strong> Two colours of plasticine (green to \"build\", red to \"destroy\").",
+        "<strong>Scenario 1 (balance):</strong> Make a green ball and a red ball of the same size. They represent that you build and destroy the same amount. Your bones stay the same.",
+        "<strong>Scenario 2 (more construction):</strong> Make a large green ball and a small red ball. They represent that you build more than you destroy. Your bones strengthen (as when you train well).",
+        "<strong>Scenario 3 (more destruction):</strong> Make a small green ball and a large red ball. They represent that you destroy more than you build. Your bones weaken (as in osteoporosis or if you don't eat well).",
+        "<strong>Reflection:</strong> Which scenario represents a dancer who trains well, eats well and rests? And one who trains too much and eats poorly?"
+      ],
+      tipH4: "✨ Fun fact",
+      tipP: "Osteoclasts, when destroying bone, <strong>release calcium into the blood</strong>. This is important because if you don't eat enough calcium, the body \"pulls\" it from the bones to maintain blood calcium (needed for muscles to work). That is why, if you don't eat calcium, your bones weaken even if you train well."
+    },
+    slide3: {
+      reminderH4: "💡 Reminder",
+      reminderP: "We have seen osteoblasts (builders) and osteoclasts (destroyers). But there is a cell that is just as important: the <strong>osteocyte</strong>. It is the \"site manager\" that decides when and where to build or destroy.",
+      introH3: "👁️ What are osteocytes?",
+      introP1: "<span class=\"highlight\">Osteocytes</span> are osteoblasts that got \"trapped\" in the bone they themselves built. Instead of dying, they adapted and became <strong>sensors</strong> that monitor the bone from the inside.",
+      introP2: "They are the most numerous cells in adult bone and are connected to each other forming a <strong>communication network</strong>.",
+      conceptH3: "📡 How do osteocytes work?",
+      howH4: "🎯 The 3 jobs of the osteocyte",
+      howUl: [
+        "<strong>1. They detect mechanical forces:</strong> When you dance and your bones receive impact, the osteocytes \"feel\" the pressure. They are like small \"accelerometers\" (like those in a phone that detect when you move it).",
+        "<strong>2. They send chemical signals:</strong> When they detect force, they release chemical substances that \"alert\" the osteoblasts: \"Hey, more bone is needed here!\"",
+        "<strong>3. They regulate balance:</strong> If they detect too much old or damaged bone, they alert the osteoclasts to remove it."
+      ],
+      svgTitle: "📡 The osteocyte: sensor and director",
+      svgLabels: {
+        osteocyte: "OSTEOCYTE", other: "Osteocyte",
+        force: "FORCE", signals: "Signals", signals2: "chemical",
+        footer: "Network of osteocytes communicating with each other"
+      },
+      importanceH3: "🎯 Why are they so important?",
+      importanceH4: "🧠 Osteocytes are the \"brain\" of bone",
+      importanceUl: [
+        "<strong>Without osteocytes:</strong> Osteoblasts and osteoclasts would not know when or where to work. It would be like a construction site without an architect.",
+        "<strong>With osteocytes:</strong> Bone adapts exactly to the forces it receives. If you dance a lot, it strengthens where you need it most.",
+        "<strong>Fun fact:</strong> Osteocytes can live for decades inside bone. They are the longest-lived cells in the body!"
+      ],
+      warningH4: "⚠️ What happens if osteocytes die?",
+      warningP: "If osteocytes die (for example, from lack of blood or from excess load without rest):",
+      warningUl: [
+        "Bone loses its \"monitoring system\"",
+        "Osteoclasts can destroy bone without control",
+        "Weak areas appear that can fracture"
+      ],
+      warningP2: "That is why <strong>rest</strong> is key: it gives osteocytes time to recover and keep monitoring.",
+      danceH4: "💃 Osteocytes in dance",
+      danceUl: [
+        "<strong>When you do a relevé:</strong> Osteocytes in the foot bones detect the pressure and send signals to strengthen that area.",
+        "<strong>When you jump:</strong> Osteocytes in the legs detect the impact and \"ask\" for more bone for next time.",
+        "<strong>When you rest:</strong> Osteocytes keep working, \"reading\" the signals and preparing the next construction phase.",
+        "<strong>If you train too much:</strong> Osteocytes get \"exhausted\" and can die. You lose the monitoring system and increase the risk of injury."
+      ],
+      activityH4: "🎭 Activity: \"Simulate an osteocyte\"",
+      activityObj: "<strong>Objective:</strong> Understand how osteocytes detect forces",
+      activitySteps: [
+        "<strong>Material:</strong> A kitchen sponge and a glass of water.",
+        "<strong>Simulate the bone:</strong> The sponge represents the bone with osteocytes inside.",
+        "<strong>Simulate the force:</strong> Squeeze the sponge under the water. You will see the water move inside the sponge.",
+        "<strong>Relation to the osteocyte:</strong> Osteocytes live in small cavities in bone surrounded by fluid. When the bone receives a force, the fluid moves and the osteocytes detect it (like you detect the water moving in the sponge).",
+        "<strong>Reflection:</strong> If you squeeze the sponge very hard or many times, what happens to it? (It deforms or breaks). That is what happens to osteocytes if you train too much without rest."
+      ],
+      tipH4: "✨ Fun fact",
+      tipP: "Osteocytes have long \"arms\" (called <strong>dendrites</strong>) that connect them to other osteocytes. They form a network similar to the <strong>neurons of the brain</strong>. That is why some scientists call bone \"the body's second brain\"! It can \"feel\" and \"respond\" to forces without you realising it."
+    },
+    slide4: {
+      quizData: [
+        { q: "What is the function of osteoblasts?",
+          opts: ["Destroy old bone","Build new bone","Detect mechanical forces","Become osteocytes"], correct: 1 },
+        { q: "How do osteoclasts destroy bone?",
+          opts: ["They break it with mechanical force","They create an acidic environment that dissolves bone","They eat it as if it were food","They freeze it until it breaks"], correct: 1 },
+        { q: "What are osteocytes?",
+          opts: ["Cells that build bone","Cells that destroy bone","Osteoblasts that got trapped and became sensors","Stem cells that can become anything"], correct: 2 },
+        { q: "What do osteoprogenitor cells do?",
+          opts: ["Destroy damaged bone","Detect mechanical forces","Can become osteoblasts when needed","Produce calcium for the blood"], correct: 2 },
+        { q: "Why are osteocytes important for a dancer?",
+          opts: ["Because they build bone directly","Because they detect the forces of dance and direct the construction of new bone","Because they destroy damaged bone","Because they are not important"], correct: 1 },
+        { q: "What happens if there are more osteoclasts than osteoblasts?",
+          opts: ["Bones become stronger","Bones stay the same","Bones weaken (loss of bone density)","Bones grow more"], correct: 2 },
+        { q: "Why is rest important for bone cells?",
+          opts: ["Because the cells sleep","Because osteoblasts work better during rest and sleep","Because osteoclasts rest","It is not important"], correct: 1 },
+        { q: "How do osteocytes communicate with each other?",
+          opts: ["Through the nervous system","Through the blood","Through small 'tunnels' (canaliculi) that connect them","They do not communicate"], correct: 2 }
+      ],
+      finalActivityH4: "🎭 Final activity: \"The complete team\"",
+      finalActivityObj: "<strong>Objective:</strong> Integrate what you've learned about bone cells",
+      finalActivitySteps: [
+        "<strong>Create a comic</strong> (4 panels) telling the story of a repaired fracture: <ul><li>Panel 1: The osteocyte detects the fracture</li><li>Panel 2: The osteoclast cleans the area</li><li>Panel 3: The osteoblast builds new bone</li><li>Panel 4: The osteoprogenitor cell helps if needed</li></ul>",
+        "<strong>Explain</strong> in your own words: Why is rest important for bone cells to work well?",
+        "<strong>Reflect:</strong> If you were an osteocyte, what would you \"say\" to a dancer who trains too much without resting?",
+        "<strong>Prepare</strong> for the next file: we will talk about bone remodelling (how this whole team works in cycles throughout life)."
+      ],
+      finalSummaryH4: "🎓 Key summary",
+      finalSummaryUl: [
+        "<strong>Osteoblasts:</strong> Build new bone (need calcium, vitamin D and rest)",
+        "<strong>Osteoclasts:</strong> Destroy old bone (release calcium into the blood)",
+        "<strong>Osteocytes:</strong> Sensors that detect forces and direct the work",
+        "<strong>Osteoprogenitor cells:</strong> Reserve that becomes osteoblasts when needed",
+        "<strong>Balance:</strong> The key is that construction = destruction (or a little more construction if you train well)"
+      ]
+    }
+  }
+};
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+let currentLang = 'ca';
+
+function showSlide(i, btn) {
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.slide')[i].classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  const t = I18N[lang];
+  
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + lang).classList.add('active');
+  
+  document.getElementById('t-header-title').textContent = t.headerTitle;
+  document.getElementById('t-header-sub').textContent = t.headerSub;
+  document.getElementById('t-header-subtitle').textContent = t.headerSubtitle;
+  t.tabs.forEach((tab, i) => { document.getElementById('tab' + i).textContent = tab; });
+  
+  document.getElementById('t-s1-h2').textContent = t.s1h2;
+  document.getElementById('t-s2-h2').textContent = t.s2h2;
+  document.getElementById('t-s3-h2').textContent = t.s3h2;
+  document.getElementById('t-s4-h2').textContent = t.s4h2;
+  document.getElementById('t-s4-h3').textContent = t.s4h3;
+  document.getElementById('t-btn-check').textContent = t.btnCheck;
+  document.getElementById('t-btn-reset').textContent = t.btnReset;
+  
+  renderSlide1(t.slide1);
+  renderSlide2(t.slide2);
+  renderSlide3(t.slide3);
+  renderSlide4(t.slide4);
+}
+
+/* ---------- SLIDE 1 ---------- */
+function renderSlide1(d) {
+  let cellsHtml = '';
+  d.cells.forEach(c => {
+    cellsHtml += `
+      <div class="cell-item ${c.cls}">
+        <div class="emoji-big">${c.emoji}</div>
+        <h4>${c.title}</h4>
+        <p><strong>${c.subtitle}</strong></p>
+        <p style="font-size: 0.9em; color: #666;">${c.desc}</p>
+      </div>`;
+  });
+  
+  document.getElementById('s1-content').innerHTML = `
+    <div class="reminder-box">
+      <h4>${d.reminderH4}</h4>
+      <p>${d.reminderP}</p>
+    </div>
+    
+    <div class="intro-box">
+      <h3>${d.introH3}</h3>
+      <p>${d.introP}</p>
+    </div>
+    
+    <div class="cell-card">${cellsHtml}</div>
+    
+    <div class="concept-card">
+      <h3><span class="emoji">🤝</span> ${d.teamH3}</h3>
+      <div class="how-it-works">
+        <h4>${d.teamH4}</h4>
+        <ul>${d.teamUl.map(x => `<li>${x}</li>`).join('')}</ul>
+      </div>
+    </div>
+    
+    <div class="diagram-container">
+      <h4>${d.svgTitle}</h4>
+      <svg viewBox="0 0 700 280">
+        <g transform="translate(300, 20)">
+          <circle cx="50" cy="50" r="40" fill="#3498db" opacity="0.8"/>
+          <text x="50" y="45" text-anchor="middle" font-size="10" fill="white" font-weight="bold">${d.svgLabels.osteocyte.split('-')[0] || d.svgLabels.osteocyte}</text>
+          <text x="50" y="60" text-anchor="middle" font-size="10" fill="white" font-weight="bold">${d.svgLabels.osteocyte}</text>
+          <text x="50" y="110" text-anchor="middle" font-size="10" fill="#3498db" font-weight="bold">${d.svgLabels.detect}</text>
+        </g>
+        
+        <line x1="350" y1="70" x2="400" y2="100" stroke="#7f8c8d" stroke-width="2" marker-end="url(#arrow)"/>
+        
+        <g transform="translate(420, 100)">
+          <circle cx="50" cy="50" r="40" fill="#e74c3c" opacity="0.8"/>
+          <text x="50" y="45" text-anchor="middle" font-size="10" fill="white" font-weight="bold">${d.svgLabels.osteoclast}</text>
+          <text x="50" y="110" text-anchor="middle" font-size="10" fill="#e74c3c" font-weight="bold">${d.svgLabels.destroy}</text>
+        </g>
+        
+        <line x1="470" y1="150" x2="420" y2="180" stroke="#7f8c8d" stroke-width="2" marker-end="url(#arrow)"/>
+        
+        <g transform="translate(300, 180)">
+          <circle cx="50" cy="50" r="40" fill="#27ae60" opacity="0.8"/>
+          <text x="50" y="45" text-anchor="middle" font-size="10" fill="white" font-weight="bold">${d.svgLabels.osteoblast}</text>
+          <text x="50" y="110" text-anchor="middle" font-size="10" fill="#27ae60" font-weight="bold">${d.svgLabels.build}</text>
+        </g>
+        
+        <path d="M 300 180 Q 200 180 200 100 Q 200 70 300 70" stroke="#7f8c8d" stroke-width="2" fill="none" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+        <text x="150" y="130" font-size="9" fill="#7f8c8d">${d.svgLabels.cycle}</text>
+        
+        <g transform="translate(50, 180)">
+          <circle cx="50" cy="50" r="35" fill="#f39c12" opacity="0.8"/>
+          <text x="50" y="45" text-anchor="middle" font-size="8" fill="white" font-weight="bold">${d.svgLabels.progenitor}</text>
+          <text x="50" y="105" text-anchor="middle" font-size="9" fill="#f39c12" font-weight="bold">${d.svgLabels.reserve}</text>
+        </g>
+        
+        <line x1="100" y1="200" x2="300" y2="220" stroke="#f39c12" stroke-width="2" marker-end="url(#arrowOrange)"/>
+        <text x="180" y="235" font-size="9" fill="#f39c12">${d.svgLabels.convert}</text>
+        
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+            <polygon points="0 0, 10 3, 0 6" fill="#7f8c8d"/>
+          </marker>
+          <marker id="arrowOrange" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+            <polygon points="0 0, 10 3, 0 6" fill="#f39c12"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+    
+    <div class="dance-box">
+      <h4><span class="emoji">💃</span> ${d.danceH4}</h4>
+      <ul>${d.danceUl.map(x => `<li>${x}</li>`).join('')}</ul>
+    </div>
+    
+    <div class="practical-activity">
+      <h4><span class="emoji">🎭</span> ${d.activityH4}</h4>
+      <p>${d.activityObj}</p>
+      <ol class="activity-steps">${d.activitySteps.map(x => `<li>${x}</li>`).join('')}</ol>
+    </div>
+    
+    <div class="tip-box">
+      <h4>${d.tipH4}</h4>
+      <p>${d.tipP}</p>
+    </div>
+  `;
+}
+
+/* ---------- SLIDE 2 ---------- */
+function renderSlide2(d) {
+  document.getElementById('s2-content').innerHTML = `
+    <div class="reminder-box">
+      <h4>${d.reminderH4}</h4>
+      <p>${d.reminderP}</p>
+    </div>
+    
+    <div class="intro-box">
+      <h3>${d.introH3}</h3>
+      <p>${d.introP}</p>
+      <ul style="margin-left: 25px; margin-top: 10px; line-height: 1.8;">
+        ${d.introUl.map(x => `<li>${x}</li>`).join('')}
+      </ul>
+    </div>
+    
+    <div class="concept-card">
+      <h3><span class="emoji">🧱</span> ${d.blastsH3}</h3>
+      <div class="how-it-works">
+        <h4>${d.blastsH4}</h4>
+        <ul>${d.blastsUl.map(x => `<li>${x}</li>`).join('')}</ul>
+      </div>
+    </div>
+    
+    <div class="concept-card">
+      <h3><span class="emoji">🔨</span> ${d.clastsH3}</h3>
+      <div class="how-it-works" style="background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); border-left-color: #e53935;">
+        <h4>${d.clastsH4}</h4>
+        <ul>${d.clastsUl.map(x => `<li>${x}</li>`).join('')}</ul>
+      </div>
+    </div>
+    
+    <div class="diagram-container">
+      <h4>${d.svgTitle}</h4>
+      <svg viewBox="0 0 700 280">
+        <line x1="350" y1="50" x2="350" y2="200" stroke="#7f8c8d" stroke-width="4"/>
+        <line x1="200" y1="80" x2="500" y2="80" stroke="#7f8c8d" stroke-width="4"/>
+        
+        <g transform="translate(150, 80)">
+          <path d="M 0 0 L 100 0 L 80 40 L 20 40 Z" fill="#27ae60" opacity="0.8"/>
+          <text x="50" y="25" text-anchor="middle" font-size="11" fill="white" font-weight="bold">${d.svgLabels.osteoblasts}</text>
+          <text x="50" y="60" text-anchor="middle" font-size="10" fill="#27ae60" font-weight="bold">${d.svgLabels.build}</text>
+        </g>
+        
+        <g transform="translate(450, 80)">
+          <path d="M 0 0 L 100 0 L 80 40 L 20 40 Z" fill="#e74c3c" opacity="0.8"/>
+          <text x="50" y="25" text-anchor="middle" font-size="11" fill="white" font-weight="bold">${d.svgLabels.osteoclasts}</text>
+          <text x="50" y="60" text-anchor="middle" font-size="10" fill="#e74c3c" font-weight="bold">${d.svgLabels.destroy}</text>
+        </g>
+        
+        <g transform="translate(50, 180)">
+          <rect x="0" y="0" width="200" height="80" fill="#e8f5e9" stroke="#27ae60" stroke-width="2" rx="10"/>
+          <text x="100" y="25" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e7d32">${d.svgLabels.moreBuild}</text>
+          <text x="100" y="45" text-anchor="middle" font-size="10" fill="#7f8c8d">${d.svgLabels.moreBuildSub}</text>
+          <text x="100" y="65" text-anchor="middle" font-size="9" fill="#27ae60" font-weight="bold">${d.svgLabels.moreBuildTag}</text>
+        </g>
+        
+        <g transform="translate(250, 180)">
+          <rect x="0" y="0" width="200" height="80" fill="#fff3e0" stroke="#f57c00" stroke-width="2" rx="10"/>
+          <text x="100" y="25" text-anchor="middle" font-size="11" font-weight="bold" fill="#e65100">${d.svgLabels.balance}</text>
+          <text x="100" y="45" text-anchor="middle" font-size="10" fill="#7f8c8d">${d.svgLabels.balanceSub}</text>
+          <text x="100" y="65" text-anchor="middle" font-size="9" fill="#f57c00" font-weight="bold">${d.svgLabels.balanceTag}</text>
+        </g>
+        
+        <g transform="translate(450, 180)">
+          <rect x="0" y="0" width="200" height="80" fill="#ffebee" stroke="#e53935" stroke-width="2" rx="10"/>
+          <text x="100" y="25" text-anchor="middle" font-size="11" font-weight="bold" fill="#c62828">${d.svgLabels.moreDestroy}</text>
+          <text x="100" y="45" text-anchor="middle" font-size="10" fill="#7f8c8d">${d.svgLabels.moreDestroySub}</text>
+          <text x="100" y="65" text-anchor="middle" font-size="9" fill="#e53935" font-weight="bold">${d.svgLabels.moreDestroyTag}</text>
+        </g>
+      </svg>
+    </div>
+    
+    <div class="dance-box">
+      <h4><span class="emoji">💃</span> ${d.danceH4}</h4>
+      <ul>${d.danceUl.map(x => `<li>${x}</li>`).join('')}</ul>
+    </div>
+    
+    <div class="practical-activity">
+      <h4><span class="emoji">🎭</span> ${d.activityH4}</h4>
+      <p>${d.activityObj}</p>
+      <ol class="activity-steps">${d.activitySteps.map(x => `<li>${x}</li>`).join('')}</ol>
+    </div>
+    
+    <div class="tip-box">
+      <h4>${d.tipH4}</h4>
+      <p>${d.tipP}</p>
+    </div>
+  `;
+}
+
+/* ---------- SLIDE 3 ---------- */
+function renderSlide3(d) {
+  document.getElementById('s3-content').innerHTML = `
+    <div class="reminder-box">
+      <h4>${d.reminderH4}</h4>
+      <p>${d.reminderP}</p>
+    </div>
+    
+    <div class="intro-box">
+      <h3>${d.introH3}</h3>
+      <p>${d.introP1}</p>
+      <p style="margin-top: 12px;">${d.introP2}</p>
+    </div>
+    
+    <div class="concept-card">
+      <h3><span class="emoji">📡</span> ${d.conceptH3}</h3>
+      <div class="how-it-works">
+        <h4>${d.howH4}</h4>
+        <ul>${d.howUl.map(x => `<li>${x}</li>`).join('')}</ul>
+      </div>
+    </div>
+    
+    <div class="diagram-container">
+      <h4>${d.svgTitle}</h4>
+      <svg viewBox="0 0 700 300">
+        <ellipse cx="350" cy="150" rx="40" ry="30" fill="#3498db" opacity="0.8"/>
+        <text x="350" y="145" text-anchor="middle" font-size="9" fill="white" font-weight="bold">${d.svgLabels.osteocyte}</text>
+        
+        <line x1="310" y1="150" x2="200" y2="100" stroke="#3498db" stroke-width="3"/>
+        <line x1="390" y1="150" x2="500" y2="100" stroke="#3498db" stroke-width="3"/>
+        <line x1="350" y1="120" x2="350" y2="50" stroke="#3498db" stroke-width="3"/>
+        <line x1="350" y1="180" x2="350" y2="250" stroke="#3498db" stroke-width="3"/>
+        <line x1="320" y1="170" x2="220" y2="220" stroke="#3498db" stroke-width="3"/>
+        <line x1="380" y1="170" x2="480" y2="220" stroke="#3498db" stroke-width="3"/>
+        
+        <ellipse cx="200" cy="100" rx="25" ry="18" fill="#3498db" opacity="0.6"/>
+        <text x="200" y="105" text-anchor="middle" font-size="8" fill="white">${d.svgLabels.other}</text>
+        <ellipse cx="500" cy="100" rx="25" ry="18" fill="#3498db" opacity="0.6"/>
+        <text x="500" y="105" text-anchor="middle" font-size="8" fill="white">${d.svgLabels.other}</text>
+        <ellipse cx="350" cy="50" rx="25" ry="18" fill="#3498db" opacity="0.6"/>
+        <text x="350" y="55" text-anchor="middle" font-size="8" fill="white">${d.svgLabels.other}</text>
+        <ellipse cx="350" cy="250" rx="25" ry="18" fill="#3498db" opacity="0.6"/>
+        <text x="350" y="255" text-anchor="middle" font-size="8" fill="white">${d.svgLabels.other}</text>
+        <ellipse cx="220" cy="220" rx="25" ry="18" fill="#3498db" opacity="0.6"/>
+        <text x="220" y="225" text-anchor="middle" font-size="8" fill="white">${d.svgLabels.other}</text>
+        <ellipse cx="480" cy="220" rx="25" ry="18" fill="#3498db" opacity="0.6"/>
+        <text x="480" y="225" text-anchor="middle" font-size="8" fill="white">${d.svgLabels.other}</text>
+        
+        <path d="M 100 150 L 180 150" stroke="#e74c3c" stroke-width="3" marker-end="url(#arrowRed)"/>
+        <text x="140" y="140" text-anchor="middle" font-size="10" fill="#e74c3c" font-weight="bold">${d.svgLabels.force}</text>
+        
+        <circle cx="280" cy="120" r="5" fill="#f39c12"/>
+        <circle cx="420" cy="120" r="5" fill="#f39c12"/>
+        <circle cx="380" cy="180" r="5" fill="#f39c12"/>
+        <text x="450" y="150" font-size="9" fill="#f39c12" font-weight="bold">${d.svgLabels.signals}</text>
+        <text x="450" y="165" font-size="9" fill="#f39c12" font-weight="bold">${d.svgLabels.signals2}</text>
+        
+        <text x="350" y="295" text-anchor="middle" font-size="11" fill="#2a5298" font-weight="bold">${d.svgLabels.footer}</text>
+        
+        <defs>
+          <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+            <polygon points="0 0, 10 3, 0 6" fill="#e74c3c"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+    
+    <div class="concept-card">
+      <h3><span class="emoji">🎯</span> ${d.importanceH3}</h3>
+      <div class="how-it-works">
+        <h4>${d.importanceH4}</h4>
+        <ul>${d.importanceUl.map(x => `<li>${x}</li>`).join('')}</ul>
+      </div>
+      
+      <div class="intro-box" style="margin-top: 15px; background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); border-left-color: #e53935;">
+        <h4>${d.warningH4}</h4>
+        <p>${d.warningP}</p>
+        <ul style="margin-left: 25px; margin-top: 10px; line-height: 1.8;">
+          ${d.warningUl.map(x => `<li>${x}</li>`).join('')}
+        </ul>
+        <p style="margin-top: 12px;">${d.warningP2}</p>
+      </div>
+    </div>
+    
+    <div class="dance-box">
+      <h4><span class="emoji">💃</span> ${d.danceH4}</h4>
+      <ul>${d.danceUl.map(x => `<li>${x}</li>`).join('')}</ul>
+    </div>
+    
+    <div class="practical-activity">
+      <h4><span class="emoji">🎭</span> ${d.activityH4}</h4>
+      <p>${d.activityObj}</p>
+      <ol class="activity-steps">${d.activitySteps.map(x => `<li>${x}</li>`).join('')}</ol>
+    </div>
+    
+    <div class="tip-box">
+      <h4>${d.tipH4}</h4>
+      <p>${d.tipP}</p>
+    </div>
+  `;
+}
+
+/* ---------- SLIDE 4 (QUIZ) ---------- */
+function renderSlide4(d) {
+  renderQuiz(d.quizData);
+  document.getElementById('finalActivity').innerHTML = `
+    <div class="practical-activity">
+      <h4><span class="emoji">🎭</span> ${d.finalActivityH4}</h4>
+      <p>${d.finalActivityObj}</p>
+      <ol class="activity-steps">${d.finalActivitySteps.map(x => `<li>${x}</li>`).join('')}</ol>
+    </div>
+    
+    <div class="tip-box" style="margin-top: 20px;">
+      <h4>${d.finalSummaryH4}</h4>
+      <ul style="margin-left: 25px; line-height: 1.8;">
+        ${d.finalSummaryUl.map(x => `<li>${x}</li>`).join('')}
+      </ul>
+    </div>
+  `;
+}
+
+function renderQuiz(quizData) {
+  const cont = document.getElementById('quizContainer');
+  cont.innerHTML = '';
+  quizData.forEach((item, qi) => {
+    let html = `<div class="question-box"><p>${qi+1}. ${item.q}</p><div class="options">`;
+    item.opts.forEach((opt, oi) => {
+      html += `<label><input type="radio" name="q${qi}" value="${oi}"> ${opt}</label>`;
+    });
+    html += `</div></div>`;
+    cont.innerHTML += html;
+  });
+}
+
+function checkQuiz() {
+  const t = I18N[currentLang];
+  let score = 0;
+  t.slide4.quizData.forEach((item, qi) => {
+    const sel = document.querySelector(`input[name="q${qi}"]:checked`);
+    const labels = document.querySelectorAll(`input[name="q${qi}"]`);
+    labels.forEach(l => l.parentElement.classList.remove('correct','incorrect'));
+    if (sel) {
+      const val = parseInt(sel.value);
+      if (val === item.correct) {
+        sel.parentElement.classList.add('correct');
+        score++;
+      } else {
+        sel.parentElement.classList.add('incorrect');
+        labels[item.correct].parentElement.classList.add('correct');
+      }
+    } else {
+      labels[item.correct].parentElement.classList.add('correct');
+    }
+  });
+  const fb = document.getElementById('fbQuiz');
+  fb.classList.add('show');
+  const total = t.slide4.quizData.length;
+  if (score === total) {
+    fb.className = 'feedback show success';
+    fb.innerHTML = t.fbExcellent(score, total);
+  } else if (score >= 6) {
+    fb.className = 'feedback show';
+    fb.style.background = '#fff3cd';
+    fb.style.color = '#856404';
+    fb.style.border = '2px solid #ffc107';
+    fb.innerHTML = t.fbGood(score, total);
+  } else {
+    fb.className = 'feedback show error';
+    fb.innerHTML = t.fbBad(score, total);
+  }
+}
+
+function resetQuiz() {
+  document.querySelectorAll('#quizContainer input').forEach(i => { i.checked = false; i.parentElement.classList.remove('correct','incorrect'); });
+  document.getElementById('fbQuiz').classList.remove('show');
+}
+
+/* Inicialització */
+setLang('ca');
+</script>
+</body>
+</html>

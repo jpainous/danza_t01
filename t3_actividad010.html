@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-translate="pageTitle">Escape Room: RED-S</title>
+<style>
+body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; }
+h1 { text-align: center; color: #f59e0b; margin-bottom: 10px; }
+.language-selector {
+display: flex;
+justify-content: center;
+gap: 10px;
+margin-bottom: 20px;
+}
+.lang-btn {
+padding: 8px 18px;
+border: 2px solid #f59e0b;
+background: transparent;
+color: #f59e0b;
+border-radius: 20px;
+cursor: pointer;
+font-size: 0.9em;
+font-weight: 600;
+transition: all 0.3s;
+}
+.lang-btn:hover { background: rgba(245,158,11,0.2); }
+.lang-btn.active { background: #f59e0b; color: #0f172a; }
+.container { max-width: 800px; margin: auto; }
+.escena { background: #1e293b; padding: 25px; border-radius: 12px; margin-bottom: 20px; }
+.personaje { display: flex; gap: 20px; align-items: center; margin-bottom: 20px; }
+.avatar { font-size: 80px; }
+.dialogo { background: #0f172a; padding: 15px; border-radius: 8px; border-left: 4px solid #f59e0b; flex: 1; }
+.opciones { display: grid; gap: 10px; }
+.opcion { background: #334155; padding: 15px; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: all 0.2s; }
+.opcion:hover { border-color: #f59e0b; background: #475569; }
+.opcion.elegida { background: #1e3a5f; border-color: #38bdf8; }
+.progreso { display: flex; gap: 5px; margin-bottom: 15px; }
+.paso { flex: 1; height: 8px; background: #334155; border-radius: 4px; }
+.paso.activo { background: #f59e0b; }
+.paso.hecho { background: #34d399; }
+.resultado { background: #1e293b; padding: 25px; border-radius: 12px; text-align: center; }
+.diagnostico { font-size: 24px; color: #ef4444; margin: 20px 0; }
+button.action { background: #f59e0b; color: #0f172a; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 15px; margin-top: 20px; }
+button.action:hover { background: #d97706; }
+@media (max-width: 768px) {
+.personaje { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="language-selector">
+<button class="lang-btn active" onclick="changeLanguage('es')">ES</button>
+<button class="lang-btn" onclick="changeLanguage('ca')">CA</button>
+<button class="lang-btn" onclick="changeLanguage('en')">EN</button>
+</div>
+<h1 data-translate="mainTitle">🕵️ Escape Room: Diagnóstico del RED-S</h1>
+<p style="text-align:center; color:#94a3b8;" data-translate="mainSubtitle">Eres el fisioterapeuta de una joven bailarina con fracturas por estrés. Investiga su caso.</p>
+<div class="progreso" id="progreso"></div>
+<div id="escena"></div>
+</div>
+
+<script>
+// ============ SISTEMA DE TRADUCCIONES ============
+const translations = {
+es: {
+pageTitle: "Escape Room: RED-S",
+mainTitle: "🕵️ Escape Room: Diagnóstico del RED-S",
+mainSubtitle: "Eres el fisioterapeuta de una joven bailarina con fracturas por estrés. Investiga su caso.",
+btnRestart: "🔄 Jugar de nuevo",
+// Escenas
+scene0Title: "Presentación del caso",
+scene0Text: "Soy Laura, 17 años, bailarina de compañía profesional. Llevo 3 meses con dolor en la tibia y me han diagnosticado fractura por estrés. No entiendo por qué, entreno mucho...",
+scene0Opt0: "¿Cuántas horas entrenas al día?",
+scene0Opt1: "¿Cómo es tu alimentación?",
+scene0Opt2: "¿Descansas lo suficiente?",
+scene1Title: "Entrenamiento",
+scene1Text: "Entreno 6 horas al día, 6 días a la semana. A veces hago doble sesión los viernes antes de las funciones.",
+scene1Opt0: "¿Y cómo comes para aguantar ese ritmo?",
+scene1Opt1: "¿Duermes bien?",
+scene1Opt2: "¿Tomas suplementos?",
+scene2Title: "Alimentación",
+scene2Text: "Pues... como poco. Mi profesora dice que las bailarinas debemos estar ligeras. A veces me salto el desayuno y la cena es una ensalada. He perdido 4 kg este año.",
+scene2Opt0: "¿Has tenido la menstruación últimamente?",
+scene2Opt1: "¿Te sientes cansada o mareada?",
+scene2Opt2: "¿Tienes más lesiones?",
+scene3Title: "Descanso",
+scene3Text: "Duermo 5-6 horas. Me cuesta dormirme porque estoy muy activa. Los domingos descanso, pero a veces ensayo.",
+scene3Opt0: "¿Y cómo comes?",
+scene3Opt1: "¿Tomas cafeína o estimulantes?",
+scene4Title: "Suplementos",
+scene4Text: "Solo café y algunas vitaminas. No tomo nada más.",
+scene4Opt0: "¿Cómo es tu alimentación real?",
+scene4Opt1: "¿Cómo duermes?",
+scene5Title: "Menstruación",
+scene5Text: "La verdad... no me ha venido en 4 meses. Pensé que era normal por el entrenamiento intenso.",
+scene5Opt0: "Necesito hacerte una analítica y DXA (densitometría)",
+scene5Opt1: "¿Tienes más síntomas?",
+scene6Title: "Síntomas",
+scene6Text: "Sí, estoy siempre cansada, me mareo al levantarme, me cuesta concentrarme y me he lesionado dos veces más este año (tobillo y metatarso).",
+scene6Opt0: "Esto apunta a algo sistémico. Voy a evaluar tu balance energético",
+scene7Title: "Más lesiones",
+scene7Text: "Sí, este año me he lesionado 3 veces: tibia, tobillo y un metatarso. Nunca me había pasado.",
+scene7Opt0: "Necesito evaluar tu estado nutricional y hormonal",
+scene8Title: "Estimulantes",
+scene8Text: "Tomo 4 cafés al día para aguantar. Y a veces bebidas energéticas antes de ensayar.",
+scene8Opt0: "¿Y cómo comes realmente?",
+scene9Title: "Diagnóstico",
+scene9Text: "Laura, tras evaluar tu caso: bajo aporte energético, amenorrea (3 meses sin regla), múltiples fracturas por estrés, fatiga crónica. Los análisis muestran baja densidad ósea y alteraciones hormonales.",
+scene9Opt0: "Ver diagnóstico final",
+// Resultado final
+finalTitle: "🔍 Diagnóstico Final",
+finalDiagnosis: "RED-S (Relative Energy Deficiency in Sport)",
+finalIntro: "Laura presenta el <b>síndrome de deficiencia energética relativa en el deporte</b>:",
+finalPoint1: "❌ <b>Bajo aporte energético</b> (come menos de lo que gasta)",
+finalPoint2: "❌ <b>Amenorrea funcional</b> (4 meses sin regla)",
+finalPoint3: "❌ <b>Fracturas por estrés múltiples</b> (hueso no se remodela correctamente)",
+finalPoint4: "❌ <b>Baja densidad ósea</b> (osteoclastos > osteoblastos)",
+finalPoint5: "❌ <b>Fatiga crónica</b> y bajo rendimiento",
+finalPhysiologyTitle: "📚 Fisiología subyacente:",
+finalPhysiologyText: "El hueso es un tejido dinámico que se remodela en ciclos de 10 años. Requiere:",
+finalReq1: "✓ Energía suficiente (calorías)",
+finalReq2: "✓ Nutrientes (calcio, vitamina D, proteínas)",
+finalReq3: "✓ Descanso adecuado",
+finalReq4: "✓ Carga mecánica apropiada",
+finalExplanation: "Sin esto, los <b>osteoclastos</b> reabsorben hueso más rápido de lo que los <b>osteoblastos</b> lo forman → fragilidad ósea → fracturas."
+},
+ca: {
+pageTitle: "Escape Room: RED-S",
+mainTitle: "🕵️ Escape Room: Diagnòstic del RED-S",
+mainSubtitle: "Ets el fisioterapeuta d'una jove ballarina amb fractures per estrès. Investiga el seu cas.",
+btnRestart: "🔄 Tornar a jugar",
+// Escenes
+scene0Title: "Presentació del cas",
+scene0Text: "Sóc la Laura, 17 anys, ballarina de companyia professional. Fa 3 mesos que tinc dolor al tíbia i m'han diagnosticat fractura per estrès. No entenc per què, entreno molt...",
+scene0Opt0: "Quantes hores entrenes al dia?",
+scene0Opt1: "Com és la teva alimentació?",
+scene0Opt2: "Descanses prou?",
+scene1Title: "Entrenament",
+scene1Text: "Entreno 6 hores al dia, 6 dies a la setmana. De vegades faig doble sessió els divendres abans de les funcions.",
+scene1Opt0: "I com menges per aguantar aquest ritme?",
+scene1Opt1: "Dorms bé?",
+scene1Opt2: "Prens suplements?",
+scene2Title: "Alimentació",
+scene2Text: "Doncs... menjo poc. La meva professora diu que les ballarines hem d'estar lleugeres. De vegades em salto l'esmorzar i el sopar és una amanida. He perdut 4 kg aquest any.",
+scene2Opt0: "Has tingut la menstruació últimament?",
+scene2Opt1: "Et sents cansada o marejada?",
+scene2Opt2: "Tens més lesions?",
+scene3Title: "Descans",
+scene3Text: "Dormo 5-6 hores. Em costa adormir-me perquè estic molt activa. Els diumenges descanso, però de vegades assajo.",
+scene3Opt0: "I com menges?",
+scene3Opt1: "Prens cafeïna o estimulants?",
+scene4Title: "Suplements",
+scene4Text: "Només cafè i algunes vitamines. No prenc res més.",
+scene4Opt0: "Com és la teva alimentació real?",
+scene4Opt1: "Com dorms?",
+scene5Title: "Menstruació",
+scene5Text: "La veritat... no m'ha vingut en 4 mesos. Pensava que era normal per l'entrenament intens.",
+scene5Opt0: "Necessito fer-te una analítica i DXA (densitometria)",
+scene5Opt1: "Tens més símptomes?",
+scene6Title: "Símptomes",
+scene6Text: "Sí, estic sempre cansada, em marejo en aixecar-me, em costa concentrar-me i m'he lesionat dues vegades més aquest any (turmell i metatars).",
+scene6Opt0: "Això apunta a alguna cosa sistèmica. Avaluaré el teu balanç energètic",
+scene7Title: "Més lesions",
+scene7Text: "Sí, aquest any m'he lesionat 3 vegades: tíbia, turmell i un metatars. Mai m'havia passat.",
+scene7Opt0: "Necessito avaluar el teu estat nutricional i hormonal",
+scene8Title: "Estimulants",
+scene8Text: "Prenc 4 cafès al dia per aguantar. I de vegades begudes energètiques abans d'assajar.",
+scene8Opt0: "I com menges realment?",
+scene9Title: "Diagnòstic",
+scene9Text: "Laura, després d'avaluar el teu cas: baix aportament energètic, amenorrea (3 mesos sense regla), múltiples fractures per estrès, fatiga crònica. Les anàlisis mostren baixa densitat òssia i alteracions hormonals.",
+scene9Opt0: "Veure diagnòstic final",
+// Resultat final
+finalTitle: "🔍 Diagnòstic Final",
+finalDiagnosis: "RED-S (Deficiència Energètica Relativa en l'Esport)",
+finalIntro: "La Laura presenta la <b>síndrome de deficiència energètica relativa en l'esport</b>:",
+finalPoint1: "❌ <b>Baix aportament energètic</b> (menja menys del que gasta)",
+finalPoint2: "❌ <b>Amenorrea funcional</b> (4 mesos sense regla)",
+finalPoint3: "❌ <b>Fractures per estrès múltiples</b> (l'os no es remodela correctament)",
+finalPoint4: "❌ <b>Baixa densitat òssia</b> (osteoclasts > osteoblasts)",
+finalPoint5: "❌ <b>Fatiga crònica</b> i baix rendiment",
+finalPhysiologyTitle: "📚 Fisiologia subjacent:",
+finalPhysiologyText: "L'os és un teixit dinàmic que es remodela en cicles de 10 anys. Requereix:",
+finalReq1: "✓ Energia suficient (calories)",
+finalReq2: "✓ Nutrients (calci, vitamina D, proteïnes)",
+finalReq3: "✓ Descans adequat",
+finalReq4: "✓ Càrrega mecànica apropiada",
+finalExplanation: "Sense això, els <b>osteoclasts</b> reabsorbeixen os més ràpid del que els <b>osteoblasts</b> el formen → fragilitat òssia → fractures."
+},
+en: {
+pageTitle: "Escape Room: RED-S",
+mainTitle: "🕵️ Escape Room: RED-S Diagnosis",
+mainSubtitle: "You are the physiotherapist of a young dancer with stress fractures. Investigate her case.",
+btnRestart: "🔄 Play again",
+// Scenes
+scene0Title: "Case presentation",
+scene0Text: "I'm Laura, 17 years old, professional company dancer. I've had pain in my tibia for 3 months and they've diagnosed me with a stress fracture. I don't understand why, I train a lot...",
+scene0Opt0: "How many hours do you train per day?",
+scene0Opt1: "What's your diet like?",
+scene0Opt2: "Do you rest enough?",
+scene1Title: "Training",
+scene1Text: "I train 6 hours a day, 6 days a week. Sometimes I do double sessions on Fridays before performances.",
+scene1Opt0: "And how do you eat to keep up that pace?",
+scene1Opt1: "Do you sleep well?",
+scene1Opt2: "Do you take supplements?",
+scene2Title: "Diet",
+scene2Text: "Well... I eat little. My teacher says dancers need to be light. Sometimes I skip breakfast and dinner is just a salad. I've lost 4 kg this year.",
+scene2Opt0: "Have you had your period lately?",
+scene2Opt1: "Do you feel tired or dizzy?",
+scene2Opt2: "Do you have more injuries?",
+scene3Title: "Rest",
+scene3Text: "I sleep 5-6 hours. I have trouble falling asleep because I'm very active. I rest on Sundays, but sometimes I rehearse.",
+scene3Opt0: "And how do you eat?",
+scene3Opt1: "Do you take caffeine or stimulants?",
+scene4Title: "Supplements",
+scene4Text: "Just coffee and some vitamins. I don't take anything else.",
+scene4Opt0: "What's your real diet like?",
+scene4Opt1: "How do you sleep?",
+scene5Title: "Menstruation",
+scene5Text: "The truth... I haven't had it in 4 months. I thought it was normal because of the intense training.",
+scene5Opt0: "I need to do blood tests and a DXA (densitometry)",
+scene5Opt1: "Do you have more symptoms?",
+scene6Title: "Symptoms",
+scene6Text: "Yes, I'm always tired, I get dizzy when I stand up, I have trouble concentrating, and I've had two more injuries this year (ankle and metatarsal).",
+scene6Opt0: "This points to something systemic. I'm going to evaluate your energy balance",
+scene7Title: "More injuries",
+scene7Text: "Yes, this year I've been injured 3 times: tibia, ankle, and a metatarsal. This has never happened to me before.",
+scene7Opt0: "I need to evaluate your nutritional and hormonal status",
+scene8Title: "Stimulants",
+scene8Text: "I drink 4 coffees a day to keep going. And sometimes energy drinks before rehearsing.",
+scene8Opt0: "And how do you really eat?",
+scene9Title: "Diagnosis",
+scene9Text: "Laura, after evaluating your case: low energy intake, amenorrhea (3 months without a period), multiple stress fractures, chronic fatigue. The tests show low bone density and hormonal alterations.",
+scene9Opt0: "See final diagnosis",
+// Final result
+finalTitle: "🔍 Final Diagnosis",
+finalDiagnosis: "RED-S (Relative Energy Deficiency in Sport)",
+finalIntro: "Laura presents <b>relative energy deficiency in sport syndrome</b>:",
+finalPoint1: "❌ <b>Low energy intake</b> (eats less than she burns)",
+finalPoint2: "❌ <b>Functional amenorrhea</b> (4 months without period)",
+finalPoint3: "❌ <b>Multiple stress fractures</b> (bone doesn't remodel properly)",
+finalPoint4: "❌ <b>Low bone density</b> (osteoclasts > osteoblasts)",
+finalPoint5: "❌ <b>Chronic fatigue</b> and low performance",
+finalPhysiologyTitle: "📚 Underlying physiology:",
+finalPhysiologyText: "Bone is a dynamic tissue that remodels in 10-year cycles. It requires:",
+finalReq1: "✓ Sufficient energy (calories)",
+finalReq2: "✓ Nutrients (calcium, vitamin D, proteins)",
+finalReq3: "✓ Adequate rest",
+finalReq4: "✓ Appropriate mechanical load",
+finalExplanation: "Without this, <b>osteoclasts</b> resorb bone faster than <b>osteoblasts</b> can form it → bone fragility → fractures."
+}
+};
+
+let currentLang = 'es';
+let paso = 0;
+
+// Estructura de casos (independent de l'idioma)
+const casos = [
+{
+titleKey: 'scene0Title',
+avatar: '🩰',
+textKey: 'scene0Text',
+opciones: [
+{textoKey: 'scene0Opt0', sig: 1},
+{textoKey: 'scene0Opt1', sig: 2},
+{textoKey: 'scene0Opt2', sig: 3}
+]
+},
+{
+titleKey: 'scene1Title',
+avatar: '🩰',
+textKey: 'scene1Text',
+opciones: [
+{textoKey: 'scene1Opt0', sig: 2},
+{textoKey: 'scene1Opt1', sig: 3},
+{textoKey: 'scene1Opt2', sig: 4}
+]
+},
+{
+titleKey: 'scene2Title',
+avatar: '🩰',
+textKey: 'scene2Text',
+opciones: [
+{textoKey: 'scene2Opt0', sig: 5},
+{textoKey: 'scene2Opt1', sig: 6},
+{textoKey: 'scene2Opt2', sig: 7}
+]
+},
+{
+titleKey: 'scene3Title',
+avatar: '🩰',
+textKey: 'scene3Text',
+opciones: [
+{textoKey: 'scene3Opt0', sig: 2},
+{textoKey: 'scene3Opt1', sig: 8}
+]
+},
+{
+titleKey: 'scene4Title',
+avatar: '🩰',
+textKey: 'scene4Text',
+opciones: [
+{textoKey: 'scene4Opt0', sig: 2},
+{textoKey: 'scene4Opt1', sig: 3}
+]
+},
+{
+titleKey: 'scene5Title',
+avatar: '🩰',
+textKey: 'scene5Text',
+opciones: [
+{textoKey: 'scene5Opt0', sig: 9},
+{textoKey: 'scene5Opt1', sig: 6}
+]
+},
+{
+titleKey: 'scene6Title',
+avatar: '🩰',
+textKey: 'scene6Text',
+opciones: [
+{textoKey: 'scene6Opt0', sig: 9}
+]
+},
+{
+titleKey: 'scene7Title',
+avatar: '🩰',
+textKey: 'scene7Text',
+opciones: [
+{textoKey: 'scene7Opt0', sig: 9}
+]
+},
+{
+titleKey: 'scene8Title',
+avatar: '🩰',
+textKey: 'scene8Text',
+opciones: [
+{textoKey: 'scene8Opt0', sig: 2}
+]
+},
+{
+titleKey: 'scene9Title',
+avatar: '⚕️',
+textKey: 'scene9Text',
+opciones: [
+{textoKey: 'scene9Opt0', sig: 10}
+]
+}
+];
+
+function changeLanguage(lang) {
+currentLang = lang;
+document.documentElement.lang = lang;
+// Actualitzar botons d'idioma
+document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+document.querySelector(`.lang-btn[onclick="changeLanguage('${lang}')"]`).classList.add('active');
+// Traduir elements estàtics
+document.querySelectorAll('[data-translate]').forEach(el => {
+const key = el.getAttribute('data-translate');
+if (translations[lang][key]) {
+el.innerHTML = translations[lang][key];
+}
+});
+// Re-renderitzar l'escena actual
+mostrar();
+}
+
+function mostrar() {
+const t = translations[currentLang];
+const prog = document.getElementById('progreso');
+prog.innerHTML = '';
+for (let i = 0; i < casos.length; i++) {
+const div = document.createElement('div');
+div.className = 'paso' + (i < paso ? ' hecho' : i === paso ? ' activo' : '');
+prog.appendChild(div);
+}
+if (paso >= casos.length) {
+mostrarFinal();
+return;
+}
+const c = casos[paso];
+document.getElementById('escena').innerHTML = `
+<div class="escena">
+<h3>${t[c.titleKey]}</h3>
+<div class="personaje">
+<div class="avatar">${c.avatar}</div>
+<div class="dialogo">${t[c.textKey]}</div>
+</div>
+<div class="opciones">
+${c.opciones.map((o,i) => `<div class="opcion" onclick="elegir(${o.sig})">${t[o.textoKey]}</div>`).join('')}
+</div>
+</div>
+`;
+}
+
+function elegir(sig) {
+paso++;
+mostrar();
+}
+
+function mostrarFinal() {
+const t = translations[currentLang];
+document.getElementById('escena').innerHTML = `
+<div class="resultado">
+<h2 style="color:#f59e0b;">${t.finalTitle}</h2>
+<div class="diagnostico">${t.finalDiagnosis}</div>
+<p>${t.finalIntro}</p>
+<ul style="text-align:left; max-width:500px; margin:20px auto;">
+<li>${t.finalPoint1}</li>
+<li>${t.finalPoint2}</li>
+<li>${t.finalPoint3}</li>
+<li>${t.finalPoint4}</li>
+<li>${t.finalPoint5}</li>
+</ul>
+<div style="background:#0f172a; padding:15px; border-radius:8px; margin-top:20px; text-align:left;">
+<b>${t.finalPhysiologyTitle}</b><br>
+${t.finalPhysiologyText}<br>
+${t.finalReq1}<br>
+${t.finalReq2}<br>
+${t.finalReq3}<br>
+${t.finalReq4}<br><br>
+${t.finalExplanation}
+</div>
+<button class="action" onclick="reiniciar()">${t.btnRestart}</button>
+</div>
+`;
+}
+
+function reiniciar() {
+paso = 0;
+mostrar();
+}
+
+// Inicialitzar al carregar
+mostrar();
+</script>
+</body>
+</html>

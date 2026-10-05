@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planos de Movimiento - Fisiología de la Danza</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+  body { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%); min-height: 100vh; padding: 20px; }
+  .container { max-width: 900px; margin: 0 auto; background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+  header { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%); color: white; padding: 40px; text-align: center; position: relative; }
+  header h1 { font-size: 2.2em; margin-bottom: 10px; }
+  
+  .language-selector {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    gap: 8px;
+  }
+  .language-selector button {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.4);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  .language-selector button:hover {
+    background: rgba(255,255,255,0.3);
+  }
+  .language-selector button.active {
+    background: white;
+    color: #c0392b;
+  }
+  
+  .section { padding: 30px 40px; border-bottom: 1px solid #eee; }
+  .section h2 { color: #c0392b; font-size: 1.6em; margin-bottom: 15px; border-left: 5px solid #ee5a6f; padding-left: 15px; }
+  .section h3 { color: #a93226; margin: 20px 0 10px; font-size: 1.2em; }
+  .section p { line-height: 1.7; margin-bottom: 12px; font-size: 1.05em; }
+  .analogy { background: #fff3e0; border-left: 4px solid #ff9800; padding: 15px 20px; margin: 15px 0; border-radius: 8px; }
+  .analogy strong { color: #e65100; }
+  .dance-example { background: #ffebee; border-left: 4px solid #e53935; padding: 15px 20px; margin: 15px 0; border-radius: 8px; }
+  .dance-example strong { color: #b71c1c; }
+  .planes-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin: 20px 0; }
+  .plane-card { background: #fafafa; padding: 25px; border-radius: 12px; border-left: 6px solid #ee5a6f; }
+  .plane-card h3 { color: #c0392b; margin-top: 0; }
+  .plane-card .french { font-style: italic; color: #7f8c8d; font-size: 1.1em; }
+  .highlight { background: #ffcdd2; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+  .movement-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
+  .movement-item { background: white; padding: 10px 15px; border-radius: 8px; border: 1px solid #eee; }
+  .movement-item strong { color: #c0392b; }
+  .activity { background: #fce4ec; border: 2px dashed #e91e63; padding: 20px; border-radius: 12px; margin: 20px 0; }
+  .activity h3 { color: #ad1457; }
+  .quiz-option { display: block; background: white; padding: 12px 18px; margin: 8px 0; border-radius: 8px; cursor: pointer; border: 2px solid #ddd; transition: all 0.3s; }
+  .quiz-option:hover { border-color: #e91e63; transform: translateX(5px); }
+  .quiz-option.correct { background: #c8e6c9; border-color: #2e7d32; }
+  .quiz-option.incorrect { background: #ffcdd2; border-color: #c62828; }
+  .feedback { margin-top: 12px; padding: 12px; border-radius: 8px; display: none; }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #c8e6c9; color: #1b5e20; }
+  .feedback.bad { background: #ffcdd2; color: #b71c1c; }
+  .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+  .comparison-card { padding: 20px; border-radius: 12px; color: white; }
+  .dehors { background: linear-gradient(135deg, #667eea, #764ba2); }
+  .dedans { background: linear-gradient(135deg, #f093fb, #f5576c); }
+  .comparison-card h4 { font-size: 1.3em; margin-bottom: 10px; }
+  footer { background: #a93226; color: white; text-align: center; padding: 20px; }
+  
+  @media (max-width: 600px) {
+    .comparison, .movement-list { grid-template-columns: 1fr; }
+    .section { padding: 20px; }
+    header h1 { font-size: 1.5em; }
+    .language-selector { position: static; margin-bottom: 15px; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="language-selector">
+    <button class="active" onclick="setLanguage('es', this)">ES</button>
+    <button onclick="setLanguage('ca', this)">CA</button>
+    <button onclick="setLanguage('en', this)">EN</button>
+  </div>
+  <h1 data-i18n="header_title">🔄 Planos de Movimiento</h1>
+  <p data-i18n="header_subtitle">En dehors, en dedans y los planos del cuerpo</p>
+</header>
+
+<div class="section">
+  <h2 data-i18n="s1_title">📐 ¿Qué es un plano de movimiento?</h2>
+  <p data-i18n="s1_text">Un <strong>plano</strong> es una superficie imaginaria (como una hoja de cristal invisible) que atraviesa tu cuerpo. Los movimientos se describen según el plano en el que ocurren.</p>
+
+  <div class="analogy">
+    <strong data-i18n="s1_analogy_label">🧠 Analogía:</strong> <span data-i18n="s1_analogy_text">Imagina que estás dentro de una caja de cristal. Puedes moverte hacia arriba/abajo (como un ascensor), hacia los lados (como un péndulo) o girando sobre ti mismo (como una peonza). Cada tipo de movimiento ocurre en un "plano" diferente.</span>
+  </div>
+
+  <p data-i18n="s1_three_text">Hay <strong>tres planos principales</strong>:</p>
+  <ul style="margin-left: 30px; line-height: 2;">
+    <li data-i18n="s1_li1"><strong>Plano sagital:</strong> divide el cuerpo en izquierda y derecha. Movimientos hacia delante y hacia detrás.</li>
+    <li data-i18n="s1_li2"><strong>Plano frontal:</strong> divide el cuerpo en delante y detrás. Movimientos laterales.</li>
+    <li data-i18n="s1_li3"><strong>Plano transversal:</strong> divide el cuerpo en arriba y abajo. Movimientos de rotación.</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2 data-i18n="s2_title">🔄 El Plano Transversal: Rotaciones</h2>
+  <p data-i18n="s2_text">En danza, el plano transversal es especialmente importante porque es donde ocurren las <strong>rotaciones de la cadera</strong>, la base del <em>turnout</em> en ballet.</p>
+
+  <div class="comparison">
+    <div class="comparison-card dehors">
+      <h4 data-i18n="s2_dehors_title">🔓 En Dehors</h4>
+      <p data-i18n="s2_dehors_type"><strong>Rotación externa</strong></p>
+      <p data-i18n="s2_dehors_text">La extremidad gira <strong>hacia afuera</strong>, alejando su cara anterior de la línea media del cuerpo.</p>
+      <p style="margin-top: 10px;" data-i18n="s2_dehors_example"><em>Ejemplo clásico:</em> el <em>turnout</em> de cadera en ballet (las rodillas y pies miran hacia los lados).</p>
+    </div>
+    <div class="comparison-card dedans">
+      <h4 data-i18n="s2_dedans_title">🔒 En Dedans</h4>
+      <p data-i18n="s2_dedans_type"><strong>Rotación interna</strong></p>
+      <p data-i18n="s2_dedans_text">La extremidad gira <strong>hacia adentro</strong>, orientando su cara anterior hacia el centro del cuerpo.</p>
+      <p style="margin-top: 10px;" data-i18n="s2_dedans_example"><em>Ejemplo clásico:</em> la posición neutra/paralela en danza contemporánea.</p>
+    </div>
+  </div>
+
+  <div class="dance-example">
+    <strong data-i18n="s2_dance_label">💃 Ejemplo en danza:</strong> <span data-i18n="s2_dance_text">Cuando un bailarín de ballet hace <em>5ème position</em>, está en <em>en dehors</em> máximo. Cuando un bailarín contemporáneo trabaja en paralelo, está en <em>en dedans</em> (posición neutra). Ambos usan el plano transversal, pero en direcciones opuestas.</span>
+  </div>
+</div>
+
+<div class="section">
+  <h2 data-i18n="s3_title">🎭 Resumen de los tres planos</h2>
+
+  <div class="planes-grid">
+    <div class="plane-card">
+      <h3 data-i18n="s3_sagital_title">➡️ Plano Sagital</h3>
+      <p data-i18n="s3_sagital_text">Divide el cuerpo en <strong>izquierda y derecha</strong>. Eje: lateral.</p>
+      <div class="movement-list">
+        <div class="movement-item" data-i18n="s3_sagital_m1"><strong>Flexión:</strong> doblar (ej. <em>plié</em>)</div>
+        <div class="movement-item" data-i18n="s3_sagital_m2"><strong>Extensión:</strong> estirar (ej. <em>cambré</em> atrás)</div>
+      </div>
+    </div>
+
+    <div class="plane-card">
+      <h3 data-i18n="s3_frontal_title">↕️ Plano Frontal</h3>
+      <p data-i18n="s3_frontal_text">Divide el cuerpo en <strong>delante y detrás</strong>. Eje: anteroposterior.</p>
+      <div class="movement-list">
+        <div class="movement-item" data-i18n="s3_frontal_m1"><strong>Abducción:</strong> separar de la línea media (ej. <em>à la seconde</em>)</div>
+        <div class="movement-item" data-i18n="s3_frontal_m2"><strong>Aducción:</strong> acercar a la línea media</div>
+        <div class="movement-item" data-i18n="s3_frontal_m3"><strong>Inclinación lateral</strong> del tronco</div>
+      </div>
+    </div>
+
+    <div class="plane-card">
+      <h3 data-i18n="s3_transversal_title">🔄 Plano Transversal</h3>
+      <p data-i18n="s3_transversal_text">Divide el cuerpo en <strong>arriba y abajo</strong>. Eje: vertical (longitudinal).</p>
+      <div class="movement-list">
+        <div class="movement-item" data-i18n="s3_transversal_m1"><strong>Rotación externa (en dehors)</strong></div>
+        <div class="movement-item" data-i18n="s3_transversal_m2"><strong>Rotación interna (en dedans)</strong></div>
+        <div class="movement-item" data-i18n="s3_transversal_m3"><strong>Piruetas</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 data-i18n="s4_title">🩰 Aplicación a la técnica de danza</h2>
+  <p data-i18n="s4_text">La mayoría de los pasos de danza combinan movimientos en <strong>varios planos a la vez</strong>. Por ejemplo:</p>
+
+  <div class="dance-example">
+    <strong data-i18n="s4_ex1_label">💃 <em>Grand battement devant</em>:</strong>
+    <ul style="margin-left: 20px; line-height: 1.8;">
+      <li data-i18n="s4_ex1_li1">Plano sagital: la pierna va hacia delante (flexión de cadera).</li>
+      <li data-i18n="s4_ex1_li2">Plano transversal: si hay <em>turnout</em>, hay rotación externa.</li>
+    </ul>
+  </div>
+
+  <div class="dance-example">
+    <strong data-i18n="s4_ex2_label">💃 <em>Pirouette</em>:</strong>
+    <ul style="margin-left: 20px; line-height: 1.8;">
+      <li data-i18n="s4_ex2_li1">Plano transversal: rotación del cuerpo sobre el eje vertical.</li>
+      <li data-i18n="s4_ex2_li2">Plano sagital: flexión de la pierna de apoyo en <em>demi-plié</em>.</li>
+      <li data-i18n="s4_ex2_li3">Plano frontal: brazos en posición que controla el equilibrio lateral.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section">
+  <h2 data-i18n="s5_title">🎯 Actividades</h2>
+
+  <div class="activity">
+    <h3 data-i18n="s5_q1_title">❓ Pregunta 1: ¿En qué plano ocurre el <em>turnout</em> de cadera?</h3>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f1')" data-i18n="s5_q1_a">a) Plano sagital</div>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f1')" data-i18n="s5_q1_b">b) Plano frontal</div>
+    <div class="quiz-option" onclick="checkAnswer(this, true, 'f1')" data-i18n="s5_q1_c">c) Plano transversal</div>
+    <div class="feedback" id="f1"></div>
+  </div>
+
+  <div class="activity">
+    <h3 data-i18n="s5_q2_title">❓ Pregunta 2: <em>En dehors</em> significa...</h3>
+    <div class="quiz-option" onclick="checkAnswer(this, true, 'f2')" data-i18n="s5_q2_a">a) Rotación externa: la cara anterior se aleja de la línea media</div>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f2')" data-i18n="s5_q2_b">b) Rotación interna: la cara anterior se acerca a la línea media</div>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f2')" data-i18n="s5_q2_c">c) Llevar la pierna hacia delante</div>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f2')" data-i18n="s5_q2_d">d) Separar la pierna hacia el lado</div>
+    <div class="feedback" id="f2"></div>
+  </div>
+
+  <div class="activity">
+    <h3 data-i18n="s5_q3_title">❓ Pregunta 3: Un <em>développé à la seconde</em> ocurre principalmente en...</h3>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f3')" data-i18n="s5_q3_a">a) Plano sagital</div>
+    <div class="quiz-option" onclick="checkAnswer(this, true, 'f3')" data-i18n="s5_q3_b">b) Plano frontal</div>
+    <div class="quiz-option" onclick="checkAnswer(this, false, 'f3')" data-i18n="s5_q3_c">c) Plano transversal</div>
+    <div class="feedback" id="f3"></div>
+  </div>
+
+  <div class="activity">
+    <h3 data-i18n="s5_practice_title">🩰 Práctica corporal</h3>
+    <p data-i18n="s5_practice_text">Levántate y realiza estos movimientos. Identifica en qué plano ocurren:</p>
+    <ol style="margin-left: 30px; line-height: 2.2;">
+      <li data-i18n="s5_practice_1">Un <em>plié</em> profundo → plano ______</li>
+      <li data-i18n="s5_practice_2">Llevar la pierna a <em>la seconde</em> (lado) → plano ______</li>
+      <li data-i18n="s5_practice_3">Girar la pierna hacia afuera desde la cadera → plano ______</li>
+      <li data-i18n="s5_practice_4">Una <em>pirouette</em> completa → plano ______</li>
+      <li data-i18n="s5_practice_5">Un <em>cambré</em> hacia atrás → plano ______</li>
+    </ol>
+    <p style="margin-top: 15px; font-style: italic; color: #ad1457;" data-i18n="s5_practice_sol">💡 Soluciones: sagital, frontal, transversal, transversal, sagital.</p>
+  </div>
+
+  <div class="activity">
+    <h3 data-i18n="s5_choreo_title">🎭 Análisis coreográfico</h3>
+    <p data-i18n="s5_choreo_text">Elige <strong>un paso</strong> de tu clase de danza (puede ser un <em>port de bras</em>, un <em>rond de jambe</em>, un <em>chaînés</em>...) y describe:</p>
+    <ul style="margin-left: 30px; line-height: 2;">
+      <li data-i18n="s5_choreo_li1">¿En qué <strong>plano principal</strong> ocurre?</li>
+      <li data-i18n="s5_choreo_li2">¿Hay combinación de planos?</li>
+      <li data-i18n="s5_choreo_li3">¿Qué tipo de <strong>rotación</strong> hay (en dehors / en dedans)?</li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  <p data-i18n="footer_text">🩰 Fisiología aplicada a la Danza | Planos de Movimiento</p>
+</footer>
+
+</div>
+
+<script>
+let currentLang = 'es';
+
+const translations = {
+  es: {
+    header_title: "🔄 Planos de Movimiento",
+    header_subtitle: "En dehors, en dedans y los planos del cuerpo",
+    s1_title: "📐 ¿Qué es un plano de movimiento?",
+    s1_text: "Un <strong>plano</strong> es una superficie imaginaria (como una hoja de cristal invisible) que atraviesa tu cuerpo. Los movimientos se describen según el plano en el que ocurren.",
+    s1_analogy_label: "🧠 Analogía:",
+    s1_analogy_text: "Imagina que estás dentro de una caja de cristal. Puedes moverte hacia arriba/abajo (como un ascensor), hacia los lados (como un péndulo) o girando sobre ti mismo (como una peonza). Cada tipo de movimiento ocurre en un \"plano\" diferente.",
+    s1_three_text: "Hay <strong>tres planos principales</strong>:",
+    s1_li1: "<strong>Plano sagital:</strong> divide el cuerpo en izquierda y derecha. Movimientos hacia delante y hacia detrás.",
+    s1_li2: "<strong>Plano frontal:</strong> divide el cuerpo en delante y detrás. Movimientos laterales.",
+    s1_li3: "<strong>Plano transversal:</strong> divide el cuerpo en arriba y abajo. Movimientos de rotación.",
+    s2_title: "🔄 El Plano Transversal: Rotaciones",
+    s2_text: "En danza, el plano transversal es especialmente importante porque es donde ocurren las <strong>rotaciones de la cadera</strong>, la base del <em>turnout</em> en ballet.",
+    s2_dehors_title: "🔓 En Dehors",
+    s2_dehors_type: "<strong>Rotación externa</strong>",
+    s2_dehors_text: "La extremidad gira <strong>hacia afuera</strong>, alejando su cara anterior de la línea media del cuerpo.",
+    s2_dehors_example: "<em>Ejemplo clásico:</em> el <em>turnout</em> de cadera en ballet (las rodillas y pies miran hacia los lados).",
+    s2_dedans_title: "🔒 En Dedans",
+    s2_dedans_type: "<strong>Rotación interna</strong>",
+    s2_dedans_text: "La extremidad gira <strong>hacia adentro</strong>, orientando su cara anterior hacia el centro del cuerpo.",
+    s2_dedans_example: "<em>Ejemplo clásico:</em> la posición neutra/paralela en danza contemporánea.",
+    s2_dance_label: "💃 Ejemplo en danza:",
+    s2_dance_text: "Cuando un bailarín de ballet hace <em>5ème position</em>, está en <em>en dehors</em> máximo. Cuando un bailarín contemporáneo trabaja en paralelo, está en <em>en dedans</em> (posición neutra). Ambos usan el plano transversal, pero en direcciones opuestas.",
+    s3_title: "🎭 Resumen de los tres planos",
+    s3_sagital_title: "➡️ Plano Sagital",
+    s3_sagital_text: "Divide el cuerpo en <strong>izquierda y derecha</strong>. Eje: lateral.",
+    s3_sagital_m1: "<strong>Flexión:</strong> doblar (ej. <em>plié</em>)",
+    s3_sagital_m2: "<strong>Extensión:</strong> estirar (ej. <em>cambré</em> atrás)",
+    s3_frontal_title: "↕️ Plano Frontal",
+    s3_frontal_text: "Divide el cuerpo en <strong>delante y detrás</strong>. Eje: anteroposterior.",
+    s3_frontal_m1: "<strong>Abducción:</strong> separar de la línea media (ej. <em>à la seconde</em>)",
+    s3_frontal_m2: "<strong>Aducción:</strong> acercar a la línea media",
+    s3_frontal_m3: "<strong>Inclinación lateral</strong> del tronco",
+    s3_transversal_title: "🔄 Plano Transversal",
+    s3_transversal_text: "Divide el cuerpo en <strong>arriba y abajo</strong>. Eje: vertical (longitudinal).",
+    s3_transversal_m1: "<strong>Rotación externa (en dehors)</strong>",
+    s3_transversal_m2: "<strong>Rotación interna (en dedans)</strong>",
+    s3_transversal_m3: "<strong>Piruetas</strong>",
+    s4_title: "🩰 Aplicación a la técnica de danza",
+    s4_text: "La mayoría de los pasos de danza combinan movimientos en <strong>varios planos a la vez</strong>. Por ejemplo:",
+    s4_ex1_label: "💃 <em>Grand battement devant</em>:",
+    s4_ex1_li1: "Plano sagital: la pierna va hacia delante (flexión de cadera).",
+    s4_ex1_li2: "Plano transversal: si hay <em>turnout</em>, hay rotación externa.",
+    s4_ex2_label: "💃 <em>Pirouette</em>:",
+    s4_ex2_li1: "Plano transversal: rotación del cuerpo sobre el eje vertical.",
+    s4_ex2_li2: "Plano sagital: flexión de la pierna de apoyo en <em>demi-plié</em>.",
+    s4_ex2_li3: "Plano frontal: brazos en posición que controla el equilibrio lateral.",
+    s5_title: "🎯 Actividades",
+    s5_q1_title: "❓ Pregunta 1: ¿En qué plano ocurre el <em>turnout</em> de cadera?",
+    s5_q1_a: "a) Plano sagital",
+    s5_q1_b: "b) Plano frontal",
+    s5_q1_c: "c) Plano transversal",
+    s5_q2_title: "❓ Pregunta 2: <em>En dehors</em> significa...",
+    s5_q2_a: "a) Rotación externa: la cara anterior se aleja de la línea media",
+    s5_q2_b: "b) Rotación interna: la cara anterior se acerca a la línea media",
+    s5_q2_c: "c) Llevar la pierna hacia delante",
+    s5_q2_d: "d) Separar la pierna hacia el lado",
+    s5_q3_title: "❓ Pregunta 3: Un <em>développé à la seconde</em> ocurre principalmente en...",
+    s5_q3_a: "a) Plano sagital",
+    s5_q3_b: "b) Plano frontal",
+    s5_q3_c: "c) Plano transversal",
+    s5_practice_title: "🩰 Práctica corporal",
+    s5_practice_text: "Levántate y realiza estos movimientos. Identifica en qué plano ocurren:",
+    s5_practice_1: "Un <em>plié</em> profundo → plano ______",
+    s5_practice_2: "Llevar la pierna a <em>la seconde</em> (lado) → plano ______",
+    s5_practice_3: "Girar la pierna hacia afuera desde la cadera → plano ______",
+    s5_practice_4: "Una <em>pirouette</em> completa → plano ______",
+    s5_practice_5: "Un <em>cambré</em> hacia atrás → plano ______",
+    s5_practice_sol: "💡 Soluciones: sagital, frontal, transversal, transversal, sagital.",
+    s5_choreo_title: "🎭 Análisis coreográfico",
+    s5_choreo_text: "Elige <strong>un paso</strong> de tu clase de danza (puede ser un <em>port de bras</em>, un <em>rond de jambe</em>, un <em>chaînés</em>...) y describe:",
+    s5_choreo_li1: "¿En qué <strong>plano principal</strong> ocurre?",
+    s5_choreo_li2: "¿Hay combinación de planos?",
+    s5_choreo_li3: "¿Qué tipo de <strong>rotación</strong> hay (en dehors / en dedans)?",
+    footer_text: "🩰 Fisiología aplicada a la Danza | Planos de Movimiento",
+    fb_correct: "✅ ¡Correcto!",
+    fb_incorrect: "❌ Revisa la sección e inténtalo otra vez."
+  },
+  ca: {
+    header_title: "🔄 Plans de Moviment",
+    header_subtitle: "En dehors, en dedans i els plans del cos",
+    s1_title: "📐 Què és un pla de moviment?",
+    s1_text: "Un <strong>pla</strong> és una superfície imaginària (com un full de vidre invisible) que travessa el teu cos. Els moviments es descriuen segons el pla en què ocorren.",
+    s1_analogy_label: "🧠 Analogia:",
+    s1_analogy_text: "Imagina que estàs dins d'una caixa de vidre. Pots moure't cap amunt/avall (com un ascensor), cap als costats (com un pèndol) o girant sobre tu mateix (com una baldufa). Cada tipus de moviment ocorre en un \"pla\" diferent.",
+    s1_three_text: "Hi ha <strong>tres plans principals</strong>:",
+    s1_li1: "<strong>Pla sagital:</strong> divideix el cos en esquerra i dreta. Moviments cap endavant i cap enrere.",
+    s1_li2: "<strong>Pla frontal:</strong> divideix el cos en davant i darrere. Moviments laterals.",
+    s1_li3: "<strong>Pla transversal:</strong> divideix el cos en amunt i avall. Moviments de rotació.",
+    s2_title: "🔄 El Pla Transversal: Rotacions",
+    s2_text: "En dansa, el pla transversal és especialment important perquè és on ocorren les <strong>rotacions del maluc</strong>, la base del <em>turnout</em> en ballet.",
+    s2_dehors_title: "🔓 En Dehors",
+    s2_dehors_type: "<strong>Rotació externa</strong>",
+    s2_dehors_text: "L'extremitat gira <strong>cap enfora</strong>, allunyant la seva cara anterior de la línia mitjana del cos.",
+    s2_dehors_example: "<em>Exemple clàssic:</em> el <em>turnout</em> de maluc en ballet (els genolls i peus miren cap als costats).",
+    s2_dedans_title: "🔒 En Dedans",
+    s2_dedans_type: "<strong>Rotació interna</strong>",
+    s2_dedans_text: "L'extremitat gira <strong>cap endins</strong>, orientant la seva cara anterior cap al centre del cos.",
+    s2_dedans_example: "<em>Exemple clàssic:</em> la posició neutra/paral·lela en dansa contemporània.",
+    s2_dance_label: "💃 Exemple en dansa:",
+    s2_dance_text: "Quan un ballarí de ballet fa <em>5ème position</em>, està en <em>en dehors</em> màxim. Quan un ballarí contemporani treballa en paral·lel, està en <em>en dedans</em> (posició neutra). Ambdós usen el pla transversal, però en direccions oposades.",
+    s3_title: "🎭 Resum dels tres plans",
+    s3_sagital_title: "➡️ Pla Sagital",
+    s3_sagital_text: "Divideix el cos en <strong>esquerra i dreta</strong>. Eix: lateral.",
+    s3_sagital_m1: "<strong>Flexió:</strong> doblegar (ex. <em>plié</em>)",
+    s3_sagital_m2: "<strong>Extensió:</strong> estirar (ex. <em>cambré</em> enrere)",
+    s3_frontal_title: "↕️ Pla Frontal",
+    s3_frontal_text: "Divideix el cos en <strong>davant i darrere</strong>. Eix: anteroposterior.",
+    s3_frontal_m1: "<strong>Abducció:</strong> separar de la línia mitjana (ex. <em>à la seconde</em>)",
+    s3_frontal_m2: "<strong>Adducció:</strong> apropar a la línia mitjana",
+    s3_frontal_m3: "<strong>Inclinació lateral</strong> del tronc",
+    s3_transversal_title: "🔄 Pla Transversal",
+    s3_transversal_text: "Divideix el cos en <strong>amunt i avall</strong>. Eix: vertical (longitudinal).",
+    s3_transversal_m1: "<strong>Rotació externa (en dehors)</strong>",
+    s3_transversal_m2: "<strong>Rotació interna (en dedans)</strong>",
+    s3_transversal_m3: "<strong>Piruetes</strong>",
+    s4_title: "🩰 Aplicació a la tècnica de dansa",
+    s4_text: "La majoria dels passos de dansa combinen moviments en <strong>diversos plans alhora</strong>. Per exemple:",
+    s4_ex1_label: "💃 <em>Grand battement devant</em>:",
+    s4_ex1_li1: "Pla sagital: la cama va cap endavant (flexió de maluc).",
+    s4_ex1_li2: "Pla transversal: si hi ha <em>turnout</em>, hi ha rotació externa.",
+    s4_ex2_label: "💃 <em>Pirouette</em>:",
+    s4_ex2_li1: "Pla transversal: rotació del cos sobre l'eix vertical.",
+    s4_ex2_li2: "Pla sagital: flexió de la cama de suport en <em>demi-plié</em>.",
+    s4_ex2_li3: "Pla frontal: braços en posició que controla l'equilibri lateral.",
+    s5_title: "🎯 Activitats",
+    s5_q1_title: "❓ Pregunta 1: En quin pla ocorre el <em>turnout</em> de maluc?",
+    s5_q1_a: "a) Pla sagital",
+    s5_q1_b: "b) Pla frontal",
+    s5_q1_c: "c) Pla transversal",
+    s5_q2_title: "❓ Pregunta 2: <em>En dehors</em> significa...",
+    s5_q2_a: "a) Rotació externa: la cara anterior s'allunya de la línia mitjana",
+    s5_q2_b: "b) Rotació interna: la cara anterior s'apropa a la línia mitjana",
+    s5_q2_c: "c) Portar la cama cap endavant",
+    s5_q2_d: "d) Separar la cama cap al costat",
+    s5_q3_title: "❓ Pregunta 3: Un <em>développé à la seconde</em> ocorre principalment en...",
+    s5_q3_a: "a) Pla sagital",
+    s5_q3_b: "b) Pla frontal",
+    s5_q3_c: "c) Pla transversal",
+    s5_practice_title: "🩰 Pràctica corporal",
+    s5_practice_text: "Aixeca't i realitza aquests moviments. Identifica en quin pla ocorren:",
+    s5_practice_1: "Un <em>plié</em> profund → pla ______",
+    s5_practice_2: "Portar la cama a <em>la seconde</em> (costat) → pla ______",
+    s5_practice_3: "Girar la cama cap enfora des del maluc → pla ______",
+    s5_practice_4: "Una <em>pirouette</em> completa → pla ______",
+    s5_practice_5: "Un <em>cambré</em> cap enrere → pla ______",
+    s5_practice_sol: "💡 Solucions: sagital, frontal, transversal, transversal, sagital.",
+    s5_choreo_title: "🎭 Anàlisi coreogràfica",
+    s5_choreo_text: "Tria <strong>un pas</strong> de la teva classe de dansa (pot ser un <em>port de bras</em>, un <em>rond de jambe</em>, un <em>chaînés</em>...) i descriu:",
+    s5_choreo_li1: "En quin <strong>pla principal</strong> ocorre?",
+    s5_choreo_li2: "Hi ha combinació de plans?",
+    s5_choreo_li3: "Quin tipus de <strong>rotació</strong> hi ha (en dehors / en dedans)?",
+    footer_text: "🩰 Fisiologia aplicada a la Dansa | Plans de Moviment",
+    fb_correct: "✅ Correcte!",
+    fb_incorrect: "❌ Revisa la secció i torna-ho a intentar."
+  },
+  en: {
+    header_title: "🔄 Planes of Movement",
+    header_subtitle: "En dehors, en dedans and the body's planes",
+    s1_title: "📐 What is a plane of movement?",
+    s1_text: "A <strong>plane</strong> is an imaginary surface (like an invisible sheet of glass) that crosses your body. Movements are described according to the plane in which they occur.",
+    s1_analogy_label: "🧠 Analogy:",
+    s1_analogy_text: "Imagine you are inside a glass box. You can move up/down (like an elevator), sideways (like a pendulum) or spinning on yourself (like a top). Each type of movement occurs in a different \"plane\".",
+    s1_three_text: "There are <strong>three main planes</strong>:",
+    s1_li1: "<strong>Sagittal plane:</strong> divides the body into left and right. Forward and backward movements.",
+    s1_li2: "<strong>Frontal plane:</strong> divides the body into front and back. Lateral movements.",
+    s1_li3: "<strong>Transverse plane:</strong> divides the body into top and bottom. Rotational movements.",
+    s2_title: "🔄 The Transverse Plane: Rotations",
+    s2_text: "In dance, the transverse plane is especially important because it is where <strong>hip rotations</strong> occur, the basis of <em>turnout</em> in ballet.",
+    s2_dehors_title: "🔓 En Dehors",
+    s2_dehors_type: "<strong>External rotation</strong>",
+    s2_dehors_text: "The limb rotates <strong>outward</strong>, moving its anterior face away from the body's midline.",
+    s2_dehors_example: "<em>Classic example:</em> hip <em>turnout</em> in ballet (knees and feet facing sideways).",
+    s2_dedans_title: "🔒 En Dedans",
+    s2_dedans_type: "<strong>Internal rotation</strong>",
+    s2_dedans_text: "The limb rotates <strong>inward</strong>, orienting its anterior face toward the center of the body.",
+    s2_dedans_example: "<em>Classic example:</em> the neutral/parallel position in contemporary dance.",
+    s2_dance_label: "💃 Dance example:",
+    s2_dance_text: "When a ballet dancer does <em>5ème position</em>, they are in maximum <em>en dehors</em>. When a contemporary dancer works in parallel, they are in <em>en dedans</em> (neutral position). Both use the transverse plane, but in opposite directions.",
+    s3_title: "🎭 Summary of the three planes",
+    s3_sagital_title: "➡️ Sagittal Plane",
+    s3_sagital_text: "Divides the body into <strong>left and right</strong>. Axis: lateral.",
+    s3_sagital_m1: "<strong>Flexion:</strong> bending (e.g. <em>plié</em>)",
+    s3_sagital_m2: "<strong>Extension:</strong> straightening (e.g. <em>cambré</em> backward)",
+    s3_frontal_title: "↕️ Frontal Plane",
+    s3_frontal_text: "Divides the body into <strong>front and back</strong>. Axis: anteroposterior.",
+    s3_frontal_m1: "<strong>Abduction:</strong> moving away from the midline (e.g. <em>à la seconde</em>)",
+    s3_frontal_m2: "<strong>Adduction:</strong> moving toward the midline",
+    s3_frontal_m3: "<strong>Lateral tilt</strong> of the trunk",
+    s3_transversal_title: "🔄 Transverse Plane",
+    s3_transversal_text: "Divides the body into <strong>top and bottom</strong>. Axis: vertical (longitudinal).",
+    s3_transversal_m1: "<strong>External rotation (en dehors)</strong>",
+    s3_transversal_m2: "<strong>Internal rotation (en dedans)</strong>",
+    s3_transversal_m3: "<strong>Pirouettes</strong>",
+    s4_title: "🩰 Application to dance technique",
+    s4_text: "Most dance steps combine movements in <strong>several planes at once</strong>. For example:",
+    s4_ex1_label: "💃 <em>Grand battement devant</em>:",
+    s4_ex1_li1: "Sagittal plane: the leg goes forward (hip flexion).",
+    s4_ex1_li2: "Transverse plane: if there is <em>turnout</em>, there is external rotation.",
+    s4_ex2_label: "💃 <em>Pirouette</em>:",
+    s4_ex2_li1: "Transverse plane: body rotation on the vertical axis.",
+    s4_ex2_li2: "Sagittal plane: support leg flexion in <em>demi-plié</em>.",
+    s4_ex2_li3: "Frontal plane: arms in a position that controls lateral balance.",
+    s5_title: "🎯 Activities",
+    s5_q1_title: "❓ Question 1: In which plane does hip <em>turnout</em> occur?",
+    s5_q1_a: "a) Sagittal plane",
+    s5_q1_b: "b) Frontal plane",
+    s5_q1_c: "c) Transverse plane",
+    s5_q2_title: "❓ Question 2: <em>En dehors</em> means...",
+    s5_q2_a: "a) External rotation: the anterior face moves away from the midline",
+    s5_q2_b: "b) Internal rotation: the anterior face moves toward the midline",
+    s5_q2_c: "c) Moving the leg forward",
+    s5_q2_d: "d) Moving the leg to the side",
+    s5_q3_title: "❓ Question 3: A <em>développé à la seconde</em> occurs mainly in...",
+    s5_q3_a: "a) Sagittal plane",
+    s5_q3_b: "b) Frontal plane",
+    s5_q3_c: "c) Transverse plane",
+    s5_practice_title: "🩰 Body practice",
+    s5_practice_text: "Stand up and perform these movements. Identify in which plane they occur:",
+    s5_practice_1: "A deep <em>plié</em> → ______ plane",
+    s5_practice_2: "Moving the leg to <em>la seconde</em> (side) → ______ plane",
+    s5_practice_3: "Rotating the leg outward from the hip → ______ plane",
+    s5_practice_4: "A complete <em>pirouette</em> → ______ plane",
+    s5_practice_5: "A <em>cambré</em> backward → ______ plane",
+    s5_practice_sol: "💡 Solutions: sagittal, frontal, transverse, transverse, sagittal.",
+    s5_choreo_title: "🎭 Choreographic analysis",
+    s5_choreo_text: "Choose <strong>a step</strong> from your dance class (it can be a <em>port de bras</em>, a <em>rond de jambe</em>, a <em>chaînés</em>...) and describe:",
+    s5_choreo_li1: "In which <strong>main plane</strong> does it occur?",
+    s5_choreo_li2: "Is there a combination of planes?",
+    s5_choreo_li3: "What type of <strong>rotation</strong> is there (en dehors / en dedans)?",
+    footer_text: "🩰 Physiology applied to Dance | Planes of Movement",
+    fb_correct: "✅ Correct!",
+    fb_incorrect: "❌ Review the section and try again."
+  }
+};
+
+function setLanguage(lang, btn) {
+  currentLang = lang;
+  document.querySelectorAll('.language-selector button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key]) {
+      el.innerHTML = translations[lang][key];
+    }
+  });
+  
+  document.documentElement.lang = lang;
+}
+
+function checkAnswer(el, isCorrect, feedbackId) {
+  const feedback = document.getElementById(feedbackId);
+  const siblings = el.parentElement.querySelectorAll('.quiz-option');
+  siblings.forEach(s => s.style.pointerEvents = 'none');
+  if (isCorrect) {
+    el.classList.add('correct');
+    feedback.className = 'feedback show ok';
+    feedback.textContent = translations[currentLang].fb_correct;
+  } else {
+    el.classList.add('incorrect');
+    feedback.className = 'feedback show bad';
+    feedback.textContent = translations[currentLang].fb_incorrect;
+    setTimeout(() => {
+      siblings.forEach(s => { s.style.pointerEvents = 'auto'; s.classList.remove('incorrect'); });
+      feedback.className = 'feedback';
+    }, 2000);
+  }
+}
+
+// Initialize with Spanish
+setLanguage('es', document.querySelector('.language-selector button'));
+</script>
+</body>
+</html>

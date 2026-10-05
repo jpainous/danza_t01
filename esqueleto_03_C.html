@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teixit Ossi i Recobriments (3) - Part Interna de l'Os</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+    position: relative;
+  }
+  header {
+    background: linear-gradient(90deg, #1e3c72, #2a5298);
+    color: white;
+    padding: 35px;
+    text-align: center;
+    position: relative;
+  }
+  header h1 { font-size: 2.1em; margin-bottom: 10px; }
+  header p { opacity: 0.95; font-size: 1.1em; }
+  header .subtitle { font-size: 0.95em; opacity: 0.85; margin-top: 8px; font-style: italic; }
+  
+  .lang-selector {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+  }
+  .lang-btn {
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.4);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85em;
+    transition: all 0.3s;
+  }
+  .lang-btn:hover { background: rgba(255,255,255,0.3); }
+  .lang-btn.active {
+    background: #fff;
+    color: #1e3c72;
+    border-color: #fff;
+  }
+  
+  .nav-tabs {
+    display: flex;
+    background: #f8f9fa;
+    flex-wrap: wrap;
+    border-bottom: 3px solid #dee2e6;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-tabs button {
+    flex: 1;
+    min-width: 140px;
+    padding: 14px 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #666;
+    transition: all 0.3s;
+    border-bottom: 4px solid transparent;
+  }
+  .nav-tabs button:hover { background: #e9ecef; color: #2a5298; }
+  .nav-tabs button.active {
+    color: #2a5298;
+    border-bottom-color: #2a5298;
+    background: white;
+  }
+  
+  .slide { display: none; padding: 30px; min-height: 600px; }
+  .slide.active { display: block; animation: fadeIn 0.5s; }
+  @keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+  
+  .slide h2 {
+    color: #1e3c72;
+    margin-bottom: 20px;
+    font-size: 1.7em;
+    border-bottom: 3px solid #2a5298;
+    padding-bottom: 10px;
+  }
+  
+  .reminder-box {
+    background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+    border-left: 5px solid #fbc02d;
+    padding: 18px;
+    margin: 20px 0;
+    border-radius: 10px;
+  }
+  
+  .reminder-box h4 { color: #f57f17; margin-bottom: 10px; font-size: 1.1em; }
+  
+  .intro-box {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-left: 5px solid #1976d2;
+    padding: 22px;
+    margin: 20px 0;
+    border-radius: 10px;
+    line-height: 1.7;
+  }
+  
+  .intro-box h3 { color: #1565c0; margin-bottom: 12px; font-size: 1.25em; }
+  
+  .concept-card {
+    background: white;
+    border: 3px solid #2a5298;
+    border-radius: 15px;
+    padding: 25px;
+    margin: 20px 0;
+    box-shadow: 0 5px 20px rgba(42,82,152,0.15);
+  }
+  
+  .concept-card h3 {
+    color: #2a5298;
+    font-size: 1.35em;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .how-it-works {
+    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border-left: 5px solid #f57c00;
+  }
+  
+  .how-it-works h4 { color: #e65100; margin-bottom: 12px; font-size: 1.15em; }
+  .how-it-works ul { margin-left: 25px; line-height: 1.8; }
+  
+  .dance-box {
+    background: linear-gradient(135deg, #fff5e6 0%, #ffe8cc 100%);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border: 2px dashed #f39c12;
+  }
+  
+  .dance-box h4 { color: #e67e22; margin-bottom: 12px; font-size: 1.15em; }
+  .dance-box ul { margin-left: 25px; line-height: 1.8; }
+  
+  .practical-activity {
+    background: linear-gradient(135deg, #e8f8f5 0%, #d5f5e3 100%);
+    padding: 22px;
+    border-radius: 15px;
+    margin: 20px 0;
+    border: 2px solid #1abc9c;
+  }
+  
+  .practical-activity h4 { color: #16a085; font-size: 1.2em; margin-bottom: 12px; }
+  .activity-steps { margin-left: 25px; line-height: 1.9; }
+  .activity-steps li { margin-bottom: 8px; }
+  .activity-steps strong { color: #16a085; }
+  
+  .diagram-container {
+    background: white;
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  
+  .diagram-container svg { max-width: 100%; height: auto; }
+  .diagram-container h4 { color: #2a5298; margin-bottom: 15px; font-size: 1.1em; }
+  
+  .tip-box {
+    background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+    padding: 16px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border-left: 5px solid #9b59b6;
+  }
+  
+  .tip-box h4 { color: #8e44ad; margin-bottom: 8px; font-size: 1.05em; }
+  
+  .highlight {
+    background: linear-gradient(120deg, #ffeaa7 0%, #ffeaa7 100%);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  
+  .emoji { font-size: 1.2em; margin-right: 6px; }
+  
+  .btn {
+    background: linear-gradient(90deg, #2a5298, #1e3c72);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 10px 5px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(42,82,152,0.3);
+  }
+  
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(42,82,152,0.4); }
+  
+  .quiz-container {
+    background: white;
+    border: 2px solid #e4e8ec;
+    border-radius: 15px;
+    padding: 25px;
+    margin: 20px 0;
+  }
+  
+  .quiz-container h3 { color: #2a5298; margin-bottom: 18px; font-size: 1.25em; }
+  
+  .question-box {
+    background: #f8f9fa;
+    border-left: 5px solid #2a5298;
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+  }
+  
+  .question-box p { font-weight: 600; margin-bottom: 12px; font-size: 1em; color: #2c3e50; }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  
+  .options label {
+    background: white;
+    border: 2px solid #dee2e6;
+    padding: 12px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    font-size: 0.93em;
+  }
+  
+  .options label:hover { border-color: #2a5298; background: #e3f2fd; }
+  .options input { margin-right: 12px; }
+  .options label.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+  .options label.incorrect { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+  
+  .feedback {
+    margin-top: 18px;
+    padding: 18px;
+    border-radius: 10px;
+    display: none;
+    font-weight: 600;
+    line-height: 1.6;
+  }
+  
+  .feedback.show { display: block; animation: fadeIn 0.3s; }
+  .feedback.success { background: #d4edda; color: #155724; border: 2px solid #28a745; }
+  .feedback.error { background: #f8d7da; color: #721c24; border: 2px solid #dc3545; }
+  
+  @media (max-width: 768px) {
+    header h1 { font-size: 1.6em; }
+    .slide { padding: 20px; }
+    .concept-card { padding: 18px; }
+    .lang-selector { position: static; justify-content: center; margin-top: 15px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="lang-selector">
+      <button class="lang-btn active" onclick="setLang('ca')" id="btn-ca">CAT</button>
+      <button class="lang-btn" onclick="setLang('es')" id="btn-es">ESP</button>
+      <button class="lang-btn" onclick="setLang('en')" id="btn-en">ENG</button>
+    </div>
+    <h1 id="t-header-title">🦴 Teixit Ossi i Recobriments</h1>
+    <p id="t-header-sub">Part 3: La Part Interna de l'Os</p>
+    <div class="subtitle" id="t-header-subtitle">Os compacte, esponjós i el "sistema de canonades" que el manté viu</div>
+  </header>
+
+  <div class="nav-tabs">
+    <button class="active" onclick="showSlide(0, this)" id="tab0">🎯 Introducció</button>
+    <button onclick="showSlide(1, this)" id="tab1">🕸️ Os esponjós</button>
+    <button onclick="showSlide(2, this)" id="tab2">🔬 Os compacte</button>
+    <button onclick="showSlide(3, this)" id="tab3">🎯 Quiz</button>
+  </div>
+
+  <div class="slide active">
+    <h2 id="t-s1-h2">🎯 Dos tipus d'os: compacte i esponjós</h2>
+    <div id="s1-content"></div>
+  </div>
+
+  <div class="slide">
+    <h2 id="t-s2-h2">🕸️ L'os esponjós i les seves "trabècules"</h2>
+    <div id="s2-content"></div>
+  </div>
+
+  <div class="slide">
+    <h2 id="t-s3-h2">🔬 L'os compacte i el "sistema de canonades"</h2>
+    <div id="s3-content"></div>
+  </div>
+
+  <div class="slide">
+    <h2 id="t-s4-h2">🎯 Quiz: Comprova el que has après</h2>
+    <div class="quiz-container">
+      <h3 id="t-s4-h3">Preguntes sobre la part interna de l'os</h3>
+      <div id="quizContainer"></div>
+      <button class="btn" onclick="checkQuiz()" id="t-btn-check">Comprovar respostes</button>
+      <button class="btn" style="background: #6c757d;" onclick="resetQuiz()" id="t-btn-reset">Reiniciar</button>
+      <div class="feedback" id="fbQuiz"></div>
+    </div>
+    <div id="finalActivity"></div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   TRADUCCIONS
+   ============================================================ */
+const I18N = {
+  ca: {
+    headerTitle: "🦴 Teixit Ossi i Recobriments",
+    headerSub: "Part 3: La Part Interna de l'Os",
+    headerSubtitle: "Os compacte, esponjós i el \"sistema de canonades\" que el manté viu",
+    tabs: ["🎯 Introducció","🕸️ Os esponjós","🔬 Os compacte","🎯 Quiz"],
+    s1h2: "🎯 Dos tipus d'os: compacte i esponjós",
+    s2h2: "🕸️ L'os esponjós i les seves \"trabècules\"",
+    s3h2: "🔬 L'os compacte i el \"sistema de canonades\"",
+    s4h2: "🎯 Quiz: Comprova el que has après",
+    s4h3: "Preguntes sobre la part interna de l'os",
+    btnCheck: "Comprovar respostes",
+    btnReset: "Reiniciar",
+    fbExcellent: (s,t) => `🏆 Excel·lent! ${s}/${t}. Entens molt bé la part interna de l'os.`,
+    fbGood: (s,t) => `👍 Bé: ${s}/${t}. Repassa els conceptes fallats.`,
+    fbBad: (s,t) => `📚 ${s}/${t}. Torna a llegir els apartats i reintenta-ho.`,
+    
+    slide1: {
+      reminderH4: "💡 Recordatori",
+      reminderP: "Als arxius anteriors vam veure el <strong>periosti</strong> (per fora), l'<strong>endosti</strong> (per dins) i el <strong>cartílag</strong> (a les articulacions). Ara mirarem <strong>dins del propi os</strong> i descobrirem que no és tot igual per dins.",
+      introH3: "L'os té dues \"personalitats\"",
+      introP: "Si tallessis un os per la meitat, veuries que té <strong>dues zones molt diferents</strong>:",
+      introUl: [
+        "<strong>Os compacte:</strong> Dur, dens, sembla marbre. Està a la part exterior i forma la \"closca\" resistent.",
+        "<strong>Os esponjós:</strong> Sembla una esponja o un encaix. Està a l'interior i als extrems dels ossos."
+      ],
+      introP2: "Tots dos són os de veritat, però estan organitzats de forma diferent perquè <span class=\"highlight\">tenen funcions diferents</span>.",
+      conceptH3: "⚖️ Per què dos tipus?",
+      howH4: "🎯 Cadascun té la seva missió",
+      howUl: [
+        "<strong>Os compacte:</strong> Dona <strong>resistència i força</strong>. És com la closca dura d'un ou: protegeix i aguanta pes.",
+        "<strong>Os esponjós:</strong> Dona <strong>lleugeresa i flexibilitat</strong>. És com l'estructura d'un pont: fort però amb forats per no pesar massa."
+      ],
+      howP: "Si tots els ossos fossin compactes (massissos), pesaríem moltíssim i no podríem ballar! La combinació de tots dos fa que siguem <strong>forts però lleugers</strong>.",
+      svgTitle: "📐 Tall d'un os llarg (com el fèmur)",
+      svgLabels: {
+        compact: "OS COMPACTE", compactSub: "(dur i resistent)",
+        spongy: "OS ESPONJÓS",
+        outer: "Exterior:", outerSub: "Compacte",
+        inner: "Interior:", innerSub: "Esponjós",
+        footer: "Fort per fora, lleuger per dins"
+      },
+      danceH4: "💃 Per què és important per a un ballarí?",
+      danceUl: [
+        "<strong>Pes corporal:</strong> Gràcies a l'os esponjós, els teus ossos són lleugers. Pots saltar alt sense carregar amb ossos massa pesats.",
+        "<strong>Resistència a l'impacte:</strong> L'os compacte de la part exterior aguanta els impactes dels aterratges.",
+        "<strong>Adaptació:</strong> Els dos tipus d'os responen de forma diferent a l'entrenament. El compacte es fa més gruixut; l'esponjós reorganitza les seves \"trabècules\" (ho veurem a l'apartat següent)."
+      ],
+      activityH4: "🎭 Activitat: \"Compara dos ossos\"",
+      activityObj: "<strong>Objectiu:</strong> Entendre la diferència entre compacte i esponjós",
+      activitySteps: [
+        "<strong>Material:</strong> Aconsegueix un os de pollastre cuit (demana a un adult que et guardi un del sopar) o mira una imatge a internet.",
+        "<strong>Observa:</strong> <ul><li>La part exterior és dura i llisa → <strong>os compacte</strong></li><li>Els extrems tenen una part amb \"foradets\" → <strong>os esponjós</strong></li><li>Al centre hi ha un forat → allà hi havia el <strong>moll d'os</strong></li></ul>",
+        "<strong>Toca:</strong> El compacte és molt dur. L'esponjós és més bla i porós.",
+        "<strong>Reflexió:</strong> Per què creus que els extrems dels ossos (on hi ha les articulacions) tenen més os esponjós? <ul><li><strong>Pista:</strong> Pensa en els impactes al ballar.</li><li><strong>Resposta:</strong> L'os esponjós actua com a \"amortidor\" a les zones d'impacte.</li></ul>"
+      ],
+      tipH4: "✨ Dada curiosa",
+      tipP: "L'os esponjós dels extrems dels ossos llargs (com el fèmur) està ple de <strong>moll d'os vermell</strong> (la \"fàbrica de sang\" que vam veure a l'arxiu 2 de la sèrie de l'esquelet). Per això, quan et fan una anàlisi de sang, de vegades en treuen mostra del maluc: allà hi ha molt moll vermell!"
+    },
+    slide2: {
+      reminderH4: "💡 Recordatori",
+      reminderP: "Acabem de veure que l'os esponjós sembla una esponja. Però aquests \"foradets\" no estan posats a l'atzar. Formen una estructura molt intel·ligent anomenada <strong>trabècules</strong>.",
+      introH3: "🕸️ Què són les trabècules?",
+      introP1: "Les <span class=\"highlight\">trabècules</span> són com \"barretes\" o \"bigues\" fines d'os que formen una xarxa dins de l'os esponjós. Si miressis un os esponjós amb una lupa, veuries una cosa semblant a un <strong>bastiment</strong> o a l'estructura d'un <strong>pont</strong>.",
+      introP2: "Entre les trabècules hi ha forats on hi ha el <strong>moll d'os</strong> (vermell o groc).",
+      conceptH3: "🧠 La màgia de les trabècules",
+      howH4: "🎯 No estan posades a l'atzar",
+      howP: "Les trabècules s'organitzen seguint les <strong>línies de força</strong> de l'os. És a dir:",
+      howUl: [
+        "<strong>On hi ha més pressió:</strong> Les trabècules es fan més gruixudes i s'orienten en aquella direcció.",
+        "<strong>On hi ha menys pressió:</strong> Les trabècules es fan més fines o desapareixen.",
+        "<strong>Resultat:</strong> L'os s'adapta exactament a les forces que rep."
+      ],
+      howP2: "Això és la <strong>Llei de Wolff</strong> (que vam veure a l'arxiu 1 de la sèrie de l'esquelet) però a nivell microscòpic.",
+      svgTitle: "📐 Les trabècules s'orienten segons la càrrega",
+      svgLabels: {
+        noLoad: "SENSE CÀRREGA (sedentari)", noLoadSub: "Trabècules fines i febles",
+        load: "AMB CÀRREGA (ballarí)", loadTag: "CÀRREGA", loadSub: "Trabècules gruixudes i orientades",
+        concl: "CONCLUSIÓ", conclP: "L'os s'adapta a les forces que rep", conclP2: "Ballar reforça l'os esponjós!"
+      },
+      danceH4: "💃 Exemple en la dansa",
+      danceUl: [
+        "<strong>Un ballarí de clàssic:</strong> Fa molts relevés i salts. Les trabècules dels seus ossos de les cames s'orienten per aguantar la càrrega vertical (de dalt a baix).",
+        "<strong>Un ballarí de breakdance:</strong> Fa molts suports a les mans i girs a terra. Les trabècules dels seus braços i canells s'orienten per aguantar aquestes forces diferents.",
+        "<strong>Una persona sedentària:</strong> Les seves trabècules es fan fines i febles perquè no reben càrrega. Els seus ossos són més fràgils."
+      ],
+      activityH4: "🎭 Activitat: \"Construeix el teu bastiment\"",
+      activityObj: "<strong>Objectiu:</strong> Entendre com les trabècules aguanten pes",
+      activitySteps: [
+        "<strong>Material:</strong> Palets de gelat (o llapis) i cola/cinta adhesiva.",
+        "<strong>Construeix dues estructures:</strong> <ul><li><strong>Estructura A:</strong> Uneix els palets a l'atzar, sense ordre.</li><li><strong>Estructura B:</strong> Uneix els palets formant triangles (com un pont).</li></ul>",
+        "<strong>Prova:</strong> Posa un llibre sobre cada estructura. Quina aguanta més pes? <ul><li>L'estructura B (triangles) aguanta més perquè les forces es distribueixen millor.</li></ul>",
+        "<strong>Relació amb l'os:</strong> Les trabècules de l'os esponjós formen triangles i rombes semblants. Per això aguanten molt pes malgrat ser fines.",
+        "<strong>Reflexió:</strong> Si un ballarí entrena bé, les seves trabècules s'organitzen com l'estructura B (forta). Si no entrena, es queden com la A (feble)."
+      ],
+      tipH4: "✨ Dada curiosa",
+      tipP: "Els enginyers que dissenyen ponts i edificis s'han inspirat en les trabècules de l'os. La natura porta milions d'anys perfeccionant aquesta estructura! Per això es diu que l'os esponjós és un <strong>\"material òptim\"</strong>: màxima resistència amb mínim pes."
+    },
+    slide3: {
+      reminderH4: "💡 Recordatori",
+      reminderP: "Hem vist que l'os compacte és dur i dens. Però si és tan compacte... <strong>com arriba la sang a les cèl·lules de l'interior?</strong> No s'\"asfixien\"? La resposta és el <strong>sistema de Havers</strong>.",
+      introH3: "🔬 El misteri de l'os compacte",
+      introP1: "L'os compacte sembla una pedra sòlida. Però si el miressis amb un microscopi, veuries que està ple de <strong>petits \"tubs\"</strong> per on circula la sang. Aquests tubs s'anomenen <span class=\"highlight\">sistema de Havers</span> (o <strong>osteones</strong>).",
+      introP2: "Sense aquest sistema, l'os compacte seria com una pedra morta. Amb ell, és un teixit viu que es nodreix i es repara.",
+      conceptH3: "🔧 Com funciona el sistema de Havers?",
+      howH4: "🚰 Imagina un \"edifici d'apartaments\"",
+      howUl: [
+        "<strong>El tub central (canal de Havers):</strong> És com l'\"ascensor\" de l'edifici. Per allà passen els vasos sanguinis i els nervis.",
+        "<strong>Les capes concèntriques (lamel·les):</strong> Són com els \"pisos\" de l'edifici, envoltant el tub central.",
+        "<strong>Les cèl·lules (osteòcits):</strong> Són com els \"veïns\" que viuen als pisos. Es comuniquen entre si per petits \"túnels\" (canalicles).",
+        "<strong>Resultat:</strong> Totes les cèl·lules de l'os, encara que estiguin \"enterrades\" a la matriu dura, reben sang i es poden comunicar."
+      ],
+      svgTitle: "El sistema de Havers (osteona)",
+      svgLabels: {
+        title: "OSTEONA (sistema de Havers)",
+        canal: "CANAL", canalLabel: "Canal de Havers", canalSub: "(sang i nervis)",
+        lamellae: "Lamel·les", lamellaeSub: "(capes d'os)",
+        osteocytes: "Osteòcits", osteocytesSub: "(cèl·lules de l'os)",
+        footer: "Així l'os compacte està viu"
+      },
+      danceH4: "💃 Per què és important per a un ballarí?",
+      danceUl: [
+        "<strong>Reparació de fractures:</strong> Quan et fas una fractura, els vasos del sistema de Havers porten les cèl·lules reparadores a la zona. Sense aquest sistema, les fractures no es curarien.",
+        "<strong>Adaptació a l'entrenament:</strong> Les cèl·lules de l'os (osteòcits) detecten les forces del ball a través dels canalicles i envien senyals per reforçar l'os.",
+        "<strong>Detecció de dany:</strong> Si hi ha microdanys (per excés d'entrenament), les cèl·lules els detecten i activen la reparació. Per això el descans és clau: dona temps que el sistema funcioni."
+      ],
+      activityH4: "🎭 Activitat: \"Simula el sistema de Havers\"",
+      activityObj: "<strong>Objectiu:</strong> Entendre com la sang arriba a totes les cèl·lules de l'os",
+      activitySteps: [
+        "<strong>Material:</strong> Un rotlle de paper de cuina (o un tub de cartró).",
+        "<strong>Simula el canal de Havers:</strong> El forat del centre del rotlle és el canal per on passa la sang.",
+        "<strong>Simula les lamel·les:</strong> Les capes de paper al voltant del forat són les lamel·les concèntriques.",
+        "<strong>Simula els osteòcits:</strong> Fes petits punts amb un bolígraf a les capes de paper. Aquests són els \"veïns\" (cèl·lules).",
+        "<strong>Simula els canalicles:</strong> Dibuixa línies fines que connectin els punts entre si i amb el centre. Aquests són els \"túnels\" de comunicació.",
+        "<strong>Reflexió:</strong> Si el canal central es bloqueja (no arriba sang), què els passa als \"veïns\" de les capes exteriors? <ul><li><strong>Resposta:</strong> S'\"asfixien\" i moren. Per això és tan important que la sang circuli bé per l'os.</li></ul>"
+      ],
+      tipH4: "✨ Dada curiosa",
+      tipP: "El sistema de Havers va ser descobert per un metge anglès anomenat <strong>Clopton Havers</strong> el 1691. Fa més de 300 anys! Però no va ser fins al segle XX que es va entendre realment la seva funció. La ciència de vegades triga a descobrir el que la natura ja porta milions d'anys fent perfectament."
+    },
+    slide4: {
+      quizData: [
+        { q: "Quins són els dos tipus d'os?",
+          opts: ["Llarg i curt","Compacte i esponjós","Dur i bla","Gran i petit"], correct: 1 },
+        { q: "On es troba principalment l'os esponjós?",
+          opts: ["A la part mitjana dels ossos llargs","Als extrems dels ossos i a l'interior","Només als ossos curts","Al periosti"], correct: 1 },
+        { q: "Què són les trabècules?",
+          opts: ["Els vasos sanguinis de l'os","Les \"barretes\" que formen la xarxa de l'os esponjós","Les cèl·lules de l'os","Els nervis del periosti"], correct: 1 },
+        { q: "Per què les trabècules són importants per a un ballarí?",
+          opts: ["Perquè fan l'os més pesat","Perquè s'orienten segons les càrregues i fan l'os més fort on més es necessita","Perquè produeixen sang","Perquè no són importants"], correct: 1 },
+        { q: "Què és el sistema de Havers?",
+          opts: ["Un tipus de cèl·lula de l'os","Els \"tubs\" per on circula la sang a l'os compacte","Una lesió òssia","Un tipus d'articulació"], correct: 1 },
+        { q: "Què passaria si el sistema de Havers no funcionés?",
+          opts: ["Res, l'os seguiria igual","Les cèl·lules de l'os s'\"asfixiarien\" i moririen","L'os es faria més fort","L'os creixeria més"], correct: 1 },
+        { q: "Per què l'os esponjós està als extrems dels ossos llargs?",
+          opts: ["Per casualitat","Perquè actua com a amortidor a les zones d'impacte (articulacions)","Perquè és més bonic","Perquè allà no hi ha os compacte"], correct: 1 },
+        { q: "Què tenen en comú l'os compacte i l'esponjós?",
+          opts: ["Els dos són igual de densos","Els dos són teixit ossi viu que s'adapta a l'entrenament","Els dos tenen la mateixa forma","No tenen res en comú"], correct: 1 }
+      ],
+      finalActivityH4: "🎭 Activitat final: \"El meu os ideal\"",
+      finalActivityObj: "<strong>Objectiu:</strong> Integrar el que has après sobre els recobriments i la part interna",
+      finalActivitySteps: [
+        "<strong>Dibuixa</strong> un os llarg (com el fèmur) al teu quadern.",
+        "<strong>Etiqueta</strong> totes les parts que has après als 3 arxius: <ul><li>Periosti (per fora)</li><li>Endosti (per dins, envoltant el moll)</li><li>Cartílag (als extrems)</li><li>Os compacte (la \"closca\")</li><li>Os esponjós (amb trabècules, als extrems)</li><li>Moll d'os (al centre i als forats de l'esponjós)</li></ul>",
+        "<strong>Explica</strong> amb les teves paraules: Per què l'os té aquesta estructura? Quins avantatges dona a un ballarí?",
+        "<strong>Prepara't</strong> per al següent arxiu: parlarem de les cèl·lules del teixit ossi (osteoblasts, osteoclasts, osteòcits) i com treballen en equip."
+      ],
+      finalSummaryH4: "🎓 Resum clau",
+      finalSummaryUl: [
+        "<strong>Os compacte:</strong> Dur i resistent, forma la \"closca\" exterior",
+        "<strong>Os esponjós:</strong> Lleuger i flexible, amb trabècules que s'adapten a les càrregues",
+        "<strong>Trabècules:</strong> S'orienten segons les forces (Llei de Wolff microscòpica)",
+        "<strong>Sistema de Havers:</strong> \"Canonades\" que porten sang a l'os compacte",
+        "<strong>Importància en dansa:</strong> Aquesta estructura ens fa forts però lleugers per ballar"
+      ]
+    }
+  },
+  es: {
+    headerTitle: "🦴 Tejido Óseo y Recubrimientos",
+    headerSub: "Parte 3: La Parte Interna del Hueso",
+    headerSubtitle: "Hueso compacto, esponjoso y el \"sistema de tuberías\" que lo mantiene vivo",
+    tabs: ["🎯 Introducción","🕸️ Hueso esponjoso","🔬 Hueso compacto","🎯 Quiz"],
+    s1h2: "🎯 Dos tipos de hueso: compacto y esponjoso",
+    s2h2: "🕸️ El hueso esponjoso y sus \"trabéculas\"",
+    s3h2: "🔬 El hueso compacto y el \"sistema de tuberías\"",
+    s4h2: "🎯 Quiz: Comprueba lo aprendido",
+    s4h3: "Preguntas sobre la parte interna del hueso",
+    btnCheck: "Comprobar respuestas",
+    btnReset: "Reiniciar",
+    fbExcellent: (s,t) => `🏆 ¡Excelente! ${s}/${t}. Entiendes muy bien la parte interna del hueso.`,
+    fbGood: (s,t) => `👍 Bien: ${s}/${t}. Repasa los conceptos fallados.`,
+    fbBad: (s,t) => `📚 ${s}/${t}. Vuelve a leer los apartados y reinténtalo.`,
+    
+    slide1: {
+      reminderH4: "💡 Recordatorio",
+      reminderP: "En los archivos anteriores vimos el <strong>periostio</strong> (por fuera), el <strong>endostio</strong> (por dentro) y el <strong>cartílago</strong> (en las articulaciones). Ahora vamos a mirar <strong>dentro del propio hueso</strong> y descubrir que no es todo igual por dentro.",
+      introH3: "El hueso tiene dos \"personalidades\"",
+      introP: "Si cortaras un hueso por la mitad, verías que tiene <strong>dos zonas muy diferentes</strong>:",
+      introUl: [
+        "<strong>Hueso compacto:</strong> Duro, denso, parece mármol. Está en la parte exterior y forma la \"cáscara\" resistente.",
+        "<strong>Hueso esponjoso:</strong> Parece una esponja o un encaje. Está en el interior y en los extremos de los huesos."
+      ],
+      introP2: "Ambos son hueso de verdad, pero están organizados de forma diferente porque <span class=\"highlight\">tienen funciones diferentes</span>.",
+      conceptH3: "⚖️ ¿Por qué dos tipos?",
+      howH4: "🎯 Cada uno tiene su misión",
+      howUl: [
+        "<strong>Hueso compacto:</strong> Da <strong>resistencia y fuerza</strong>. Es como la cáscara dura de un huevo: protege y aguanta peso.",
+        "<strong>Hueso esponjoso:</strong> Da <strong>ligereza y flexibilidad</strong>. Es como la estructura de un puente: fuerte pero con huecos para no pesar demasiado."
+      ],
+      howP: "Si todos los huesos fueran compactos (macizos), ¡pesaríamos muchísimo y no podríamos bailar! La combinación de ambos hace que seamos <strong>fuertes pero ligeros</strong>.",
+      svgTitle: "📐 Corte de un hueso largo (como el fémur)",
+      svgLabels: {
+        compact: "HUESO COMPACTO", compactSub: "(duro y resistente)",
+        spongy: "HUESO ESPONJOSO",
+        outer: "Exterior:", outerSub: "Compacto",
+        inner: "Interior:", innerSub: "Esponjoso",
+        footer: "Fuerte por fuera, ligero por dentro"
+      },
+      danceH4: "💃 ¿Por qué es importante para un bailarín?",
+      danceUl: [
+        "<strong>Peso corporal:</strong> Gracias al hueso esponjoso, tus huesos son ligeros. Puedes saltar alto sin cargar con huesos demasiado pesados.",
+        "<strong>Resistencia al impacto:</strong> El hueso compacto de la parte exterior aguanta los impactos de los aterrizajes.",
+        "<strong>Adaptación:</strong> Los dos tipos de hueso responden de forma diferente al entrenamiento. El compacto se hace más grueso; el esponjoso reorganiza sus \"trabéculas\" (lo veremos en el siguiente apartado)."
+      ],
+      activityH4: "🎭 Actividad: \"Compara dos huesos\"",
+      activityObj: "<strong>Objetivo:</strong> Entender la diferencia entre compacto y esponjoso",
+      activitySteps: [
+        "<strong>Material:</strong> Consigue un hueso de pollo cocido (pide a un adulto que te guarde uno de la cena) o mira una imagen en internet.",
+        "<strong>Observa:</strong> <ul><li>La parte exterior es dura y lisa → <strong>hueso compacto</strong></li><li>Los extremos tienen una parte con \"agujeritos\" → <strong>hueso esponjoso</strong></li><li>En el centro hay un hueco → ahí estaba la <strong>médula ósea</strong></li></ul>",
+        "<strong>Toca:</strong> El compacto es muy duro. El esponjoso es más blando y poroso.",
+        "<strong>Reflexión:</strong> ¿Por qué crees que los extremos de los huesos (donde están las articulaciones) tienen más hueso esponjoso? <ul><li><strong>Pista:</strong> Piensa en los impactos al bailar.</li><li><strong>Respuesta:</strong> El hueso esponjoso actúa como \"amortiguador\" en las zonas de impacto.</li></ul>"
+      ],
+      tipH4: "✨ Dato curioso",
+      tipP: "El hueso esponjoso de los extremos de los huesos largos (como el fémur) está lleno de <strong>médula ósea roja</strong> (la \"fábrica de sangre\" que vimos en el archivo 2 de la serie del esqueleto). Por eso, cuando te hacen un análisis de sangre, a veces sacan muestra de la cadera: ¡ahí hay mucha médula roja!"
+    },
+    slide2: {
+      reminderH4: "💡 Recordatorio",
+      reminderP: "Acabamos de ver que el hueso esponjoso parece una esponja. Pero esos \"agujeritos\" no están puestos al azar. Forman una estructura muy inteligente llamada <strong>trabéculas</strong>.",
+      introH3: "🕸️ ¿Qué son las trabéculas?",
+      introP1: "Las <span class=\"highlight\">trabéculas</span> son como \"barritas\" o \"vigas\" finas de hueso que forman una red dentro del hueso esponjoso. Si miraras un hueso esponjoso con una lupa, verías algo parecido a un <strong>andamio</strong> o a la estructura de un <strong>puente</strong>.",
+      introP2: "Entre las trabéculas hay huecos donde está la <strong>médula ósea</strong> (roja o amarilla).",
+      conceptH3: "🧠 La magia de las trabéculas",
+      howH4: "🎯 No están puestas al azar",
+      howP: "Las trabéculas se organizan siguiendo las <strong>líneas de fuerza</strong> del hueso. Es decir:",
+      howUl: [
+        "<strong>Donde hay más presión:</strong> Las trabéculas se hacen más gruesas y se orientan en esa dirección.",
+        "<strong>Donde hay menos presión:</strong> Las trabéculas se hacen más finas o desaparecen.",
+        "<strong>Resultado:</strong> El hueso se adapta exactamente a las fuerzas que recibe."
+      ],
+      howP2: "Esto es la <strong>Ley de Wolff</strong> (que vimos en el archivo 1 de la serie del esqueleto) pero a nivel microscópico.",
+      svgTitle: "📐 Las trabéculas se orientan según la carga",
+      svgLabels: {
+        noLoad: "SIN CARGA (sedentario)", noLoadSub: "Trabéculas finas y débiles",
+        load: "CON CARGA (bailarín)", loadTag: "CARGA", loadSub: "Trabéculas gruesas y orientadas",
+        concl: "CONCLUSIÓN", conclP: "El hueso se adapta a las fuerzas que recibe", conclP2: "¡Bailar fortalece el hueso esponjoso!"
+      },
+      danceH4: "💃 Ejemplo en la danza",
+      danceUl: [
+        "<strong>Un bailarín de clásico:</strong> Hace muchos relevés y saltos. Las trabéculas de sus huesos de las piernas se orientan para aguantar la carga vertical (de arriba a abajo).",
+        "<strong>Un bailarín de breakdance:</strong> Hace muchos apoyos en las manos y giros en el suelo. Las trabéculas de sus brazos y muñecas se orientan para aguantar esas fuerzas diferentes.",
+        "<strong>Una persona sedentaria:</strong> Sus trabéculas se hacen finas y débiles porque no reciben carga. Sus huesos son más frágiles."
+      ],
+      activityH4: "🎭 Actividad: \"Construye tu andamio\"",
+      activityObj: "<strong>Objetivo:</strong> Entender cómo las trabéculas aguantan peso",
+      activitySteps: [
+        "<strong>Material:</strong> Palitos de helado (o lápices) y pegamento/cinta adhesiva.",
+        "<strong>Construye dos estructuras:</strong> <ul><li><strong>Estructura A:</strong> Une los palitos al azar, sin orden.</li><li><strong>Estructura B:</strong> Une los palitos formando triángulos (como un puente).</li></ul>",
+        "<strong>Prueba:</strong> Pon un libro encima de cada estructura. ¿Cuál aguanta más peso? <ul><li>La estructura B (triángulos) aguanta más porque las fuerzas se distribuyen mejor.</li></ul>",
+        "<strong>Relación con el hueso:</strong> Las trabéculas del hueso esponjoso forman triángulos y rombos parecidos. Por eso aguantan mucho peso a pesar de ser finas.",
+        "<strong>Reflexión:</strong> Si un bailarín entrena bien, sus trabéculas se organizan como la estructura B (fuerte). Si no entrena, se quedan como la A (débil)."
+      ],
+      tipH4: "✨ Dato curioso",
+      tipP: "Los ingenieros que diseñan puentes y edificios se han inspirado en las trabéculas del hueso. ¡La naturaleza lleva millones de años perfeccionando esta estructura! Por eso se dice que el hueso esponjoso es un <strong>\"material óptimo\"</strong>: máxima resistencia con mínimo peso."
+    },
+    slide3: {
+      reminderH4: "💡 Recordatorio",
+      reminderP: "Hemos visto que el hueso compacto es duro y denso. Pero si es tan compacto... <strong>¿cómo llega la sangre a las células del interior?</strong> ¿No se \"asfixian\"? La respuesta es el <strong>sistema de Havers</strong>.",
+      introH3: "🔬 El misterio del hueso compacto",
+      introP1: "El hueso compacto parece una piedra sólida. Pero si lo miraras con un microscopio, verías que está lleno de <strong>pequeños \"tubos\"</strong> por donde circula la sangre. Estos tubos se llaman <span class=\"highlight\">sistema de Havers</span> (o <strong>osteonas</strong>).",
+      introP2: "Sin este sistema, el hueso compacto sería como una piedra muerta. Con él, es un tejido vivo que se nutre y se repara.",
+      conceptH3: "🔧 ¿Cómo funciona el sistema de Havers?",
+      howH4: "🚰 Imagina un \"edificio de apartamentos\"",
+      howUl: [
+        "<strong>El tubo central (canal de Havers):</strong> Es como el \"ascensor\" del edificio. Por ahí pasan los vasos sanguíneos y los nervios.",
+        "<strong>Las capas concéntricas (laminillas):</strong> Son como los \"pisos\" del edificio, rodeando el tubo central.",
+        "<strong>Las células (osteocitos):</strong> Son como los \"vecinos\" que viven en los pisos. Se comunican entre sí por pequeños \"túneles\" (canalículos).",
+        "<strong>Resultado:</strong> Todas las células del hueso, aunque estén \"enterradas\" en la matriz dura, reciben sangre y pueden comunicarse."
+      ],
+      svgTitle: "El sistema de Havers (osteona)",
+      svgLabels: {
+        title: "OSTEONA (sistema de Havers)",
+        canal: "CANAL", canalLabel: "Canal de Havers", canalSub: "(sangre y nervios)",
+        lamellae: "Laminillas", lamellaeSub: "(capas de hueso)",
+        osteocytes: "Osteocitos", osteocytesSub: "(células del hueso)",
+        footer: "Así el hueso compacto está vivo"
+      },
+      danceH4: "💃 ¿Por qué es importante para un bailarín?",
+      danceUl: [
+        "<strong>Reparación de fracturas:</strong> Cuando te haces una fractura, los vasos del sistema de Havers llevan las células reparadoras a la zona. Sin este sistema, las fracturas no se curarían.",
+        "<strong>Adaptación al entrenamiento:</strong> Las células del hueso (osteocitos) detectan las fuerzas del baile a través de los canalículos y envían señales para fortalecer el hueso.",
+        "<strong>Detección de daño:</strong> Si hay microdaños (por exceso de entrenamiento), las células los detectan y activan la reparación. Por eso el descanso es clave: da tiempo a que el sistema funcione."
+      ],
+      activityH4: "🎭 Actividad: \"Simula el sistema de Havers\"",
+      activityObj: "<strong>Objetivo:</strong> Entender cómo la sangre llega a todas las células del hueso",
+      activitySteps: [
+        "<strong>Material:</strong> Un rollo de papel de cocina (o un tubo de cartón).",
+        "<strong>Simula el canal de Havers:</strong> El agujero del centro del rollo es el canal por donde pasa la sangre.",
+        "<strong>Simula las laminillas:</strong> Las capas de papel alrededor del agujero son las laminillas concéntricas.",
+        "<strong>Simula los osteocitos:</strong> Haz pequeños puntos con un bolígrafo en las capas de papel. Esos son los \"vecinos\" (células).",
+        "<strong>Simula los canalículos:</strong> Dibuja líneas finas que conecten los puntos entre sí y con el centro. Esos son los \"túneles\" de comunicación.",
+        "<strong>Reflexión:</strong> Si el canal central se bloquea (no llega sangre), ¿qué les pasa a los \"vecinos\" de las capas exteriores? <ul><li><strong>Respuesta:</strong> Se \"asfixian\" y mueren. Por eso es tan importante que la sangre circule bien por el hueso.</li></ul>"
+      ],
+      tipH4: "✨ Dato curioso",
+      tipP: "El sistema de Havers fue descubierto por un médico inglés llamado <strong>Clopton Havers</strong> en 1691. ¡Hace más de 300 años! Pero no fue hasta el siglo XX que se entendió realmente su función. La ciencia a veces tarda en descubrir lo que la naturaleza ya lleva millones de años haciendo perfectamente."
+    },
+    slide4: {
+      quizData: [
+        { q: "¿Cuáles son los dos tipos de hueso?",
+          opts: ["Largo y corto","Compacto y esponjoso","Duro y blando","Grande y pequeño"], correct: 1 },
+        { q: "¿Dónde se encuentra principalmente el hueso esponjoso?",
+          opts: ["En la parte media de los huesos largos","En los extremos de los huesos y en el interior","Solo en los huesos cortos","En el periostio"], correct: 1 },
+        { q: "¿Qué son las trabéculas?",
+          opts: ["Los vasos sanguíneos del hueso","Las 'barritas' que forman la red del hueso esponjoso","Las células del hueso","Los nervios del periostio"], correct: 1 },
+        { q: "¿Por qué las trabéculas son importantes para un bailarín?",
+          opts: ["Porque hacen el hueso más pesado","Porque se orientan según las cargas y hacen el hueso más fuerte donde más se necesita","Porque producen sangre","Porque no son importantes"], correct: 1 },
+        { q: "¿Qué es el sistema de Havers?",
+          opts: ["Un tipo de célula del hueso","Los 'tubos' por donde circula la sangre en el hueso compacto","Una lesión ósea","Un tipo de articulación"], correct: 1 },
+        { q: "¿Qué pasaría si el sistema de Havers no funcionara?",
+          opts: ["Nada, el hueso seguiría igual","Las células del hueso se 'asfixiarían' y morirían","El hueso se haría más fuerte","El hueso crecería más"], correct: 1 },
+        { q: "¿Por qué el hueso esponjoso está en los extremos de los huesos largos?",
+          opts: ["Por casualidad","Porque actúa como amortiguador en las zonas de impacto (articulaciones)","Porque es más bonito","Porque ahí no hay hueso compacto"], correct: 1 },
+        { q: "¿Qué tienen en común el hueso compacto y el esponjoso?",
+          opts: ["Los dos son igual de densos","Los dos son tejido óseo vivo que se adapta al entrenamiento","Los dos tienen la misma forma","Nada en común"], correct: 1 }
+      ],
+      finalActivityH4: "🎭 Actividad final: \"Mi hueso ideal\"",
+      finalActivityObj: "<strong>Objetivo:</strong> Integrar lo aprendido sobre los recubrimientos y la parte interna",
+      finalActivitySteps: [
+        "<strong>Dibuja</strong> un hueso largo (como el fémur) en tu cuaderno.",
+        "<strong>Etiqueta</strong> todas las partes que has aprendido en los 3 archivos: <ul><li>Periostio (por fuera)</li><li>Endostio (por dentro, rodeando la médula)</li><li>Cartílago (en los extremos)</li><li>Hueso compacto (la \"cáscara\")</li><li>Hueso esponjoso (con trabéculas, en los extremos)</li><li>Médula ósea (en el centro y en los huecos del esponjoso)</li></ul>",
+        "<strong>Explica</strong> con tus palabras: ¿Por qué el hueso tiene esta estructura? ¿Qué ventajas le da a un bailarín?",
+        "<strong>Prepárate</strong> para el siguiente archivo: hablaremos de las células del tejido óseo (osteoblastos, osteoclastos, osteocitos) y cómo trabajan en equipo."
+      ],
+      finalSummaryH4: "🎓 Resumen clave",
+      finalSummaryUl: [
+        "<strong>Hueso compacto:</strong> Duro y resistente, forma la \"cáscara\" exterior",
+        "<strong>Hueso esponjoso:</strong> Ligero y flexible, con trabéculas que se adaptan a las cargas",
+        "<strong>Trabéculas:</strong> Se orientan según las fuerzas (Ley de Wolff microscópica)",
+        "<strong>Sistema de Havers:</strong> \"Tuberías\" que llevan sangre al hueso compacto",
+        "<strong>Importancia en danza:</strong> Esta estructura nos hace fuertes pero ligeros para bailar"
+      ]
+    }
+  },
+  en: {
+    headerTitle: "🦴 Bone Tissue and Coverings",
+    headerSub: "Part 3: The Inside of Bone",
+    headerSubtitle: "Compact bone, spongy bone and the \"plumbing system\" that keeps it alive",
+    tabs: ["🎯 Introduction","🕸️ Spongy bone","🔬 Compact bone","🎯 Quiz"],
+    s1h2: "🎯 Two types of bone: compact and spongy",
+    s2h2: "🕸️ Spongy bone and its \"trabeculae\"",
+    s3h2: "🔬 Compact bone and the \"plumbing system\"",
+    s4h2: "🎯 Quiz: Check what you've learned",
+    s4h3: "Questions about the inside of bone",
+    btnCheck: "Check answers",
+    btnReset: "Reset",
+    fbExcellent: (s,t) => `🏆 Excellent! ${s}/${t}. You understand the inside of bone very well.`,
+    fbGood: (s,t) => `👍 Good: ${s}/${t}. Review the concepts you missed.`,
+    fbBad: (s,t) => `📚 ${s}/${t}. Re-read the sections and try again.`,
+    
+    slide1: {
+      reminderH4: "💡 Reminder",
+      reminderP: "In the previous files we saw the <strong>periosteum</strong> (outside), the <strong>endosteum</strong> (inside) and the <strong>cartilage</strong> (at the joints). Now we will look <strong>inside the bone itself</strong> and discover that it is not all the same inside.",
+      introH3: "Bone has two \"personalities\"",
+      introP: "If you cut a bone in half, you would see that it has <strong>two very different zones</strong>:",
+      introUl: [
+        "<strong>Compact bone:</strong> Hard, dense, looks like marble. It is on the outside and forms the resistant \"shell\".",
+        "<strong>Spongy bone:</strong> Looks like a sponge or lace. It is inside and at the ends of bones."
+      ],
+      introP2: "Both are real bone, but they are organised differently because <span class=\"highlight\">they have different functions</span>.",
+      conceptH3: "⚖️ Why two types?",
+      howH4: "🎯 Each has its mission",
+      howUl: [
+        "<strong>Compact bone:</strong> Provides <strong>resistance and strength</strong>. It is like the hard shell of an egg: protects and bears weight.",
+        "<strong>Spongy bone:</strong> Provides <strong>lightness and flexibility</strong>. It is like the structure of a bridge: strong but with gaps so it doesn't weigh too much."
+      ],
+      howP: "If all bones were compact (solid), we would weigh a huge amount and could not dance! The combination of both makes us <strong>strong but light</strong>.",
+      svgTitle: "📐 Cross-section of a long bone (like the femur)",
+      svgLabels: {
+        compact: "COMPACT BONE", compactSub: "(hard and resistant)",
+        spongy: "SPONGY BONE",
+        outer: "Outside:", outerSub: "Compact",
+        inner: "Inside:", innerSub: "Spongy",
+        footer: "Strong on the outside, light on the inside"
+      },
+      danceH4: "💃 Why is it important for a dancer?",
+      danceUl: [
+        "<strong>Body weight:</strong> Thanks to spongy bone, your bones are light. You can jump high without carrying bones that are too heavy.",
+        "<strong>Impact resistance:</strong> The compact bone on the outside withstands the impacts of landings.",
+        "<strong>Adaptation:</strong> The two types of bone respond differently to training. Compact bone becomes thicker; spongy bone reorganises its \"trabeculae\" (we will see this in the next section)."
+      ],
+      activityH4: "🎭 Activity: \"Compare two bones\"",
+      activityObj: "<strong>Objective:</strong> Understand the difference between compact and spongy",
+      activitySteps: [
+        "<strong>Material:</strong> Get a cooked chicken bone (ask an adult to save one from dinner) or look at an image online.",
+        "<strong>Observe:</strong> <ul><li>The outside is hard and smooth → <strong>compact bone</strong></li><li>The ends have a part with \"little holes\" → <strong>spongy bone</strong></li><li>In the centre there is a gap → that is where the <strong>bone marrow</strong> was</li></ul>",
+        "<strong>Touch:</strong> The compact part is very hard. The spongy part is softer and more porous.",
+        "<strong>Reflection:</strong> Why do you think the ends of bones (where the joints are) have more spongy bone? <ul><li><strong>Hint:</strong> Think about the impacts when dancing.</li><li><strong>Answer:</strong> Spongy bone acts as a \"shock absorber\" in impact zones.</li></ul>"
+      ],
+      tipH4: "✨ Fun fact",
+      tipP: "The spongy bone at the ends of long bones (like the femur) is full of <strong>red bone marrow</strong> (the \"blood factory\" we saw in file 2 of the skeleton series). That is why, when you have a blood test, a sample is sometimes taken from the hip: there is a lot of red marrow there!"
+    },
+    slide2: {
+      reminderH4: "💡 Reminder",
+      reminderP: "We have just seen that spongy bone looks like a sponge. But those \"little holes\" are not placed at random. They form a very intelligent structure called <strong>trabeculae</strong>.",
+      introH3: "🕸️ What are trabeculae?",
+      introP1: "<span class=\"highlight\">Trabeculae</span> are like thin \"rods\" or \"beams\" of bone that form a network inside spongy bone. If you looked at spongy bone with a magnifying glass, you would see something similar to a <strong>scaffold</strong> or the structure of a <strong>bridge</strong>.",
+      introP2: "Between the trabeculae there are gaps where the <strong>bone marrow</strong> is (red or yellow).",
+      conceptH3: "🧠 The magic of trabeculae",
+      howH4: "🎯 They are not placed at random",
+      howP: "Trabeculae organise themselves following the bone's <strong>lines of force</strong>. That is:",
+      howUl: [
+        "<strong>Where there is more pressure:</strong> Trabeculae become thicker and orient themselves in that direction.",
+        "<strong>Where there is less pressure:</strong> Trabeculae become thinner or disappear.",
+        "<strong>Result:</strong> Bone adapts exactly to the forces it receives."
+      ],
+      howP2: "This is <strong>Wolff's Law</strong> (which we saw in file 1 of the skeleton series) but at a microscopic level.",
+      svgTitle: "📐 Trabeculae orient themselves according to load",
+      svgLabels: {
+        noLoad: "NO LOAD (sedentary)", noLoadSub: "Thin and weak trabeculae",
+        load: "WITH LOAD (dancer)", loadTag: "LOAD", loadSub: "Thick and oriented trabeculae",
+        concl: "CONCLUSION", conclP: "Bone adapts to the forces it receives", conclP2: "Dancing strengthens spongy bone!"
+      },
+      danceH4: "💃 Example in dance",
+      danceUl: [
+        "<strong>A classical dancer:</strong> Does many relevés and jumps. The trabeculae of the leg bones orient themselves to bear the vertical load (top to bottom).",
+        "<strong>A breakdancer:</strong> Does many hand supports and floor spins. The trabeculae of the arms and wrists orient themselves to bear these different forces.",
+        "<strong>A sedentary person:</strong> Their trabeculae become thin and weak because they receive no load. Their bones are more fragile."
+      ],
+      activityH4: "🎭 Activity: \"Build your scaffold\"",
+      activityObj: "<strong>Objective:</strong> Understand how trabeculae bear weight",
+      activitySteps: [
+        "<strong>Material:</strong> Ice-lolly sticks (or pencils) and glue/tape.",
+        "<strong>Build two structures:</strong> <ul><li><strong>Structure A:</strong> Join the sticks at random, in no order.</li><li><strong>Structure B:</strong> Join the sticks forming triangles (like a bridge).</li></ul>",
+        "<strong>Test:</strong> Put a book on each structure. Which bears more weight? <ul><li>Structure B (triangles) bears more because the forces are distributed better.</li></ul>",
+        "<strong>Relation to bone:</strong> The trabeculae of spongy bone form similar triangles and diamonds. That is why they bear a lot of weight despite being thin.",
+        "<strong>Reflection:</strong> If a dancer trains well, their trabeculae organise themselves like structure B (strong). If they don't train, they stay like A (weak)."
+      ],
+      tipH4: "✨ Fun fact",
+      tipP: "Engineers who design bridges and buildings have been inspired by bone trabeculae. Nature has spent millions of years perfecting this structure! That is why spongy bone is called an <strong>\"optimal material\"</strong>: maximum resistance with minimum weight."
+    },
+    slide3: {
+      reminderH4: "💡 Reminder",
+      reminderP: "We have seen that compact bone is hard and dense. But if it is so compact... <strong>how does blood reach the cells inside?</strong> Don't they \"suffocate\"? The answer is the <strong>Haversian system</strong>.",
+      introH3: "🔬 The mystery of compact bone",
+      introP1: "Compact bone looks like a solid stone. But if you looked at it under a microscope, you would see that it is full of <strong>small \"tubes\"</strong> through which blood circulates. These tubes are called the <span class=\"highlight\">Haversian system</span> (or <strong>osteons</strong>).",
+      introP2: "Without this system, compact bone would be like a dead stone. With it, it is a living tissue that nourishes itself and repairs itself.",
+      conceptH3: "🔧 How does the Haversian system work?",
+      howH4: "🚰 Imagine an \"apartment building\"",
+      howUl: [
+        "<strong>The central tube (Haversian canal):</strong> It is like the building's \"lift\". Blood vessels and nerves pass through it.",
+        "<strong>The concentric layers (lamellae):</strong> They are like the \"floors\" of the building, surrounding the central tube.",
+        "<strong>The cells (osteocytes):</strong> They are like the \"neighbours\" who live on the floors. They communicate with each other through small \"tunnels\" (canaliculi).",
+        "<strong>Result:</strong> All the bone cells, even though they are \"buried\" in the hard matrix, receive blood and can communicate."
+      ],
+      svgTitle: "The Haversian system (osteon)",
+      svgLabels: {
+        title: "OSTEON (Haversian system)",
+        canal: "CANAL", canalLabel: "Haversian canal", canalSub: "(blood and nerves)",
+        lamellae: "Lamellae", lamellaeSub: "(bone layers)",
+        osteocytes: "Osteocytes", osteocytesSub: "(bone cells)",
+        footer: "This is how compact bone stays alive"
+      },
+      danceH4: "💃 Why is it important for a dancer?",
+      danceUl: [
+        "<strong>Fracture repair:</strong> When you get a fracture, the vessels of the Haversian system carry repair cells to the area. Without this system, fractures would not heal.",
+        "<strong>Adaptation to training:</strong> Bone cells (osteocytes) detect the forces of dance through the canaliculi and send signals to strengthen the bone.",
+        "<strong>Damage detection:</strong> If there is micro-damage (from overtraining), the cells detect it and activate repair. That is why rest is key: it gives the system time to work."
+      ],
+      activityH4: "🎭 Activity: \"Simulate the Haversian system\"",
+      activityObj: "<strong>Objective:</strong> Understand how blood reaches all bone cells",
+      activitySteps: [
+        "<strong>Material:</strong> A kitchen paper roll (or a cardboard tube).",
+        "<strong>Simulate the Haversian canal:</strong> The hole in the centre of the roll is the canal through which blood passes.",
+        "<strong>Simulate the lamellae:</strong> The paper layers around the hole are the concentric lamellae.",
+        "<strong>Simulate the osteocytes:</strong> Make small dots with a pen on the paper layers. These are the \"neighbours\" (cells).",
+        "<strong>Simulate the canaliculi:</strong> Draw thin lines connecting the dots to each other and to the centre. These are the communication \"tunnels\".",
+        "<strong>Reflection:</strong> If the central canal is blocked (no blood arrives), what happens to the \"neighbours\" in the outer layers? <ul><li><strong>Answer:</strong> They \"suffocate\" and die. That is why it is so important that blood circulates well through bone.</li></ul>"
+      ],
+      tipH4: "✨ Fun fact",
+      tipP: "The Haversian system was discovered by an English doctor named <strong>Clopton Havers</strong> in 1691. Over 300 years ago! But it was not until the 20th century that its function was truly understood. Science sometimes takes time to discover what nature has been doing perfectly for millions of years."
+    },
+    slide4: {
+      quizData: [
+        { q: "What are the two types of bone?",
+          opts: ["Long and short","Compact and spongy","Hard and soft","Big and small"], correct: 1 },
+        { q: "Where is spongy bone mainly found?",
+          opts: ["In the middle of long bones","At the ends of bones and inside","Only in short bones","In the periosteum"], correct: 1 },
+        { q: "What are trabeculae?",
+          opts: ["The blood vessels of bone","The 'rods' that form the network of spongy bone","The bone cells","The nerves of the periosteum"], correct: 1 },
+        { q: "Why are trabeculae important for a dancer?",
+          opts: ["Because they make bone heavier","Because they orient themselves according to loads and make bone stronger where it is most needed","Because they produce blood","Because they are not important"], correct: 1 },
+        { q: "What is the Haversian system?",
+          opts: ["A type of bone cell","The 'tubes' through which blood circulates in compact bone","A bone injury","A type of joint"], correct: 1 },
+        { q: "What would happen if the Haversian system did not work?",
+          opts: ["Nothing, bone would stay the same","The bone cells would 'suffocate' and die","Bone would become stronger","Bone would grow more"], correct: 1 },
+        { q: "Why is spongy bone at the ends of long bones?",
+          opts: ["By chance","Because it acts as a shock absorber in impact zones (joints)","Because it looks nicer","Because there is no compact bone there"], correct: 1 },
+        { q: "What do compact and spongy bone have in common?",
+          opts: ["Both are equally dense","Both are living bone tissue that adapts to training","Both have the same shape","Nothing in common"], correct: 1 }
+      ],
+      finalActivityH4: "🎭 Final activity: \"My ideal bone\"",
+      finalActivityObj: "<strong>Objective:</strong> Integrate what you've learned about coverings and the inside",
+      finalActivitySteps: [
+        "<strong>Draw</strong> a long bone (like the femur) in your notebook.",
+        "<strong>Label</strong> all the parts you have learned in the 3 files: <ul><li>Periosteum (outside)</li><li>Endosteum (inside, surrounding the marrow)</li><li>Cartilage (at the ends)</li><li>Compact bone (the \"shell\")</li><li>Spongy bone (with trabeculae, at the ends)</li><li>Bone marrow (in the centre and in the gaps of the spongy bone)</li></ul>",
+        "<strong>Explain</strong> in your own words: Why does bone have this structure? What advantages does it give a dancer?",
+        "<strong>Prepare</strong> for the next file: we will talk about bone tissue cells (osteoblasts, osteoclasts, osteocytes) and how they work as a team."
+      ],
+      finalSummaryH4: "🎓 Key summary",
+      finalSummaryUl: [
+        "<strong>Compact bone:</strong> Hard and resistant, forms the outer \"shell\"",
+        "<strong>Spongy bone:</strong> Light and flexible, with trabeculae that adapt to loads",
+        "<strong>Trabeculae:</strong> Orient themselves according to forces (microscopic Wolff's Law)",
+        "<strong>Haversian system:</strong> \"Pipes\" that carry blood to compact bone",
+        "<strong>Importance in dance:</strong> This structure makes us strong but light for dancing"
+      ]
+    }
+  }
+};
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+let currentLang = 'ca';
+
+function showSlide(i, btn) {
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.slide')[i].classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  const t = I18N[lang];
+  
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + lang).classList.add('active');
+  
+  document.getElementById('t-header-title').textContent = t.headerTitle;
+  document.getElementById('t-header-sub').textContent = t.headerSub;
+  document.getElementById('t-header-subtitle').textContent = t.headerSubtitle;
+  t.tabs.forEach((tab, i) => { document.getElementById('tab' + i).textContent = tab; });
+  
+  document.getElementById('t-s1-h2').textContent = t.s1h2;
+  document.getElementById('t-s2-h2').textContent = t.s2h2;
+  document.getElementById('t-s3-h2').textContent = t.s3h2;
+  document.getElementById('t-s4-h2').textContent = t.s4h2;
+  document.getElementById('t-s4-h3').textContent = t.s4h3;
+  document.getElementById('t-btn-check').textContent = t.btnCheck;
+  document.getElementById('t-btn-reset').textContent = t.btnReset;
+  
+  renderSlide1(t.slide1);
+  renderSlide2(t.slide2);
+  renderSlide3(t.slide3);
+  renderSlide4(t.slide4);
+}
+
+/* ---------- SLIDE 1 ---------- */
+function renderSlide1(d) {
+  document.getElementById('s1-content').innerHTML = `
+    <div class="reminder-box">
+      <h4>${d.reminderH4}</h4>
+      <p>${d.reminderP}</p>
+    </div>
+    
+    <div class="intro-box">
+      <h3>${d.introH3}</h3>
+      <p>${d.introP}</p>
+      <ul style="margin-left: 25px; margin-top: 10px; line-height: 1.8;">
+        ${d.introUl.map(x => `<li>${x}</li>`).join('')}
+      </ul>
+      <p style="margin-top: 12px;">${d.introP2}</p>
+    </div>
+    
+    <div class="concept-card">
+      <h3><span class="emoji">⚖️</span> ${d.conceptH3}</h3>
+      <div class="how-it-works">
+        <h4>${d.howH4}</h4>
+        <ul>${d.howUl.map(x => `<li>${x}</li>`).join('')}</ul>
+        <p style="margin-top: 12px;">${d.howP}</p>
+      </div>
+    </div>
+    
+    <div class="diagram-container">
+      <h4>${d.svgTitle}</h4>
+      <svg viewBox="0 0 700 320">
+        <rect x="200" y="30" width="300" height="260" fill="#f5f5f5" stroke="#999" stroke-width="2" rx="10"/>
+        <rect x="220" y="50" width="260" height="220" fill="#bdc3c7" opacity="0.6" rx="5"/>
+        <text x="350" y="70" text-anchor="middle" font-size="11" fill="#2c3e50" font-weight="bold">${d.svgLabels.compact}</text>
+        <text x="350" y="85" text-anchor="middle" font-size="9" fill="#7f8c8d">${d.svgLabels.compactSub}</text>
+        
+        <rect x="250" y="100" width="200" height="140" fill="#ecf0f1" stroke="#95a5a6" stroke-width="1" rx="5"/>
+        <line x1="270" y1="120" x2="310" y2="155" stroke="#95a5a6" stroke-width="2"/>
+        <line x1="310" y1="120" x2="350" y2="155" stroke="#95a5a6" stroke-width="2"/>
+        <line x1="350" y1="120" x2="390" y2="155" stroke="#95a5a6" stroke-width="2"/>
+        <line x1="390" y1="120" x2="430" y2="155" stroke="#95a5a6" stroke-width="2"/>
+        <line x1="270" y1="155" x2="310" y2="190" stroke="#95a5a6" stroke-width="2"/>
+        <line x1="310" y1="155" x2="350" y2="190" stroke="#95a5a6" stroke-width="2"/>
+        <line x1="350" y1="155" x2="390" y2="190" stroke="#95a5a6" stroke-width="2"/>
+        <line x1="390" y1="155" x2="430" y2="190" stroke="#95a5a6" stroke-width="2"/>
+        <line x1="270" y1="190" x2="310" y2="225" stroke="#95a5a6" stroke-width="2"/>
+        <line x1="310" y1="190" x2="350" y2="225" stroke="#95a5a6" stroke-width="2"/>
+        <line x1="350" y1="190" x2="390" y2="225" stroke="#95a5a6" stroke-width="2"/>
+        <line x1="390" y1="190" x2="430" y2="225" stroke="#95a5a6" stroke-width="2"/>
+        <text x="350" y="168" text-anchor="middle" font-size="10" fill="#2c3e50" font-weight="bold">${d.svgLabels.spongy}</text>
+        
+        <text x="100" y="100" font-size="10" fill="#7f8c8d" font-weight="bold">${d.svgLabels.outer}</text>
+        <text x="100" y="115" font-size="10" fill="#7f8c8d" font-weight="bold">${d.svgLabels.outerSub}</text>
+        <line x1="195" y1="105" x2="220" y2="105" stroke="#7f8c8d" stroke-width="1.5"/>
+        
+        <text x="100" y="200" font-size="10" fill="#95a5a6" font-weight="bold">${d.svgLabels.inner}</text>
+        <text x="100" y="215" font-size="10" fill="#95a5a6" font-weight="bold">${d.svgLabels.innerSub}</text>
+        <line x1="195" y1="205" x2="250" y2="160" stroke="#95a5a6" stroke-width="1.5"/>
+        
+        <text x="350" y="310" text-anchor="middle" font-size="11" fill="#2a5298" font-weight="bold">${d.svgLabels.footer}</text>
+      </svg>
+    </div>
+    
+    <div class="dance-box">
+      <h4><span class="emoji">💃</span> ${d.danceH4}</h4>
+      <ul>${d.danceUl.map(x => `<li>${x}</li>`).join('')}</ul>
+    </div>
+    
+    <div class="practical-activity">
+      <h4><span class="emoji">🎭</span> ${d.activityH4}</h4>
+      <p>${d.activityObj}</p>
+      <ol class="activity-steps">${d.activitySteps.map(x => `<li>${x}</li>`).join('')}</ol>
+    </div>
+    
+    <div class="tip-box">
+      <h4>${d.tipH4}</h4>
+      <p>${d.tipP}</p>
+    </div>
+  `;
+}
+
+/* ---------- SLIDE 2 ---------- */
+function renderSlide2(d) {
+  document.getElementById('s2-content').innerHTML = `
+    <div class="reminder-box">
+      <h4>${d.reminderH4}</h4>
+      <p>${d.reminderP}</p>
+    </div>
+    
+    <div class="intro-box">
+      <h3>${d.introH3}</h3>
+      <p>${d.introP1}</p>
+      <p style="margin-top: 12px;">${d.introP2}</p>
+    </div>
+    
+    <div class="concept-card">
+      <h3><span class="emoji">🧠</span> ${d.conceptH3}</h3>
+      <div class="how-it-works">
+        <h4>${d.howH4}</h4>
+        <p>${d.howP}</p>
+        <ul>${d.howUl.map(x => `<li>${x}</li>`).join('')}</ul>
+        <p style="margin-top: 12px;">${d.howP2}</p>
+      </div>
+    </div>
+    
+    <div class="diagram-container">
+      <h4>${d.svgTitle}</h4>
+      <svg viewBox="0 0 700 300">
+        <g transform="translate(30, 30)">
+          <rect x="0" y="0" width="300" height="130" fill="#f8f9fa" stroke="#dee2e6" stroke-width="2" rx="10"/>
+          <text x="150" y="25" text-anchor="middle" font-size="12" font-weight="bold" fill="#7f8c8d">${d.svgLabels.noLoad}</text>
+          <line x1="50" y1="50" x2="100" y2="80" stroke="#bdc3c7" stroke-width="2"/>
+          <line x1="100" y1="50" x2="150" y2="80" stroke="#bdc3c7" stroke-width="2"/>
+          <line x1="150" y1="50" x2="200" y2="80" stroke="#bdc3c7" stroke-width="2"/>
+          <line x1="200" y1="50" x2="250" y2="80" stroke="#bdc3c7" stroke-width="2"/>
+          <line x1="50" y1="80" x2="100" y2="110" stroke="#bdc3c7" stroke-width="2"/>
+          <line x1="100" y1="80" x2="150" y2="110" stroke="#bdc3c7" stroke-width="2"/>
+          <line x1="150" y1="80" x2="200" y2="110" stroke="#bdc3c7" stroke-width="2"/>
+          <line x1="200" y1="80" x2="250" y2="110" stroke="#bdc3c7" stroke-width="2"/>
+          <text x="150" y="145" text-anchor="middle" font-size="10" fill="#7f8c8d">${d.svgLabels.noLoadSub}</text>
+        </g>
+        
+        <g transform="translate(370, 30)">
+          <rect x="0" y="0" width="300" height="130" fill="#e8f5e9" stroke="#388e3c" stroke-width="2" rx="10"/>
+          <text x="150" y="25" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e7d32">${d.svgLabels.load}</text>
+          <line x1="50" y1="50" x2="100" y2="80" stroke="#2e7d32" stroke-width="4"/>
+          <line x1="100" y1="50" x2="150" y2="80" stroke="#2e7d32" stroke-width="4"/>
+          <line x1="150" y1="50" x2="200" y2="80" stroke="#2e7d32" stroke-width="4"/>
+          <line x1="200" y1="50" x2="250" y2="80" stroke="#2e7d32" stroke-width="4"/>
+          <line x1="50" y1="80" x2="100" y2="110" stroke="#2e7d32" stroke-width="4"/>
+          <line x1="100" y1="80" x2="150" y2="110" stroke="#2e7d32" stroke-width="4"/>
+          <line x1="150" y1="80" x2="200" y2="110" stroke="#2e7d32" stroke-width="4"/>
+          <line x1="200" y1="80" x2="250" y2="110" stroke="#2e7d32" stroke-width="4"/>
+          <line x1="150" y1="30" x2="150" y2="15" stroke="#e74c3c" stroke-width="3" marker-end="url(#arrowRed)"/>
+          <text x="150" y="10" text-anchor="middle" font-size="9" fill="#e74c3c" font-weight="bold">${d.svgLabels.loadTag}</text>
+          <text x="150" y="145" text-anchor="middle" font-size="10" fill="#2e7d32" font-weight="bold">${d.svgLabels.loadSub}</text>
+        </g>
+        
+        <g transform="translate(150, 180)">
+          <rect x="0" y="0" width="400" height="80" fill="#fff3e0" stroke="#f57c00" stroke-width="2" rx="10"/>
+          <text x="200" y="30" text-anchor="middle" font-size="12" font-weight="bold" fill="#e65100">${d.svgLabels.concl}</text>
+          <text x="200" y="55" text-anchor="middle" font-size="11" fill="#7f8c8d">${d.svgLabels.conclP}</text>
+          <text x="200" y="72" text-anchor="middle" font-size="10" fill="#e65100" font-weight="bold">${d.svgLabels.conclP2}</text>
+        </g>
+        
+        <defs>
+          <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+            <polygon points="0 0, 10 3, 0 6" fill="#e74c3c"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+    
+    <div class="dance-box">
+      <h4><span class="emoji">💃</span> ${d.danceH4}</h4>
+      <ul>${d.danceUl.map(x => `<li>${x}</li>`).join('')}</ul>
+    </div>
+    
+    <div class="practical-activity">
+      <h4><span class="emoji">🎭</span> ${d.activityH4}</h4>
+      <p>${d.activityObj}</p>
+      <ol class="activity-steps">${d.activitySteps.map(x => `<li>${x}</li>`).join('')}</ol>
+    </div>
+    
+    <div class="tip-box">
+      <h4>${d.tipH4}</h4>
+      <p>${d.tipP}</p>
+    </div>
+  `;
+}
+
+/* ---------- SLIDE 3 ---------- */
+function renderSlide3(d) {
+  document.getElementById('s3-content').innerHTML = `
+    <div class="reminder-box">
+      <h4>${d.reminderH4}</h4>
+      <p>${d.reminderP}</p>
+    </div>
+    
+    <div class="intro-box">
+      <h3>${d.introH3}</h3>
+      <p>${d.introP1}</p>
+      <p style="margin-top: 12px;">${d.introP2}</p>
+    </div>
+    
+    <div class="concept-card">
+      <h3><span class="emoji">🔧</span> ${d.conceptH3}</h3>
+      <div class="how-it-works">
+        <h4>${d.howH4}</h4>
+        <ul>${d.howUl.map(x => `<li>${x}</li>`).join('')}</ul>
+      </div>
+    </div>
+    
+    <div class="diagram-container">
+      <h4>${d.svgTitle}</h4>
+      <svg viewBox="0 0 700 320">
+        <circle cx="350" cy="160" r="130" fill="#f5f5f5" stroke="#999" stroke-width="2"/>
+        <circle cx="350" cy="160" r="25" fill="#e74c3c" opacity="0.8"/>
+        <text x="350" y="165" text-anchor="middle" font-size="9" fill="white" font-weight="bold">${d.svgLabels.canal}</text>
+        
+        <circle cx="350" cy="160" r="50" fill="none" stroke="#bdc3c7" stroke-width="3"/>
+        <circle cx="350" cy="160" r="75" fill="none" stroke="#bdc3c7" stroke-width="3"/>
+        <circle cx="350" cy="160" r="100" fill="none" stroke="#bdc3c7" stroke-width="3"/>
+        <circle cx="350" cy="160" r="125" fill="none" stroke="#bdc3c7" stroke-width="3"/>
+        
+        <ellipse cx="350" cy="110" rx="8" ry="5" fill="#9b59b6"/>
+        <ellipse cx="400" cy="160" rx="8" ry="5" fill="#9b59b6"/>
+        <ellipse cx="350" cy="210" rx="8" ry="5" fill="#9b59b6"/>
+        <ellipse cx="300" cy="160" rx="8" ry="5" fill="#9b59b6"/>
+        
+        <line x1="350" y1="115" x2="350" y2="135" stroke="#9b59b6" stroke-width="1" stroke-dasharray="2,2"/>
+        <line x1="395" y1="160" x2="375" y2="160" stroke="#9b59b6" stroke-width="1" stroke-dasharray="2,2"/>
+        <line x1="350" y1="205" x2="350" y2="185" stroke="#9b59b6" stroke-width="1" stroke-dasharray="2,2"/>
+        <line x1="305" y1="160" x2="325" y2="160" stroke="#9b59b6" stroke-width="1" stroke-dasharray="2,2"/>
+        
+        <text x="350" y="50" text-anchor="middle" font-size="11" fill="#2a5298" font-weight="bold">${d.svgLabels.title}</text>
+        
+        <text x="550" y="100" font-size="10" fill="#e74c3c" font-weight="bold">${d.svgLabels.canalLabel}</text>
+        <text x="550" y="115" font-size="9" fill="#7f8c8d">${d.svgLabels.canalSub}</text>
+        <line x1="545" y1="105" x2="375" y2="150" stroke="#e74c3c" stroke-width="1.5"/>
+        
+        <text x="550" y="160" font-size="10" fill="#bdc3c7" font-weight="bold">${d.svgLabels.lamellae}</text>
+        <text x="550" y="175" font-size="9" fill="#7f8c8d">${d.svgLabels.lamellaeSub}</text>
+        <line x1="545" y1="165" x2="425" y2="160" stroke="#bdc3c7" stroke-width="1.5"/>
+        
+        <text x="550" y="220" font-size="10" fill="#9b59b6" font-weight="bold">${d.svgLabels.osteocytes}</text>
+        <text x="550" y="235" font-size="9" fill="#7f8c8d">${d.svgLabels.osteocytesSub}</text>
+        <line x1="545" y1="225" x2="405" y2="165" stroke="#9b59b6" stroke-width="1.5"/>
+        
+        <text x="350" y="310" text-anchor="middle" font-size="11" fill="#2a5298" font-weight="bold">${d.svgLabels.footer}</text>
+      </svg>
+    </div>
+    
+    <div class="dance-box">
+      <h4><span class="emoji">💃</span> ${d.danceH4}</h4>
+      <ul>${d.danceUl.map(x => `<li>${x}</li>`).join('')}</ul>
+    </div>
+    
+    <div class="practical-activity">
+      <h4><span class="emoji">🎭</span> ${d.activityH4}</h4>
+      <p>${d.activityObj}</p>
+      <ol class="activity-steps">${d.activitySteps.map(x => `<li>${x}</li>`).join('')}</ol>
+    </div>
+    
+    <div class="tip-box">
+      <h4>${d.tipH4}</h4>
+      <p>${d.tipP}</p>
+    </div>
+  `;
+}
+
+/* ---------- SLIDE 4 (QUIZ) ---------- */
+function renderSlide4(d) {
+  renderQuiz(d.quizData);
+  document.getElementById('finalActivity').innerHTML = `
+    <div class="practical-activity">
+      <h4><span class="emoji">🎭</span> ${d.finalActivityH4}</h4>
+      <p>${d.finalActivityObj}</p>
+      <ol class="activity-steps">${d.finalActivitySteps.map(x => `<li>${x}</li>`).join('')}</ol>
+    </div>
+    
+    <div class="tip-box" style="margin-top: 20px;">
+      <h4>${d.finalSummaryH4}</h4>
+      <ul style="margin-left: 25px; line-height: 1.8;">
+        ${d.finalSummaryUl.map(x => `<li>${x}</li>`).join('')}
+      </ul>
+    </div>
+  `;
+}
+
+function renderQuiz(quizData) {
+  const cont = document.getElementById('quizContainer');
+  cont.innerHTML = '';
+  quizData.forEach((item, qi) => {
+    let html = `<div class="question-box"><p>${qi+1}. ${item.q}</p><div class="options">`;
+    item.opts.forEach((opt, oi) => {
+      html += `<label><input type="radio" name="q${qi}" value="${oi}"> ${opt}</label>`;
+    });
+    html += `</div></div>`;
+    cont.innerHTML += html;
+  });
+}
+
+function checkQuiz() {
+  const t = I18N[currentLang];
+  let score = 0;
+  t.slide4.quizData.forEach((item, qi) => {
+    const sel = document.querySelector(`input[name="q${qi}"]:checked`);
+    const labels = document.querySelectorAll(`input[name="q${qi}"]`);
+    labels.forEach(l => l.parentElement.classList.remove('correct','incorrect'));
+    if (sel) {
+      const val = parseInt(sel.value);
+      if (val === item.correct) {
+        sel.parentElement.classList.add('correct');
+        score++;
+      } else {
+        sel.parentElement.classList.add('incorrect');
+        labels[item.correct].parentElement.classList.add('correct');
+      }
+    } else {
+      labels[item.correct].parentElement.classList.add('correct');
+    }
+  });
+  const fb = document.getElementById('fbQuiz');
+  fb.classList.add('show');
+  const total = t.slide4.quizData.length;
+  if (score === total) {
+    fb.className = 'feedback show success';
+    fb.innerHTML = t.fbExcellent(score, total);
+  } else if (score >= 6) {
+    fb.className = 'feedback show';
+    fb.style.background = '#fff3cd';
+    fb.style.color = '#856404';
+    fb.style.border = '2px solid #ffc107';
+    fb.innerHTML = t.fbGood(score, total);
+  } else {
+    fb.className = 'feedback show error';
+    fb.innerHTML = t.fbBad(score, total);
+  }
+}
+
+function resetQuiz() {
+  document.querySelectorAll('#quizContainer input').forEach(i => { i.checked = false; i.parentElement.classList.remove('correct','incorrect'); });
+  document.getElementById('fbQuiz').classList.remove('show');
+}
+
+/* Inicialització */
+setLang('ca');
+</script>
+</body>
+</html>

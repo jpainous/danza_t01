@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teixit Ossi i Recobriments (5) - Remodelació Òssia</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+    position: relative;
+  }
+  header {
+    background: linear-gradient(90deg, #1e3c72, #2a5298);
+    color: white;
+    padding: 35px;
+    text-align: center;
+    position: relative;
+  }
+  header h1 { font-size: 2.1em; margin-bottom: 10px; }
+  header p { opacity: 0.95; font-size: 1.1em; }
+  header .subtitle { font-size: 0.95em; opacity: 0.85; margin-top: 8px; font-style: italic; }
+  
+  .lang-selector {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+  }
+  .lang-btn {
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.4);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85em;
+    transition: all 0.3s;
+  }
+  .lang-btn:hover { background: rgba(255,255,255,0.3); }
+  .lang-btn.active {
+    background: #fff;
+    color: #1e3c72;
+    border-color: #fff;
+  }
+  
+  .nav-tabs {
+    display: flex;
+    background: #f8f9fa;
+    flex-wrap: wrap;
+    border-bottom: 3px solid #dee2e6;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-tabs button {
+    flex: 1;
+    min-width: 140px;
+    padding: 14px 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #666;
+    transition: all 0.3s;
+    border-bottom: 4px solid transparent;
+  }
+  .nav-tabs button:hover { background: #e9ecef; color: #2a5298; }
+  .nav-tabs button.active {
+    color: #2a5298;
+    border-bottom-color: #2a5298;
+    background: white;
+  }
+  
+  .slide { display: none; padding: 30px; min-height: 600px; }
+  .slide.active { display: block; animation: fadeIn 0.5s; }
+  @keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+  
+  .slide h2 {
+    color: #1e3c72;
+    margin-bottom: 20px;
+    font-size: 1.7em;
+    border-bottom: 3px solid #2a5298;
+    padding-bottom: 10px;
+  }
+  
+  .reminder-box {
+    background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+    border-left: 5px solid #fbc02d;
+    padding: 18px;
+    margin: 20px 0;
+    border-radius: 10px;
+  }
+  
+  .reminder-box h4 {
+    color: #f57f17;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+  }
+  
+  .intro-box {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-left: 5px solid #1976d2;
+    padding: 22px;
+    margin: 20px 0;
+    border-radius: 10px;
+    line-height: 1.7;
+  }
+  
+  .intro-box h3 {
+    color: #1565c0;
+    margin-bottom: 12px;
+    font-size: 1.25em;
+  }
+  
+  .concept-card {
+    background: white;
+    border: 3px solid #2a5298;
+    border-radius: 15px;
+    padding: 25px;
+    margin: 20px 0;
+    box-shadow: 0 5px 20px rgba(42,82,152,0.15);
+  }
+  
+  .concept-card h3 {
+    color: #2a5298;
+    font-size: 1.35em;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .how-it-works {
+    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border-left: 5px solid #f57c00;
+  }
+  
+  .how-it-works h4 {
+    color: #e65100;
+    margin-bottom: 12px;
+    font-size: 1.15em;
+  }
+  
+  .how-it-works ul {
+    margin-left: 25px;
+    line-height: 1.8;
+  }
+  
+  .dance-box {
+    background: linear-gradient(135deg, #fff5e6 0%, #ffe8cc 100%);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border: 2px dashed #f39c12;
+  }
+  
+  .dance-box h4 {
+    color: #e67e22;
+    margin-bottom: 12px;
+    font-size: 1.15em;
+  }
+  
+  .dance-box ul {
+    margin-left: 25px;
+    line-height: 1.8;
+  }
+  
+  .practical-activity {
+    background: linear-gradient(135deg, #e8f8f5 0%, #d5f5e3 100%);
+    padding: 22px;
+    border-radius: 15px;
+    margin: 20px 0;
+    border: 2px solid #1abc9c;
+  }
+  
+  .practical-activity h4 {
+    color: #16a085;
+    font-size: 1.2em;
+    margin-bottom: 12px;
+  }
+  
+  .activity-steps {
+    margin-left: 25px;
+    line-height: 1.9;
+  }
+  
+  .activity-steps li {
+    margin-bottom: 8px;
+  }
+  
+  .activity-steps strong {
+    color: #16a085;
+  }
+  
+  .diagram-container {
+    background: white;
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  
+  .diagram-container svg {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .diagram-container h4 {
+    color: #2a5298;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+  }
+  
+  .tip-box {
+    background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+    padding: 16px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border-left: 5px solid #9b59b6;
+  }
+  
+  .tip-box h4 {
+    color: #8e44ad;
+    margin-bottom: 8px;
+    font-size: 1.05em;
+  }
+  
+  .warning-box {
+    background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+    padding: 18px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border-left: 5px solid #e53935;
+  }
+  
+  .warning-box h4 {
+    color: #c62828;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+  }
+  
+  .phase-card {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+  }
+  
+  .phase-item {
+    background: white;
+    border: 3px solid #dee2e6;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  
+  .phase-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  }
+  
+  .phase-item .emoji-big {
+    font-size: 3em;
+    margin-bottom: 10px;
+  }
+  
+  .phase-item h4 {
+    font-size: 1.2em;
+    margin-bottom: 8px;
+  }
+  
+  .phase-item.activation { border-color: #9b59b6; background: #f4ecf7; }
+  .phase-item.activation h4 { color: #8e44ad; }
+  
+  .phase-item.resorption { border-color: #e74c3c; background: #fdedec; }
+  .phase-item.resorption h4 { color: #c0392b; }
+  
+  .phase-item.reversal { border-color: #f39c12; background: #fef9e7; }
+  .phase-item.reversal h4 { color: #d68910; }
+  
+  .phase-item.formation { border-color: #27ae60; background: #e8f8f5; }
+  .phase-item.formation h4 { color: #27ae60; }
+  
+  .highlight {
+    background: linear-gradient(120deg, #ffeaa7 0%, #ffeaa7 100%);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  
+  .emoji { font-size: 1.2em; margin-right: 6px; }
+  
+  .btn {
+    background: linear-gradient(90deg, #2a5298, #1e3c72);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 10px 5px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(42,82,152,0.3);
+  }
+  
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(42,82,152,0.4);
+  }
+  
+  .quiz-container {
+    background: white;
+    border: 2px solid #e4e8ec;
+    border-radius: 15px;
+    padding: 25px;
+    margin: 20px 0;
+  }
+  
+  .quiz-container h3 {
+    color: #2a5298;
+    margin-bottom: 18px;
+    font-size: 1.25em;
+  }
+  
+  .question-box {
+    background: #f8f9fa;
+    border-left: 5px solid #2a5298;
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+  }
+  
+  .question-box p {
+    font-weight: 600;
+    margin-bottom: 12px;
+    font-size: 1em;
+    color: #2c3e50;
+  }
+  
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .options label {
+    background: white;
+    border: 2px solid #dee2e6;
+    padding: 12px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    font-size: 0.93em;
+  }
+  
+  .options label:hover {
+    border-color: #2a5298;
+    background: #e3f2fd;
+  }
+  
+  .options input { margin-right: 12px; }
+  
+  .options label.correct {
+    background: #d4edda;
+    border-color: #28a745;
+    color: #155724;
+  }
+  
+  .options label.incorrect {
+    background: #f8d7da;
+    border-color: #dc3545;
+    color: #721c24;
+  }
+  
+  .feedback {
+    margin-top: 18px;
+    padding: 18px;
+    border-radius: 10px;
+    display: none;
+    font-weight: 600;
+    line-height: 1.6;
+  }
+  
+  .feedback.show { display: block; animation: fadeIn 0.3s; }
+  .feedback.success { background: #d4edda; color: #155724; border: 2px solid #28a745; }
+  .feedback.error { background: #f8d7da; color: #721c24; border: 2px solid #dc3545; }
+  
+  @media (max-width: 768px) {
+    header h1 { font-size: 1.6em; }
+    .slide { padding: 20px; }
+    .concept-card { padding: 18px; }
+    .phase-card { grid-template-columns: 1fr; }
+    .lang-selector { position: static; justify-content: center; margin-top: 15px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="lang-selector">
+      <button class="lang-btn active" onclick="setLang('ca')" id="btn-ca">CAT</button>
+      <button class="lang-btn" onclick="setLang('es')" id="btn-es">ESP</button>
+      <button class="lang-btn" onclick="setLang('en')" id="btn-en">ENG</button>
+    </div>
+    <h1 id="t-header-title">🦴 Teixit Ossi i Recobriments</h1>
+    <p id="t-header-sub">Part 5: La Remodelació Òssia</p>
+    <div class="subtitle" id="t-header-subtitle">El cicle continu que renova el teu esquelet cada 10 anys</div>
+  </header>
+
+  <div class="nav-tabs">
+    <button class="active" onclick="showSlide(0, this)" id="tab0">🔄 Què és?</button>
+    <button onclick="showSlide(1, this)" id="tab1">⚙️ Les 4 fases</button>
+    <button onclick="showSlide(2, this)" id="tab2">⚖️ L'equilibri</button>
+    <button onclick="showSlide(3, this)" id="tab3">🎯 Quiz</button>
+  </div>
+
+  <!-- SLIDE 1 -->
+  <div class="slide active">
+    <h2 id="t-s1-h2">🔄 Què és la remodelació òssia?</h2>
+    <div id="s1-content"></div>
+  </div>
+
+  <!-- SLIDE 2 -->
+  <div class="slide">
+    <h2 id="t-s2-h2">⚙️ Les 4 fases de la remodelació</h2>
+    <div id="s2-content"></div>
+  </div>
+
+  <!-- SLIDE 3 -->
+  <div class="slide">
+    <h2 id="t-s3-h2">⚖️ L'equilibri de la remodelació</h2>
+    <div id="s3-content"></div>
+  </div>
+
+  <!-- SLIDE 4 -->
+  <div class="slide">
+    <h2 id="t-s4-h2">🎯 Quiz: Comprova el que has après</h2>
+    <div class="quiz-container">
+      <h3 id="t-s4-h3">Preguntes sobre la remodelació òssia</h3>
+      <div id="quizContainer"></div>
+      <button class="btn" onclick="checkQuiz()" id="t-btn-check">Comprovar respostes</button>
+      <button class="btn" style="background: #6c757d;" onclick="resetQuiz()" id="t-btn-reset">Reiniciar</button>
+      <div class="feedback" id="fbQuiz"></div>
+    </div>
+    <div id="finalActivity"></div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   TRADUCCIONS
+   ============================================================ */
+const I18N = {
+  ca: {
+    headerTitle: "🦴 Teixit Ossi i Recobriments",
+    headerSub: "Part 5: La Remodelació Òssia",
+    headerSubtitle: "El cicle continu que renova el teu esquelet cada 10 anys",
+    tabs: ["🔄 Què és?","⚙️ Les 4 fases","⚖️ L'equilibri","🎯 Quiz"],
+    s1h2: "🔄 Què és la remodelació òssia?",
+    s2h2: "⚙️ Les 4 fases de la remodelació",
+    s3h2: "⚖️ L'equilibri de la remodelació",
+    s4h2: "🎯 Quiz: Comprova el que has après",
+    s4h3: "Preguntes sobre la remodelació òssia",
+    btnCheck: "Comprovar respostes",
+    btnReset: "Reiniciar",
+    fbExcellent: (s,t) => `🏆 Excel·lent! ${s}/${t}. Entens molt bé la remodelació òssia i la seva importància per a la salut.`,
+    fbGood: (s,t) => `👍 Bé: ${s}/${t}. Repassa els conceptes fallats.`,
+    fbBad: (s,t) => `📚 ${s}/${t}. Torna a llegir els apartats i reintenta-ho.`,
+    
+    slide1: {
+      reminderH4: "💡 Recordatori",
+      reminderP: "A l'arxiu anterior vam veure les 4 cèl·lules de l'os: osteoblasts (constructors), osteoclasts (destructors), osteòcits (sensors) i cèl·lules osteoprogenitores (reserva). Ara veurem <strong>com treballen juntes en un cicle continu</strong> anomenat remodelació òssia.",
+      introH3: "🎯 El teu esquelet es renova constantment",
+      introP1: "La <span class=\"highlight\">remodelació òssia</span> és el procés pel qual el teu cos <strong>retira os vell o danyat i el reemplaça amb os nou</strong>. Aquest cicle ocorre durant tota la teva vida, les 24 hores del dia, els 365 dies de l'any.",
+      introP2: "<strong>Dada sorprenent:</strong> Cada 10 anys, tens un esquelet completament nou! Totes les teves cèl·lules òssies han estat reemplaçades.",
+      conceptH3: "Per què és necessària la remodelació?",
+      howH4: "🎯 Tres raons principals",
+      howUl: [
+        "<strong>1. Reparar microdanys:</strong> Cada vegada que balles, saltes o aterres, es produeixen petites esquerdes microscòpiques a l'os. La remodelació les repara abans que es converteixin en fractures.",
+        "<strong>2. Adaptar-se a les càrregues:</strong> Si comences a ballar més o canvies el teu estil de ball, l'os es remodela per fer-se més fort on més ho necessites (Llei de Wolff).",
+        "<strong>3. Regular el calci:</strong> L'os és el \"banc\" de calci del cos. La remodelació permet alliberar calci a la sang quan el necessites (perquè els músculs funcionin) o guardar-lo quan en tens de sobres."
+      ],
+      svgTitle: "🔄 El cicle de la remodelació (visió general)",
+      svgLabels: {
+        activation: "Activació",
+        resorption: "Resorció",
+        reversal: "Inversió",
+        formation: "Formació",
+        center1: "CICLE",
+        center2: "CONTINU",
+        footer: "Aquest cicle es repeteix durant tota la teva vida"
+      },
+      danceH4: "💃 Per què és important per a un ballarí?",
+      danceUl: [
+        "<strong>Cada vegada que balles:</strong> S'activen cicles de remodelació als ossos que reben càrrega (cames, peus, columna).",
+        "<strong>Quan descanses:</strong> La remodelació continua, reparant els microdanys de l'entrenament.",
+        "<strong>A llarg termini:</strong> Si entrenes bé i menges bé, la remodelació fa que els teus ossos siguin més forts. Si no, s'afebleixen.",
+        "<strong>Paciència:</strong> Els canvis en la densitat òssia triguen mesos a veure's. No és com guanyar múscul, que es nota en setmanes."
+      ],
+      activityH4: "🎭 Activitat: \"La casa que es renova\"",
+      activityObj: "<strong>Objectiu:</strong> Entendre per què la remodelació és necessària",
+      activitySteps: [
+        "<strong>Imagina una casa:</strong> Amb el temps, les parets s'esquerden, la pintura es desenganxa, les canonades s'oxiden.",
+        "<strong>Què fas?</strong> No esperes que caigui. Fas reformes constants: arregles esquerdes, pintes, canvies canonades.",
+        "<strong>Relació amb l'os:</strong> El teu esquelet és com aquella casa. La remodelació és la \"reforma constant\" que manté l'os fort i sa.",
+        "<strong>Reflexió:</strong> Què passaria si mai reformessis la casa? (Es cauria). Què passaria si no hi hagués remodelació òssia? (Els ossos es fracturarien amb facilitat)."
+      ],
+      tipH4: "✨ Dada curiosa",
+      tipP: "En un adult sa, es remodela aproximadament el <strong>10% de l'esquelet cada any</strong>. Això significa que cada any, el 10% dels teus ossos és \"nou\". En 10 anys, tot el teu esquelet és nou!"
+    },
+    slide2: {
+      reminderH4: "💡 Recordatori",
+      reminderP: "Acabem de veure que la remodelació és un cicle continu. Ara aprofundirem en <strong>cadascuna de les 4 fases</strong> i veurem quines cèl·lules treballen a cada una.",
+      introH3: "🎯 L'equip de remodelació (BMU)",
+      introP1: "La remodelació no la fa una cèl·lula sola. Treballa un <span class=\"highlight\">equip de cèl·lules</span> anomenat <strong>BMU</strong> (Bone Multicellular Unit, o Unitat Multicel·lular Òssia). És com un \"equip de reforma\" que es desplaça per l'os.",
+      introP2: "El BMU té un ordre de treball molt estricte: primer uns, després altres. No poden treballar al mateix temps.",
+      phases: [
+        { emoji: "", cls: "activation", title: "Fase 1: ACTIVACIÓ",
+          dur: "<strong>Durada:</strong> 1-2 dies",
+          desc: "Els osteòcits detecten la necessitat de remodelar (microdanys, canvis de càrrega) i \"criden\" els osteoclasts.",
+          cells: "<strong>Cèl·lules:</strong> Osteòcits (sensores)" },
+        { emoji: "🔨", cls: "resorption", title: "Fase 2: RESORCIÓ",
+          dur: "<strong>Durada:</strong> 2-3 setmanes",
+          desc: "Els osteoclasts arriben i \"caven\" un petit túnel a l'os vell o danyat, dissolent-lo amb àcid.",
+          cells: "<strong>Cèl·lules:</strong> Osteoclasts (destructors)" },
+        { emoji: "🔄", cls: "reversal", title: "Fase 3: INVERSIÓ",
+          dur: "<strong>Durada:</strong> 1-2 setmanes",
+          desc: "Els osteoclasts se'n van i els osteoblasts arriben. És el \"canvi de torn\" entre destructors i constructors.",
+          cells: "<strong>Cèl·lules:</strong> Transició" },
+        { emoji: "", cls: "formation", title: "Fase 4: FORMACIÓ",
+          dur: "<strong>Durada:</strong> 3-4 mesos",
+          desc: "Els osteoblasts construeixen os nou al túnel que van deixar els osteoclasts. Alguns es converteixen en osteòcits.",
+          cells: "<strong>Cèl·lules:</strong> Osteoblasts (constructors)" }
+      ],
+      svgTitle: "📐 Les 4 fases en acció",
+      svgLabels: {
+        phase: "FASE",
+        act: "Activació",
+        res: "Resorció",
+        inv: "Inversió",
+        form: "Formació",
+        osteocyte: "Osteòcit",
+        osteoclast: "Osteoclast",
+        osteoblast: "Osteoblast",
+        change: "Canvi",
+        days12: "1-2 dies",
+        weeks23: "2-3 setmanes",
+        weeks12: "1-2 setmanes",
+        months34: "3-4 mesos",
+        continue: "El cicle continua"
+      },
+      danceH4: "💃 Aplicació en la dansa",
+      danceUl: [
+        "<strong>Fase 1 (Activació):</strong> Quan balles, els osteòcits detecten les forces i activen la remodelació.",
+        "<strong>Fase 2 (Resorció):</strong> Els osteoclasts retiren l'os danyat per l'impacte dels salts.",
+        "<strong>Fase 3 (Inversió):</strong> Canvi de torn. És un moment delicat: si no hi ha prou osteoblasts disponibles, l'os queda feble.",
+        "<strong>Fase 4 (Formació):</strong> Els osteoblasts construeixen os nou més fort. Aquesta fase és la més llarga (3-4 mesos)."
+      ],
+      activityH4: "🎭 Activitat: \"Simula les 4 fases\"",
+      activityObj: "<strong>Objectiu:</strong> Entendre la seqüència i durada de les fases",
+      activitySteps: [
+        "<strong>Material:</strong> Plastilina de 4 colors (morat, vermell, taronja, verd).",
+        "<strong>Fase 1 (morat - 2 dies):</strong> Fes una boleta petita. Representa el senyal d'activació.",
+        "<strong>Fase 2 (vermell - 3 setmanes):</strong> Fes una boleta mitjana. Representa la destrucció de l'os vell.",
+        "<strong>Fase 3 (taronja - 2 setmanes):</strong> Fes una boleta petita. Representa el canvi de torn.",
+        "<strong>Fase 4 (verd - 4 mesos):</strong> Fes una boleta GRAN. Representa la construcció d'os nou.",
+        "<strong>Reflexió:</strong> Quina fase és la més llarga? (La formació, 4 mesos). Per què és important saber-ho? (Perquè els canvis a l'os triguen mesos, no dies)."
+      ],
+      tipH4: "✨ Dada curiosa",
+      tipP: "La fase de formació (4 mesos) és <strong>molt més llarga</strong> que la de resorció (3 setmanes). Això significa que el cos triga molt més a construir os nou que a destruir el vell. Per això, si hi ha un desequilibri, l'os es perd ràpidament però triga molt a recuperar-se."
+    },
+    slide3: {
+      reminderH4: "💡 Recordatori",
+      reminderP: "Hem vist les 4 fases de la remodelació. Ara descobrirem què passa quan l'equilibri entre construcció i destrucció es trenca.",
+      introH3: "🎯 L'acoblament perfecte",
+      introP1: "En un os sa, la quantitat d'os que es destrueix a la fase 2 és <span class=\"highlight\">exactament igual</span> a la quantitat d'os que es construeix a la fase 4. Això s'anomena <strong>acoblament</strong> (coupling).",
+      introP2: "És com un compte bancari: si ingresses tant com gastes, el saldo es manté estable.",
+      conceptH3: "⚖️ Tres escenaris possibles",
+      howH4: "🎯 Què passa a cada cas?",
+      howUl: [
+        "<strong>Escenari 1: Equilibri perfecte</strong> - Destrucció = Construcció. L'os es manté fort i sa. Això és l'ideal en un adult sa.",
+        "<strong>Escenari 2: Més construcció</strong> - Construcció > Destrucció. L'os es fa més dens i fort. Això passa quan entrenes bé, menges bé i descanses.",
+        "<strong>Escenari 3: Més destrucció</strong> - Destrucció > Construcció. L'os es torna feble i fràgil. Això passa amb l'edat, si no menges bé, o si entrenes massa sense descansar."
+      ],
+      svgTitle: "⚖️ Els 3 escenaris de la remodelació",
+      svgLabels: {
+        balance: "EQUILIBRI",
+        balanceSub: "Os sa",
+        balanceSub2: "Adult sa",
+        build: "MÉS CONSTRUCCIÓ",
+        buildSub: "Os més fort",
+        buildSub2: "Ballarí entrenat",
+        destroy: "MÉS DESTRUCCIÓ",
+        destroySub: "Os feble",
+        destroySub2: "Osteoporosi",
+        factors: "Factors que afecten l'equilibri",
+        good: "✅ Milloren:",
+        goodSub: "Exercici, calci, vitamina D, descans",
+        bad: "❌ Empitjoren:",
+        badSub: "Sedentarisme, mala dieta, estrès, edat"
+      },
+      warningH4: "🚨 Què passa quan es trenca l'equilibri?",
+      warningP: "Si la destrucció supera la construcció durant molt de temps:",
+      warningUl: [
+        "<strong>Osteopènia:</strong> Els ossos comencen a perdre densitat (són menys densos del normal, però no tant com per anomenar-ho osteoporosi).",
+        "<strong>Osteoporosi:</strong> Els ossos es tornen molt fràgils i es fracturen amb facilitat. És com un os \"carcomit\" per dins.",
+        "<strong>Fractures per estrès:</strong> Petites esquerdes que no es reparen a temps perquè la remodelació no dona l'abast."
+      ],
+      danceH4: "💃 La remodelació en la vida del ballarí",
+      danceUl: [
+        "<strong>Adolescència:</strong> La construcció guanya a la destrucció. Els ossos creixen i es fan més densos. És la millor època per \"invertir\" en os!",
+        "<strong>Adult jove (20-30 anys):</strong> Equilibri perfecte. Els ossos estan en la seva màxima densitat.",
+        "<strong>Adult major (40+ anys):</strong> La destrucció comença a guanyar. Els ossos perden densitat lentament. Per això és important haver \"invertit\" bé a la joventut.",
+        "<strong>Ballarins:</strong> Si entrenen bé, poden mantenir ossos forts fins i tot amb l'edat. El ball és una \"inversió\" en salut òssia."
+      ],
+      activityH4: "🎭 Activitat: \"El compte bancari de l'os\"",
+      activityObj: "<strong>Objectiu:</strong> Entendre el concepte d'\"inversió\" en os",
+      activitySteps: [
+        "<strong>Imagina un compte bancari:</strong> <ul><li><strong>Ingressos:</strong> Construcció d'os (osteoblasts treballant)</li><li><strong>Despeses:</strong> Destrucció d'os (osteoclasts treballant)</li><li><strong>Saldo:</strong> Densitat òssia (quant os tens)</li></ul>",
+        "<strong>Escenari A (jove ballarí):</strong> Ingresses 100€ (construcció) i gastes 80€ (destrucció). Saldo: +20€. El teu os es reforça.",
+        "<strong>Escenari B (adult sedentari):</strong> Ingresses 80€ i gastes 100€. Saldo: -20€. El teu os s'afebleix.",
+        "<strong>Escenari C (adult ballarí):</strong> Ingresses 100€ i gastes 100€. Saldo: 0€. El teu os es manté fort.",
+        "<strong>Reflexió:</strong> Per què és important \"invertir\" en os durant l'adolescència? (Perquè després, amb l'edat, les \"despeses\" augmenten i necessites un bon \"saldo\" acumulat)."
+      ],
+      tipH4: "✨ Consell per a ballarins",
+      tipP: "Per mantenir l'equilibri de la remodelació:",
+      tipUl: [
+        "<strong>Entrena amb càrrega:</strong> Salts, relevés, treball de força (activa la construcció)",
+        "<strong>Menja bé:</strong> Calci, vitamina D, proteïnes (materials per construir)",
+        "<strong>Dorm bé:</strong> Els osteoblasts treballen millor de nit",
+        "<strong>Descansa:</strong> Dona temps a la fase de formació (3-4 mesos)",
+        "<strong>Evita l'estrès crònic:</strong> El cortisol accelera la destrucció"
+      ]
+    },
+    slide4: {
+      quizData: [
+        { q: "Què és la remodelació òssia?",
+          opts: ["El creixement de l'os a la infància","El cicle continu de destrucció i construcció d'os","La reparació d'una fractura","La formació de l'os al fetus"], correct: 1 },
+        { q: "Quant temps triga a renovar-se tot l'esquelet?",
+          opts: ["1 any","5 anys","10 anys","20 anys"], correct: 2 },
+        { q: "Quina és la fase més llarga de la remodelació?",
+          opts: ["Activació (1-2 dies)","Resorció (2-3 setmanes)","Inversió (1-2 setmanes)","Formació (3-4 mesos)"], correct: 3 },
+        { q: "Quines cèl·lules treballen a la fase de resorció?",
+          opts: ["Osteoblasts (constructors)","Osteoclasts (destructors)","Osteòcits (sensors)","Cèl·lules osteoprogenitores"], correct: 1 },
+        { q: "Què és l'\"acoblament\" a la remodelació?",
+          opts: ["La unió entre dos ossos","L'equilibri entre destrucció i construcció d'os","La connexió entre osteòcits","La unió del múscul a l'os"], correct: 1 },
+        { q: "Què passa si la destrucció supera la construcció durant molt de temps?",
+          opts: ["Els ossos es fan més forts","Els ossos es mantenen igual","Els ossos s'afebleixen (osteoporosi)","Els ossos creixen més"], correct: 2 },
+        { q: "Per què és important l'adolescència per a la salut òssia?",
+          opts: ["Perquè és quan més s'estira el cos","Perquè és quan més os es pot \"emmagatzemar\" per al futur","Perquè és quan més es balla","No és important"], correct: 1 },
+        { q: "Quin factor NO ajuda a mantenir l'equilibri de la remodelació?",
+          opts: ["Fer exercici d'impacte","Menjar prou calci","Dormir bé","Estar molt de temps assegut"], correct: 3 }
+      ],
+      finalActivityH4: "🎭 Activitat final: \"El meu pla de remodelació\"",
+      finalActivityObj: "<strong>Objectiu:</strong> Aplicar el que has après al teu entrenament",
+      finalActivitySteps: [
+        "<strong>Avalua la teva situació:</strong> <ul><li>Entrenes amb càrrega suficient per activar la remodelació?</li><li>Menges prou calci i vitamina D?</li><li>Dorms 8-9 hores (temps per a la fase de formació)?</li><li>Descanses entre sessions intensives?</li></ul>",
+        "<strong>Crea el teu pla:</strong> Tria 3 accions concretes per millorar la teva remodelació òssia: <ul><li>Exemple: \"Faré 10 minuts de salts 3 vegades per setmana\"</li><li>\"Menjaré un iogurt cada dia\"</li><li>\"Dormiré 8 hores mínim\"</li></ul>",
+        "<strong>Recorda:</strong> Els canvis a l'os triguen mesos. No esperis resultats immediats. Sigues constant!",
+        "<strong>Prepara't</strong> per al següent arxiu: parlarem de com l'os s'adapta a la càrrega (mecanotransducció i Llei de Wolff en detall)."
+      ],
+      finalSummaryH4: "Resum clau",
+      finalSummaryUl: [
+        "<strong>Remodelació:</strong> Cicle continu de destrucció i construcció d'os",
+        "<strong>4 fases:</strong> Activació (1-2 dies) → Resorció (2-3 setmanes) → Inversió (1-2 setmanes) → Formació (3-4 mesos)",
+        "<strong>Acoblament:</strong> En os sa, destrucció = construcció",
+        "<strong>Desequilibri:</strong> Si destrucció > construcció → osteoporosi",
+        "<strong>Per a ballarins:</strong> Entrenament + nutrició + descans = ossos forts"
+      ]
+    }
+  },
+  es: {
+    headerTitle: "🦴 Tejido Óseo y Recubrimientos",
+    headerSub: "Parte 5: La Remodelación Ósea",
+    headerSubtitle: "El ciclo continuo que renueva tu esqueleto cada 10 años",
+    tabs: ["🔄 ¿Qué es?","⚙️ Las 4 fases","⚖️ El equilibrio","🎯 Quiz"],
+    s1h2: "🔄 ¿Qué es la remodelación ósea?",
+    s2h2: "⚙️ Las 4 fases de la remodelación",
+    s3h2: "⚖️ El equilibrio de la remodelación",
+    s4h2: "🎯 Quiz: Comprueba lo aprendido",
+    s4h3: "Preguntas sobre la remodelación ósea",
+    btnCheck: "Comprobar respuestas",
+    btnReset: "Reiniciar",
+    fbExcellent: (s,t) => `🏆 ¡Excelente! ${s}/${t}. Entiendes muy bien la remodelación ósea y su importancia para la salud.`,
+    fbGood: (s,t) => `👍 Bien: ${s}/${t}. Repasa los conceptos fallados.`,
+    fbBad: (s,t) => `📚 ${s}/${t}. Vuelve a leer los apartados y reinténtalo.`,
+    
+    slide1: {
+      reminderH4: "💡 Recordatorio",
+      reminderP: "En el archivo anterior vimos las 4 células del hueso: osteoblastos (constructores), osteoclastos (destructores), osteocitos (sensores) y células osteoprogenitoras (reserva). Ahora vamos a ver <strong>cómo trabajan juntas en un ciclo continuo</strong> llamado remodelación ósea.",
+      introH3: "🎯 Tu esqueleto se renueva constantemente",
+      introP1: "La <span class=\"highlight\">remodelación ósea</span> es el proceso por el cual tu cuerpo <strong>retira hueso viejo o dañado y lo reemplaza con hueso nuevo</strong>. Este ciclo ocurre durante toda tu vida, las 24 horas del día, los 365 días del año.",
+      introP2: "<strong>Dato sorprendente:</strong> Cada 10 años, ¡tienes un esqueleto completamente nuevo! Todas tus células óseas han sido reemplazadas.",
+      conceptH3: "¿Por qué es necesaria la remodelación?",
+      howH4: "🎯 Tres razones principales",
+      howUl: [
+        "<strong>1. Reparar microdaños:</strong> Cada vez que bailas, saltas o aterrizas, se producen pequeñas grietas microscópicas en el hueso. La remodelación las repara antes de que se conviertan en fracturas.",
+        "<strong>2. Adaptarse a las cargas:</strong> Si empiezas a bailar más o cambias tu estilo de baile, el hueso se remodela para hacerse más fuerte donde más lo necesitas (Ley de Wolff).",
+        "<strong>3. Regular el calcio:</strong> El hueso es el \"banco\" de calcio del cuerpo. La remodelación permite liberar calcio a la sangre cuando lo necesitas (para que los músculos funcionen) o guardarlo cuando tienes de sobra."
+      ],
+      svgTitle: "🔄 El ciclo de la remodelación (visión general)",
+      svgLabels: {
+        activation: "Activación",
+        resorption: "Resorción",
+        reversal: "Inversión",
+        formation: "Formación",
+        center1: "CICLO",
+        center2: "CONTINUO",
+        footer: "Este ciclo se repite durante toda tu vida"
+      },
+      danceH4: "💃 ¿Por qué es importante para un bailarín?",
+      danceUl: [
+        "<strong>Cada vez que bailas:</strong> Se activan ciclos de remodelación en los huesos que reciben carga (piernas, pies, columna).",
+        "<strong>Cuando descansas:</strong> La remodelación continúa, reparando los microdaños del entrenamiento.",
+        "<strong>A largo plazo:</strong> Si entrenas bien y comes bien, la remodelación hace que tus huesos sean más fuertes. Si no, se debilitan.",
+        "<strong>Paciencia:</strong> Los cambios en la densidad ósea tardan meses en verse. No es como ganar músculo, que se nota en semanas."
+      ],
+      activityH4: "🎭 Actividad: \"La casa que se renueva\"",
+      activityObj: "<strong>Objetivo:</strong> Entender por qué la remodelación es necesaria",
+      activitySteps: [
+        "<strong>Imagina una casa:</strong> Con el tiempo, las paredes se agrietan, la pintura se despega, las tuberías se oxidan.",
+        "<strong>¿Qué haces?</strong> No esperas a que se caiga. Haces reformas constantes: arreglas grietas, pintas, cambias tuberías.",
+        "<strong>Relación con el hueso:</strong> Tu esqueleto es como esa casa. La remodelación es la \"reforma constante\" que mantiene el hueso fuerte y sano.",
+        "<strong>Reflexión:</strong> ¿Qué pasaría si nunca reformaras la casa? (Se caería). ¿Qué pasaría si no hubiera remodelación ósea? (Los huesos se fracturarían con facilidad)."
+      ],
+      tipH4: "✨ Dato curioso",
+      tipP: "En un adulto sano, se remodela aproximadamente el <strong>10% del esqueleto cada año</strong>. Eso significa que cada año, el 10% de tus huesos es \"nuevo\". ¡En 10 años, todo tu esqueleto es nuevo!"
+    },
+    slide2: {
+      reminderH4: "💡 Recordatorio",
+      reminderP: "Acabamos de ver que la remodelación es un ciclo continuo. Ahora vamos a profundizar en <strong>cada una de las 4 fases</strong> y ver qué células trabajan en cada una.",
+      introH3: "🎯 El equipo de remodelación (BMU)",
+      introP1: "La remodelación no la hace una célula sola. Trabaja un <span class=\"highlight\">equipo de células</span> llamado <strong>BMU</strong> (Bone Multicellular Unit, o Unidad Multicelular Ósea). Es como un \"equipo de reforma\" que se desplaza por el hueso.",
+      introP2: "El BMU tiene un orden de trabajo muy estricto: primero unos, luego otros. No pueden trabajar al mismo tiempo.",
+      phases: [
+        { emoji: "", cls: "activation", title: "Fase 1: ACTIVACIÓN",
+          dur: "<strong>Duración:</strong> 1-2 días",
+          desc: "Los osteocitos detectan la necesidad de remodelar (microdaños, cambios de carga) y \"llaman\" a los osteoclastos.",
+          cells: "<strong>Células:</strong> Osteocitos (sensores)" },
+        { emoji: "🔨", cls: "resorption", title: "Fase 2: RESORCIÓN",
+          dur: "<strong>Duración:</strong> 2-3 semanas",
+          desc: "Los osteoclastos llegan y \"cavan\" un pequeño túnel en el hueso viejo o dañado, disolviéndolo con ácido.",
+          cells: "<strong>Células:</strong> Osteoclastos (destructores)" },
+        { emoji: "🔄", cls: "reversal", title: "Fase 3: INVERSIÓN",
+          dur: "<strong>Duración:</strong> 1-2 semanas",
+          desc: "Los osteoclastos se van y los osteoblastos llegan. Es el \"cambio de turno\" entre destructores y constructores.",
+          cells: "<strong>Células:</strong> Transición" },
+        { emoji: "", cls: "formation", title: "Fase 4: FORMACIÓN",
+          dur: "<strong>Duración:</strong> 3-4 meses",
+          desc: "Los osteoblastos construyen hueso nuevo en el túnel que dejaron los osteoclastos. Algunos se convierten en osteocitos.",
+          cells: "<strong>Células:</strong> Osteoblastos (constructores)" }
+      ],
+      svgTitle: "📐 Las 4 fases en acción",
+      svgLabels: {
+        phase: "FASE",
+        act: "Activación",
+        res: "Resorción",
+        inv: "Inversión",
+        form: "Formación",
+        osteocyte: "Osteocito",
+        osteoclast: "Osteoclasto",
+        osteoblast: "Osteoblasto",
+        change: "Cambio",
+        days12: "1-2 días",
+        weeks23: "2-3 semanas",
+        weeks12: "1-2 semanas",
+        months34: "3-4 meses",
+        continue: "El ciclo continúa"
+      },
+      danceH4: "💃 Aplicación en la danza",
+      danceUl: [
+        "<strong>Fase 1 (Activación):</strong> Cuando bailas, los osteocitos detectan las fuerzas y activan la remodelación.",
+        "<strong>Fase 2 (Resorción):</strong> Los osteoclastos retiran el hueso dañado por el impacto de los saltos.",
+        "<strong>Fase 3 (Inversión):</strong> Cambio de turno. Es un momento delicado: si no hay suficientes osteoblastos disponibles, el hueso queda débil.",
+        "<strong>Fase 4 (Formación):</strong> Los osteoblastos construyen hueso nuevo más fuerte. Esta fase es la más larga (3-4 meses)."
+      ],
+      activityH4: "🎭 Actividad: \"Simula las 4 fases\"",
+      activityObj: "<strong>Objetivo:</strong> Entender la secuencia y duración de las fases",
+      activitySteps: [
+        "<strong>Material:</strong> Plastilina de 4 colores (morado, rojo, naranja, verde).",
+        "<strong>Fase 1 (morado - 2 días):</strong> Haz una bolita pequeña. Representa la señal de activación.",
+        "<strong>Fase 2 (rojo - 3 semanas):</strong> Haz una bolita mediana. Representa la destrucción del hueso viejo.",
+        "<strong>Fase 3 (naranja - 2 semanas):</strong> Haz una bolita pequeña. Representa el cambio de turno.",
+        "<strong>Fase 4 (verde - 4 meses):</strong> Haz una bolita GRANDE. Representa la construcción de hueso nuevo.",
+        "<strong>Reflexión:</strong> ¿Qué fase es la más larga? (La formación, 4 meses). ¿Por qué es importante saber esto? (Porque los cambios en el hueso tardan meses, no días)."
+      ],
+      tipH4: "✨ Dato curioso",
+      tipP: "La fase de formación (4 meses) es <strong>mucho más larga</strong> que la de resorción (3 semanas). Esto significa que el cuerpo tarda mucho más en construir hueso nuevo que en destruir el viejo. Por eso, si hay un desequilibrio, el hueso se pierde rápidamente pero tarda mucho en recuperarse."
+    },
+    slide3: {
+      reminderH4: "💡 Recordatorio",
+      reminderP: "Hemos visto las 4 fases de la remodelación. Ahora vamos a descubrir qué pasa cuando el equilibrio entre construcción y destrucción se rompe.",
+      introH3: "🎯 El acoplamiento perfecto",
+      introP1: "En un hueso sano, la cantidad de hueso que se destruye en la fase 2 es <span class=\"highlight\">exactamente igual</span> a la cantidad de hueso que se construye en la fase 4. Esto se llama <strong>acoplamiento</strong> (coupling).",
+      introP2: "Es como una cuenta bancaria: si ingresas tanto como sacas, el saldo se mantiene estable.",
+      conceptH3: "⚖️ Tres escenarios posibles",
+      howH4: "🎯 ¿Qué pasa en cada caso?",
+      howUl: [
+        "<strong>Escenario 1: Equilibrio perfecto</strong> - Destrucción = Construcción. El hueso se mantiene fuerte y sano. Esto es lo ideal en un adulto sano.",
+        "<strong>Escenario 2: Más construcción</strong> - Construcción > Destrucción. El hueso se hace más denso y fuerte. Esto pasa cuando entrenas bien, comes bien y descansas.",
+        "<strong>Escenario 3: Más destrucción</strong> - Destrucción > Construcción. El hueso se vuelve débil y frágil. Esto pasa con la edad, si no comes bien, o si entrenas demasiado sin descansar."
+      ],
+      svgTitle: "⚖️ Los 3 escenarios de la remodelación",
+      svgLabels: {
+        balance: "EQUILIBRIO",
+        balanceSub: "Hueso sano",
+        balanceSub2: "Adulto sano",
+        build: "MÁS CONSTRUCCIÓN",
+        buildSub: "Hueso más fuerte",
+        buildSub2: "Bailarín entrenado",
+        destroy: "MÁS DESTRUCCIÓN",
+        destroySub: "Hueso débil",
+        destroySub2: "Osteoporosis",
+        factors: "Factores que afectan el equilibrio",
+        good: "✅ Mejoran:",
+        goodSub: "Ejercicio, calcio, vitamina D, descanso",
+        bad: "❌ Empeoran:",
+        badSub: "Sedentarismo, mala dieta, estrés, edad"
+      },
+      warningH4: "🚨 ¿Qué pasa cuando se rompe el equilibrio?",
+      warningP: "Si la destrucción supera a la construcción durante mucho tiempo:",
+      warningUl: [
+        "<strong>Osteopenia:</strong> Los huesos empiezan a perder densidad (son menos densos de lo normal, pero no tanto como para llamarlo osteoporosis).",
+        "<strong>Osteoporosis:</strong> Los huesos se vuelven muy frágiles y se fracturan con facilidad. Es como un hueso \"carcomido\" por dentro.",
+        "<strong>Fracturas por estrés:</strong> Pequeñas grietas que no se reparan a tiempo porque la remodelación no da abasto."
+      ],
+      danceH4: "💃 La remodelación en la vida del bailarín",
+      danceUl: [
+        "<strong>Adolescencia:</strong> La construcción gana a la destrucción. Los huesos crecen y se hacen más densos. ¡Es la mejor época para \"invertir\" en hueso!",
+        "<strong>Adulto joven (20-30 años):</strong> Equilibrio perfecto. Los huesos están en su máxima densidad.",
+        "<strong>Adulto mayor (40+ años):</strong> La destrucción empieza a ganar. Los huesos pierden densidad lentamente. Por eso es importante haber \"invertido\" bien en la juventud.",
+        "<strong>Bailarines:</strong> Si entrenan bien, pueden mantener huesos fuertes incluso con la edad. El baile es una \"inversión\" en salud ósea."
+      ],
+      activityH4: "🎭 Actividad: \"La cuenta bancaria del hueso\"",
+      activityObj: "<strong>Objetivo:</strong> Entender el concepto de \"inversión\" en hueso",
+      activitySteps: [
+        "<strong>Imagina una cuenta bancaria:</strong> <ul><li><strong>Ingresos:</strong> Construcción de hueso (osteoblastos trabajando)</li><li><strong>Gastos:</strong> Destrucción de hueso (osteoclastos trabajando)</li><li><strong>Saldo:</strong> Densidad ósea (cuánto hueso tienes)</li></ul>",
+        "<strong>Escenario A (joven bailarín):</strong> Ingresas 100€ (construcción) y gastas 80€ (destrucción). Saldo: +20€. Tu hueso se fortalece.",
+        "<strong>Escenario B (adulto sedentario):</strong> Ingresas 80€ y gastas 100€. Saldo: -20€. Tu hueso se debilita.",
+        "<strong>Escenario C (adulto bailarín):</strong> Ingresas 100€ y gastas 100€. Saldo: 0€. Tu hueso se mantiene fuerte.",
+        "<strong>Reflexión:</strong> ¿Por qué es importante \"invertir\" en hueso durante la adolescencia? (Porque luego, con la edad, los \"gastos\" aumentan y necesitas un buen \"saldo\" acumulado)."
+      ],
+      tipH4: "✨ Consejo para bailarines",
+      tipP: "Para mantener el equilibrio de la remodelación:",
+      tipUl: [
+        "<strong>Entrena con carga:</strong> Saltos, relevés, trabajo de fuerza (activa la construcción)",
+        "<strong>Come bien:</strong> Calcio, vitamina D, proteínas (materiales para construir)",
+        "<strong>Duerme bien:</strong> Los osteoblastos trabajan mejor de noche",
+        "<strong>Descansa:</strong> Da tiempo a la fase de formación (3-4 meses)",
+        "<strong>Evita el estrés crónico:</strong> El cortisol acelera la destrucción"
+      ]
+    },
+    slide4: {
+      quizData: [
+        { q: "¿Qué es la remodelación ósea?",
+          opts: ["El crecimiento del hueso en la infancia","El ciclo continuo de destrucción y construcción de hueso","La reparación de una fractura","La formación del hueso en el feto"], correct: 1 },
+        { q: "¿Cuánto tiempo tarda en renovarse todo el esqueleto?",
+          opts: ["1 año","5 años","10 años","20 años"], correct: 2 },
+        { q: "¿Cuál es la fase más larga de la remodelación?",
+          opts: ["Activación (1-2 días)","Resorción (2-3 semanas)","Inversión (1-2 semanas)","Formación (3-4 meses)"], correct: 3 },
+        { q: "¿Qué células trabajan en la fase de resorción?",
+          opts: ["Osteoblastos (constructores)","Osteoclastos (destructores)","Osteocitos (sensores)","Células osteoprogenitoras"], correct: 1 },
+        { q: "¿Qué es el 'acoplamiento' en la remodelación?",
+          opts: ["La unión entre dos huesos","El equilibrio entre destrucción y construcción de hueso","La conexión entre osteocitos","La unión del músculo al hueso"], correct: 1 },
+        { q: "¿Qué pasa si la destrucción supera a la construcción durante mucho tiempo?",
+          opts: ["Los huesos se hacen más fuertes","Los huesos se mantienen igual","Los huesos se debilitan (osteoporosis)","Los huesos crecen más"], correct: 2 },
+        { q: "¿Por qué es importante la adolescencia para la salud ósea?",
+          opts: ["Porque es cuando más se estira el cuerpo","Porque es cuando más hueso se puede 'almacenar' para el futuro","Porque es cuando más se baila","No es importante"], correct: 1 },
+        { q: "¿Qué factor NO ayuda a mantener el equilibrio de la remodelación?",
+          opts: ["Hacer ejercicio de impacto","Comer suficiente calcio","Dormir bien","Estar mucho tiempo sentado"], correct: 3 }
+      ],
+      finalActivityH4: "🎭 Actividad final: \"Mi plan de remodelación\"",
+      finalActivityObj: "<strong>Objetivo:</strong> Aplicar lo aprendido a tu entrenamiento",
+      finalActivitySteps: [
+        "<strong>Evalúa tu situación:</strong> <ul><li>¿Entrenas con carga suficiente para activar la remodelación?</li><li>¿Comes suficiente calcio y vitamina D?</li><li>¿Duermes 8-9 horas (tiempo para la fase de formación)?</li><li>¿Descansas entre sesiones intensas?</li></ul>",
+        "<strong>Crea tu plan:</strong> Elige 3 acciones concretas para mejorar tu remodelación ósea: <ul><li>Ejemplo: \"Voy a hacer 10 minutos de saltos 3 veces por semana\"</li><li>\"Voy a tomar un yogur cada día\"</li><li>\"Voy a dormir 8 horas mínimo\"</li></ul>",
+        "<strong>Recuerda:</strong> Los cambios en el hueso tardan meses. No esperes resultados inmediatos. ¡Sé constante!",
+        "<strong>Prepárate</strong> para el siguiente archivo: hablaremos de cómo el hueso se adapta a la carga (mecanotransducción y Ley de Wolff en detalle)."
+      ],
+      finalSummaryH4: "Resumen clave",
+      finalSummaryUl: [
+        "<strong>Remodelación:</strong> Ciclo continuo de destrucción y construcción de hueso",
+        "<strong>4 fases:</strong> Activación (1-2 días) → Resorción (2-3 semanas) → Inversión (1-2 semanas) → Formación (3-4 meses)",
+        "<strong>Acoplamiento:</strong> En hueso sano, destrucción = construcción",
+        "<strong>Desequilibrio:</strong> Si destrucción > construcción → osteoporosis",
+        "<strong>Para bailarines:</strong> Entrenamiento + nutrición + descanso = huesos fuertes"
+      ]
+    }
+  },
+  en: {
+    headerTitle: "🦴 Bone Tissue and Coverings",
+    headerSub: "Part 5: Bone Remodelling",
+    headerSubtitle: "The continuous cycle that renews your skeleton every 10 years",
+    tabs: ["🔄 What is it?","⚙️ The 4 phases","⚖️ Balance","🎯 Quiz"],
+    s1h2: "🔄 What is bone remodelling?",
+    s2h2: "⚙️ The 4 phases of remodelling",
+    s3h2: "⚖️ The balance of remodelling",
+    s4h2: "🎯 Quiz: Check what you've learned",
+    s4h3: "Questions about bone remodelling",
+    btnCheck: "Check answers",
+    btnReset: "Reset",
+    fbExcellent: (s,t) => `🏆 Excellent! ${s}/${t}. You understand bone remodelling and its importance for health very well.`,
+    fbGood: (s,t) => `👍 Good: ${s}/${t}. Review the concepts you missed.`,
+    fbBad: (s,t) => `📚 ${s}/${t}. Re-read the sections and try again.`,
+    
+    slide1: {
+      reminderH4: "💡 Reminder",
+      reminderP: "In the previous file we saw the 4 bone cells: osteoblasts (builders), osteoclasts (destroyers), osteocytes (sensors) and osteoprogenitor cells (reserve). Now we will see <strong>how they work together in a continuous cycle</strong> called bone remodelling.",
+      introH3: "🎯 Your skeleton constantly renews itself",
+      introP1: "<span class=\"highlight\">Bone remodelling</span> is the process by which your body <strong>removes old or damaged bone and replaces it with new bone</strong>. This cycle occurs throughout your life, 24 hours a day, 365 days a year.",
+      introP2: "<strong>Surprising fact:</strong> Every 10 years, you have a completely new skeleton! All your bone cells have been replaced.",
+      conceptH3: "Why is remodelling necessary?",
+      howH4: "🎯 Three main reasons",
+      howUl: [
+        "<strong>1. Repair micro-damage:</strong> Every time you dance, jump or land, small microscopic cracks occur in the bone. Remodelling repairs them before they become fractures.",
+        "<strong>2. Adapt to loads:</strong> If you start dancing more or change your dance style, the bone remodels to become stronger where you need it most (Wolff's Law).",
+        "<strong>3. Regulate calcium:</strong> Bone is the body's calcium \"bank\". Remodelling allows calcium to be released into the blood when you need it (for muscles to work) or stored when you have plenty."
+      ],
+      svgTitle: "🔄 The remodelling cycle (overview)",
+      svgLabels: {
+        activation: "Activation",
+        resorption: "Resorption",
+        reversal: "Reversal",
+        formation: "Formation",
+        center1: "CYCLE",
+        center2: "CONTINUOUS",
+        footer: "This cycle repeats throughout your life"
+      },
+      danceH4: "💃 Why is it important for a dancer?",
+      danceUl: [
+        "<strong>Every time you dance:</strong> Remodelling cycles are activated in the bones that receive load (legs, feet, spine).",
+        "<strong>When you rest:</strong> Remodelling continues, repairing the micro-damage from training.",
+        "<strong>Long term:</strong> If you train well and eat well, remodelling makes your bones stronger. If not, they weaken.",
+        "<strong>Patience:</strong> Changes in bone density take months to see. It is not like gaining muscle, which shows in weeks."
+      ],
+      activityH4: "🎭 Activity: \"The house that renews itself\"",
+      activityObj: "<strong>Objective:</strong> Understand why remodelling is necessary",
+      activitySteps: [
+        "<strong>Imagine a house:</strong> Over time, the walls crack, the paint peels, the pipes rust.",
+        "<strong>What do you do?</strong> You don't wait for it to collapse. You do constant renovations: fix cracks, paint, change pipes.",
+        "<strong>Relation to bone:</strong> Your skeleton is like that house. Remodelling is the \"constant renovation\" that keeps bone strong and healthy.",
+        "<strong>Reflection:</strong> What would happen if you never renovated the house? (It would collapse). What would happen if there were no bone remodelling? (Bones would fracture easily)."
+      ],
+      tipH4: "✨ Fun fact",
+      tipP: "In a healthy adult, approximately <strong>10% of the skeleton is remodelled each year</strong>. That means every year, 10% of your bones are \"new\". In 10 years, your entire skeleton is new!"
+    },
+    slide2: {
+      reminderH4: "💡 Reminder",
+      reminderP: "We have just seen that remodelling is a continuous cycle. Now we will go deeper into <strong>each of the 4 phases</strong> and see which cells work in each one.",
+      introH3: "🎯 The remodelling team (BMU)",
+      introP1: "Remodelling is not done by one cell alone. A <span class=\"highlight\">team of cells</span> works together called the <strong>BMU</strong> (Bone Multicellular Unit). It is like a \"renovation team\" that moves through the bone.",
+      introP2: "The BMU has a very strict work order: first some, then others. They cannot work at the same time.",
+      phases: [
+        { emoji: "", cls: "activation", title: "Phase 1: ACTIVATION",
+          dur: "<strong>Duration:</strong> 1-2 days",
+          desc: "Osteocytes detect the need to remodel (micro-damage, load changes) and \"call\" the osteoclasts.",
+          cells: "<strong>Cells:</strong> Osteocytes (sensors)" },
+        { emoji: "🔨", cls: "resorption", title: "Phase 2: RESORPTION",
+          dur: "<strong>Duration:</strong> 2-3 weeks",
+          desc: "Osteoclasts arrive and \"dig\" a small tunnel in the old or damaged bone, dissolving it with acid.",
+          cells: "<strong>Cells:</strong> Osteoclasts (destroyers)" },
+        { emoji: "🔄", cls: "reversal", title: "Phase 3: REVERSAL",
+          dur: "<strong>Duration:</strong> 1-2 weeks",
+          desc: "Osteoclasts leave and osteoblasts arrive. It is the \"shift change\" between destroyers and builders.",
+          cells: "<strong>Cells:</strong> Transition" },
+        { emoji: "", cls: "formation", title: "Phase 4: FORMATION",
+          dur: "<strong>Duration:</strong> 3-4 months",
+          desc: "Osteoblasts build new bone in the tunnel left by the osteoclasts. Some become osteocytes.",
+          cells: "<strong>Cells:</strong> Osteoblasts (builders)" }
+      ],
+      svgTitle: "📐 The 4 phases in action",
+      svgLabels: {
+        phase: "PHASE",
+        act: "Activation",
+        res: "Resorption",
+        inv: "Reversal",
+        form: "Formation",
+        osteocyte: "Osteocyte",
+        osteoclast: "Osteoclast",
+        osteoblast: "Osteoblast",
+        change: "Change",
+        days12: "1-2 days",
+        weeks23: "2-3 weeks",
+        weeks12: "1-2 weeks",
+        months34: "3-4 months",
+        continue: "The cycle continues"
+      },
+      danceH4: "💃 Application in dance",
+      danceUl: [
+        "<strong>Phase 1 (Activation):</strong> When you dance, osteocytes detect the forces and activate remodelling.",
+        "<strong>Phase 2 (Resorption):</strong> Osteoclasts remove bone damaged by the impact of jumps.",
+        "<strong>Phase 3 (Reversal):</strong> Shift change. It is a delicate moment: if there are not enough osteoblasts available, the bone is left weak.",
+        "<strong>Phase 4 (Formation):</strong> Osteoblasts build new, stronger bone. This phase is the longest (3-4 months)."
+      ],
+      activityH4: "🎭 Activity: \"Simulate the 4 phases\"",
+      activityObj: "<strong>Objective:</strong> Understand the sequence and duration of the phases",
+      activitySteps: [
+        "<strong>Material:</strong> 4 colours of plasticine (purple, red, orange, green).",
+        "<strong>Phase 1 (purple - 2 days):</strong> Make a small ball. It represents the activation signal.",
+        "<strong>Phase 2 (red - 3 weeks):</strong> Make a medium ball. It represents the destruction of old bone.",
+        "<strong>Phase 3 (orange - 2 weeks):</strong> Make a small ball. It represents the shift change.",
+        "<strong>Phase 4 (green - 4 months):</strong> Make a LARGE ball. It represents the construction of new bone.",
+        "<strong>Reflection:</strong> Which phase is the longest? (Formation, 4 months). Why is it important to know this? (Because changes in bone take months, not days)."
+      ],
+      tipH4: "✨ Fun fact",
+      tipP: "The formation phase (4 months) is <strong>much longer</strong> than resorption (3 weeks). This means the body takes much longer to build new bone than to destroy old bone. That is why, if there is an imbalance, bone is lost quickly but takes a long time to recover."
+    },
+    slide3: {
+      reminderH4: "💡 Reminder",
+      reminderP: "We have seen the 4 phases of remodelling. Now we will discover what happens when the balance between construction and destruction breaks down.",
+      introH3: "🎯 Perfect coupling",
+      introP1: "In a healthy bone, the amount of bone destroyed in phase 2 is <span class=\"highlight\">exactly equal</span> to the amount of bone built in phase 4. This is called <strong>coupling</strong>.",
+      introP2: "It is like a bank account: if you deposit as much as you withdraw, the balance stays stable.",
+      conceptH3: "⚖️ Three possible scenarios",
+      howH4: "🎯 What happens in each case?",
+      howUl: [
+        "<strong>Scenario 1: Perfect balance</strong> - Destruction = Construction. Bone stays strong and healthy. This is ideal in a healthy adult.",
+        "<strong>Scenario 2: More construction</strong> - Construction > Destruction. Bone becomes denser and stronger. This happens when you train well, eat well and rest.",
+        "<strong>Scenario 3: More destruction</strong> - Destruction > Construction. Bone becomes weak and fragile. This happens with age, if you don't eat well, or if you train too much without resting."
+      ],
+      svgTitle: "⚖️ The 3 scenarios of remodelling",
+      svgLabels: {
+        balance: "BALANCE",
+        balanceSub: "Healthy bone",
+        balanceSub2: "Healthy adult",
+        build: "MORE CONSTRUCTION",
+        buildSub: "Stronger bone",
+        buildSub2: "Trained dancer",
+        destroy: "MORE DESTRUCTION",
+        destroySub: "Weak bone",
+        destroySub2: "Osteoporosis",
+        factors: "Factors affecting balance",
+        good: "✅ Improve:",
+        goodSub: "Exercise, calcium, vitamin D, rest",
+        bad: "❌ Worsen:",
+        badSub: "Sedentary lifestyle, poor diet, stress, age"
+      },
+      warningH4: "🚨 What happens when balance breaks?",
+      warningP: "If destruction exceeds construction for a long time:",
+      warningUl: [
+        "<strong>Osteopenia:</strong> Bones begin to lose density (they are less dense than normal, but not enough to call it osteoporosis).",
+        "<strong>Osteoporosis:</strong> Bones become very fragile and fracture easily. It is like a bone \"eaten away\" from the inside.",
+        "<strong>Stress fractures:</strong> Small cracks that are not repaired in time because remodelling cannot keep up."
+      ],
+      danceH4: "💃 Remodelling in the dancer's life",
+      danceUl: [
+        "<strong>Adolescence:</strong> Construction wins over destruction. Bones grow and become denser. It is the best time to \"invest\" in bone!",
+        "<strong>Young adult (20-30 years):</strong> Perfect balance. Bones are at their maximum density.",
+        "<strong>Older adult (40+ years):</strong> Destruction begins to win. Bones slowly lose density. That is why it is important to have \"invested\" well in youth.",
+        "<strong>Dancers:</strong> If they train well, they can maintain strong bones even with age. Dance is an \"investment\" in bone health."
+      ],
+      activityH4: "🎭 Activity: \"The bone bank account\"",
+      activityObj: "<strong>Objective:</strong> Understand the concept of \"investment\" in bone",
+      activitySteps: [
+        "<strong>Imagine a bank account:</strong> <ul><li><strong>Deposits:</strong> Bone construction (osteoblasts working)</li><li><strong>Withdrawals:</strong> Bone destruction (osteoclasts working)</li><li><strong>Balance:</strong> Bone density (how much bone you have)</li></ul>",
+        "<strong>Scenario A (young dancer):</strong> You deposit €100 (construction) and spend €80 (destruction). Balance: +€20. Your bone strengthens.",
+        "<strong>Scenario B (sedentary adult):</strong> You deposit €80 and spend €100. Balance: -€20. Your bone weakens.",
+        "<strong>Scenario C (adult dancer):</strong> You deposit €100 and spend €100. Balance: €0. Your bone stays strong.",
+        "<strong>Reflection:</strong> Why is it important to \"invest\" in bone during adolescence? (Because later, with age, \"expenses\" increase and you need a good accumulated \"balance\")."
+      ],
+      tipH4: "✨ Tip for dancers",
+      tipP: "To maintain remodelling balance:",
+      tipUl: [
+        "<strong>Train with load:</strong> Jumps, relevés, strength work (activates construction)",
+        "<strong>Eat well:</strong> Calcium, vitamin D, proteins (materials to build)",
+        "<strong>Sleep well:</strong> Osteoblasts work better at night",
+        "<strong>Rest:</strong> Give time to the formation phase (3-4 months)",
+        "<strong>Avoid chronic stress:</strong> Cortisol accelerates destruction"
+      ]
+    },
+    slide4: {
+      quizData: [
+        { q: "What is bone remodelling?",
+          opts: ["Bone growth in childhood","The continuous cycle of bone destruction and construction","The repair of a fracture","Bone formation in the fetus"], correct: 1 },
+        { q: "How long does it take to renew the entire skeleton?",
+          opts: ["1 year","5 years","10 years","20 years"], correct: 2 },
+        { q: "Which is the longest phase of remodelling?",
+          opts: ["Activation (1-2 days)","Resorption (2-3 weeks)","Reversal (1-2 weeks)","Formation (3-4 months)"], correct: 3 },
+        { q: "Which cells work in the resorption phase?",
+          opts: ["Osteoblasts (builders)","Osteoclasts (destroyers)","Osteocytes (sensors)","Osteoprogenitor cells"], correct: 1 },
+        { q: "What is 'coupling' in remodelling?",
+          opts: ["The union between two bones","The balance between bone destruction and construction","The connection between osteocytes","The union of muscle to bone"], correct: 1 },
+        { q: "What happens if destruction exceeds construction for a long time?",
+          opts: ["Bones become stronger","Bones stay the same","Bones weaken (osteoporosis)","Bones grow more"], correct: 2 },
+        { q: "Why is adolescence important for bone health?",
+          opts: ["Because it is when the body stretches the most","Because it is when the most bone can be 'stored' for the future","Because it is when you dance the most","It is not important"], correct: 1 },
+        { q: "Which factor does NOT help maintain remodelling balance?",
+          opts: ["Doing impact exercise","Eating enough calcium","Sleeping well","Sitting for a long time"], correct: 3 }
+      ],
+      finalActivityH4: "🎭 Final activity: \"My remodelling plan\"",
+      finalActivityObj: "<strong>Objective:</strong> Apply what you've learned to your training",
+      finalActivitySteps: [
+        "<strong>Assess your situation:</strong> <ul><li>Do you train with enough load to activate remodelling?</li><li>Do you eat enough calcium and vitamin D?</li><li>Do you sleep 8-9 hours (time for the formation phase)?</li><li>Do you rest between intense sessions?</li></ul>",
+        "<strong>Create your plan:</strong> Choose 3 concrete actions to improve your bone remodelling: <ul><li>Example: \"I will do 10 minutes of jumps 3 times a week\"</li><li>\"I will eat a yoghurt every day\"</li><li>\"I will sleep at least 8 hours\"</li></ul>",
+        "<strong>Remember:</strong> Changes in bone take months. Don't expect immediate results. Be consistent!",
+        "<strong>Prepare</strong> for the next file: we will talk about how bone adapts to load (mechanotransduction and Wolff's Law in detail)."
+      ],
+      finalSummaryH4: "Key summary",
+      finalSummaryUl: [
+        "<strong>Remodelling:</strong> Continuous cycle of bone destruction and construction",
+        "<strong>4 phases:</strong> Activation (1-2 days) → Resorption (2-3 weeks) → Reversal (1-2 weeks) → Formation (3-4 months)",
+        "<strong>Coupling:</strong> In healthy bone, destruction = construction",
+        "<strong>Imbalance:</strong> If destruction > construction → osteoporosis",
+        "<strong>For dancers:</strong> Training + nutrition + rest = strong bones"
+      ]
+    }
+  }
+};
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+let currentLang = 'ca';
+
+function showSlide(i, btn) {
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.slide')[i].classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  const t = I18N[lang];
+  
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + lang).classList.add('active');
+  
+  document.getElementById('t-header-title').textContent = t.headerTitle;
+  document.getElementById('t-header-sub').textContent = t.headerSub;
+  document.getElementById('t-header-subtitle').textContent = t.headerSubtitle;
+  t.tabs.forEach((tab, i) => { document.getElementById('tab' + i).textContent = tab; });
+  
+  document.getElementById('t-s1-h2').textContent = t.s1h2;
+  document.getElementById('t-s2-h2').textContent = t.s2h2;
+  document.getElementById('t-s3-h2').textContent = t.s3h2;
+  document.getElementById('t-s4-h2').textContent = t.s4h2;
+  document.getElementById('t-s4-h3').textContent = t.s4h3;
+  document.getElementById('t-btn-check').textContent = t.btnCheck;
+  document.getElementById('t-btn-reset').textContent = t.btnReset;
+  
+  renderSlide1(t.slide1);
+  renderSlide2(t.slide2);
+  renderSlide3(t.slide3);
+  renderSlide4(t.slide4);
+}
+
+/* ---------- SLIDE 1 ---------- */
+function renderSlide1(d) {
+  document.getElementById('s1-content').innerHTML = `
+    <div class="reminder-box">
+      <h4>${d.reminderH4}</h4>
+      <p>${d.reminderP}</p>
+    </div>
+    
+    <div class="intro-box">
+      <h3>${d.introH3}</h3>
+      <p>${d.introP1}</p>
+      <p style="margin-top: 12px;">${d.introP2}</p>
+    </div>
+    
+    <div class="concept-card">
+      <h3><span class="emoji">🤔</span> ${d.conceptH3}</h3>
+      <div class="how-it-works">
+        <h4>${d.howH4}</h4>
+        <ul>${d.howUl.map(x => `<li>${x}</li>`).join('')}</ul>
+      </div>
+    </div>
+    
+    <div class="diagram-container">
+      <h4>${d.svgTitle}</h4>
+      <svg viewBox="0 0 700 280">
+        <circle cx="350" cy="140" r="100" fill="none" stroke="#2a5298" stroke-width="3" stroke-dasharray="5,3"/>
+        
+        <g transform="translate(300, 30)">
+          <circle cx="50" cy="20" r="25" fill="#9b59b6" opacity="0.8"/>
+          <text x="50" y="25" text-anchor="middle" font-size="10" fill="white" font-weight="bold">1</text>
+          <text x="50" y="60" text-anchor="middle" font-size="10" fill="#8e44ad" font-weight="bold">${d.svgLabels.activation}</text>
+        </g>
+        
+        <g transform="translate(420, 90)">
+          <circle cx="50" cy="20" r="25" fill="#e74c3c" opacity="0.8"/>
+          <text x="50" y="25" text-anchor="middle" font-size="10" fill="white" font-weight="bold">2</text>
+          <text x="50" y="60" text-anchor="middle" font-size="10" fill="#c0392b" font-weight="bold">${d.svgLabels.resorption}</text>
+        </g>
+        
+        <g transform="translate(420, 190)">
+          <circle cx="50" cy="20" r="25" fill="#f39c12" opacity="0.8"/>
+          <text x="50" y="25" text-anchor="middle" font-size="10" fill="white" font-weight="bold">3</text>
+          <text x="50" y="60" text-anchor="middle" font-size="10" fill="#d68910" font-weight="bold">${d.svgLabels.reversal}</text>
+        </g>
+        
+        <g transform="translate(300, 230)">
+          <circle cx="50" cy="20" r="25" fill="#27ae60" opacity="0.8"/>
+          <text x="50" y="25" text-anchor="middle" font-size="10" fill="white" font-weight="bold">4</text>
+          <text x="50" y="60" text-anchor="middle" font-size="10" fill="#27ae60" font-weight="bold">${d.svgLabels.formation}</text>
+        </g>
+        
+        <path d="M 370 50 Q 420 50 445 90" stroke="#7f8c8d" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+        <path d="M 470 130 L 470 190" stroke="#7f8c8d" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+        <path d="M 445 230 Q 420 270 370 270" stroke="#7f8c8d" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+        <path d="M 300 230 Q 250 230 250 140 Q 250 50 320 50" stroke="#7f8c8d" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+        
+        <text x="350" y="135" text-anchor="middle" font-size="12" fill="#2a5298" font-weight="bold">${d.svgLabels.center1}</text>
+        <text x="350" y="155" text-anchor="middle" font-size="11" fill="#2a5298" font-weight="bold">${d.svgLabels.center2}</text>
+        
+        <text x="350" y="295" text-anchor="middle" font-size="11" fill="#2a5298" font-weight="bold">${d.svgLabels.footer}</text>
+        
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+            <polygon points="0 0, 10 3, 0 6" fill="#7f8c8d"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+    
+    <div class="dance-box">
+      <h4><span class="emoji">💃</span> ${d.danceH4}</h4>
+      <ul>${d.danceUl.map(x => `<li>${x}</li>`).join('')}</ul>
+    </div>
+    
+    <div class="practical-activity">
+      <h4><span class="emoji">🎭</span> ${d.activityH4}</h4>
+      <p>${d.activityObj}</p>
+      <ol class="activity-steps">${d.activitySteps.map(x => `<li>${x}</li>`).join('')}</ol>
+    </div>
+    
+    <div class="tip-box">
+      <h4>${d.tipH4}</h4>
+      <p>${d.tipP}</p>
+    </div>
+  `;
+}
+
+/* ---------- SLIDE 2 ---------- */
+function renderSlide2(d) {
+  let phasesHtml = '';
+  d.phases.forEach(p => {
+    phasesHtml += `
+      <div class="phase-item ${p.cls}">
+        <div class="emoji-big">${p.emoji}</div>
+        <h4>${p.title}</h4>
+        <p style="font-size: 0.95em; margin-bottom: 10px;">${p.dur}</p>
+        <p style="font-size: 0.9em; color: #666;">${p.desc}</p>
+        <p style="font-size: 0.85em; margin-top: 10px;">${p.cells}</p>
+      </div>`;
+  });
+  
+  document.getElementById('s2-content').innerHTML = `
+    <div class="reminder-box">
+      <h4>${d.reminderH4}</h4>
+      <p>${d.reminderP}</p>
+    </div>
+    
+    <div class="intro-box">
+      <h3>${d.introH3}</h3>
+      <p>${d.introP1}</p>
+      <p style="margin-top: 12px;">${d.introP2}</p>
+    </div>
+    
+    <div class="phase-card">${phasesHtml}</div>
+    
+    <div class="diagram-container">
+      <h4>${d.svgTitle}</h4>
+      <svg viewBox="0 0 700 320">
+        <g transform="translate(30, 30)">
+          <rect x="0" y="0" width="150" height="120" fill="#f4ecf7" stroke="#8e44ad" stroke-width="2" rx="10"/>
+          <text x="75" y="25" text-anchor="middle" font-size="11" font-weight="bold" fill="#8e44ad">${d.svgLabels.phase} 1</text>
+          <text x="75" y="45" text-anchor="middle" font-size="10" fill="#8e44ad" font-weight="bold">${d.svgLabels.act}</text>
+          <circle cx="75" cy="75" r="20" fill="#3498db" opacity="0.8"/>
+          <text x="75" y="80" text-anchor="middle" font-size="8" fill="white">${d.svgLabels.osteocyte}</text>
+          <path d="M 95 75 L 120 75" stroke="#8e44ad" stroke-width="2" marker-end="url(#arrowPurple)"/>
+          <text x="75" y="110" text-anchor="middle" font-size="9" fill="#8e44ad">${d.svgLabels.days12}</text>
+        </g>
+        
+        <line x1="190" y1="90" x2="220" y2="90" stroke="#7f8c8d" stroke-width="2" marker-end="url(#arrow)"/>
+        
+        <g transform="translate(230, 30)">
+          <rect x="0" y="0" width="150" height="120" fill="#fdedec" stroke="#c0392b" stroke-width="2" rx="10"/>
+          <text x="75" y="25" text-anchor="middle" font-size="11" font-weight="bold" fill="#c0392b">${d.svgLabels.phase} 2</text>
+          <text x="75" y="45" text-anchor="middle" font-size="10" fill="#c0392b" font-weight="bold">${d.svgLabels.res}</text>
+          <circle cx="75" cy="75" r="20" fill="#e74c3c" opacity="0.8"/>
+          <text x="75" y="80" text-anchor="middle" font-size="8" fill="white">${d.svgLabels.osteoclast}</text>
+          <rect x="30" y="95" width="90" height="10" fill="#bdc3c7" opacity="0.5"/>
+          <text x="75" y="110" text-anchor="middle" font-size="9" fill="#c0392b">${d.svgLabels.weeks23}</text>
+        </g>
+        
+        <line x1="390" y1="90" x2="420" y2="90" stroke="#7f8c8d" stroke-width="2" marker-end="url(#arrow)"/>
+        
+        <g transform="translate(430, 30)">
+          <rect x="0" y="0" width="150" height="120" fill="#fef9e7" stroke="#d68910" stroke-width="2" rx="10"/>
+          <text x="75" y="25" text-anchor="middle" font-size="11" font-weight="bold" fill="#d68910">${d.svgLabels.phase} 3</text>
+          <text x="75" y="45" text-anchor="middle" font-size="10" fill="#d68910" font-weight="bold">${d.svgLabels.inv}</text>
+          <circle cx="60" cy="75" r="15" fill="#e74c3c" opacity="0.5"/>
+          <circle cx="90" cy="75" r="15" fill="#27ae60" opacity="0.5"/>
+          <text x="75" y="80" text-anchor="middle" font-size="8" fill="#333">${d.svgLabels.change}</text>
+          <text x="75" y="110" text-anchor="middle" font-size="9" fill="#d68910">${d.svgLabels.weeks12}</text>
+        </g>
+        
+        <line x1="590" y1="90" x2="620" y2="90" stroke="#7f8c8d" stroke-width="2" marker-end="url(#arrow)"/>
+        
+        <g transform="translate(30, 170)">
+          <rect x="0" y="0" width="150" height="120" fill="#e8f8f5" stroke="#27ae60" stroke-width="2" rx="10"/>
+          <text x="75" y="25" text-anchor="middle" font-size="11" font-weight="bold" fill="#27ae60">${d.svgLabels.phase} 4</text>
+          <text x="75" y="45" text-anchor="middle" font-size="10" fill="#27ae60" font-weight="bold">${d.svgLabels.form}</text>
+          <circle cx="75" cy="75" r="20" fill="#27ae60" opacity="0.8"/>
+          <text x="75" y="80" text-anchor="middle" font-size="8" fill="white">${d.svgLabels.osteoblast}</text>
+          <rect x="30" y="95" width="90" height="10" fill="#27ae60" opacity="0.5"/>
+          <text x="75" y="110" text-anchor="middle" font-size="9" fill="#27ae60">${d.svgLabels.months34}</text>
+        </g>
+        
+        <path d="M 180 230 Q 100 280 100 200 Q 100 150 180 150" stroke="#7f8c8d" stroke-width="2" fill="none" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+        <text x="100" y="295" text-anchor="middle" font-size="9" fill="#7f8c8d">${d.svgLabels.continue}</text>
+        
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+            <polygon points="0 0, 10 3, 0 6" fill="#7f8c8d"/>
+          </marker>
+          <marker id="arrowPurple" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+            <polygon points="0 0, 10 3, 0 6" fill="#8e44ad"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+    
+    <div class="dance-box">
+      <h4><span class="emoji">💃</span> ${d.danceH4}</h4>
+      <ul>${d.danceUl.map(x => `<li>${x}</li>`).join('')}</ul>
+    </div>
+    
+    <div class="practical-activity">
+      <h4><span class="emoji">🎭</span> ${d.activityH4}</h4>
+      <p>${d.activityObj}</p>
+      <ol class="activity-steps">${d.activitySteps.map(x => `<li>${x}</li>`).join('')}</ol>
+    </div>
+    
+    <div class="tip-box">
+      <h4>${d.tipH4}</h4>
+      <p>${d.tipP}</p>
+    </div>
+  `;
+}
+
+/* ---------- SLIDE 3 ---------- */
+function renderSlide3(d) {
+  document.getElementById('s3-content').innerHTML = `
+    <div class="reminder-box">
+      <h4>${d.reminderH4}</h4>
+      <p>${d.reminderP}</p>
+    </div>
+    
+    <div class="intro-box">
+      <h3>${d.introH3}</h3>
+      <p>${d.introP1}</p>
+      <p style="margin-top: 12px;">${d.introP2}</p>
+    </div>
+    
+    <div class="concept-card">
+      <h3><span class="emoji">⚖️</span> ${d.conceptH3}</h3>
+      <div class="how-it-works">
+        <h4>${d.howH4}</h4>
+        <ul>${d.howUl.map(x => `<li>${x}</li>`).join('')}</ul>
+      </div>
+    </div>
+    
+    <div class="diagram-container">
+      <h4>${d.svgTitle}</h4>
+      <svg viewBox="0 0 700 280">
+        <g transform="translate(30, 30)">
+          <rect x="0" y="0" width="200" height="120" fill="#e8f5e9" stroke="#27ae60" stroke-width="2" rx="10"/>
+          <text x="100" y="25" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e7d32">${d.svgLabels.balance}</text>
+          <line x1="50" y1="60" x2="150" y2="60" stroke="#7f8c8d" stroke-width="3"/>
+          <line x1="100" y1="50" x2="100" y2="90" stroke="#7f8c8d" stroke-width="3"/>
+          <circle cx="50" cy="60" r="15" fill="#e74c3c" opacity="0.6"/>
+          <circle cx="150" cy="60" r="15" fill="#27ae60" opacity="0.6"/>
+          <text x="100" y="95" text-anchor="middle" font-size="10" fill="#2e7d32" font-weight="bold">${d.svgLabels.balanceSub}</text>
+          <text x="100" y="110" text-anchor="middle" font-size="9" fill="#7f8c8d">${d.svgLabels.balanceSub2}</text>
+        </g>
+        
+        <g transform="translate(250, 30)">
+          <rect x="0" y="0" width="200" height="120" fill="#e3f2fd" stroke="#1976d2" stroke-width="2" rx="10"/>
+          <text x="100" y="25" text-anchor="middle" font-size="12" font-weight="bold" fill="#1565c0">${d.svgLabels.build}</text>
+          <line x1="50" y1="70" x2="150" y2="50" stroke="#7f8c8d" stroke-width="3"/>
+          <line x1="100" y1="50" x2="100" y2="90" stroke="#7f8c8d" stroke-width="3"/>
+          <circle cx="50" cy="70" r="12" fill="#e74c3c" opacity="0.6"/>
+          <circle cx="150" cy="50" r="20" fill="#27ae60" opacity="0.8"/>
+          <text x="100" y="95" text-anchor="middle" font-size="10" fill="#1565c0" font-weight="bold">${d.svgLabels.buildSub}</text>
+          <text x="100" y="110" text-anchor="middle" font-size="9" fill="#7f8c8d">${d.svgLabels.buildSub2}</text>
+        </g>
+        
+        <g transform="translate(470, 30)">
+          <rect x="0" y="0" width="200" height="120" fill="#ffebee" stroke="#e53935" stroke-width="2" rx="10"/>
+          <text x="100" y="25" text-anchor="middle" font-size="12" font-weight="bold" fill="#c62828">${d.svgLabels.destroy}</text>
+          <line x1="50" y1="50" x2="150" y2="70" stroke="#7f8c8d" stroke-width="3"/>
+          <line x1="100" y1="50" x2="100" y2="90" stroke="#7f8c8d" stroke-width="3"/>
+          <circle cx="50" cy="50" r="20" fill="#e74c3c" opacity="0.8"/>
+          <circle cx="150" cy="70" r="12" fill="#27ae60" opacity="0.6"/>
+          <text x="100" y="95" text-anchor="middle" font-size="10" fill="#c62828" font-weight="bold">${d.svgLabels.destroySub}</text>
+          <text x="100" y="110" text-anchor="middle" font-size="9" fill="#7f8c8d">${d.svgLabels.destroySub2}</text>
+        </g>
+        
+        <g transform="translate(50, 170)">
+          <rect x="0" y="0" width="600" height="90" fill="#f8f9fa" stroke="#dee2e6" stroke-width="2" rx="10"/>
+          <text x="300" y="25" text-anchor="middle" font-size="12" font-weight="bold" fill="#2a5298">${d.svgLabels.factors}</text>
+          <text x="150" y="50" text-anchor="middle" font-size="10" fill="#27ae60" font-weight="bold">${d.svgLabels.good}</text>
+          <text x="150" y="68" text-anchor="middle" font-size="9" fill="#7f8c8d">${d.svgLabels.goodSub}</text>
+          <text x="450" y="50" text-anchor="middle" font-size="10" fill="#e74c3c" font-weight="bold">${d.svgLabels.bad}</text>
+          <text x="450" y="68" text-anchor="middle" font-size="9" fill="#7f8c8d">${d.svgLabels.badSub}</text>
+        </g>
+      </svg>
+    </div>
+    
+    <div class="warning-box">
+      <h4>${d.warningH4}</h4>
+      <p>${d.warningP}</p>
+      <ul style="margin-left: 25px; margin-top: 10px; line-height: 1.8;">
+        ${d.warningUl.map(x => `<li>${x}</li>`).join('')}
+      </ul>
+    </div>
+    
+    <div class="dance-box">
+      <h4><span class="emoji">💃</span> ${d.danceH4}</h4>
+      <ul>${d.danceUl.map(x => `<li>${x}</li>`).join('')}</ul>
+    </div>
+    
+    <div class="practical-activity">
+      <h4><span class="emoji"></span> ${d.activityH4}</h4>
+      <p>${d.activityObj}</p>
+      <ol class="activity-steps">${d.activitySteps.map(x => `<li>${x}</li>`).join('')}</ol>
+    </div>
+    
+    <div class="tip-box">
+      <h4>${d.tipH4}</h4>
+      <p>${d.tipP}</p>
+      <ul style="margin-left: 25px; margin-top: 8px; line-height: 1.7;">
+        ${d.tipUl.map(x => `<li>${x}</li>`).join('')}
+      </ul>
+    </div>
+  `;
+}
+
+/* ---------- SLIDE 4 (QUIZ) ---------- */
+function renderSlide4(d) {
+  renderQuiz(d.quizData);
+  document.getElementById('finalActivity').innerHTML = `
+    <div class="practical-activity">
+      <h4><span class="emoji">🎭</span> ${d.finalActivityH4}</h4>
+      <p>${d.finalActivityObj}</p>
+      <ol class="activity-steps">${d.finalActivitySteps.map(x => `<li>${x}</li>`).join('')}</ol>
+    </div>
+    
+    <div class="tip-box" style="margin-top: 20px;">
+      <h4>${d.finalSummaryH4}</h4>
+      <ul style="margin-left: 25px; line-height: 1.8;">
+        ${d.finalSummaryUl.map(x => `<li>${x}</li>`).join('')}
+      </ul>
+    </div>
+  `;
+}
+
+function renderQuiz(quizData) {
+  const cont = document.getElementById('quizContainer');
+  cont.innerHTML = '';
+  quizData.forEach((item, qi) => {
+    let html = `<div class="question-box"><p>${qi+1}. ${item.q}</p><div class="options">`;
+    item.opts.forEach((opt, oi) => {
+      html += `<label><input type="radio" name="q${qi}" value="${oi}"> ${opt}</label>`;
+    });
+    html += `</div></div>`;
+    cont.innerHTML += html;
+  });
+}
+
+function checkQuiz() {
+  const t = I18N[currentLang];
+  let score = 0;
+  t.slide4.quizData.forEach((item, qi) => {
+    const sel = document.querySelector(`input[name="q${qi}"]:checked`);
+    const labels = document.querySelectorAll(`input[name="q${qi}"]`);
+    labels.forEach(l => l.parentElement.classList.remove('correct','incorrect'));
+    if (sel) {
+      const val = parseInt(sel.value);
+      if (val === item.correct) {
+        sel.parentElement.classList.add('correct');
+        score++;
+      } else {
+        sel.parentElement.classList.add('incorrect');
+        labels[item.correct].parentElement.classList.add('correct');
+      }
+    } else {
+      labels[item.correct].parentElement.classList.add('correct');
+    }
+  });
+  const fb = document.getElementById('fbQuiz');
+  fb.classList.add('show');
+  const total = t.slide4.quizData.length;
+  if (score === total) {
+    fb.className = 'feedback show success';
+    fb.innerHTML = t.fbExcellent(score, total);
+  } else if (score >= 6) {
+    fb.className = 'feedback show';
+    fb.style.background = '#fff3cd';
+    fb.style.color = '#856404';
+    fb.style.border = '2px solid #ffc107';
+    fb.innerHTML = t.fbGood(score, total);
+  } else {
+    fb.className = 'feedback show error';
+    fb.innerHTML = t.fbBad(score, total);
+  }
+}
+
+function resetQuiz() {
+  document.querySelectorAll('#quizContainer input').forEach(i => { i.checked = false; i.parentElement.classList.remove('correct','incorrect'); });
+  document.getElementById('fbQuiz').classList.remove('show');
+}
+
+/* Inicialització */
+setLang('ca');
+</script>
+</body>
+</html>

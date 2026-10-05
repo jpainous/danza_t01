@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapeo de Diapositivas vs. Recursos HTML - Presentación II</title>
+<style>
+  :root { 
+    --primary: #11998e; 
+    --secondary: #38ef7d; 
+    --bg: #f8fafc; 
+    --text: #1e293b; 
+    --card-bg: #ffffff; 
+    --border: #e2e8f0;
+    --no-link: #94a3b8;
+  }
+  * { box-sizing: border-box; }
+  body { 
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+    line-height: 1.6; 
+    color: var(--text); 
+    background: var(--bg); 
+    margin: 0; 
+    padding: 0; 
+  }
+  .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+  
+  header { 
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); 
+    color: white; 
+    padding: 30px 20px; 
+    text-align: center; 
+    border-radius: 0 0 20px 20px; 
+    margin-bottom: 30px; 
+    box-shadow: 0 10px 25px rgba(17, 153, 142, 0.2); 
+    position: relative;
+  }
+  header h1 { margin: 0; font-size: 2em; font-weight: 800; }
+  header p { margin: 10px 0 0; opacity: 0.9; font-size: 1.1em; }
+  
+  .language-selector {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    gap: 8px;
+  }
+  .language-selector button {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.4);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  .language-selector button:hover {
+    background: rgba(255,255,255,0.3);
+  }
+  .language-selector button.active {
+    background: white;
+    color: var(--primary);
+  }
+  
+  .table-container {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    overflow-x: auto;
+  }
+  
+  table { 
+    width: 100%; 
+    border-collapse: separate; 
+    border-spacing: 0; 
+    border-radius: 8px; 
+    overflow: hidden; 
+    border: 1px solid var(--border); 
+    min-width: 600px;
+  }
+  th, td { 
+    padding: 14px 18px; 
+    text-align: left; 
+    border-bottom: 1px solid var(--border); 
+    vertical-align: top;
+  }
+  th { 
+    background-color: #f1f5f9; 
+    color: #334155; 
+    font-weight: 700; 
+    font-size: 0.95em; 
+    text-transform: uppercase; 
+    letter-spacing: 0.5px;
+    position: sticky;
+    top: 0;
+  }
+  th.col-a { width: 35%; }
+  th.col-b { width: 65%; }
+  
+  tr:last-child td { border-bottom: none; }
+  tr:hover { background-color: #f8fafc; transition: background-color 0.2s; }
+  
+  .slide-number {
+    font-weight: 800;
+    color: var(--primary);
+    font-size: 1.1em;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .slide-title {
+    font-size: 0.95em;
+    color: #475569;
+    font-weight: 500;
+  }
+  .slide-type {
+    display: inline-block;
+    font-size: 0.75em;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-top: 6px;
+    font-weight: 600;
+  }
+  .type-visual { background: #f1f5f9; color: #64748b; }
+  .type-anim { background: #fef3c7; color: #92400e; }
+  
+  .link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .link-list li {
+    margin-bottom: 6px;
+  }
+  .link-list li:last-child {
+    margin-bottom: 0;
+  }
+  a.resource-link { 
+    color: var(--primary); 
+    text-decoration: none; 
+    font-weight: 600; 
+    font-size: 0.95em;
+    display: inline-flex; 
+    align-items: center; 
+    gap: 6px; 
+    transition: all 0.2s; 
+    word-break: break-all;
+  }
+  a.resource-link:hover { 
+    color: #0d7a6e; 
+    text-decoration: underline; 
+  }
+  a.resource-link::after { 
+    content: "↗"; 
+    font-size: 0.8em; 
+    opacity: 0.7; 
+  }
+  
+  .no-link {
+    color: var(--no-link);
+    font-style: italic;
+    font-size: 0.95em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .no-link::before {
+    content: "⚠️";
+    font-style: normal;
+  }
+
+  footer { 
+    text-align: center; 
+    padding: 30px 20px; 
+    color: #64748b; 
+    font-size: 0.9em; 
+    border-top: 1px solid var(--border); 
+    margin-top: 20px; 
+  }
+  
+  @media (max-width: 768px) {
+    header h1 { font-size: 1.5em; }
+    .container { padding: 15px; }
+    .table-container { padding: 15px; }
+    th, td { padding: 10px 12px; font-size: 0.9em; }
+    .language-selector { position: static; margin-bottom: 15px; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="language-selector">
+    <button class="active" onclick="setLanguage('es', this)">ES</button>
+    <button onclick="setLanguage('ca', this)">CA</button>
+    <button onclick="setLanguage('en', this)">EN</button>
+  </div>
+  <h1 data-i18n="header_title">📋 Mapeo de Diapositivas vs. Recursos HTML</h1>
+  <p data-i18n="header_subtitle">Sistema Musculoesquelético II · 61 Diapositivas · Curso 2026-2027</p>
+</header>
+
+<div class="container">
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-a" data-i18n="th_slide">Nº DIAPOSITIVA</th>
+          <th class="col-b" data-i18n="th_url">URL ARCHIVO WEB</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="slide-number">1</span><span class="slide-title" data-i18n="slide1_title">Portada ("Sistema músculo-esquelético II")</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_00_A.html" target="_blank">esqueleto_00_A.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">2</span><span class="slide-title" data-i18n="slide2_title">La Anatomía en Movimiento: De lo Micro a lo Macro (Intro)</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_00_A.html" target="_blank">esqueleto_00_A.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_00_B.html" target="_blank">esqueleto_00_B.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">3</span><span class="slide-title" data-i18n="slide3_title">Bloque 1: El Motor</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_00_A.html" target="_blank">esqueleto_00_A.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">4</span><span class="slide-title" data-i18n="slide4_title">Bloque 2: El Chasis Vivo</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_00_A.html" target="_blank">esqueleto_00_A.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">5</span><span class="slide-title" data-i18n="slide5_title">Bloque 3: El Control Preciso</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_00_A.html" target="_blank">esqueleto_00_A.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">6</span><span class="slide-title" data-i18n="slide6_title">Cierre: Práctica somática de integración biomecánica</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_test_final.html" target="_blank">esqueleto_test_final.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">7</span><span class="slide-title" data-i18n="slide7_title">Músculo esquelético / Sarcómero</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/actividades_sarcomero.html" target="_blank">actividades_sarcomero.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">8</span><span class="slide-title" data-i18n="slide8_title">Actina y miosina: el dúo dinámico</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">9</span><span class="slide-title" data-i18n="slide9_title">Actina y miosina (Interacción de cabezas)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">10</span><span class="slide-title" data-i18n="slide10_title">Mecanismo de deslizamiento</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/miosina_actina.html" target="_blank">miosina_actina.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/contraccion_muscular.html" target="_blank">contraccion_muscular.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">11</span><span class="slide-title" data-i18n="slide11_title">Tipos de contracción muscular (Ilustración inicial)</span><span class="slide-type type-visual" data-i18n="type_visual">Visual</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/contraccion_muscular.html" target="_blank">contraccion_muscular.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control_1.html" target="_blank">estabilidad_control_1.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">12</span><span class="slide-title" data-i18n="slide12_title">Tipos de contracción muscular (Definiciones)</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/contraccion_muscular.html" target="_blank">contraccion_muscular.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control_1.html" target="_blank">estabilidad_control_1.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control_2.html" target="_blank">estabilidad_control_2.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">13</span><span class="slide-title" data-i18n="slide13_title">Tipos de contracción: Concéntrica</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/contraccion_muscular.html" target="_blank">contraccion_muscular.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control_1.html" target="_blank">estabilidad_control_1.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">14</span><span class="slide-title" data-i18n="slide14_title">Tipos de contracción: Isométrica</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/contraccion_muscular.html" target="_blank">contraccion_muscular.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control_1.html" target="_blank">estabilidad_control_1.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">15</span><span class="slide-title" data-i18n="slide15_title">Tipos de contracción: Excéntrica</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/contraccion_muscular.html" target="_blank">contraccion_muscular.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control_2.html" target="_blank">estabilidad_control_2.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">16</span><span class="slide-title" data-i18n="slide16_title">Tipos de contracción (Cierre y nota)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/contraccion_muscular.html" target="_blank">contraccion_muscular.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_B.html" target="_blank">casos_practicos02_B.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">17</span><span class="slide-title" data-i18n="slide17_title">Componentes de la cadena biomecánica</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_00_A.html" target="_blank">esqueleto_00_A.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_04_tendones.html" target="_blank">esqueleto_04_tendones.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">18</span><span class="slide-title" data-i18n="slide18_title">Componentes: Músculo</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_00_A.html" target="_blank">esqueleto_00_A.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">19</span><span class="slide-title" data-i18n="slide19_title">Componentes: Tendón</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_04_tendones.html" target="_blank">esqueleto_04_tendones.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">20</span><span class="slide-title" data-i18n="slide20_title">Componentes: Huesos</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_01_A.html" target="_blank">esqueleto_01_A.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_02_A.html" target="_blank">esqueleto_02_A.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">21</span><span class="slide-title" data-i18n="slide21_title">Componentes: Articulación</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_05_articulaciones_A.html" target="_blank">esqueleto_05_articulaciones_A.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">22</span><span class="slide-title" data-i18n="slide22_title">Componentes: Ligamento</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_04_tendones.html" target="_blank">esqueleto_04_tendones.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">23</span><span class="slide-title" data-i18n="slide23_title">Los músculos trabajan en equipo (Agonista)</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/musculos_tr_equipo.html" target="_blank">musculos_tr_equipo.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/trabajo_musculos.html" target="_blank">trabajo_musculos.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">24</span><span class="slide-title" data-i18n="slide24_title">Los músculos trabajan en equipo (Antagonista, Sinergista)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/musculos_tr_equipo.html" target="_blank">musculos_tr_equipo.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/trabajo_musculos.html" target="_blank">trabajo_musculos.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">25</span><span class="slide-title" data-i18n="slide25_title">Los músculos trabajan en equipo (Estabilizador)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/musculos_tr_equipo.html" target="_blank">musculos_tr_equipo.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/trabajo_musculos.html" target="_blank">trabajo_musculos.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_B.html" target="_blank">casos_practicos02_B.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">26</span><span class="slide-title" data-i18n="slide26_title">Coactivación: estabilidad y control</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control.html" target="_blank">estabilidad_control.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control_1.html" target="_blank">estabilidad_control_1.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">27</span><span class="slide-title" data-i18n="slide27_title">Coactivación: estabilidad y control (Detalles)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control.html" target="_blank">estabilidad_control.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control_1.html" target="_blank">estabilidad_control_1.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control_2.html" target="_blank">estabilidad_control_2.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">28</span><span class="slide-title" data-i18n="slide28_title">El hueso no es estático</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_D.html" target="_blank">esqueleto_03_D.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_E.html" target="_blank">esqueleto_03_E.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">29</span><span class="slide-title" data-i18n="slide29_title">El hueso no es estático (Comparación)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_D.html" target="_blank">esqueleto_03_D.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_E.html" target="_blank">esqueleto_03_E.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">30</span><span class="slide-title" data-i18n="slide30_title">Estructura interna del hueso trabecular</span><span class="slide-type type-visual" data-i18n="type_visual">Visual</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_A.html" target="_blank">esqueleto_03_A.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_B.html" target="_blank">esqueleto_03_B.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">31</span><span class="slide-title" data-i18n="slide31_title">Tipos de huesos según su forma</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_01_A.html" target="_blank">esqueleto_01_A.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_B.html" target="_blank">casos_practicos02_B.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">32</span><span class="slide-title" data-i18n="slide32_title">Tipos de huesos según su forma (Texto)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_01_A.html" target="_blank">esqueleto_01_A.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_B.html" target="_blank">casos_practicos02_B.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">33</span><span class="slide-title" data-i18n="slide33_title">Ejemplo de hueso sesamoideo</span><span class="slide-type type-visual" data-i18n="type_visual">Visual</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_01_A.html" target="_blank">esqueleto_01_A.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_mano.html" target="_blank">esqueleto_mano.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">34</span><span class="slide-title" data-i18n="slide34_title">Partes de un hueso largo</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_02_A.html" target="_blank">esqueleto_02_A.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_B.html" target="_blank">casos_practicos02_B.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">35</span><span class="slide-title" data-i18n="slide35_title">Partes de un hueso largo (Epífisis)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_02_A.html" target="_blank">esqueleto_02_A.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">36</span><span class="slide-title" data-i18n="slide36_title">Partes de un hueso largo (Metáfisis)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_02_A.html" target="_blank">esqueleto_02_A.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">37</span><span class="slide-title" data-i18n="slide37_title">Partes de un hueso largo (Diáfisis)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_02_A.html" target="_blank">esqueleto_02_A.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">38</span><span class="slide-title" data-i18n="slide38_title">Placa de crecimiento óseo</span><span class="slide-type type-visual" data-i18n="type_visual">Visual</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_02_A.html" target="_blank">esqueleto_02_A.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">39</span><span class="slide-title" data-i18n="slide39_title">Tejido óseo y recubrimientos</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_A.html" target="_blank">esqueleto_03_A.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_B.html" target="_blank">esqueleto_03_B.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">40</span><span class="slide-title" data-i18n="slide40_title">Tejido óseo y recubrimientos (Endostio)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_A.html" target="_blank">esqueleto_03_A.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_B.html" target="_blank">esqueleto_03_B.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">41</span><span class="slide-title" data-i18n="slide41_title">Corte anatómico de hueso largo</span><span class="slide-type type-visual" data-i18n="type_visual">Visual</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_A.html" target="_blank">esqueleto_03_A.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_B.html" target="_blank">esqueleto_03_B.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_C.html" target="_blank">esqueleto_03_C.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">42</span><span class="slide-title" data-i18n="slide42_title">Funciones del sistema esquelético</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_00_A.html" target="_blank">esqueleto_00_A.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">43</span><span class="slide-title" data-i18n="slide43_title">Funciones del sistema esquelético (Reserva y Hematopoyesis)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_00_A.html" target="_blank">esqueleto_00_A.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">44</span><span class="slide-title" data-i18n="slide44_title">Células del tejido óseo</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_D.html" target="_blank">esqueleto_03_D.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">45</span><span class="slide-title" data-i18n="slide45_title">Células del tejido óseo (Texto descriptivo)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_D.html" target="_blank">esqueleto_03_D.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">46</span><span class="slide-title" data-i18n="slide46_title">Remodelación ósea: un ciclo continuo</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_D.html" target="_blank">esqueleto_03_D.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_E.html" target="_blank">esqueleto_03_E.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">47</span><span class="slide-title" data-i18n="slide47_title">Remodelación ósea: un ciclo continuo (Texto)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_D.html" target="_blank">esqueleto_03_D.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_E.html" target="_blank">esqueleto_03_E.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">48</span><span class="slide-title" data-i18n="slide48_title">El hueso se adapta a la carga</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_E.html" target="_blank">esqueleto_03_E.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_F.html" target="_blank">esqueleto_03_F.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">49</span><span class="slide-title" data-i18n="slide49_title">El hueso se adapta a la carga (Comparación)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_E.html" target="_blank">esqueleto_03_E.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_F.html" target="_blank">esqueleto_03_F.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">50</span><span class="slide-title" data-i18n="slide50_title">¿Qué necesita el hueso para mantenerse sano?</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_E.html" target="_blank">esqueleto_03_E.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_03_F.html" target="_blank">esqueleto_03_F.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">51</span><span class="slide-title" data-i18n="slide51_title">Fisiología del Tendón: Transmisión y Energía</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_04_tendones.html" target="_blank">esqueleto_04_tendones.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">52</span><span class="slide-title" data-i18n="slide52_title">Fisiología del Tendón: Transmisión y Energía (Texto)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_04_tendones.html" target="_blank">esqueleto_04_tendones.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">53</span><span class="slide-title" data-i18n="slide53_title">El tendón también almacena energía</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_04_tendones.html" target="_blank">esqueleto_04_tendones.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">54</span><span class="slide-title" data-i18n="slide54_title">Fisiología del Ligamento: Guía y Límite</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_04_tendones.html" target="_blank">esqueleto_04_tendones.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">55</span><span class="slide-title" data-i18n="slide55_title">Fisiología del Ligamento: Guía y Límite (Warning Zone)</span><span class="slide-type type-anim" data-i18n="type_anim">Animación</span></td>
+          <td><ul class="link-list"><li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_04_tendones.html" target="_blank">esqueleto_04_tendones.html</a></li></ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">56</span><span class="slide-title" data-i18n="slide56_title">Tipos de articulaciones</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_05_articulaciones_A.html" target="_blank">esqueleto_05_articulaciones_A.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_B.html" target="_blank">casos_practicos02_B.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">57</span><span class="slide-title" data-i18n="slide57_title">¿De qué tipo es cada articulación?</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_05_articulaciones_A.html" target="_blank">esqueleto_05_articulaciones_A.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_B.html" target="_blank">casos_practicos02_B.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">58</span><span class="slide-title" data-i18n="slide58_title">Partes de una articulación</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_05_articulaciones_A.html" target="_blank">esqueleto_05_articulaciones_A.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_05_articulaciones_B.html" target="_blank">esqueleto_05_articulaciones_B.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">59</span><span class="slide-title" data-i18n="slide59_title">El cartílago necesita movimiento y carga</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/esqueleto_05_articulaciones_B.html" target="_blank">esqueleto_05_articulaciones_B.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_B.html" target="_blank">casos_practicos02_B.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">60</span><span class="slide-title" data-i18n="slide60_title">Plano coronal o frontal (y rotaciones)</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/planos_movimiento.html" target="_blank">planos_movimiento.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/casos_practicos02_B.html" target="_blank">casos_practicos02_B.html</a></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td><span class="slide-number">61</span><span class="slide-title" data-i18n="slide61_title">Propiocepción (Mecanorreceptores)</span></td>
+          <td><ul class="link-list">
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control.html" target="_blank">estabilidad_control.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control_1.html" target="_blank">estabilidad_control_1.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/estabilidad_control_2.html" target="_blank">estabilidad_control_2.html</a></li>
+            <li><a class="resource-link" href="https://jpainous.github.io/dansa_tema03/planos_movimiento.html" target="_blank">planos_movimiento.html</a></li>
+          </ul></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<footer>
+  <p data-i18n="footer_line1">🩰 Fisiología aplicada a la Danza · Dra. Cèlia Painous, MD, PhD · Curso 2026-2027</p>
+  <p style="font-size: 0.85em; margin-top: 8px;" data-i18n="footer_line2">Todos los enlaces se abren en una nueva pestaña para facilitar la navegación.</p>
+</footer>
+
+<script>
+let currentLang = 'es';
+
+const translations = {
+  es: {
+    header_title: "📋 Mapeo de Diapositivas vs. Recursos HTML",
+    header_subtitle: "Sistema Musculoesquelético II · 61 Diapositivas · Curso 2026-2027",
+    th_slide: "Nº DIAPOSITIVA",
+    th_url: "URL ARCHIVO WEB",
+    type_visual: "Visual",
+    type_anim: "Animación",
+    footer_line1: "🩰 Fisiología aplicada a la Danza · Dra. Cèlia Painous, MD, PhD · Curso 2026-2027",
+    footer_line2: "Todos los enlaces se abren en una nueva pestaña para facilitar la navegación.",
+    slide1_title: 'Portada ("Sistema músculo-esquelético II")',
+    slide2_title: "La Anatomía en Movimiento: De lo Micro a lo Macro (Intro)",
+    slide3_title: "Bloque 1: El Motor",
+    slide4_title: "Bloque 2: El Chasis Vivo",
+    slide5_title: "Bloque 3: El Control Preciso",
+    slide6_title: "Cierre: Práctica somática de integración biomecánica",
+    slide7_title: "Músculo esquelético / Sarcómero",
+    slide8_title: "Actina y miosina: el dúo dinámico",
+    slide9_title: "Actina y miosina (Interacción de cabezas)",
+    slide10_title: "Mecanismo de deslizamiento",
+    slide11_title: "Tipos de contracción muscular (Ilustración inicial)",
+    slide12_title: "Tipos de contracción muscular (Definiciones)",
+    slide13_title: "Tipos de contracción: Concéntrica",
+    slide14_title: "Tipos de contracción: Isométrica",
+    slide15_title: "Tipos de contracción: Excéntrica",
+    slide16_title: "Tipos de contracción (Cierre y nota)",
+    slide17_title: "Componentes de la cadena biomecánica",
+    slide18_title: "Componentes: Músculo",
+    slide19_title: "Componentes: Tendón",
+    slide20_title: "Componentes: Huesos",
+    slide21_title: "Componentes: Articulación",
+    slide22_title: "Componentes: Ligamento",
+    slide23_title: "Los músculos trabajan en equipo (Agonista)",
+    slide24_title: "Los músculos trabajan en equipo (Antagonista, Sinergista)",
+    slide25_title: "Los músculos trabajan en equipo (Estabilizador)",
+    slide26_title: "Coactivación: estabilidad y control",
+    slide27_title: "Coactivación: estabilidad y control (Detalles)",
+    slide28_title: "El hueso no es estático",
+    slide29_title: "El hueso no es estático (Comparación)",
+    slide30_title: "Estructura interna del hueso trabecular",
+    slide31_title: "Tipos de huesos según su forma",
+    slide32_title: "Tipos de huesos según su forma (Texto)",
+    slide33_title: "Ejemplo de hueso sesamoideo",
+    slide34_title: "Partes de un hueso largo",
+    slide35_title: "Partes de un hueso largo (Epífisis)",
+    slide36_title: "Partes de un hueso largo (Metáfisis)",
+    slide37_title: "Partes de un hueso largo (Diáfisis)",
+    slide38_title: "Placa de crecimiento óseo",
+    slide39_title: "Tejido óseo y recubrimientos",
+    slide40_title: "Tejido óseo y recubrimientos (Endostio)",
+    slide41_title: "Corte anatómico de hueso largo",
+    slide42_title: "Funciones del sistema esquelético",
+    slide43_title: "Funciones del sistema esquelético (Reserva y Hematopoyesis)",
+    slide44_title: "Células del tejido óseo",
+    slide45_title: "Células del tejido óseo (Texto descriptivo)",
+    slide46_title: "Remodelación ósea: un ciclo continuo",
+    slide47_title: "Remodelación ósea: un ciclo continuo (Texto)",
+    slide48_title: "El hueso se adapta a la carga",
+    slide49_title: "El hueso se adapta a la carga (Comparación)",
+    slide50_title: "¿Qué necesita el hueso para mantenerse sano?",
+    slide51_title: "Fisiología del Tendón: Transmisión y Energía",
+    slide52_title: "Fisiología del Tendón: Transmisión y Energía (Texto)",
+    slide53_title: "El tendón también almacena energía",
+    slide54_title: "Fisiología del Ligamento: Guía y Límite",
+    slide55_title: "Fisiología del Ligamento: Guía y Límite (Warning Zone)",
+    slide56_title: "Tipos de articulaciones",
+    slide57_title: "¿De qué tipo es cada articulación?",
+    slide58_title: "Partes de una articulación",
+    slide59_title: "El cartílago necesita movimiento y carga",
+    slide60_title: "Plano coronal o frontal (y rotaciones)",
+    slide61_title: "Propiocepción (Mecanorreceptores)"
+  },
+  ca: {
+    header_title: "📋 Mapatge de Diapositives vs. Recursos HTML",
+    header_subtitle: "Sistema Musculoesquelètic II · 61 Diapositives · Curs 2026-2027",
+    th_slide: "Nº DIAPOSITIVA",
+    th_url: "URL ARXIU WEB",
+    type_visual: "Visual",
+    type_anim: "Animació",
+    footer_line1: "🩰 Fisiologia aplicada a la Dansa · Dra. Cèlia Painous, MD, PhD · Curs 2026-2027",
+    footer_line2: "Tots els enllaços s'obren en una nova pestanya per facilitar la navegació.",
+    slide1_title: 'Portada ("Sistema múscul-esquelètic II")',
+    slide2_title: "L'Anatomia en Moviment: De lo Micro a lo Macro (Intro)",
+    slide3_title: "Bloc 1: El Motor",
+    slide4_title: "Bloc 2: El Xassís Viu",
+    slide5_title: "Bloc 3: El Control Precis",
+    slide6_title: "Tancament: Pràctica somàtica d'integració biomecànica",
+    slide7_title: "Múscul esquelètic / Sarcòmer",
+    slide8_title: "Actina i miosina: el duo dinàmic",
+    slide9_title: "Actina i miosina (Interacció de caps)",
+    slide10_title: "Mecanisme de lliscament",
+    slide11_title: "Tipus de contracció muscular (Il·lustració inicial)",
+    slide12_title: "Tipus de contracció muscular (Definicions)",
+    slide13_title: "Tipus de contracció: Concèntrica",
+    slide14_title: "Tipus de contracció: Isomètrica",
+    slide15_title: "Tipus de contracció: Excèntrica",
+    slide16_title: "Tipus de contracció (Tancament i nota)",
+    slide17_title: "Components de la cadena biomecànica",
+    slide18_title: "Components: Múscul",
+    slide19_title: "Components: Tendó",
+    slide20_title: "Components: Ossos",
+    slide21_title: "Components: Articulació",
+    slide22_title: "Components: Lligament",
+    slide23_title: "Els músculs treballen en equip (Agonista)",
+    slide24_title: "Els músculs treballen en equip (Antagonista, Sinergista)",
+    slide25_title: "Els músculs treballen en equip (Estabilitzador)",
+    slide26_title: "Coactivació: estabilitat i control",
+    slide27_title: "Coactivació: estabilitat i control (Detalls)",
+    slide28_title: "L'os no és estàtic",
+    slide29_title: "L'os no és estàtic (Comparació)",
+    slide30_title: "Estructura interna de l'os trabecular",
+    slide31_title: "Tipus d'ossos segons la seva forma",
+    slide32_title: "Tipus d'ossos segons la seva forma (Text)",
+    slide33_title: "Exemple d'os sesamoide",
+    slide34_title: "Parts d'un os llarg",
+    slide35_title: "Parts d'un os llarg (Epífisi)",
+    slide36_title: "Parts d'un os llarg (Metàfisi)",
+    slide37_title: "Parts d'un os llarg (Diàfisi)",
+    slide38_title: "Placa de creixement ossi",
+    slide39_title: "Teixit ossi i recobriments",
+    slide40_title: "Teixit ossi i recobriments (Endosti)",
+    slide41_title: "Tall anatòmic d'os llarg",
+    slide42_title: "Funcions del sistema esquelètic",
+    slide43_title: "Funcions del sistema esquelètic (Reserva i Hematopoesi)",
+    slide44_title: "Cèl·lules del teixit ossi",
+    slide45_title: "Cèl·lules del teixit ossi (Text descriptiu)",
+    slide46_title: "Remodelació òssia: un cicle continu",
+    slide47_title: "Remodelació òssia: un cicle continu (Text)",
+    slide48_title: "L'os s'adapta a la càrrega",
+    slide49_title: "L'os s'adapta a la càrrega (Comparació)",
+    slide50_title: "Què necessita l'os per mantenir-se sa?",
+    slide51_title: "Fisiologia del Tendó: Transmissió i Energia",
+    slide52_title: "Fisiologia del Tendó: Transmissió i Energia (Text)",
+    slide53_title: "El tendó també emmagatzema energia",
+    slide54_title: "Fisiologia del Lligament: Guia i Límit",
+    slide55_title: "Fisiologia del Lligament: Guia i Límit (Warning Zone)",
+    slide56_title: "Tipus d'articulacions",
+    slide57_title: "De quin tipus és cada articulació?",
+    slide58_title: "Parts d'una articulació",
+    slide59_title: "El cartílag necessita moviment i càrrega",
+    slide60_title: "Pla coronal o frontal (i rotacions)",
+    slide61_title: "Propiocepció (Mecanoreceptors)"
+  },
+  en: {
+    header_title: "📋 Mapping of Slides vs. HTML Resources",
+    header_subtitle: "Musculoskeletal System II · 61 Slides · Academic Year 2026-2027",
+    th_slide: "SLIDE Nº",
+    th_url: "WEB FILE URL",
+    type_visual: "Visual",
+    type_anim: "Animation",
+    footer_line1: "🩰 Physiology applied to Dance · Dra. Cèlia Painous, MD, PhD · Academic Year 2026-2027",
+    footer_line2: "All links open in a new tab for easier navigation.",
+    slide1_title: 'Cover ("Musculoskeletal System II")',
+    slide2_title: "Anatomy in Motion: From Micro to Macro (Intro)",
+    slide3_title: "Block 1: The Engine",
+    slide4_title: "Block 2: The Living Chassis",
+    slide5_title: "Block 3: Precise Control",
+    slide6_title: "Closing: Somatic practice of biomechanical integration",
+    slide7_title: "Skeletal muscle / Sarcomere",
+    slide8_title: "Actin and myosin: the dynamic duo",
+    slide9_title: "Actin and myosin (Head interaction)",
+    slide10_title: "Sliding mechanism",
+    slide11_title: "Types of muscle contraction (Initial illustration)",
+    slide12_title: "Types of muscle contraction (Definitions)",
+    slide13_title: "Types of contraction: Concentric",
+    slide14_title: "Types of contraction: Isometric",
+    slide15_title: "Types of contraction: Eccentric",
+    slide16_title: "Types of contraction (Closing and note)",
+    slide17_title: "Components of the biomechanical chain",
+    slide18_title: "Components: Muscle",
+    slide19_title: "Components: Tendon",
+    slide20_title: "Components: Bones",
+    slide21_title: "Components: Joint",
+    slide22_title: "Components: Ligament",
+    slide23_title: "Muscles work as a team (Agonist)",
+    slide24_title: "Muscles work as a team (Antagonist, Synergist)",
+    slide25_title: "Muscles work as a team (Stabilizer)",
+    slide26_title: "Coactivation: stability and control",
+    slide27_title: "Coactivation: stability and control (Details)",
+    slide28_title: "Bone is not static",
+    slide29_title: "Bone is not static (Comparison)",
+    slide30_title: "Internal structure of trabecular bone",
+    slide31_title: "Types of bones according to their shape",
+    slide32_title: "Types of bones according to their shape (Text)",
+    slide33_title: "Example of sesamoid bone",
+    slide34_title: "Parts of a long bone",
+    slide35_title: "Parts of a long bone (Epiphysis)",
+    slide36_title: "Parts of a long bone (Metaphysis)",
+    slide37_title: "Parts of a long bone (Diaphysis)",
+    slide38_title: "Bone growth plate",
+    slide39_title: "Bone tissue and coverings",
+    slide40_title: "Bone tissue and coverings (Endosteum)",
+    slide41_title: "Anatomical section of a long bone",
+    slide42_title: "Functions of the skeletal system",
+    slide43_title: "Functions of the skeletal system (Reserve and Hematopoiesis)",
+    slide44_title: "Bone tissue cells",
+    slide45_title: "Bone tissue cells (Descriptive text)",
+    slide46_title: "Bone remodeling: a continuous cycle",
+    slide47_title: "Bone remodeling: a continuous cycle (Text)",
+    slide48_title: "Bone adapts to load",
+    slide49_title: "Bone adapts to load (Comparison)",
+    slide50_title: "What does bone need to stay healthy?",
+    slide51_title: "Tendon Physiology: Transmission and Energy",
+    slide52_title: "Tendon Physiology: Transmission and Energy (Text)",
+    slide53_title: "The tendon also stores energy",
+    slide54_title: "Ligament Physiology: Guide and Limit",
+    slide55_title: "Ligament Physiology: Guide and Limit (Warning Zone)",
+    slide56_title: "Types of joints",
+    slide57_title: "What type is each joint?",
+    slide58_title: "Parts of a joint",
+    slide59_title: "Cartilage needs movement and load",
+    slide60_title: "Coronal or frontal plane (and rotations)",
+    slide61_title: "Proprioception (Mechanoreceptors)"
+  }
+};
+
+function setLanguage(lang, btn) {
+  currentLang = lang;
+  document.querySelectorAll('.language-selector button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key]) {
+      el.textContent = translations[lang][key];
+    }
+  });
+  
+  document.documentElement.lang = lang;
+}
+
+// Initialize with Spanish
+setLanguage('es', document.querySelector('.language-selector button'));
+</script>
+</body>
+</html>

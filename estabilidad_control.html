@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Els Músculs Treballen en Equip - Dansa</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+    position: relative;
+  }
+  header {
+    background: linear-gradient(90deg, #1e3c72, #2a5298);
+    color: white;
+    padding: 40px 30px;
+    text-align: center;
+    position: relative;
+  }
+  header h1 { font-size: 2.2em; margin-bottom: 10px; }
+  header p { opacity: 0.9; font-size: 1.1em; }
+  header .subtitle { font-size: 0.95em; opacity: 0.85; margin-top: 8px; font-style: italic; }
+  
+  .lang-selector {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+  }
+  .lang-btn {
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.4);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85em;
+    transition: all 0.3s;
+  }
+  .lang-btn:hover { background: rgba(255,255,255,0.3); }
+  .lang-btn.active {
+    background: #fff;
+    color: #1e3c72;
+    border-color: #fff;
+  }
+  
+  .nav-tabs {
+    display: flex;
+    background: #f8f9fa;
+    flex-wrap: wrap;
+    border-bottom: 3px solid #dee2e6;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-tabs button {
+    flex: 1;
+    min-width: 120px;
+    padding: 14px 8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 600;
+    color: #666;
+    transition: all 0.3s;
+    border-bottom: 4px solid transparent;
+  }
+  .nav-tabs button:hover { background: #e9ecef; color: #2a5298; }
+  .nav-tabs button.active {
+    color: #2a5298;
+    border-bottom-color: #2a5298;
+    background: white;
+  }
+  
+  .slide { display: none; padding: 30px; min-height: 600px; }
+  .slide.active { display: block; animation: fadeIn 0.5s; }
+  @keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+  
+  .slide h2 {
+    color: #1e3c72;
+    margin-bottom: 20px;
+    font-size: 1.7em;
+    border-bottom: 3px solid #2a5298;
+    padding-bottom: 10px;
+  }
+  
+  .intro-box {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-left: 5px solid #1976d2;
+    padding: 22px;
+    margin: 20px 0;
+    border-radius: 10px;
+    line-height: 1.7;
+  }
+  
+  .intro-box h3 { color: #1565c0; margin-bottom: 12px; font-size: 1.25em; }
+  
+  .exercise-card {
+    background: white;
+    border: 3px solid #2a5298;
+    border-radius: 15px;
+    padding: 25px;
+    margin: 20px 0;
+    box-shadow: 0 5px 20px rgba(42,82,152,0.15);
+  }
+  
+  .exercise-card h3 {
+    color: #2a5298;
+    font-size: 1.35em;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .how-it-works {
+    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border-left: 5px solid #f57c00;
+  }
+  
+  .how-it-works h4 { color: #e65100; margin-bottom: 12px; font-size: 1.15em; }
+  .how-it-works ul { margin-left: 25px; line-height: 1.8; }
+  
+  .muscle-info {
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    padding: 18px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border-left: 5px solid #388e3c;
+  }
+  
+  .muscle-info h4 { color: #2e7d32; margin-bottom: 10px; font-size: 1.1em; }
+  .muscle-info ul { margin-left: 25px; line-height: 1.8; }
+  
+  .scenario-box {
+    background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+    padding: 22px;
+    border-radius: 10px;
+    margin: 20px 0;
+    border: 2px dashed #9b59b6;
+  }
+  
+  .scenario-box h4 { color: #8e44ad; margin-bottom: 15px; font-size: 1.15em; }
+  .scenario-box > p { line-height: 1.6; margin-bottom: 15px; }
+  
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+    margin: 15px 0;
+  }
+  
+  .option-card {
+    background: white;
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.95em;
+  }
+  
+  .option-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-color: #2a5298; }
+  .option-card.selected { background: #e3f2fd; border-color: #2a5298; border-width: 3px; }
+  .option-card.correct { background: #d4edda; border-color: #28a745; }
+  .option-card.incorrect { background: #f8d7da; border-color: #dc3545; }
+  .option-card strong { color: #2a5298; display: block; margin-bottom: 6px; font-size: 1.05em; }
+  
+  .explanation-field { margin: 18px 0; }
+  .explanation-field label { display: block; font-weight: 600; color: #2a5298; margin-bottom: 8px; font-size: 0.95em; }
+  .explanation-field textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    font-size: 0.95em;
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+  }
+  .explanation-field textarea:focus { outline: none; border-color: #2a5298; }
+  
+  .btn {
+    background: linear-gradient(90deg, #2a5298, #1e3c72);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 8px 5px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(42,82,152,0.3);
+  }
+  
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(42,82,152,0.4); }
+  .btn-secondary { background: #6c757d; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+  
+  .feedback {
+    margin-top: 15px;
+    padding: 18px;
+    border-radius: 10px;
+    display: none;
+    line-height: 1.7;
+    font-size: 0.95em;
+  }
+  
+  .feedback.show { display: block; animation: fadeIn 0.3s; }
+  .feedback.success { background: #d4edda; color: #155724; border: 2px solid #28a745; }
+  .feedback.error { background: #f8d7da; color: #721c24; border: 2px solid #dc3545; }
+  
+  .tip-box {
+    background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+    padding: 16px;
+    border-radius: 10px;
+    margin: 15px 0;
+    border-left: 5px solid #fbc02d;
+  }
+  
+  .tip-box h4 { color: #f57f17; margin-bottom: 8px; font-size: 1.05em; }
+  .tip-box ul { margin-left: 25px; margin-top: 8px; line-height: 1.7; }
+  
+  .emoji { font-size: 1.2em; margin-right: 6px; }
+  
+  @media (max-width: 768px) {
+    header h1 { font-size: 1.6em; }
+    .slide { padding: 20px; }
+    .exercise-card { padding: 18px; }
+    .options-grid { grid-template-columns: 1fr; }
+    .lang-selector { position: static; justify-content: center; margin-top: 15px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="lang-selector">
+      <button class="lang-btn active" onclick="setLang('ca')" id="btn-ca">CAT</button>
+      <button class="lang-btn" onclick="setLang('es')" id="btn-es">ESP</button>
+      <button class="lang-btn" onclick="setLang('en')" id="btn-en">ENG</button>
+    </div>
+    <h1 id="t-header-title">💪 Els Músculs Treballen en Equip</h1>
+    <p id="t-header-sub">10 Exercicis per millorar la teva estabilitat i control en dansa</p>
+    <div class="subtitle" id="t-header-subtitle">Aprèn com funcionen els teus músculs mentre balles</div>
+  </header>
+
+  <div class="nav-tabs" id="navTabs"></div>
+
+  <div id="slidesContainer"></div>
+</div>
+
+<script>
+/* ============================================================
+   TRADUCCIONS
+   ============================================================ */
+const I18N = {
+  ca: {
+    headerTitle: "💪 Els Músculs Treballen en Equip",
+    headerSub: "10 Exercicis per millorar la teva estabilitat i control en dansa",
+    headerSubtitle: "Aprèn com funcionen els teus músculs mentre balles",
+    tabs: ["📚 Introducció","1. Planxa","2. Relevé","3. Arabesque","4. Esquat","5. Plié","6. Equilibri","7. Pont","8. Battement","9. Girs","10. Salts","📊 Resum"],
+    btnCheck: "Verificar resposta",
+    btnReset: "Reiniciar",
+    alertSelect: "Si us plau, selecciona una opció primer",
+    intro: {
+      h2: "Què és la Coactivació?",
+      introH3: "Imagina un equip de ball...",
+      introP: "Quan balles, els teus músculs treballen com un equip de dansa. No treballen sols, sinó que <strong>diversos músculs s'activen al mateix temps</strong> per mantenir-te estable i controlar els teus moviments. Això s'anomena <strong>coactivació</strong>.",
+      whyH4: "🎯 Per què és important?",
+      whyUl: [
+        "<strong>Et manté estable:</strong> Com quan fas un equilibri sobre una cama",
+        "<strong>Protegeix les teves articulacions:</strong> Evita que et lesionis en saltar o girar",
+        "<strong>Millora el teu control:</strong> Els teus moviments són més precisos i elegants",
+        "<strong>Et dona més força:</strong> En treballar en equip, els músculs són més eficients"
+      ],
+      exH4: "💡 Exemple senzill",
+      exP: "Quan fas una <strong>planxa</strong> (posició de flexió), no només treballa el teu abdomen. La teva esquena també s'activa per mantenir-te recte. Si només treballés l'abdomen, la teva esquena cauria. Si només treballés l'esquena, el teu abdomen cauria. <strong>Tots dos treballen junts!</strong>",
+      danceH4: "🎭 En la dansa",
+      danceP: "La coactivació és el que et permet:",
+      danceUl: [
+        "Mantenir un arabesque sense tremolar",
+        "Aterrar d'un salt sense fer soroll",
+        "Girar sense caure",
+        "Moure't amb fluïdesa i control"
+      ]
+    },
+    exercises: [
+      {
+        num: 1, title: "1️⃣ Planxa: Enforteix el teu centre",
+        cardH3: "📋 Què passa al teu cos?",
+        howH4: "🔍 Com funciona",
+        howUl: [
+          "<strong>El teu abdomen</strong> es contreu per evitar que l'esquena s'arqui massa",
+          "<strong>La teva esquena</strong> es contreu per evitar que l'abdomen caigui",
+          "<strong>Tots dos treballen junts</strong> creant una \"faixa\" natural que protegeix la teva columna",
+          "Al principi tremoles perquè els teus músculs es van cansant i el cervell els activa i desactiva ràpidament"
+        ],
+        muscleH4: "💪 Músculs que treballen",
+        muscleUl: [
+          "<strong>Abdomen:</strong> Manté la part frontal estable",
+          "<strong>Esquena baixa:</strong> Manté la part posterior estable",
+          "<strong>Espatlles i braços:</strong> Suporten el teu pes"
+        ],
+        tipH4: "✨ Consell",
+        tipP: "Comença amb 15-20 segons i ves augmentant. És normal tremolar al principi. Significa que els teus músculs s'estan enfortint!",
+        scenarioH4: "🤔 Pensa i respon",
+        scenarioP: "Estàs fent la planxa i després de 20 segons comences a tremolar. Per què creus que passa això?",
+        opts: [
+          "Perquè els teus músculs s'han quedat sense energia i ja no poden funcionar",
+          "Perquè els teus músculs es van cansant i el teu cervell els activa i desactiva ràpidament per mantenir la posició",
+          "Perquè els teus músculs s'han trencat i per això tremolen"
+        ],
+        correct: 1,
+        correctFb: "<strong>Correcte!</strong> El tremolor passa perquè els teus músculs es van cansant. Quan es fatiguen, el teu cervell els activa i desactiva molt ràpid per mantenir la posició. Això crea les vibracions que veus. És normal i significa que t'estàs enfortint. Amb la pràctica, aguantaràs més temps sense tremolar.",
+        incorrectFb: "<strong>Gairebé...</strong> Pensa: si els músculs es quedessin sense energia, no podries moure't en absolut. Si es trenquessin, sentiries un dolor fort. El tremolor és perquè es van cansant i el teu cervell els activa i desactiva ràpid per mantenir la posició. És un senyal que t'estàs enfortint."
+      },
+      {
+        num: 2, title: "2️⃣ Relevé: Pujar sobre les puntes",
+        cardH3: "🩰 Què passa al teu cos?",
+        howH4: "🔍 Com funciona",
+        howUl: [
+          "<strong>Els teus bessons</strong> (panxells) t'eleven sobre les puntes",
+          "<strong>El múscul de la canyella</strong> (part frontal) també s'activa una mica per estabilitzar el turmell",
+          "És com si tinguessis un peu a l'accelerador (bessons) i un altre al fre (canyella) al mateix temps",
+          "Això evita que el turmell se'n vagi massa cap endavant i caiguis"
+        ],
+        muscleH4: "💪 Músculs que treballen",
+        muscleUl: [
+          "<strong>Bessons i soli:</strong> T'eleven (part posterior de la cama)",
+          "<strong>Tibial anterior:</strong> Estabilitza (part frontal de la canyella)",
+          "<strong>Músculs laterals:</strong> Eviten que el turmell es torci"
+        ],
+        tipH4: "✨ Consell",
+        tipP: "Si sents que et balanceges, és normal. Els teus músculs estan aprenent a treballar junts. Amb la pràctica serà més fàcil!",
+        scenarioH4: "🤔 Pensa i respon",
+        scenarioP: "Quan puges a relevé, el múscul de la canyella (que normalment baixa el peu) també s'activa una mica. Per a què creus que serveix?",
+        opts: [
+          "És un error del cos que s'hauria d'evitar",
+          "Per estabilitzar el turmell i evitar que se'n vagi massa cap endavant",
+          "Per preparar la baixada del relevé"
+        ],
+        correct: 1,
+        correctFb: "<strong>Exacte!</strong> El múscul de la canyella s'activa per estabilitzar el turmell. Imagina que és com tenir un fre de seguretat: evita que el turmell se'n vagi massa cap endavant i caiguis. Aquesta \"cooperació\" entre músculs oposats és el que et dona estabilitat.",
+        incorrectFb: "<strong>Reflexiona...</strong> No és un error ni només per preparar la baixada. El múscul de la canyella estabilitza el turmell mentre puges. Sense ell, el turmell seria inestable i podries caure o torçar-te. És com tenir un sistema de seguretat que treballa junt amb els bessons."
+      },
+      {
+        num: 3, title: "3️⃣ Arabesque: Mantenir la cama enrere",
+        cardH3: "🦵 Què passa al teu cos?",
+        howH4: "🔍 Com funciona",
+        howUl: [
+          "<strong>Els teus glutis</strong> i la part posterior de la cuixa mantenen la cama elevada",
+          "<strong>El psoes</strong> (múscul que està al maluc i puja la cama) també s'activa una mica",
+          "Això pot semblar estrany: per què un múscul que puja la cama treballa quan la cama està enrere?",
+          "Per controlar! Evita que la cama se'n vagi massa enrere i protegeix el maluc"
+        ],
+        muscleH4: "💪 Músculs que treballen",
+        muscleUl: [
+          "<strong>Glutis:</strong> Mantenen la cama elevada",
+          "<strong>Isquiotibials:</strong> (part posterior de la cuixa) Ajuden a estendre",
+          "<strong>Psoes:</strong> Controla que no se'n vagi massa enrere",
+          "<strong>Abdomen:</strong> Manté el tronc estable"
+        ],
+        tipH4: "✨ Consell",
+        tipP: "No intentis pujar la cama el més alt possible si perds el control. Millor una posició més baixa però estable i controlada.",
+        scenarioH4: "🤔 Pensa i respon",
+        scenarioP: "En l'arabesque, el psoes (que normalment puja la cama) s'activa encara que la cama estigui enrere. Quin avantatge té això?",
+        opts: [
+          "Cap, és un malbaratament d'energia",
+          "Per preparar el següent moviment de pujar la cama",
+          "Per controlar l'altura de la cama i protegir el maluc d'estirar-se massa"
+        ],
+        correct: 2,
+        correctFb: "<strong>Molt bé!</strong> El psoes treballa per controlar que la cama no se'n vagi massa enrere. És com un \"fre\" que protegeix el teu maluc d'estirar-se massa. Sense aquest control, la cama cauria per gravetat o se n'aniria massa enrere, i podries lesionar-te.",
+        incorrectFb: "<strong>Pensa...</strong> No és malbaratament d'energia ni només per preparar el següent moviment. El psoes controla la posició de la cama. Sense aquest control, la cama se n'aniria massa enrere (hiperextensió) i podries ferir el maluc. És un \"fre\" de seguretat."
+      },
+      {
+        num: 4, title: "4️⃣ Esquat: Baixar i pujar controlat",
+        cardH3: "🦵 Què passa al teu cos?",
+        howH4: "🔍 Com funciona",
+        howUl: [
+          "<strong>En baixar:</strong> Els músculs del davant de la cuixa (quàdriceps) treballen frenant la baixada",
+          "<strong>La part del darrere de la cuixa</strong> també s'activa per protegir el genoll",
+          "És com si tinguessis dues persones estirant d'una corda en direccions oposades: s'equilibren",
+          "Això protegeix el lligament encreuat del genoll (una espècie de \"cinta\" que el manté estable)"
+        ],
+        muscleH4: "💪 Músculs que treballen",
+        muscleUl: [
+          "<strong>Quàdriceps:</strong> (davant de la cuixa) Controlen la baixada",
+          "<strong>Isquiotibials:</strong> (darrere de la cuixa) Protegeixen el genoll",
+          "<strong>Glutis:</strong> Ajuden en el moviment",
+          "<strong>Bessons:</strong> Estabilitzen el turmell"
+        ],
+        tipH4: "✨ Consell",
+        tipP: "Baixa lentament (compta fins a 4) i puja també controlat. Així protegeixes els teus genolls i enforteixes més els músculs.",
+        scenarioH4: "🤔 Pensa i respon",
+        scenarioP: "Quan baixes en esquat, la part del darrere de la cuixa s'activa encara que el moviment el faci la part de davant. Per què és important?",
+        opts: [
+          "Per protegir el genoll equilibrant les forces i evitant que es lesioni",
+          "Per ajudar la part de davant a fer més força",
+          "Per estirar la part de davant de la cuixa"
+        ],
+        correct: 0,
+        correctFb: "<strong>Correcte!</strong> La part del darrere de la cuixa treballa per protegir el genoll. Quan baixes, la part de davant estira del genoll cap endavant. La part del darrere estira cap enrere. Així s'equilibren i protegeixen el lligament encreuat (una \"cinta\" important dins del genoll).",
+        incorrectFb: "<strong>Considera...</strong> La part del darrere no ajuda a la de davant (de fet, fan moviments oposats). Tampoc no és per estirar. Treballa per protegir el genoll: contraresta la força que fa la part de davant, evitant que el genoll es lesioni. És un sistema de seguretat."
+      },
+      {
+        num: 5, title: "5️⃣ Plié: Flexió amb rotació",
+        cardH3: "🩰 Què passa al teu cos?",
+        howH4: "🔍 Com funciona",
+        howUl: [
+          "En el plié de ballet, les cames estan rotades cap enfora",
+          "<strong>Tres grups de músculs</strong> treballen junts:",
+          "• Els de davant i darrere de la cuixa controlen la flexió",
+          "• Els de la part interna de la cuixa mantenen la rotació",
+          "És com un trípode: si falta una pota, cau"
+        ],
+        muscleH4: "💪 Músculs que treballen",
+        muscleUl: [
+          "<strong>Quàdriceps:</strong> Controlen la flexió de genoll",
+          "<strong>Isquiotibials:</strong> Estabilitzen el genoll",
+          "<strong>Adductors:</strong> (part interna) Mantenen la rotació externa",
+          "<strong>Glutis:</strong> Ajuden a mantenir el maluc estable"
+        ],
+        tipH4: "✨ Consell",
+        tipP: "Assegura't que els genolls vagin en la mateixa direcció que els peus. Si els genolls se'n van cap endins, estàs perdent l'activació correcta.",
+        scenarioH4: "🤔 Pensa i respon",
+        scenarioP: "En el plié amb les cames rotades cap enfora, per què és important que treballin també els músculs de la part interna de la cuixa?",
+        opts: [
+          "Per ajudar a doblegar el genoll",
+          "Per mantenir la rotació del maluc i estabilitzar el genoll",
+          "Per estirar la part externa de la cuixa"
+        ],
+        correct: 1,
+        correctFb: "<strong>Excel·lent!</strong> Els músculs interns mantenen la rotació del maluc i estabilitzen el genoll. En el plié de ballet, necessites estabilitat en diverses direccions alhora. Si no treballessin els interns, els genolls se n'anirien cap endins i perdríes la posició correcta.",
+        incorrectFb: "<strong>Analitza...</strong> Els músculs interns no ajuden a doblegar el genoll ni només estiren. Mantenen la rotació del maluc i estabilitzen el genoll en el plié. Sense ells, els genolls se n'anirien cap endins i perdríes l'alineació correcta. És treball en equip en diverses direccions."
+      },
+      {
+        num: 6, title: "6️⃣ Equilibri sobre una cama",
+        cardH3: "⚖️ Què passa al teu cos?",
+        howH4: "🔍 Com funciona",
+        howUl: [
+          "Quan estàs sobre una cama, fas <strong>petits ajustos constants</strong> sense adonar-te'n",
+          "Els músculs del turmell treballen com un equip, activant-se i relaxant-se ràpidament",
+          "És com quan sostens una safata amb gots: fas petits moviments perquè no caigui",
+          "Si tanques els ulls, és més difícil perquè només pots confiar en el que sents als teus músculs i articulacions"
+        ],
+        muscleH4: "💪 Músculs que treballen",
+        muscleUl: [
+          "<strong>Turmell:</strong> Fa micro-ajustos constants",
+          "<strong>Maluc:</strong> Manté la pelvis anivellada",
+          "<strong>Abdomen i esquena:</strong> Mantenen el tronc recte",
+          "<strong>Cama de suport:</strong> Tots els seus músculs treballen junts"
+        ],
+        tipH4: "✨ Consell",
+        tipP: "Prova de mantenir l'equilibri amb els ulls oberts i després tancats. Notaràs la diferència. És un bon exercici per millorar!",
+        scenarioH4: "🤔 Pensa i respon",
+        scenarioP: "Quan mantens l'equilibri sobre una cama, sents petites oscil·lacions. Què les causa?",
+        opts: [
+          "Que no tens prou força",
+          "Els petits ajustos que fan els teus músculs per mantenir-te equilibrat",
+          "Que t'estàs cansant massa ràpid"
+        ],
+        correct: 1,
+        correctFb: "<strong>Perfecte!</strong> Les petites oscil·lacions són ajustos que fan els teus músculs constantment per mantenir-te equilibrat. És com quan sostens una cosa delicada: fas petits moviments perquè no caigui. Els teus músculs fan el mateix, activant-se i relaxant-se molt ràpid.",
+        incorrectFb: "<strong>Observa...</strong> No és falta de força (pots mantenir-ho) ni només cansament. Les oscil·lacions són ajustos constants que fan els músculs per mantenir-te equilibrat. És automàtic: els teus músculs detecten que cauràs i corregeixen ràpidament. És com un sistema d'equilibri automàtic."
+      },
+      {
+        num: 7, title: "7️⃣ Pont de glutis",
+        cardH3: "🌉 Què passa al teu cos?",
+        howH4: "🔍 Com funciona",
+        howUl: [
+          "<strong>Els teus glutis</strong> eleven el maluc",
+          "<strong>El teu abdomen</strong> s'activa per evitar que l'esquena s'arqui massa",
+          "És com si tinguessis dues persones estirant dels extrems d'una corda: s'equilibren",
+          "Sense l'abdomen treballant, l'esquena s'arquaria massa i podries ferir-te"
+        ],
+        muscleH4: "💪 Músculs que treballen",
+        muscleUl: [
+          "<strong>Glutis:</strong> Eleven el maluc",
+          "<strong>Abdomen:</strong> Evita que l'esquena s'arqui massa",
+          "<strong>Esquena baixa:</strong> Manté la columna estable",
+          "<strong>Isquiotibials:</strong> Ajuden en el moviment"
+        ],
+        tipH4: "✨ Consell",
+        tipP: "En pujar, pensa a ficar una mica el melic cap endins. Així actives l'abdomen i protegeixes la teva esquena.",
+        scenarioH4: "🤔 Pensa i respon",
+        scenarioP: "En el pont, l'abdomen s'activa encara que el moviment el facin els glutis. Per què?",
+        opts: [
+          "Per evitar que l'esquena s'arqui massa i mantenir la pelvis en posició correcta",
+          "Per ajudar els glutis a pujar més el maluc",
+          "Per respirar millor durant l'exercici"
+        ],
+        correct: 0,
+        correctFb: "<strong>Correcte!</strong> L'abdomen treballa per evitar que l'esquena s'arqui massa. Els glutis pugen el maluc, però si l'abdomen no treballa, l'esquena s'arquaria molt i podries ferir-te. Treballant junts, mantenen la pelvis en posició correcta i protegeixen l'esquena.",
+        incorrectFb: "<strong>Reflexiona...</strong> L'abdomen no ajuda a pujar (de fet, és oposat al moviment). Tampoc no és per respiració. Treballa per evitar que l'esquena s'arqui massa quan els glutis pugen el maluc. És un contrapès que protegeix l'esquena."
+      },
+      {
+        num: 8, title: "8️⃣ Battement controlat",
+        cardH3: "🦵 Què passa al teu cos?",
+        howH4: "🔍 Com funciona",
+        howUl: [
+          "<strong>En pujar la cama:</strong> Els músculs de la part externa del maluc treballen",
+          "<strong>En baixar lentament:</strong> Aquests mateixos músculs treballen frenant la baixada (com un fre de cotxe)",
+          "<strong>Els músculs interns</strong> també s'activen per estabilitzar",
+          "Baixar lent és més difícil que pujar ràpid perquè requereix més control"
+        ],
+        muscleH4: "💪 Músculs que treballen",
+        muscleUl: [
+          "<strong>Abductors:</strong> (part externa del maluc) Eleven i controlen la baixada",
+          "<strong>Adductors:</strong> (part interna) Estabilitzen",
+          "<strong>Abdomen:</strong> Manté el tronc estable"
+        ],
+        tipH4: "✨ Consell",
+        tipP: "Si l'endemà et fan més mal els músculs, és normal. Baixar lent crea més \"agulletes\" però també et fa més fort.",
+        scenarioH4: "🤔 Pensa i respon",
+        scenarioP: "Quan baixes la cama lentament en battement controlat, per què és més difícil que pujar-la ràpid?",
+        opts: [
+          "Perquè trigues més temps i et canses més",
+          "Perquè els músculs han de frenar la cama poc a poc, cosa que requereix més control",
+          "Perquè s'acumula més cansament als músculs"
+        ],
+        correct: 1,
+        correctFb: "<strong>Molt bé!</strong> Baixar lent requereix que els músculs frenin la cama poc a poc, com un cotxe que frena suaument. Això requereix més control i força que deixar-la caure. Per això és més difícil i també per això l'endemà pots tenir més \"agulletes\".",
+        incorrectFb: "<strong>Pensa...</strong> No és pel temps ni només pel cansament. Baixar lent requereix que els músculs frenin la cama poc a poc, com un fre de cotxe. Això és més difícil que deixar-la caure i requereix més control. Per això fa més mal l'endemà (agulletes), però també et fa més fort."
+      },
+      {
+        num: 9, title: "9️⃣ Girs i piruetes",
+        cardH3: "🌀 Què passa al teu cos?",
+        howH4: "🔍 Com funciona",
+        howUl: [
+          "<strong>El teu abdomen i esquena</strong> treballen junts creant un \"cilindre\" fort al voltant del teu tronc",
+          "Això et manté recte mentre gires, com un baldufa",
+          "<strong>La cama de suport</strong> també activa tots els seus músculs per mantenir-te estable",
+          "Si el \"cilindre\" del tronc no és fort, caus o perds l'equilibri"
+        ],
+        muscleH4: "💪 Músculs que treballen",
+        muscleUl: [
+          "<strong>Abdomen complet:</strong> Crea el \"cilindre\" d'estabilitat",
+          "<strong>Esquena:</strong> Treballa junt amb l'abdomen",
+          "<strong>Cama de suport:</strong> Tots els seus músculs treballen",
+          "<strong>Espatlles i braços:</strong> Ajuden a mantenir l'equilibri"
+        ],
+        tipH4: "✨ Consell",
+        tipP: "Abans de girar, activa l'abdomen com si et donessin un cop. Això crea l'estabilitat que necessites.",
+        scenarioH4: "🤔 Pensa i respon",
+        scenarioP: "Durant una pirueta, l'abdomen i l'esquena treballen junts sense moure's. Per a què serveix això?",
+        opts: [
+          "Per crear un \"cilindre\" fort que et mantingui recte i estable mentre gires",
+          "Per generar el gir",
+          "Per respirar millor durant el gir"
+        ],
+        correct: 0,
+        correctFb: "<strong>Exacte!</strong> L'abdomen i l'esquena treballen junts creant un \"cilindre\" fort al voltant del teu tronc. Això et manté recte mentre gires, com una baldufa. Si aquest cilindre no és fort, caus o perds l'equilibri. Per això és tan important enfortir el centre del cos.",
+        incorrectFb: "<strong>Considera...</strong> L'abdomen i esquena no generen el gir (això ho fan altres músculs). Tampoc no és per respiració. Treballen junts creant un \"cilindre\" fort que et manté recte mentre gires. Sense aquesta estabilitat, cauries. És com l'eix d'una baldufa."
+      },
+      {
+        num: 10, title: "🔟 Salts i aterratges",
+        cardH3: "🦘 Què passa al teu cos?",
+        howH4: "🔍 Com funciona",
+        howUl: [
+          "<strong>En aterrar:</strong> Tots els músculs de les cames treballen junts frenant la caiguda",
+          "És com quan frenes un cotxe: tots els frens treballen junts",
+          "Si només treballés un múscul, la força de l'impacte aniria directa a les articulacions i et podries lesionar",
+          "En treballar tots junts, distribueixen la força i et protegeixen"
+        ],
+        muscleH4: "💪 Músculs que treballen",
+        muscleUl: [
+          "<strong>Quàdriceps:</strong> (davant de la cuixa) Frenen el genoll",
+          "<strong>Isquiotibials:</strong> (darrere de la cuixa) Protegeixen el genoll",
+          "<strong>Bessons:</strong> (panxells) Controlen el turmell",
+          "<strong>Glutis:</strong> Controlen el maluc"
+        ],
+        tipH4: "✨ Consell",
+        tipP: "Un bon aterratge és silenciós. Si fas molt soroll en caure, és que no estàs fent servir bé els teus músculs per amortir.",
+        scenarioH4: "🤔 Pensa i respon",
+        scenarioP: "Quan aterres d'un salt, tots els músculs de les cames treballen junts. Per què és important?",
+        opts: [
+          "Per poder saltar de nou immediatament",
+          "Per distribuir la força de l'impacte i protegir les articulacions de lesions",
+          "Per estirar els músculs després del salt"
+        ],
+        correct: 1,
+        correctFb: "<strong>Correcte!</strong> Tots els músculs treballen junts per distribuir la força de l'impacte. Quan aterres, la força és 5-8 vegades el teu pes. Si tots els músculs frenen junts, distribueixen aquesta força i protegeixen les teves articulacions. Si no, la força aniria directa a ossos i lligaments → lesió.",
+        incorrectFb: "<strong>Analitza...</strong> No és per saltar de nou ni per estirar. Tots els músculs treballen per absorbir l'impacte de l'aterratge. La força és molt gran (5-8 vegades el teu pes). Si tots frenen junts, distribueixen aquesta força i protegeixen les teves articulacions. Si no, et podries lesionar."
+      }
+    ],
+    summary: {
+      h2: "📊 Resum: El més important",
+      introH3: "🎯 El que has après",
+      introP: "Al llarg d'aquests 10 exercicis has descobert que:",
+      keyH4: "💡 Conceptes clau",
+      keyUl: [
+        "<strong>Els músculs treballen en equip:</strong> Mai treballen sols, sempre n'hi ha diversos activant-se alhora",
+        "<strong>L'estabilitat és clau:</strong> Per ballar bé, necessites músculs que s'activin junts per mantenir-te estable",
+        "<strong>Protegeixen les teves articulacions:</strong> Aquesta manera de treballar evita que et lesionis",
+        "<strong>Milloren el teu control:</strong> Els teus moviments són més precisos i elegants",
+        "<strong>Es pot entrenar:</strong> Com més practiquis, millor treballaran els teus músculs en equip"
+      ],
+      tipsH4: "✨ Consells per al teu entrenament",
+      tipsUl: [
+        "Presta atenció a com se senten els teus músculs quan balles",
+        "Prioritza la qualitat del moviment sobre la quantitat",
+        "Comença a poc a poc i ves augmentant gradualment",
+        "Si alguna cosa fa mal (no el cansament normal, sinó dolor), atura i consulta",
+        "Practica aquests exercicis regularment per millorar"
+      ],
+      danceH4: "🎭 En la pràctica",
+      danceP: "Ara que entens com treballen els teus músculs:",
+      danceUl: [
+        "Aplica aquests conceptes a les teves classes de dansa",
+        "Observa com millora la teva estabilitat i control",
+        "Gaudeix ballant amb més seguretat i menys risc de lesió",
+        "Segueix practicant!"
+      ]
+    }
+  },
+  es: {
+    headerTitle: "💪 Los Músculos Trabajan en Equipo",
+    headerSub: "10 Ejercicios para mejorar tu estabilidad y control en danza",
+    headerSubtitle: "Aprende cómo funcionan tus músculos mientras bailas",
+    tabs: ["📚 Introducción","1. Plancha","2. Relevé","3. Arabesque","4. Sentadilla","5. Plié","6. Equilibrio","7. Puente","8. Battement","9. Giros","10. Saltos","📊 Resumen"],
+    btnCheck: "Verificar respuesta",
+    btnReset: "Reiniciar",
+    alertSelect: "Por favor, selecciona una opción primero",
+    intro: {
+      h2: "¿Qué es la Coactivación?",
+      introH3: "Imagina un equipo de baile...",
+      introP: "Cuando bailas, tus músculos trabajan como un equipo de danza. No trabajan solos, sino que <strong>varios músculos se activan al mismo tiempo</strong> para mantenerte estable y controlar tus movimientos. Esto se llama <strong>coactivación</strong>.",
+      whyH4: "🎯 ¿Por qué es importante?",
+      whyUl: [
+        "<strong>Te mantiene estable:</strong> Como cuando haces un equilibrio sobre una pierna",
+        "<strong>Protege tus articulaciones:</strong> Evita que te lesiones al saltar o girar",
+        "<strong>Mejora tu control:</strong> Tus movimientos son más precisos y elegantes",
+        "<strong>Te da más fuerza:</strong> Al trabajar en equipo, los músculos son más eficientes"
+      ],
+      exH4: "💡 Ejemplo sencillo",
+      exP: "Cuando haces una <strong>plancha</strong> (posición de flexión), no solo trabaja tu abdomen. Tu espalda también se activa para mantenerte recto. Si solo trabajara el abdomen, tu espalda caería. Si solo trabajara la espalda, tu abdomen caería. <strong>¡Ambos trabajan juntos!</strong>",
+      danceH4: "🎭 En la danza",
+      danceP: "La coactivación es lo que te permite:",
+      danceUl: [
+        "Mantener un arabesque sin temblar",
+        "Aterrizar de un salto sin hacer ruido",
+        "Girar sin caerte",
+        "Moverte con fluidez y control"
+      ]
+    },
+    exercises: [
+      {
+        num: 1, title: "1️⃣ Plancha: Fortalece tu centro",
+        cardH3: "📋 ¿Qué ocurre en tu cuerpo?",
+        howH4: "🔍 Cómo funciona",
+        howUl: [
+          "<strong>Tu abdomen</strong> se contrae para evitar que la espalda se arquee demasiado",
+          "<strong>Tu espalda</strong> se contrae para evitar que el abdomen caiga",
+          "<strong>Ambos trabajan juntos</strong> creando una \"faja\" natural que protege tu columna",
+          "Al principio tiemblas porque tus músculos se están cansando y el cerebro los activa y desactiva rápidamente"
+        ],
+        muscleH4: "💪 Músculos que trabajan",
+        muscleUl: [
+          "<strong>Abdomen:</strong> Mantiene la parte frontal estable",
+          "<strong>Espalda baja:</strong> Mantiene la parte posterior estable",
+          "<strong>Hombros y brazos:</strong> Soportan tu peso"
+        ],
+        tipH4: "✨ Consejo",
+        tipP: "Empieza con 15-20 segundos y ve aumentando. Es normal temblar al principio. ¡Significa que tus músculos se están fortaleciendo!",
+        scenarioH4: "🤔 Piensa y responde",
+        scenarioP: "Estás haciendo la plancha y después de 20 segundos empiezas a temblar. ¿Por qué crees que ocurre esto?",
+        opts: [
+          "Porque tus músculos se han quedado sin energía y ya no pueden funcionar",
+          "Porque tus músculos se están cansando y tu cerebro los activa y desactiva rápidamente para mantener la posición",
+          "Porque tus músculos se han roto y por eso tiemblan"
+        ],
+        correct: 1,
+        correctFb: "<strong>¡Correcto!</strong> El temblor ocurre porque tus músculos se están cansando. Cuando se fatigan, tu cerebro los activa y desactiva muy rápido para mantener la posición. Esto crea las vibraciones que ves. Es normal y significa que te estás fortaleciendo. Con la práctica, aguantarás más tiempo sin temblar.",
+        incorrectFb: "<strong>Casi...</strong> Piensa: si los músculos se quedaran sin energía, no podrías moverte en absoluto. Si se rompieran, sentirías un dolor fuerte. El temblor es porque se están cansando y tu cerebro los activa y desactiva rápido para mantener la posición. Es una señal de que te estás fortaleciendo."
+      },
+      {
+        num: 2, title: "2️⃣ Relevé: Subir sobre las puntas",
+        cardH3: "🩰 ¿Qué ocurre en tu cuerpo?",
+        howH4: "🔍 Cómo funciona",
+        howUl: [
+          "<strong>Tus gemelos</strong> (pantorrillas) te elevan sobre las puntas",
+          "<strong>El músculo de la espinilla</strong> (parte frontal) también se activa un poco para estabilizar el tobillo",
+          "Es como si tuvieras un pie en el acelerador (gemelos) y otro en el freno (espinilla) al mismo tiempo",
+          "Esto evita que el tobillo se vaya demasiado hacia adelante y te caigas"
+        ],
+        muscleH4: "💪 Músculos que trabajan",
+        muscleUl: [
+          "<strong>Gemelos y sóleo:</strong> Te elevan (parte posterior de la pierna)",
+          "<strong>Tibial anterior:</strong> Estabiliza (parte frontal de la espinilla)",
+          "<strong>Músculos laterales:</strong> Evitan que el tobillo se tuerza"
+        ],
+        tipH4: "✨ Consejo",
+        tipP: "Si sientes que te tambaleas, es normal. Tus músculos están aprendiendo a trabajar juntos. ¡Con la práctica será más fácil!",
+        scenarioH4: "🤔 Piensa y responde",
+        scenarioP: "Cuando subes a relevé, el músculo de la espinilla (que normalmente baja el pie) también se activa un poco. ¿Para qué crees que sirve?",
+        opts: [
+          "Es un error del cuerpo que debería evitarse",
+          "Para estabilizar el tobillo y evitar que se vaya demasiado hacia adelante",
+          "Para preparar la bajada del relevé"
+        ],
+        correct: 1,
+        correctFb: "<strong>¡Exacto!</strong> El músculo de la espinilla se activa para estabilizar el tobillo. Imagina que es como tener un freno de seguridad: evita que el tobillo se vaya demasiado hacia adelante y te caigas. Esta \"cooperación\" entre músculos opuestos es lo que te da estabilidad.",
+        incorrectFb: "<strong>Reflexiona...</strong> No es un error ni solo para preparar la bajada. El músculo de la espinilla estabiliza el tobillo mientras subes. Sin él, el tobillo sería inestable y podrías caerte o torcerte. Es como tener un sistema de seguridad que trabaja junto con los gemelos."
+      },
+      {
+        num: 3, title: "3️⃣ Arabesque: Mantener la pierna atrás",
+        cardH3: "🦵 ¿Qué ocurre en tu cuerpo?",
+        howH4: "🔍 Cómo funciona",
+        howUl: [
+          "<strong>Tus glúteos</strong> y la parte posterior del muslo mantienen la pierna elevada",
+          "<strong>El psoas</strong> (músculo que está en la cadera y sube la pierna) también se activa un poco",
+          "Esto puede parecer raro: ¿por qué un músculo que sube la pierna trabaja cuando la pierna está atrás?",
+          "¡Para controlar! Evita que la pierna se vaya demasiado atrás y protege la cadera"
+        ],
+        muscleH4: "💪 Músculos que trabajan",
+        muscleUl: [
+          "<strong>Glúteos:</strong> Mantienen la pierna elevada",
+          "<strong>Isquiotibiales:</strong> (parte posterior del muslo) Ayudan a extender",
+          "<strong>Psoas:</strong> Controla que no se vaya demasiado atrás",
+          "<strong>Abdomen:</strong> Mantiene el tronco estable"
+        ],
+        tipH4: "✨ Consejo",
+        tipP: "No intentes subir la pierna lo más alto posible si pierdes el control. Mejor una posición más baja pero estable y controlada.",
+        scenarioH4: "🤔 Piensa y responde",
+        scenarioP: "En el arabesque, el psoas (que normalmente sube la pierna) se activa aunque la pierna esté atrás. ¿Qué ventaja tiene esto?",
+        opts: [
+          "Ninguna, es un desperdicio de energía",
+          "Para preparar el siguiente movimiento de subir la pierna",
+          "Para controlar la altura de la pierna y proteger la cadera de estirarse demasiado"
+        ],
+        correct: 2,
+        correctFb: "<strong>¡Muy bien!</strong> El psoas trabaja para controlar que la pierna no se vaya demasiado atrás. Es como un \"freno\" que protege tu cadera de estirarse demasiado. Sin este control, la pierna o caería por gravedad o se iría demasiado atrás, y podrías lastimarte.",
+        incorrectFb: "<strong>Piensa...</strong> No es desperdicio de energía ni solo para preparar el siguiente movimiento. El psoas controla la posición de la pierna. Sin este control, la pierna se iría demasiado atrás (hiperextensión) y podrías lastimar la cadera. Es un \"freno\" de seguridad."
+      },
+      {
+        num: 4, title: "4️⃣ Sentadilla: Bajar y subir controlado",
+        cardH3: "🦵 ¿Qué ocurre en tu cuerpo?",
+        howH4: "🔍 Cómo funciona",
+        howUl: [
+          "<strong>Al bajar:</strong> Los músculos del frente del muslo (cuádriceps) trabajan frenando la bajada",
+          "<strong>La parte de atrás del muslo</strong> también se activa para proteger la rodilla",
+          "Es como si tuvieras dos personas tirando de una cuerda en direcciones opuestas: se equilibran",
+          "Esto protege el ligamento cruzado de la rodilla (una especie de \"cinta\" que la mantiene estable)"
+        ],
+        muscleH4: "💪 Músculos que trabajan",
+        muscleUl: [
+          "<strong>Cuádriceps:</strong> (frente del muslo) Controlan la bajada",
+          "<strong>Isquiotibiales:</strong> (detrás del muslo) Protegen la rodilla",
+          "<strong>Glúteos:</strong> Ayudan en el movimiento",
+          "<strong>Gemelos:</strong> Estabilizan el tobillo"
+        ],
+        tipH4: "✨ Consejo",
+        tipP: "Baja lentamente (cuenta hasta 4) y sube también controlado. Así proteges tus rodillas y fortaleces más los músculos.",
+        scenarioH4: "🤔 Piensa y responde",
+        scenarioP: "Cuando bajas en sentadilla, la parte de atrás del muslo se activa aunque el movimiento lo haga la parte de adelante. ¿Por qué es importante?",
+        opts: [
+          "Para proteger la rodilla equilibrando las fuerzas y evitando que se lesione",
+          "Para ayudar a la parte de adelante a hacer más fuerza",
+          "Para estirar la parte de adelante del muslo"
+        ],
+        correct: 0,
+        correctFb: "<strong>¡Correcto!</strong> La parte de atrás del muslo trabaja para proteger la rodilla. Cuando bajas, la parte de adelante tira de la rodilla hacia adelante. La parte de atrás tira hacia atrás. Así se equilibran y protegen el ligamento cruzado (una \"cinta\" importante dentro de la rodilla).",
+        incorrectFb: "<strong>Considera...</strong> La parte de atrás no ayuda a la de adelante (de hecho, hacen movimientos opuestos). Tampoco es para estirar. Trabaja para proteger la rodilla: contrarresta la fuerza que hace la parte de adelante, evitando que la rodilla se lesione. Es un sistema de seguridad."
+      },
+      {
+        num: 5, title: "5️⃣ Plié: Flexión con rotación",
+        cardH3: "🩰 ¿Qué ocurre en tu cuerpo?",
+        howH4: "🔍 Cómo funciona",
+        howUl: [
+          "En el plié de ballet, las piernas están rotadas hacia afuera",
+          "<strong>Tres grupos de músculos</strong> trabajan juntos:",
+          "• Los de adelante y atrás del muslo controlan la flexión",
+          "• Los de la parte interna del muslo mantienen la rotación",
+          "Es como un trípode: si falta una pata, se cae"
+        ],
+        muscleH4: "💪 Músculos que trabajan",
+        muscleUl: [
+          "<strong>Cuádriceps:</strong> Controlan la flexión de rodilla",
+          "<strong>Isquiotibiales:</strong> Estabilizan la rodilla",
+          "<strong>Aductores:</strong> (parte interna) Mantienen la rotación externa",
+          "<strong>Glúteos:</strong> Ayudan a mantener la cadera estable"
+        ],
+        tipH4: "✨ Consejo",
+        tipP: "Asegúrate de que las rodillas vayan en la misma dirección que los pies. Si las rodillas se van hacia adentro, estás perdiendo la activación correcta.",
+        scenarioH4: "🤔 Piensa y responde",
+        scenarioP: "En el plié con las piernas rotadas hacia afuera, ¿por qué es importante que trabajen también los músculos de la parte interna del muslo?",
+        opts: [
+          "Para ayudar a doblar la rodilla",
+          "Para mantener la rotación de la cadera y estabilizar la rodilla",
+          "Para estirar la parte externa del muslo"
+        ],
+        correct: 1,
+        correctFb: "<strong>¡Excelente!</strong> Los músculos internos mantienen la rotación de la cadera y estabilizan la rodilla. En el plié de ballet, necesitas estabilidad en varias direcciones a la vez. Si no trabajaran los internos, las rodillas se irían hacia adentro y perderías la posición correcta.",
+        incorrectFb: "<strong>Analiza...</strong> Los músculos internos no ayudan a doblar la rodilla ni solo estiran. Mantienen la rotación de la cadera y estabilizan la rodilla en el plié. Sin ellos, las rodillas se irían hacia adentro y perderías la alineación correcta. Es trabajo en equipo en varias direcciones."
+      },
+      {
+        num: 6, title: "6️⃣ Equilibrio sobre una pierna",
+        cardH3: "⚖️ ¿Qué ocurre en tu cuerpo?",
+        howH4: "🔍 Cómo funciona",
+        howUl: [
+          "Cuando estás sobre una pierna, haces <strong>pequeños ajustes constantes</strong> sin darte cuenta",
+          "Los músculos del tobillo trabajan como un equipo, activándose y relajándose rápidamente",
+          "Es como cuando sostienes una bandeja con vasos: haces pequeños movimientos para que no se caiga",
+          "Si cierras los ojos, es más difícil porque solo puedes confiar en lo que sientes en tus músculos y articulaciones"
+        ],
+        muscleH4: "💪 Músculos que trabajan",
+        muscleUl: [
+          "<strong>Tobillo:</strong> Hace micro-ajustes constantes",
+          "<strong>Cadera:</strong> Mantiene la pelvis nivelada",
+          "<strong>Abdomen y espalda:</strong> Mantienen el tronco recto",
+          "<strong>Pierna de apoyo:</strong> Todos sus músculos trabajan juntos"
+        ],
+        tipH4: "✨ Consejo",
+        tipP: "Prueba a mantener el equilibrio con los ojos abiertos y luego cerrados. Notarás la diferencia. ¡Es un buen ejercicio para mejorar!",
+        scenarioH4: "🤔 Piensa y responde",
+        scenarioP: "Cuando mantienes el equilibrio sobre una pierna, sientes pequeñas oscilaciones. ¿Qué las causa?",
+        opts: [
+          "Que no tienes suficiente fuerza",
+          "Los pequeños ajustes que hacen tus músculos para mantenerte equilibrado",
+          "Que te estás cansando demasiado rápido"
+        ],
+        correct: 1,
+        correctFb: "<strong>¡Perfecto!</strong> Las pequeñas oscilaciones son ajustes que hacen tus músculos constantemente para mantenerte equilibrado. Es como cuando sostienes algo delicado: haces pequeños movimientos para que no se caiga. Tus músculos hacen lo mismo, activándose y relajándose muy rápido.",
+        incorrectFb: "<strong>Observa...</strong> No es falta de fuerza (puedes mantenerlo) ni solo cansancio. Las oscilaciones son ajustes constantes que hacen los músculos para mantenerte equilibrado. Es automático: tus músculos detectan que te vas a caer y corrigen rápidamente. Es como un sistema de equilibrio automático."
+      },
+      {
+        num: 7, title: "7️⃣ Puente de glúteos",
+        cardH3: "🌉 ¿Qué ocurre en tu cuerpo?",
+        howH4: "🔍 Cómo funciona",
+        howUl: [
+          "<strong>Tus glúteos</strong> elevan la cadera",
+          "<strong>Tu abdomen</strong> se activa para evitar que la espalda se arquee demasiado",
+          "Es como si tuvieras dos personas tirando de los extremos de una cuerda: se equilibran",
+          "Sin el abdomen trabajando, la espalda se arquearía demasiado y podrías lastimarte"
+        ],
+        muscleH4: "💪 Músculos que trabajan",
+        muscleUl: [
+          "<strong>Glúteos:</strong> Elevan la cadera",
+          "<strong>Abdomen:</strong> Evita que la espalda se arquee demasiado",
+          "<strong>Espalda baja:</strong> Mantiene la columna estable",
+          "<strong>Isquiotibiales:</strong> Ayudan en el movimiento"
+        ],
+        tipH4: "✨ Consejo",
+        tipP: "Al subir, piensa en meter un poco el ombligo hacia adentro. Así activas el abdomen y proteges tu espalda.",
+        scenarioH4: "🤔 Piensa y responde",
+        scenarioP: "En el puente, el abdomen se activa aunque el movimiento lo hagan los glúteos. ¿Por qué?",
+        opts: [
+          "Para evitar que la espalda se arquee demasiado y mantener la pelvis en posición correcta",
+          "Para ayudar a los glúteos a subir más la cadera",
+          "Para respirar mejor durante el ejercicio"
+        ],
+        correct: 0,
+        correctFb: "<strong>¡Correcto!</strong> El abdomen trabaja para evitar que la espalda se arquee demasiado. Los glúteos suben la cadera, pero si el abdomen no trabaja, la espalda se arquearía mucho y podrías lastimarte. Trabajando juntos, mantienen la pelvis en posición correcta y protegen la espalda.",
+        incorrectFb: "<strong>Reflexiona...</strong> El abdomen no ayuda a subir (de hecho, es opuesto al movimiento). Tampoco es por respiración. Trabaja para evitar que la espalda se arquee demasiado cuando los glúteos suben la cadera. Es un contrapeso que protege la espalda."
+      },
+      {
+        num: 8, title: "8️⃣ Battement controlado",
+        cardH3: "🦵 ¿Qué ocurre en tu cuerpo?",
+        howH4: "🔍 Cómo funciona",
+        howUl: [
+          "<strong>Al subir la pierna:</strong> Los músculos de la parte externa de la cadera trabajan",
+          "<strong>Al bajar lentamente:</strong> Esos mismos músculos trabajan frenando la bajada (como un freno de coche)",
+          "<strong>Los músculos internos</strong> también se activan para estabilizar",
+          "Bajar lento es más difícil que subir rápido porque requiere más control"
+        ],
+        muscleH4: "💪 Músculos que trabajan",
+        muscleUl: [
+          "<strong>Abductores:</strong> (parte externa de la cadera) Elevan y controlan la bajada",
+          "<strong>Aductores:</strong> (parte interna) Estabilizan",
+          "<strong>Abdomen:</strong> Mantiene el tronco estable"
+        ],
+        tipH4: "✨ Consejo",
+        tipP: "Si al día siguiente te duelen más los músculos, es normal. Bajar lento crea más \"agujetas\" pero también te hace más fuerte.",
+        scenarioH4: "🤔 Piensa y responde",
+        scenarioP: "Cuando bajas la pierna lentamente en battement controlado, ¿por qué es más difícil que subirla rápido?",
+        opts: [
+          "Porque tardas más tiempo y te cansas más",
+          "Porque los músculos tienen que frenar la pierna poco a poco, lo que requiere más control",
+          "Porque se acumula más cansancio en los músculos"
+        ],
+        correct: 1,
+        correctFb: "<strong>¡Muy bien!</strong> Bajar lento requiere que los músculos frenen la pierna poco a poco, como un coche que frena suavemente. Esto requiere más control y fuerza que dejarla caer. Por eso es más difícil y también por eso al día siguiente puedes tener más \"agujetas\".",
+        incorrectFb: "<strong>Piensa...</strong> No es por el tiempo ni solo por cansancio. Bajar lento requiere que los músculos frenen la pierna poco a poco, como un freno de coche. Esto es más difícil que dejarla caer y requiere más control. Por eso duele más al día siguiente (agujetas), pero también te hace más fuerte."
+      },
+      {
+        num: 9, title: "9️⃣ Giros y piruetas",
+        cardH3: "🌀 ¿Qué ocurre en tu cuerpo?",
+        howH4: "🔍 Cómo funciona",
+        howUl: [
+          "<strong>Tu abdomen y espalda</strong> trabajan juntos creando un \"cilindro\" fuerte alrededor de tu tronco",
+          "Esto te mantiene recto mientras giras, como un trompo",
+          "<strong>La pierna de apoyo</strong> también activa todos sus músculos para mantenerte estable",
+          "Si el \"cilindro\" del tronco no es fuerte, te caes o pierdes el equilibrio"
+        ],
+        muscleH4: "💪 Músculos que trabajan",
+        muscleUl: [
+          "<strong>Abdomen completo:</strong> Crea el \"cilindro\" de estabilidad",
+          "<strong>Espalda:</strong> Trabaja junto con el abdomen",
+          "<strong>Pierna de apoyo:</strong> Todos sus músculos trabajan",
+          "<strong>Hombros y brazos:</strong> Ayudan a mantener el equilibrio"
+        ],
+        tipH4: "✨ Consejo",
+        tipP: "Antes de girar, activa el abdomen como si te fueran a dar un golpe. Esto crea la estabilidad que necesitas.",
+        scenarioH4: "🤔 Piensa y responde",
+        scenarioP: "Durante una pirueta, el abdomen y la espalda trabajan juntos sin moverse. ¿Para qué sirve esto?",
+        opts: [
+          "Para crear un \"cilindro\" fuerte que te mantenga recto y estable mientras giras",
+          "Para generar el giro",
+          "Para respirar mejor durante el giro"
+        ],
+        correct: 0,
+        correctFb: "<strong>¡Exacto!</strong> El abdomen y la espalda trabajan juntos creando un \"cilindro\" fuerte alrededor de tu tronco. Esto te mantiene recto mientras giras, como un trompo. Si este cilindro no es fuerte, te caes o pierdes el equilibrio. Por eso es tan importante fortalecer el centro del cuerpo.",
+        incorrectFb: "<strong>Considera...</strong> El abdomen y espalda no generan el giro (eso lo hacen otros músculos). Tampoco es por respiración. Trabajan juntos creando un \"cilindro\" fuerte que te mantiene recto mientras giras. Sin esta estabilidad, te caerías. Es como el eje de un trompo."
+      },
+      {
+        num: 10, title: "🔟 Saltos y aterrizajes",
+        cardH3: "🦘 ¿Qué ocurre en tu cuerpo?",
+        howH4: "🔍 Cómo funciona",
+        howUl: [
+          "<strong>Al aterrizar:</strong> Todos los músculos de las piernas trabajan juntos frenando la caída",
+          "Es como cuando frenas un coche: todos los frenos trabajan juntos",
+          "Si solo trabajara un músculo, la fuerza del impacto iría directa a las articulaciones y te podrías lesionar",
+          "Al trabajar todos juntos, distribuyen la fuerza y te protegen"
+        ],
+        muscleH4: "💪 Músculos que trabajan",
+        muscleUl: [
+          "<strong>Cuádriceps:</strong> (frente del muslo) Frenan la rodilla",
+          "<strong>Isquiotibiales:</strong> (detrás del muslo) Protegen la rodilla",
+          "<strong>Gemelos:</strong> (pantorrillas) Controlan el tobillo",
+          "<strong>Glúteos:</strong> Controlan la cadera"
+        ],
+        tipH4: "✨ Consejo",
+        tipP: "Un buen aterrizaje es silencioso. Si haces mucho ruido al caer, es que no estás usando bien tus músculos para amortiguar.",
+        scenarioH4: "🤔 Piensa y responde",
+        scenarioP: "Cuando aterrizas de un salto, todos los músculos de las piernas trabajan juntos. ¿Por qué es importante?",
+        opts: [
+          "Para poder saltar de nuevo inmediatamente",
+          "Para distribuir la fuerza del impacto y proteger las articulaciones de lesiones",
+          "Para estirar los músculos después del salto"
+        ],
+        correct: 1,
+        correctFb: "<strong>¡Correcto!</strong> Todos los músculos trabajan juntos para distribuir la fuerza del impacto. Cuando aterrizas, la fuerza es 5-8 veces tu peso. Si todos los músculos frenan juntos, distribuyen esa fuerza y protegen tus articulaciones. Si no, la fuerza iría directa a huesos y ligamentos → lesión.",
+        incorrectFb: "<strong>Analiza...</strong> No es para saltar de nuevo ni para estirar. Todos los músculos trabajan para absorber el impacto del aterrizaje. La fuerza es muy grande (5-8 veces tu peso). Si todos frenan juntos, distribuyen esa fuerza y protegen tus articulaciones. Si no, te podrías lesionar."
+      }
+    ],
+    summary: {
+      h2: "📊 Resumen: Lo más importante",
+      introH3: "🎯 Lo que has aprendido",
+      introP: "A lo largo de estos 10 ejercicios has descubierto que:",
+      keyH4: "💡 Conceptos clave",
+      keyUl: [
+        "<strong>Los músculos trabajan en equipo:</strong> Nunca trabajan solos, siempre hay varios activándose a la vez",
+        "<strong>La estabilidad es clave:</strong> Para bailar bien, necesitas músculos que se activen juntos para mantenerte estable",
+        "<strong>Protegen tus articulaciones:</strong> Esta forma de trabajar evita que te lesiones",
+        "<strong>Mejoran tu control:</strong> Tus movimientos son más precisos y elegantes",
+        "<strong>Se puede entrenar:</strong> Cuanto más practiques, mejor trabajarán tus músculos en equipo"
+      ],
+      tipsH4: "✨ Consejos para tu entrenamiento",
+      tipsUl: [
+        "Presta atención a cómo se sienten tus músculos cuando bailas",
+        "Prioriza la calidad del movimiento sobre la cantidad",
+        "Empieza despacio y ve aumentando poco a poco",
+        "Si algo duele (no el cansancio normal, sino dolor), para y consulta",
+        "Practica estos ejercicios regularmente para mejorar"
+      ],
+      danceH4: "🎭 En la práctica",
+      danceP: "Ahora que entiendes cómo trabajan tus músculos:",
+      danceUl: [
+        "Aplica estos conceptos en tus clases de danza",
+        "Observa cómo mejora tu estabilidad y control",
+        "Disfruta bailando con más seguridad y menos riesgo de lesión",
+        "¡Sigue practicando!"
+      ]
+    }
+  },
+  en: {
+    headerTitle: "💪 Muscles Work as a Team",
+    headerSub: "10 Exercises to improve your stability and control in dance",
+    headerSubtitle: "Learn how your muscles work while you dance",
+    tabs: ["📚 Introduction","1. Plank","2. Relevé","3. Arabesque","4. Squat","5. Plié","6. Balance","7. Bridge","8. Battement","9. Turns","10. Jumps","📊 Summary"],
+    btnCheck: "Check answer",
+    btnReset: "Reset",
+    alertSelect: "Please select an option first",
+    intro: {
+      h2: "What is Coactivation?",
+      introH3: "Imagine a dance team...",
+      introP: "When you dance, your muscles work like a dance team. They don't work alone, but <strong>several muscles activate at the same time</strong> to keep you stable and control your movements. This is called <strong>coactivation</strong>.",
+      whyH4: "🎯 Why is it important?",
+      whyUl: [
+        "<strong>It keeps you stable:</strong> Like when you balance on one leg",
+        "<strong>It protects your joints:</strong> It prevents injury when jumping or turning",
+        "<strong>It improves your control:</strong> Your movements are more precise and elegant",
+        "<strong>It gives you more strength:</strong> By working as a team, muscles are more efficient"
+      ],
+      exH4: "💡 Simple example",
+      exP: "When you do a <strong>plank</strong> (push-up position), it's not just your abdomen working. Your back also activates to keep you straight. If only your abdomen worked, your back would fall. If only your back worked, your abdomen would fall. <strong>Both work together!</strong>",
+      danceH4: "🎭 In dance",
+      danceP: "Coactivation is what allows you to:",
+      danceUl: [
+        "Hold an arabesque without shaking",
+        "Land from a jump without making noise",
+        "Turn without falling",
+        "Move with fluidity and control"
+      ]
+    },
+    exercises: [
+      {
+        num: 1, title: "1️⃣ Plank: Strengthen your core",
+        cardH3: "📋 What happens in your body?",
+        howH4: "🔍 How it works",
+        howUl: [
+          "<strong>Your abdomen</strong> contracts to prevent your back from arching too much",
+          "<strong>Your back</strong> contracts to prevent your abdomen from falling",
+          "<strong>Both work together</strong> creating a natural \"belt\" that protects your spine",
+          "At first you shake because your muscles are tiring and the brain activates and deactivates them quickly"
+        ],
+        muscleH4: "💪 Muscles that work",
+        muscleUl: [
+          "<strong>Abdomen:</strong> Keeps the front stable",
+          "<strong>Lower back:</strong> Keeps the back stable",
+          "<strong>Shoulders and arms:</strong> Support your weight"
+        ],
+        tipH4: "✨ Tip",
+        tipP: "Start with 15-20 seconds and gradually increase. It's normal to shake at first. It means your muscles are getting stronger!",
+        scenarioH4: "🤔 Think and answer",
+        scenarioP: "You're doing the plank and after 20 seconds you start shaking. Why do you think this happens?",
+        opts: [
+          "Because your muscles have run out of energy and can no longer work",
+          "Because your muscles are tiring and your brain activates and deactivates them quickly to maintain the position",
+          "Because your muscles have torn and that's why they shake"
+        ],
+        correct: 1,
+        correctFb: "<strong>Correct!</strong> Shaking happens because your muscles are tiring. When they fatigue, your brain activates and deactivates them very quickly to maintain the position. This creates the vibrations you see. It's normal and means you're getting stronger. With practice, you'll hold it longer without shaking.",
+        incorrectFb: "<strong>Almost...</strong> Think: if your muscles ran out of energy, you couldn't move at all. If they tore, you'd feel sharp pain. The shaking is because they're tiring and your brain activates and deactivates them quickly to maintain the position. It's a sign you're getting stronger."
+      },
+      {
+        num: 2, title: "2️⃣ Relevé: Rising on the toes",
+        cardH3: "🩰 What happens in your body?",
+        howH4: "🔍 How it works",
+        howUl: [
+          "<strong>Your calves</strong> lift you onto your toes",
+          "<strong>The shin muscle</strong> (front part) also activates a little to stabilise the ankle",
+          "It's as if you had one foot on the accelerator (calves) and one on the brake (shin) at the same time",
+          "This prevents the ankle from going too far forward and you falling"
+        ],
+        muscleH4: "💪 Muscles that work",
+        muscleUl: [
+          "<strong>Calves and soleus:</strong> Lift you (back of the leg)",
+          "<strong>Tibialis anterior:</strong> Stabilises (front of the shin)",
+          "<strong>Lateral muscles:</strong> Prevent the ankle from twisting"
+        ],
+        tipH4: "✨ Tip",
+        tipP: "If you feel wobbly, it's normal. Your muscles are learning to work together. With practice it will be easier!",
+        scenarioH4: "🤔 Think and answer",
+        scenarioP: "When you rise to relevé, the shin muscle (which normally lowers the foot) also activates a little. What do you think it's for?",
+        opts: [
+          "It's a body error that should be avoided",
+          "To stabilise the ankle and prevent it from going too far forward",
+          "To prepare for coming down from the relevé"
+        ],
+        correct: 1,
+        correctFb: "<strong>Exactly!</strong> The shin muscle activates to stabilise the ankle. Imagine it's like having a safety brake: it prevents the ankle from going too far forward and you falling. This \"cooperation\" between opposing muscles is what gives you stability.",
+        incorrectFb: "<strong>Reflect...</strong> It's not an error nor just to prepare for coming down. The shin muscle stabilises the ankle while you rise. Without it, the ankle would be unstable and you could fall or twist it. It's like having a safety system working alongside the calves."
+      },
+      {
+        num: 3, title: "3️⃣ Arabesque: Holding the leg back",
+        cardH3: "🦵 What happens in your body?",
+        howH4: "🔍 How it works",
+        howUl: [
+          "<strong>Your glutes</strong> and the back of the thigh keep the leg raised",
+          "<strong>The psoas</strong> (muscle at the hip that lifts the leg) also activates a little",
+          "This may seem strange: why does a muscle that lifts the leg work when the leg is back?",
+          "To control! It prevents the leg from going too far back and protects the hip"
+        ],
+        muscleH4: "💪 Muscles that work",
+        muscleUl: [
+          "<strong>Glutes:</strong> Keep the leg raised",
+          "<strong>Hamstrings:</strong> (back of the thigh) Help extend",
+          "<strong>Psoas:</strong> Controls it from going too far back",
+          "<strong>Abdomen:</strong> Keeps the trunk stable"
+        ],
+        tipH4: "✨ Tip",
+        tipP: "Don't try to lift the leg as high as possible if you lose control. Better a lower but stable and controlled position.",
+        scenarioH4: "🤔 Think and answer",
+        scenarioP: "In arabesque, the psoas (which normally lifts the leg) activates even though the leg is back. What advantage does this have?",
+        opts: [
+          "None, it's a waste of energy",
+          "To prepare for the next movement of lifting the leg",
+          "To control the leg height and protect the hip from over-stretching"
+        ],
+        correct: 2,
+        correctFb: "<strong>Very good!</strong> The psoas works to control the leg from going too far back. It's like a \"brake\" that protects your hip from over-stretching. Without this control, the leg would either fall by gravity or go too far back, and you could hurt yourself.",
+        incorrectFb: "<strong>Think...</strong> It's not a waste of energy nor just to prepare for the next movement. The psoas controls the leg position. Without this control, the leg would go too far back (hyperextension) and you could hurt the hip. It's a safety \"brake\"."
+      },
+      {
+        num: 4, title: "4️⃣ Squat: Controlled down and up",
+        cardH3: "🦵 What happens in your body?",
+        howH4: "🔍 How it works",
+        howUl: [
+          "<strong>Going down:</strong> The muscles at the front of the thigh (quadriceps) work braking the descent",
+          "<strong>The back of the thigh</strong> also activates to protect the knee",
+          "It's as if you had two people pulling a rope in opposite directions: they balance each other",
+          "This protects the cruciate ligament of the knee (a kind of \"tape\" that keeps it stable)"
+        ],
+        muscleH4: "💪 Muscles that work",
+        muscleUl: [
+          "<strong>Quadriceps:</strong> (front of the thigh) Control the descent",
+          "<strong>Hamstrings:</strong> (back of the thigh) Protect the knee",
+          "<strong>Glutes:</strong> Help with the movement",
+          "<strong>Calves:</strong> Stabilise the ankle"
+        ],
+        tipH4: "✨ Tip",
+        tipP: "Go down slowly (count to 4) and come up controlled too. This protects your knees and strengthens the muscles more.",
+        scenarioH4: "🤔 Think and answer",
+        scenarioP: "When you go down in a squat, the back of the thigh activates even though the movement is done by the front. Why is this important?",
+        opts: [
+          "To protect the knee by balancing forces and preventing injury",
+          "To help the front part exert more force",
+          "To stretch the front of the thigh"
+        ],
+        correct: 0,
+        correctFb: "<strong>Correct!</strong> The back of the thigh works to protect the knee. When you go down, the front pulls the knee forward. The back pulls backward. This balances them and protects the cruciate ligament (an important \"tape\" inside the knee).",
+        incorrectFb: "<strong>Consider...</strong> The back doesn't help the front (in fact, they do opposite movements). Nor is it for stretching. It works to protect the knee: it counteracts the force of the front, preventing knee injury. It's a safety system."
+      },
+      {
+        num: 5, title: "5️⃣ Plié: Flexion with rotation",
+        cardH3: "🩰 What happens in your body?",
+        howH4: "🔍 How it works",
+        howUl: [
+          "In ballet plié, the legs are rotated outward",
+          "<strong>Three muscle groups</strong> work together:",
+          "• The front and back of the thigh control the flexion",
+          "• The inner thigh maintains the rotation",
+          "It's like a tripod: if one leg is missing, it falls"
+        ],
+        muscleH4: "💪 Muscles that work",
+        muscleUl: [
+          "<strong>Quadriceps:</strong> Control knee flexion",
+          "<strong>Hamstrings:</strong> Stabilise the knee",
+          "<strong>Adductors:</strong> (inner part) Maintain external rotation",
+          "<strong>Glutes:</strong> Help keep the hip stable"
+        ],
+        tipH4: "✨ Tip",
+        tipP: "Make sure your knees go in the same direction as your feet. If your knees go inward, you're losing the correct activation.",
+        scenarioH4: "🤔 Think and answer",
+        scenarioP: "In plié with legs rotated outward, why is it important for the inner thigh muscles to also work?",
+        opts: [
+          "To help bend the knee",
+          "To maintain hip rotation and stabilise the knee",
+          "To stretch the outer thigh"
+        ],
+        correct: 1,
+        correctFb: "<strong>Excellent!</strong> The inner muscles maintain hip rotation and stabilise the knee. In ballet plié, you need stability in several directions at once. If the inner muscles didn't work, the knees would go inward and you'd lose the correct position.",
+        incorrectFb: "<strong>Analyse...</strong> The inner muscles don't help bend the knee nor just stretch. They maintain hip rotation and stabilise the knee in plié. Without them, the knees would go inward and you'd lose correct alignment. It's teamwork in several directions."
+      },
+      {
+        num: 6, title: "6️⃣ Balancing on one leg",
+        cardH3: "⚖️ What happens in your body?",
+        howH4: "🔍 How it works",
+        howUl: [
+          "When you're on one leg, you make <strong>small constant adjustments</strong> without realising",
+          "The ankle muscles work as a team, activating and relaxing quickly",
+          "It's like when you hold a tray with glasses: you make small movements so it doesn't fall",
+          "If you close your eyes, it's harder because you can only trust what you feel in your muscles and joints"
+        ],
+        muscleH4: "💪 Muscles that work",
+        muscleUl: [
+          "<strong>Ankle:</strong> Makes constant micro-adjustments",
+          "<strong>Hip:</strong> Keeps the pelvis level",
+          "<strong>Abdomen and back:</strong> Keep the trunk straight",
+          "<strong>Support leg:</strong> All its muscles work together"
+        ],
+        tipH4: "✨ Tip",
+        tipP: "Try to balance with your eyes open and then closed. You'll notice the difference. It's a good exercise to improve!",
+        scenarioH4: "🤔 Think and answer",
+        scenarioP: "When you balance on one leg, you feel small oscillations. What causes them?",
+        opts: [
+          "That you don't have enough strength",
+          "The small adjustments your muscles make to keep you balanced",
+          "That you're tiring too quickly"
+        ],
+        correct: 1,
+        correctFb: "<strong>Perfect!</strong> The small oscillations are adjustments your muscles make constantly to keep you balanced. It's like when you hold something delicate: you make small movements so it doesn't fall. Your muscles do the same, activating and relaxing very quickly.",
+        incorrectFb: "<strong>Observe...</strong> It's not lack of strength (you can hold it) nor just fatigue. The oscillations are constant adjustments the muscles make to keep you balanced. It's automatic: your muscles detect that you're going to fall and correct quickly. It's like an automatic balance system."
+      },
+      {
+        num: 7, title: "7️⃣ Glute bridge",
+        cardH3: "🌉 What happens in your body?",
+        howH4: "🔍 How it works",
+        howUl: [
+          "<strong>Your glutes</strong> lift the hip",
+          "<strong>Your abdomen</strong> activates to prevent the back from arching too much",
+          "It's as if you had two people pulling the ends of a rope: they balance each other",
+          "Without the abdomen working, the back would arch too much and you could hurt yourself"
+        ],
+        muscleH4: "💪 Muscles that work",
+        muscleUl: [
+          "<strong>Glutes:</strong> Lift the hip",
+          "<strong>Abdomen:</strong> Prevents the back from arching too much",
+          "<strong>Lower back:</strong> Keeps the spine stable",
+          "<strong>Hamstrings:</strong> Help with the movement"
+        ],
+        tipH4: "✨ Tip",
+        tipP: "When going up, think about pulling your navel slightly inward. This activates the abdomen and protects your back.",
+        scenarioH4: "🤔 Think and answer",
+        scenarioP: "In the bridge, the abdomen activates even though the movement is done by the glutes. Why?",
+        opts: [
+          "To prevent the back from arching too much and keep the pelvis in the correct position",
+          "To help the glutes lift the hip higher",
+          "To breathe better during the exercise"
+        ],
+        correct: 0,
+        correctFb: "<strong>Correct!</strong> The abdomen works to prevent the back from arching too much. The glutes lift the hip, but if the abdomen doesn't work, the back would arch a lot and you could hurt yourself. Working together, they keep the pelvis in the correct position and protect the back.",
+        incorrectFb: "<strong>Reflect...</strong> The abdomen doesn't help lift (in fact, it's opposite to the movement). Nor is it for breathing. It works to prevent the back from arching too much when the glutes lift the hip. It's a counterweight that protects the back."
+      },
+      {
+        num: 8, title: "8️⃣ Controlled battement",
+        cardH3: "🦵 What happens in your body?",
+        howH4: "🔍 How it works",
+        howUl: [
+          "<strong>Lifting the leg:</strong> The muscles on the outside of the hip work",
+          "<strong>Lowering slowly:</strong> Those same muscles work braking the descent (like a car brake)",
+          "<strong>The inner muscles</strong> also activate to stabilise",
+          "Lowering slowly is harder than lifting fast because it requires more control"
+        ],
+        muscleH4: "💪 Muscles that work",
+        muscleUl: [
+          "<strong>Abductors:</strong> (outside of the hip) Lift and control the descent",
+          "<strong>Adductors:</strong> (inner part) Stabilise",
+          "<strong>Abdomen:</strong> Keeps the trunk stable"
+        ],
+        tipH4: "✨ Tip",
+        tipP: "If your muscles hurt more the next day, it's normal. Lowering slowly creates more \"soreness\" but also makes you stronger.",
+        scenarioH4: "🤔 Think and answer",
+        scenarioP: "When you lower the leg slowly in controlled battement, why is it harder than lifting it fast?",
+        opts: [
+          "Because it takes longer and you get more tired",
+          "Because the muscles have to brake the leg little by little, which requires more control",
+          "Because more fatigue builds up in the muscles"
+        ],
+        correct: 1,
+        correctFb: "<strong>Very good!</strong> Lowering slowly requires the muscles to brake the leg little by little, like a car braking gently. This requires more control and strength than letting it fall. That's why it's harder and also why the next day you may have more \"soreness\".",
+        incorrectFb: "<strong>Think...</strong> It's not about time or just fatigue. Lowering slowly requires the muscles to brake the leg little by little, like a car brake. This is harder than letting it fall and requires more control. That's why it hurts more the next day (soreness), but also makes you stronger."
+      },
+      {
+        num: 9, title: "9️⃣ Turns and pirouettes",
+        cardH3: "🌀 What happens in your body?",
+        howH4: "🔍 How it works",
+        howUl: [
+          "<strong>Your abdomen and back</strong> work together creating a strong \"cylinder\" around your trunk",
+          "This keeps you straight while you turn, like a spinning top",
+          "<strong>The support leg</strong> also activates all its muscles to keep you stable",
+          "If the trunk \"cylinder\" isn't strong, you fall or lose balance"
+        ],
+        muscleH4: "💪 Muscles that work",
+        muscleUl: [
+          "<strong>Full abdomen:</strong> Creates the stability \"cylinder\"",
+          "<strong>Back:</strong> Works together with the abdomen",
+          "<strong>Support leg:</strong> All its muscles work",
+          "<strong>Shoulders and arms:</strong> Help maintain balance"
+        ],
+        tipH4: "✨ Tip",
+        tipP: "Before turning, activate the abdomen as if you were about to be hit. This creates the stability you need.",
+        scenarioH4: "🤔 Think and answer",
+        scenarioP: "During a pirouette, the abdomen and back work together without moving. What is this for?",
+        opts: [
+          "To create a strong \"cylinder\" that keeps you straight and stable while you turn",
+          "To generate the turn",
+          "To breathe better during the turn"
+        ],
+        correct: 0,
+        correctFb: "<strong>Exactly!</strong> The abdomen and back work together creating a strong \"cylinder\" around your trunk. This keeps you straight while you turn, like a spinning top. If this cylinder isn't strong, you fall or lose balance. That's why strengthening the body's centre is so important.",
+        incorrectFb: "<strong>Consider...</strong> The abdomen and back don't generate the turn (other muscles do that). Nor is it for breathing. They work together creating a strong \"cylinder\" that keeps you straight while you turn. Without this stability, you'd fall. It's like the axis of a spinning top."
+      },
+      {
+        num: 10, title: "🔟 Jumps and landings",
+        cardH3: "🦘 What happens in your body?",
+        howH4: "🔍 How it works",
+        howUl: [
+          "<strong>On landing:</strong> All the leg muscles work together braking the fall",
+          "It's like when you brake a car: all the brakes work together",
+          "If only one muscle worked, the impact force would go straight to the joints and you could get injured",
+          "By working all together, they distribute the force and protect you"
+        ],
+        muscleH4: "💪 Muscles that work",
+        muscleUl: [
+          "<strong>Quadriceps:</strong> (front of the thigh) Brake the knee",
+          "<strong>Hamstrings:</strong> (back of the thigh) Protect the knee",
+          "<strong>Calves:</strong> Control the ankle",
+          "<strong>Glutes:</strong> Control the hip"
+        ],
+        tipH4: "✨ Tip",
+        tipP: "A good landing is silent. If you make a lot of noise when landing, you're not using your muscles well to cushion.",
+        scenarioH4: "🤔 Think and answer",
+        scenarioP: "When you land from a jump, all the leg muscles work together. Why is this important?",
+        opts: [
+          "To be able to jump again immediately",
+          "To distribute the impact force and protect the joints from injury",
+          "To stretch the muscles after the jump"
+        ],
+        correct: 1,
+        correctFb: "<strong>Correct!</strong> All the muscles work together to distribute the impact force. When you land, the force is 5-8 times your weight. If all the muscles brake together, they distribute that force and protect your joints. If not, the force would go straight to bones and ligaments → injury.",
+        incorrectFb: "<strong>Analyse...</strong> It's not to jump again nor to stretch. All the muscles work to absorb the landing impact. The force is very large (5-8 times your weight). If they all brake together, they distribute that force and protect your joints. If not, you could get injured."
+      }
+    ],
+    summary: {
+      h2: "📊 Summary: The most important",
+      introH3: "🎯 What you've learned",
+      introP: "Throughout these 10 exercises you've discovered that:",
+      keyH4: "💡 Key concepts",
+      keyUl: [
+        "<strong>Muscles work as a team:</strong> They never work alone, there are always several activating at the same time",
+        "<strong>Stability is key:</strong> To dance well, you need muscles that activate together to keep you stable",
+        "<strong>They protect your joints:</strong> This way of working prevents injury",
+        "<strong>They improve your control:</strong> Your movements are more precise and elegant",
+        "<strong>It can be trained:</strong> The more you practice, the better your muscles will work as a team"
+      ],
+      tipsH4: "✨ Tips for your training",
+      tipsUl: [
+        "Pay attention to how your muscles feel when you dance",
+        "Prioritise quality of movement over quantity",
+        "Start slowly and gradually increase",
+        "If something hurts (not normal fatigue, but pain), stop and consult",
+        "Practise these exercises regularly to improve"
+      ],
+      danceH4: "🎭 In practice",
+      danceP: "Now that you understand how your muscles work:",
+      danceUl: [
+        "Apply these concepts in your dance classes",
+        "Observe how your stability and control improve",
+        "Enjoy dancing with more confidence and less risk of injury",
+        "Keep practising!"
+      ]
+    }
+  }
+};
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+let currentLang = 'ca';
+const exerciseState = {};
+
+function buildNav() {
+  const t = I18N[currentLang];
+  const nav = document.getElementById('navTabs');
+  nav.innerHTML = '';
+  t.tabs.forEach((tab, i) => {
+    const btn = document.createElement('button');
+    btn.textContent = tab;
+    btn.onclick = () => showSlide(i, btn);
+    if (i === 0) btn.classList.add('active');
+    nav.appendChild(btn);
+  });
+}
+
+function buildSlides() {
+  const t = I18N[currentLang];
+  const container = document.getElementById('slidesContainer');
+  container.innerHTML = '';
+  
+  // Slide 0: Introducció
+  let introHtml = `<div class="slide active">
+    <h2>${t.intro.h2}</h2>
+    <div class="intro-box">
+      <h3>${t.intro.introH3}</h3>
+      <p>${t.intro.introP}</p>
+    </div>
+    <div class="how-it-works">
+      <h4>${t.intro.whyH4}</h4>
+      <ul>${t.intro.whyUl.map(x => `<li>${x}</li>`).join('')}</ul>
+    </div>
+    <div class="muscle-info">
+      <h4>${t.intro.exH4}</h4>
+      <p>${t.intro.exP}</p>
+    </div>
+    <div class="tip-box">
+      <h4>${t.intro.danceH4}</h4>
+      <p>${t.intro.danceP}</p>
+      <ul>${t.intro.danceUl.map(x => `<li>${x}</li>`).join('')}</ul>
+    </div>
+  </div>`;
+  container.innerHTML += introHtml;
+  
+  // Slides 1-10: Exercicis
+  t.exercises.forEach(ex => {
+    let exHtml = `<div class="slide">
+      <h2>${ex.title}</h2>
+      <div class="exercise-card">
+        <h3><span class="emoji"></span> ${ex.cardH3}</h3>
+        <div class="how-it-works">
+          <h4>${ex.howH4}</h4>
+          <ul>${ex.howUl.map(x => `<li>${x}</li>`).join('')}</ul>
+        </div>
+        <div class="muscle-info">
+          <h4>${ex.muscleH4}</h4>
+          <ul>${ex.muscleUl.map(x => `<li>${x}</li>`).join('')}</ul>
+        </div>
+        <div class="tip-box">
+          <h4>${ex.tipH4}</h4>
+          <p>${ex.tipP}</p>
+        </div>
+      </div>
+      <div class="scenario-box">
+        <h4>${ex.scenarioH4}</h4>
+        <p>${ex.scenarioP}</p>
+        <div class="options-grid" id="options${ex.num}">`;
+    ex.opts.forEach((opt, oi) => {
+      exHtml += `<div class="option-card" onclick="selectOption(${ex.num}, ${oi}, ${oi === ex.correct})">
+        <strong>${t.btnCheck === 'Verificar resposta' ? 'Opció' : t.btnCheck === 'Verificar respuesta' ? 'Opción' : 'Option'} ${String.fromCharCode(65+oi)}</strong>
+        ${opt}
+      </div>`;
+    });
+    exHtml += `</div>
+        <div class="explanation-field">
+          <label for="explanation${ex.num}">💭 ${currentLang === 'ca' ? 'Explica amb les teves paraules per què vas triar aquesta opció:' : currentLang === 'es' ? 'Explica con tus palabras por qué elegiste esta opción:' : 'Explain in your own words why you chose this option:'}</label>
+          <textarea id="explanation${ex.num}" placeholder="${currentLang === 'ca' ? 'Pensa en què li passa als teus músculs quan fan un esforç perllongat...' : currentLang === 'es' ? 'Piensa en qué le pasa a tus músculos cuando hacen un esfuerzo prolongado...' : 'Think about what happens to your muscles during prolonged effort...'}"></textarea>
+        </div>
+        <button class="btn" onclick="checkAnswer(${ex.num})">${t.btnCheck}</button>
+        <button class="btn btn-secondary" onclick="resetExercise(${ex.num})">${t.btnReset}</button>
+        <div class="feedback" id="feedback${ex.num}"></div>
+      </div>
+    </div>`;
+    container.innerHTML += exHtml;
+  });
+  
+  // Slide 11: Resum
+  let summaryHtml = `<div class="slide">
+    <h2>${t.summary.h2}</h2>
+    <div class="intro-box">
+      <h3>${t.summary.introH3}</h3>
+      <p>${t.summary.introP}</p>
+    </div>
+    <div class="how-it-works">
+      <h4>${t.summary.keyH4}</h4>
+      <ul>${t.summary.keyUl.map(x => `<li>${x}</li>`).join('')}</ul>
+    </div>
+    <div class="muscle-info">
+      <h4>${t.summary.tipsH4}</h4>
+      <ul>${t.summary.tipsUl.map(x => `<li>${x}</li>`).join('')}</ul>
+    </div>
+    <div class="tip-box">
+      <h4>${t.summary.danceH4}</h4>
+      <p>${t.summary.danceP}</p>
+      <ul>${t.summary.danceUl.map(x => `<li>${x}</li>`).join('')}</ul>
+    </div>
+  </div>`;
+  container.innerHTML += summaryHtml;
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  const t = I18N[lang];
+  
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + lang).classList.add('active');
+  
+  document.getElementById('t-header-title').textContent = t.headerTitle;
+  document.getElementById('t-header-sub').textContent = t.headerSub;
+  document.getElementById('t-header-subtitle').textContent = t.headerSubtitle;
+  
+  buildNav();
+  buildSlides();
+  
+  // Restaurar estats
+  Object.keys(exerciseState).forEach(num => {
+    const state = exerciseState[num];
+    const options = document.querySelectorAll(`#options${num} .option-card`);
+    if (options.length === 0) return;
+    const feedback = document.getElementById(`feedback${num}`);
+    options[state.selected].classList.add('selected');
+    if (state.checked) {
+      options[state.selected].classList.add(state.isCorrect ? 'correct' : 'incorrect');
+      feedback.classList.add('show');
+      if (state.isCorrect) {
+        feedback.className = 'feedback show success';
+        feedback.innerHTML = t.exercises[num-1].correctFb;
+      } else {
+        feedback.className = 'feedback show error';
+        feedback.innerHTML = t.exercises[num-1].incorrectFb;
+      }
+    }
+  });
+}
+
+function showSlide(i, btn) {
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+  const slides = document.querySelectorAll('.slide');
+  if (slides[i]) slides[i].classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function selectOption(exerciseNum, optionIndex, isCorrect) {
+  const options = document.querySelectorAll(`#options${exerciseNum} .option-card`);
+  options.forEach(opt => opt.classList.remove('selected', 'correct', 'incorrect'));
+  options[optionIndex].classList.add('selected');
+  exerciseState[exerciseNum] = { selected: optionIndex, isCorrect, checked: false };
+}
+
+function checkAnswer(exerciseNum) {
+  const t = I18N[currentLang];
+  if (!exerciseState[exerciseNum] || exerciseState[exerciseNum].selected === undefined) {
+    alert(t.alertSelect);
+    return;
+  }
+  
+  const state = exerciseState[exerciseNum];
+  const feedback = document.getElementById(`feedback${exerciseNum}`);
+  const options = document.querySelectorAll(`#options${exerciseNum} .option-card`);
+  
+  options.forEach((opt, idx) => {
+    opt.classList.remove('correct', 'incorrect');
+    if (idx === state.selected) {
+      opt.classList.add(state.isCorrect ? 'correct' : 'incorrect');
+    }
+  });
+  
+  feedback.classList.remove('show');
+  setTimeout(() => {
+    feedback.classList.add('show');
+    if (state.isCorrect) {
+      feedback.className = 'feedback show success';
+      feedback.innerHTML = t.exercises[exerciseNum-1].correctFb;
+    } else {
+      feedback.className = 'feedback show error';
+      feedback.innerHTML = t.exercises[exerciseNum-1].incorrectFb;
+    }
+  }, 100);
+  
+  state.checked = true;
+}
+
+function resetExercise(exerciseNum) {
+  const options = document.querySelectorAll(`#options${exerciseNum} .option-card`);
+  options.forEach(opt => opt.classList.remove('selected', 'correct', 'incorrect'));
+  const textarea = document.getElementById(`explanation${exerciseNum}`);
+  if (textarea) textarea.value = '';
+  const feedback = document.getElementById(`feedback${exerciseNum}`);
+  feedback.classList.remove('show');
+  delete exerciseState[exerciseNum];
+}
+
+/* Inicialització */
+setLang('ca');
+</script>
+</body>
+</html>

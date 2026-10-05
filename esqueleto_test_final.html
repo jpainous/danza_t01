@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test de Fisiologia Aplicada a la Dansa</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+    position: relative;
+  }
+  header {
+    background: linear-gradient(90deg, #1e3c72, #2a5298);
+    color: white;
+    padding: 30px;
+    text-align: center;
+    position: relative;
+  }
+  header h1 { font-size: 2em; margin-bottom: 10px; }
+  header p { opacity: 0.95; font-size: 1.1em; }
+  
+  .lang-selector {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+  }
+  .lang-btn {
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.4);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85em;
+    transition: all 0.3s;
+  }
+  .lang-btn:hover { background: rgba(255,255,255,0.3); }
+  .lang-btn.active {
+    background: #fff;
+    color: #1e3c72;
+    border-color: #fff;
+  }
+  
+  .student-info {
+    background: #f8f9fa;
+    padding: 25px;
+    border-bottom: 3px solid #dee2e6;
+  }
+  
+  .student-info h2 {
+    color: #2a5298;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+  }
+  
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .info-field {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .info-field label {
+    font-weight: 600;
+    color: #2a5298;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+  }
+  
+  .info-field input {
+    padding: 10px;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    font-size: 1em;
+  }
+  
+  .info-field input:focus {
+    outline: none;
+    border-color: #2a5298;
+  }
+  
+  .timer-box {
+    background: linear-gradient(90deg, #e74c3c, #c0392b);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 15px;
+  }
+  
+  .timer-box h3 {
+    font-size: 1.8em;
+    margin-bottom: 5px;
+  }
+  
+  .timer-box p {
+    font-size: 0.9em;
+    opacity: 0.9;
+  }
+  
+  .test-info {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 15px;
+    margin: 20px 25px;
+    border-radius: 0 8px 8px 0;
+  }
+  
+  .test-info h3 {
+    color: #856404;
+    margin-bottom: 8px;
+  }
+  
+  .test-info ul {
+    margin-left: 20px;
+    line-height: 1.6;
+  }
+  
+  .question {
+    margin: 25px 30px;
+    padding: 25px;
+    background: white;
+    border: 2px solid #dee2e6;
+    border-radius: 15px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  }
+  
+  .question-header {
+    background: linear-gradient(90deg, #2a5298, #1e3c72);
+    color: white;
+    padding: 10px 20px;
+    margin: -25px -25px 20px -25px;
+    border-radius: 13px 13px 0 0;
+    font-size: 1em;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .topic-tag {
+    background: rgba(255,255,255,0.2);
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-weight: 400;
+  }
+  
+  .question-text {
+    font-size: 1.1em;
+    color: #333;
+    margin-bottom: 20px;
+    line-height: 1.6;
+    font-weight: 500;
+  }
+  
+  .case-box {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+  }
+  
+  .options {
+    margin: 20px 0;
+  }
+  
+  .option {
+    background: #f8f9fa;
+    border: 2px solid #dee2e6;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .option:hover {
+    background: #e3f2fd;
+    border-color: #2a5298;
+    transform: translateX(5px);
+  }
+  
+  .option input[type="radio"] {
+    margin-top: 3px;
+    cursor: pointer;
+  }
+  
+  .option label {
+    cursor: pointer;
+    flex: 1;
+    line-height: 1.5;
+  }
+  
+  .controls {
+    padding: 30px;
+    background: #f8f9fa;
+    border-top: 3px solid #dee2e6;
+    text-align: center;
+  }
+  
+  .btn {
+    background: linear-gradient(90deg, #2a5298, #1e3c72);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 30px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 10px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(42,82,152,0.3);
+  }
+  
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(42,82,152,0.4);
+  }
+  
+  .btn-secondary {
+    background: #6c757d;
+  }
+  
+  .results {
+    display: none;
+    padding: 40px;
+    background: #e8f5e9;
+    text-align: center;
+  }
+  
+  .results.show {
+    display: block;
+  }
+  
+  .results h2 {
+    color: #2e7d32;
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .score {
+    font-size: 3em;
+    color: #198754;
+    font-weight: bold;
+    margin: 20px 0;
+  }
+  
+  .results-details {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    margin: 20px 0;
+    text-align: left;
+  }
+  
+  .results-details h3 {
+    color: #2a5298;
+    margin-bottom: 15px;
+  }
+  
+  .results-details p {
+    line-height: 1.8;
+    margin-bottom: 10px;
+  }
+  
+  .print-btn {
+    background: linear-gradient(90deg, #198754, #0f5132);
+  }
+  
+  @media print {
+    body { background: white; }
+    .container { box-shadow: none; }
+    .controls, .timer-box, .lang-selector { display: none; }
+    .question { break-inside: avoid; }
+  }
+  
+  @media (max-width: 768px) {
+    header h1 { font-size: 1.5em; }
+    .question { margin: 15px; padding: 20px; }
+    .question-header { margin: -20px -20px 15px -20px; }
+    .info-grid { grid-template-columns: 1fr; }
+    .lang-selector { position: static; justify-content: center; margin-top: 15px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="lang-selector">
+      <button class="lang-btn active" onclick="setLang('ca')" id="btn-ca">CAT</button>
+      <button class="lang-btn" onclick="setLang('es')" id="btn-es">ESP</button>
+      <button class="lang-btn" onclick="setLang('en')" id="btn-en">ENG</button>
+    </div>
+    <h1 id="t-header-title">📝 Test de Fisiologia Aplicada a la Dansa</h1>
+    <p id="t-header-sub">Avaluació completa: Esquelet, Músculs, Teixit Ossi, Tendons i Articulacions</p>
+  </header>
+  
+  <div class="student-info">
+    <h2 id="t-student-title">👤 Informació de l'Estudiant</h2>
+    <div class="info-grid">
+      <div class="info-field">
+        <label for="studentName" id="t-lbl-name">Nom complet:</label>
+        <input type="text" id="studentName">
+      </div>
+      <div class="info-field">
+        <label for="studentEmail" id="t-lbl-email">Email:</label>
+        <input type="email" id="studentEmail">
+      </div>
+      <div class="info-field">
+        <label for="testDate" id="t-lbl-date">Data:</label>
+        <input type="date" id="testDate">
+      </div>
+      <div class="info-field">
+        <label for="timeLimit" id="t-lbl-time">Temps límit (minuts):</label>
+        <input type="number" id="timeLimit" value="75" min="30" max="120">
+      </div>
+    </div>
+    <div class="timer-box">
+      <h3 id="timer">75:00</h3>
+      <p id="t-timer-label">Temps restant</p>
+    </div>
+  </div>
+  
+  <div class="test-info">
+    <h3 id="t-instr-title">📋 Instruccions del Test</h3>
+    <ul id="t-instr-list"></ul>
+  </div>
+
+  <form id="testForm">
+    <div id="questionsContainer"></div>
+  </form>
+
+  <div class="controls">
+    <button type="button" class="btn" onclick="startTest()" id="t-btn-start">Iniciar Test</button>
+    <button type="button" class="btn btn-secondary" onclick="saveProgress()" id="t-btn-save">Guardar Progrés</button>
+    <button type="button" class="btn" onclick="finishTest()" id="t-btn-finish">Finalitzar i Veure Resultats</button>
+    <button type="button" class="btn print-btn" onclick="printResults()" id="t-btn-print">Imprimir/Guardar PDF</button>
+  </div>
+
+  <div class="results" id="results">
+    <h2 id="t-results-title">Resultats del Test</h2>
+    <div class="score" id="scoreDisplay">0/50</div>
+    <div class="results-details" id="resultsDetails">
+      <h3 id="t-results-info">Informació de l'Estudiant</h3>
+      <p><strong id="t-r-name">Nom:</strong> <span id="resultName"></span></p>
+      <p><strong id="t-r-email">Email:</strong> <span id="resultEmail"></span></p>
+      <p><strong id="t-r-date">Data:</strong> <span id="resultDate"></span></p>
+      <p><strong id="t-r-start">Hora d'inici:</strong> <span id="resultStartTime"></span></p>
+      <p><strong id="t-r-end">Hora de finalització:</strong> <span id="resultEndTime"></span></p>
+      <p><strong id="t-r-used">Temps utilitzat:</strong> <span id="resultTimeUsed"></span></p>
+      <p><strong id="t-r-score">Puntuació:</strong> <span id="resultScore"></span>/50</p>
+      <p><strong id="t-r-pct">Percentatge:</strong> <span id="resultPercentage"></span>%</p>
+    </div>
+    <button type="button" class="btn print-btn" onclick="printResults()" id="t-btn-print2">Imprimir/Guardar PDF</button>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   TRADUCCIONS
+   ============================================================ */
+const I18N = {
+  ca: {
+    headerTitle: "📝 Test de Fisiologia Aplicada a la Dansa",
+    headerSub: "Avaluació completa: Esquelet, Músculs, Teixit Ossi, Tendons i Articulacions",
+    studentTitle: "👤 Informació de l'Estudiant",
+    lblName: "Nom complet:", lblEmail: "Email:", lblDate: "Data:", lblTime: "Temps límit (minuts):",
+    placeholderName: "Ex: Maria Garcia López", placeholderEmail: "Ex: maria@email.com",
+    timerLabel: "Temps restant",
+    instrTitle: "📋 Instruccions del Test",
+    instrList: [
+      "<strong>50 preguntes</strong> de diferents tipus (opció múltiple, casos pràctics, vertader/fals)",
+      "<strong>Temps límit:</strong> 75 minuts (ajustable pel professor)",
+      "Cada pregunta indica el <strong>tema</strong> al qual correspon",
+      "Només <strong>una resposta correcta</strong> per pregunta",
+      "En finalitzar, podràs <strong>imprimir o guardar com a PDF</strong> per enviar al professor"
+    ],
+    btnStart: "Iniciar Test", btnSave: "Guardar Progrés",
+    btnFinish: "Finalitzar i Veure Resultats", btnPrint: "Imprimir/Guardar PDF",
+    resultsTitle: "Resultats del Test",
+    resultsInfo: "Informació de l'Estudiant",
+    rName: "Nom:", rEmail: "Email:", rDate: "Data:",
+    rStart: "Hora d'inici:", rEnd: "Hora de finalització:",
+    rUsed: "Temps utilitzat:", rScore: "Puntuació:", rPct: "Percentatge:",
+    qOf: (a,b) => `Pregunta ${a} de ${b}`,
+    caseLabel: "<strong>Cas pràctic:</strong>",
+    alertName: "Si us plau, introdueix el teu nom complet abans d'iniciar.",
+    alertStarted: (m) => `Test iniciat! Tens ${m} minuts.`,
+    alertTimeUp: "Temps esgotat! El test s'ha finalitzat automàticament.",
+    alertSaved: "Progrés guardat. Pots tancar el navegador i continuar més tard.",
+    minutes: "minuts",
+    questions: [], // omplert a baix
+    correctAnswers: {}
+  },
+  es: {
+    headerTitle: "📝 Test de Fisiología Aplicada a la Danza",
+    headerSub: "Evaluación completa: Esqueleto, Músculos, Tejido Óseo, Tendones y Articulaciones",
+    studentTitle: "👤 Información del Estudiante",
+    lblName: "Nombre completo:", lblEmail: "Email:", lblDate: "Fecha:", lblTime: "Tiempo límite (minutos):",
+    placeholderName: "Ej: María García López", placeholderEmail: "Ej: maria@email.com",
+    timerLabel: "Tiempo restante",
+    instrTitle: "📋 Instrucciones del Test",
+    instrList: [
+      "<strong>50 preguntas</strong> de diferentes tipos (opción múltiple, casos prácticos, verdadero/falso)",
+      "<strong>Tiempo límite:</strong> 75 minutos (ajustable por el profesor)",
+      "Cada pregunta indica el <strong>tema</strong> al que corresponde",
+      "Solo <strong>una respuesta correcta</strong> por pregunta",
+      "Al finalizar, podrás <strong>imprimir o guardar como PDF</strong> para enviar al profesor"
+    ],
+    btnStart: "Iniciar Test", btnSave: "Guardar Progreso",
+    btnFinish: "Finalizar y Ver Resultados", btnPrint: "Imprimir/Guardar PDF",
+    resultsTitle: "Resultados del Test",
+    resultsInfo: "Información del Estudiante",
+    rName: "Nombre:", rEmail: "Email:", rDate: "Fecha:",
+    rStart: "Hora de inicio:", rEnd: "Hora de finalización:",
+    rUsed: "Tiempo utilizado:", rScore: "Puntuación:", rPct: "Porcentaje:",
+    qOf: (a,b) => `Pregunta ${a} de ${b}`,
+    caseLabel: "<strong>Caso práctico:</strong>",
+    alertName: "Por favor, introduce tu nombre completo antes de iniciar.",
+    alertStarted: (m) => `¡Test iniciado! Tienes ${m} minutos.`,
+    alertTimeUp: "¡Tiempo agotado! El test se ha finalizado automáticamente.",
+    alertSaved: "Progreso guardado. Puedes cerrar el navegador y continuar más tarde.",
+    minutes: "minutos",
+    questions: [],
+    correctAnswers: {}
+  },
+  en: {
+    headerTitle: "📝 Dance Applied Physiology Test",
+    headerSub: "Complete assessment: Skeleton, Muscles, Bone Tissue, Tendons and Joints",
+    studentTitle: "👤 Student Information",
+    lblName: "Full name:", lblEmail: "Email:", lblDate: "Date:", lblTime: "Time limit (minutes):",
+    placeholderName: "E.g.: Maria Garcia Lopez", placeholderEmail: "E.g.: maria@email.com",
+    timerLabel: "Time remaining",
+    instrTitle: "📋 Test Instructions",
+    instrList: [
+      "<strong>50 questions</strong> of different types (multiple choice, practical cases, true/false)",
+      "<strong>Time limit:</strong> 75 minutes (adjustable by the teacher)",
+      "Each question indicates the <strong>topic</strong> it belongs to",
+      "Only <strong>one correct answer</strong> per question",
+      "At the end, you can <strong>print or save as PDF</strong> to send to the teacher"
+    ],
+    btnStart: "Start Test", btnSave: "Save Progress",
+    btnFinish: "Finish and View Results", btnPrint: "Print/Save PDF",
+    resultsTitle: "Test Results",
+    resultsInfo: "Student Information",
+    rName: "Name:", rEmail: "Email:", rDate: "Date:",
+    rStart: "Start time:", rEnd: "End time:",
+    rUsed: "Time used:", rScore: "Score:", rPct: "Percentage:",
+    qOf: (a,b) => `Question ${a} of ${b}`,
+    caseLabel: "<strong>Practical case:</strong>",
+    alertName: "Please enter your full name before starting.",
+    alertStarted: (m) => `Test started! You have ${m} minutes.`,
+    alertTimeUp: "Time is up! The test has been automatically finished.",
+    alertSaved: "Progress saved. You can close the browser and continue later.",
+    minutes: "minutes",
+    questions: [],
+    correctAnswers: {}
+  }
+};
+
+/* ============================================================
+   PREGUNTES (50) - estructura comuna, textos per idioma
+   ============================================================ */
+const QUESTIONS = [
+  // ---- ESQUELETO 1-10 ----
+  { id:1, topic:{ca:"Esquelet - Part 1",es:"Esqueleto - Parte 1",en:"Skeleton - Part 1"},
+    q:{ca:"Per què diem que l'os és un teixit \"viu\" i no una estructura inerta?",
+       es:"¿Por qué decimos que el hueso es un tejido \"vivo\" y no una estructura inerte?",
+       en:"Why do we say that bone is a \"living\" tissue and not an inert structure?"},
+    opts:{
+      ca:["Perquè fa mal quan et colpeges","Perquè es renova constantment, s'adapta a l'esforç i té cèl·lules vives que el mantenen","Perquè està ple de sang","Perquè es mou amb els músculs"],
+      es:["Porque duele cuando te golpeas","Porque se renueva constantemente, se adapta al esfuerzo y tiene células vivas que lo mantienen","Porque está lleno de sangre","Porque se mueve con los músculos"],
+      en:["Because it hurts when you bump into it","Because it constantly renews itself, adapts to effort and has living cells that maintain it","Because it is full of blood","Because it moves with the muscles"]
+    }, correct:"B" },
+  { id:2, topic:{ca:"Esquelet - Part 1",es:"Esqueleto - Parte 1",en:"Skeleton - Part 1"},
+    case:{ca:"<strong>Cas pràctic:</strong> L'Anna, una ballarina de 20 anys, entrena 4 hores diàries amb salts i relevés. La seva densitat òssia és un 15% més gran que la d'una persona sedentària de la seva edat.",
+          es:"<strong>Caso práctico:</strong> Ana, una bailarina de 20 años, entrena 4 horas diarias con saltos y relevés. Su densidad ósea es un 15% mayor que la de una persona sedentaria de su edad.",
+          en:"<strong>Practical case:</strong> Ana, a 20-year-old dancer, trains 4 hours a day with jumps and relevés. Her bone density is 15% higher than that of a sedentary person her age."},
+    q:{ca:"Quin principi fisiològic explica aquest fenomen?",
+       es:"¿Qué principio fisiológico explica este fenómeno?",
+       en:"Which physiological principle explains this phenomenon?"},
+    opts:{
+      ca:["Els ossos creixen més amb l'exercici","Llei de Wolff: l'os s'adapta i es reforça on rep més càrrega mecànica","L'Anna menja més calci que la persona sedentària","És només genètic"],
+      es:["Los huesos crecen más con el ejercicio","Ley de Wolff: el hueso se adapta y fortalece donde recibe más carga mecánica","Ana come más calcio que la persona sedentaria","Es solo genético"],
+      en:["Bones grow more with exercise","Wolff's law: bone adapts and strengthens where it receives more mechanical load","Ana eats more calcium than the sedentary person","It's only genetic"]
+    }, correct:"B" },
+  { id:3, topic:{ca:"Esquelet - Part 1",es:"Esqueleto - Parte 1",en:"Skeleton - Part 1"},
+    q:{ca:"En un relevé (elevar-se sobre les puntes), quin tipus de palanca utilitza el cos?",
+       es:"En un relevé (elevarse sobre las puntas), ¿qué tipo de palanca utiliza el cuerpo?",
+       en:"In a relevé (rising on the toes), what type of lever does the body use?"},
+    opts:{
+      ca:["Tipus 1 (equilibri) - com una balança","Tipus 2 (força) - la càrrega (pes corporal) està entre el suport (punta del peu) i la força (bessons)","Tipus 3 (velocitat) - com el braç en llançar","No és una palanca"],
+      es:["Tipo 1 (equilibrio) - como una balanza","Tipo 2 (fuerza) - la carga (peso corporal) está entre el apoyo (punta del pie) y la fuerza (gemelos)","Tipo 3 (velocidad) - como el brazo al lanzar","No es una palanca"],
+      en:["Type 1 (balance) - like a scale","Type 2 (force) - the load (body weight) is between the support (tip of the foot) and the force (calves)","Type 3 (speed) - like the arm when throwing","It is not a lever"]
+    }, correct:"B" },
+  { id:4, topic:{ca:"Esquelet - Part 2",es:"Esqueleto - Parte 2",en:"Skeleton - Part 2"},
+    q:{ca:"Per què el calci és tan important per a la funció muscular?",
+       es:"¿Por qué el calcio es tan importante para la función muscular?",
+       en:"Why is calcium so important for muscle function?"},
+    opts:{
+      ca:["Perquè fa els ossos més durs","Perquè és necessari perquè els músculs es contraiguin (actua com a \"espurna\" que activa les proteïnes contràctils)","Perquè dona energia als músculs","Perquè evita els calambres"],
+      es:["Porque hace los huesos más duros","Porque es necesario para que los músculos se contraigan (actúa como \"chispa\" que activa las proteínas contráctiles)","Porque da energía a los músculos","Porque evita los calambres"],
+      en:["Because it makes bones harder","Because it is necessary for muscles to contract (it acts as a \"spark\" that activates contractile proteins)","Because it gives energy to the muscles","Because it prevents cramps"]
+    }, correct:"B" },
+  { id:5, topic:{ca:"Esquelet - Part 2",es:"Esqueleto - Parte 2",en:"Skeleton - Part 2"},
+    case:{ca:"<strong>Cas pràctic:</strong> En Carles, un ballarí, se sent molt fatigat durant els assajos. Se li diagnostica anèmia (pocs glòbuls vermells).",
+          es:"<strong>Caso práctico:</strong> Carlos, un bailarín, se siente muy fatigado durante los ensayos. Se le diagnostica anemia (pocos glóbulos rojos).",
+          en:"<strong>Practical case:</strong> Carlos, a dancer, feels very fatigued during rehearsals. He is diagnosed with anaemia (few red blood cells)."},
+    q:{ca:"Com afecta això al seu rendiment en la dansa des del punt de vista fisiològic?",
+       es:"¿Cómo afecta esto a su rendimiento en la danza desde el punto de vista fisiológico?",
+       en:"How does this affect his dance performance from a physiological point of view?"},
+    opts:{
+      ca:["No afecta, només és un problema de sang","Menys glòbuls vermells = menys transport d'oxigen als músculs = fatiga ràpida i baix rendiment","Només li afecta la força, no la resistència","Millora la seva flexibilitat"],
+      es:["No afecta, solo es un problema de sangre","Menos glóbulos rojos = menos transporte de oxígeno a los músculos = fatiga rápida y bajo rendimiento","Solo le afecta la fuerza, no la resistencia","Mejora su flexibilidad"],
+      en:["It doesn't affect him, it's only a blood problem","Fewer red blood cells = less oxygen transport to muscles = rapid fatigue and low performance","It only affects strength, not endurance","It improves his flexibility"]
+    }, correct:"B" },
+  { id:6, topic:{ca:"Esquelet - Part 3",es:"Esqueleto - Parte 3",en:"Skeleton - Part 3"},
+    q:{ca:"Quin és el principal risc de la Tríada de la Dona Atleta per a la salut òssia?",
+       es:"¿Cuál es el principal riesgo de la Tríada de la Mujer Atleta para la salud ósea?",
+       en:"What is the main risk of the Female Athlete Triad for bone health?"},
+    opts:{
+      ca:["Augment de pes","Osteoporosi precoç per pèrdua d'estrògens i baixa energia disponible","Massa massa muscular","Millora del rendiment"],
+      es:["Aumento de peso","Osteoporosis precoz por pérdida de estrógenos y baja energía disponible","Demasiada masa muscular","Mejora del rendimiento"],
+      en:["Weight gain","Early osteoporosis due to loss of oestrogen and low available energy","Too much muscle mass","Improved performance"]
+    }, correct:"B" },
+  { id:7, topic:{ca:"Esquelet - Part 3",es:"Esqueleto - Parte 3",en:"Skeleton - Part 3"},
+    case:{ca:"<strong>Cas pràctic:</strong> La Laura, ballarina de 19 anys, porta 6 mesos sense menstruació i entrena 5 hores diàries amb dieta molt restrictiva.",
+          es:"<strong>Caso práctico:</strong> Laura, bailarina de 19 años, lleva 6 meses sin menstruación y entrena 5 horas diarias con dieta muy restrictiva.",
+          en:"<strong>Practical case:</strong> Laura, a 19-year-old dancer, has not menstruated for 6 months and trains 5 hours a day on a very restrictive diet."},
+    q:{ca:"Quina condició fisiològica representa més risc per als seus ossos?",
+       es:"¿Qué condición fisiológica representa mayor riesgo para sus huesos?",
+       en:"Which physiological condition represents the greatest risk to her bones?"},
+    opts:{
+      ca:["Guany de pes","RED-S (Dèficit Relatiu d'Energia) amb pèrdua de densitat òssia","Hipertròfia muscular","Millora de la flexibilitat"],
+      es:["Ganancia de peso","RED-S (Déficit Relativo de Energía) con pérdida de densidad ósea","Hipertrofia muscular","Mejora de la flexibilidad"],
+      en:["Weight gain","RED-S (Relative Energy Deficiency) with bone density loss","Muscle hypertrophy","Improved flexibility"]
+    }, correct:"B" },
+  { id:8, topic:{ca:"Esquelet - Part 3",es:"Esqueleto - Parte 3",en:"Skeleton - Part 3"},
+    q:{ca:"Per què és important el descans per a la salut òssia?",
+       es:"¿Por qué es importante el descanso para la salud ósea?",
+       en:"Why is rest important for bone health?"},
+    opts:{
+      ca:["Perquè els ossos dormen","Perquè durant el son s'allibera l'hormona del creixement i els osteoblasts construeixen os nou","Perquè així no es cansen els músculs","No és important"],
+      es:["Porque los huesos duermen","Porque durante el sueño se libera la hormona del crecimiento y los osteoblastos construyen hueso nuevo","Porque así no se cansan los músculos","No es importante"],
+      en:["Because bones sleep","Because during sleep growth hormone is released and osteoblasts build new bone","So that the muscles don't get tired","It is not important"]
+    }, correct:"B" },
+  { id:9, topic:{ca:"Esquelet - Part 3",es:"Esqueleto - Parte 3",en:"Skeleton - Part 3"},
+    q:{ca:"Què són les fractures per estrès i per què són comunes en ballarins?",
+       es:"¿Qué son las fracturas por estrés y por qué son comunes en bailarines?",
+       en:"What are stress fractures and why are they common in dancers?"},
+    opts:{
+      ca:["Són fractures completes per accidents","Són microesquerdes que apareixen quan el dany per impacte supera la capacitat de reparació de l'os","Són fractures per falta de calci","Només ocorren en persones grans"],
+      es:["Son fracturas completas por accidentes","Son microgrietas que aparecen cuando el daño por impacto supera la capacidad de reparación del hueso","Son fracturas por falta de calcio","Solo ocurren en personas mayores"],
+      en:["They are complete fractures from accidents","They are microcracks that appear when impact damage exceeds the bone's repair capacity","They are fractures from lack of calcium","They only occur in older people"]
+    }, correct:"B" },
+  { id:10, topic:{ca:"Esquelet - Part 3",es:"Esqueleto - Parte 3",en:"Skeleton - Part 3"},
+    q:{ca:"Vertader o Fals: Les dones tenen més risc de lesions del LCA (lligament encreuat anterior) que els homes a causa de diferències hormonals i anatòmiques.",
+       es:"Verdadero o Falso: Las mujeres tienen mayor riesgo de lesiones del LCA (ligamento cruzado anterior) que los hombres debido a diferencias hormonales y anatómicas.",
+       en:"True or False: Women have a higher risk of ACL (anterior cruciate ligament) injuries than men due to hormonal and anatomical differences."},
+    opts:{
+      ca:["Vertader","Fals"],
+      es:["Verdadero","Falso"],
+      en:["True","False"]
+    }, correct:"A" },
+
+  // ---- COACTIVACIÓ 11-20 ----
+  { id:11, topic:{ca:"Coactivació - Part 1",es:"Coactivación - Parte 1",en:"Coactivation - Part 1"},
+    q:{ca:"Què és la coactivació muscular?",
+       es:"¿Qué es la coactivación muscular?",
+       en:"What is muscle coactivation?"},
+    opts:{
+      ca:["Quan un múscul treballa sol","Activació simultània de músculs agonistes i antagonistes per proporcionar estabilitat","Quan els músculs es relaxen","Només ocorre a l'abdomen"],
+      es:["Cuando un músculo trabaja solo","Activación simultánea de músculos agonistas y antagonistas para proporcionar estabilidad","Cuando los músculos se relajan","Solo ocurre en el abdomen"],
+      en:["When a muscle works alone","Simultaneous activation of agonist and antagonist muscles to provide stability","When muscles relax","It only occurs in the abdomen"]
+    }, correct:"B" },
+  { id:12, topic:{ca:"Coactivació - Part 1",es:"Coactivación - Parte 1",en:"Coactivation - Part 1"},
+    case:{ca:"<strong>Cas pràctic:</strong> Durant una planxa abdominal, la Maria nota que tant el seu abdomen com la seva esquena baixa estan treballant.",
+          es:"<strong>Caso práctico:</strong> Durante una plancha abdominal, María nota que tanto su abdomen como su espalda baja están trabajando.",
+          en:"<strong>Practical case:</strong> During a plank, Maria notices that both her abdomen and lower back are working."},
+    q:{ca:"Quin tipus de coactivació està ocorrent?",
+       es:"¿Qué tipo de coactivación está ocurriendo?",
+       en:"What type of coactivation is occurring?"},
+    opts:{
+      ca:["Coactivació agonista-antagonista (abdomen-esquena) per estabilitzar el core","Només treballa l'abdomen","És un error, hauria de treballar només un","No hi ha coactivació"],
+      es:["Coactivación agonista-antagonista (abdomen-espalda) para estabilizar el core","Solo trabaja el abdomen","Es un error, debería trabajar solo uno","No hay coactivación"],
+      en:["Agonist-antagonist coactivation (abdomen-back) to stabilise the core","Only the abdomen works","It's a mistake, only one should work","There is no coactivation"]
+    }, correct:"A" },
+  { id:13, topic:{ca:"Coactivació - Part 2",es:"Coactivación - Parte 2",en:"Coactivation - Part 2"},
+    q:{ca:"En un arabesque (cama estesa enrere), per què el psoes (flexor de maluc) es coactiva encara que la cama estigui en extensió?",
+       es:"En un arabesque (pierna extendida hacia atrás), ¿por qué el psoas (flexor de cadera) se coactiva aunque la pierna esté en extensión?",
+       en:"In an arabesque (leg extended backwards), why is the psoas (hip flexor) coactivated even though the leg is extended?"},
+    opts:{
+      ca:["És un error del sistema nerviós","Per controlar l'altura de la cama i protegir el maluc d'hiperextensió","Per preparar el moviment següent","No es coactiva"],
+      es:["Es un error del sistema nervioso","Para controlar la altura de la pierna y proteger la cadera de hiperextensión","Para preparar el siguiente movimiento","No se coactiva"],
+      en:["It's a nervous system error","To control the leg height and protect the hip from hyperextension","To prepare the next movement","It is not coactivated"]
+    }, correct:"B" },
+  { id:14, topic:{ca:"Coactivació - Part 2",es:"Coactivación - Parte 2",en:"Coactivation - Part 2"},
+    q:{ca:"Per què és important la coactivació del core durant una pirueta?",
+       es:"¿Por qué es importante la coactivación del core durante una pirueta?",
+       en:"Why is core coactivation important during a pirouette?"},
+    opts:{
+      ca:["Per generar el gir","Per crear un \"cilindre\" estable que mantingui l'eix vertical durant la rotació","Per respirar millor","No és important"],
+      es:["Para generar el giro","Para crear un \"cilindro\" estable que mantenga el eje vertical durante la rotación","Para respirar mejor","No es importante"],
+      en:["To generate the turn","To create a stable \"cylinder\" that maintains the vertical axis during rotation","To breathe better","It is not important"]
+    }, correct:"B" },
+  { id:15, topic:{ca:"Coactivació - Part 3",es:"Coactivación - Parte 3",en:"Coactivation - Part 3"},
+    q:{ca:"Durant l'aterratge d'un salt, què passa a nivell de coactivació muscular?",
+       es:"Durante el aterrizaje de un salto, ¿qué ocurre a nivel de coactivación muscular?",
+       en:"During a jump landing, what happens at the level of muscle coactivation?"},
+    opts:{
+      ca:["Tots els músculs es relaxen","Coactivació global de quàdriceps, isquiotibials, bessons i glutis per absorbir l'impacte (5-8x el pes corporal)","Només treballen els bessons","Només treballen els abdominals"],
+      es:["Todos los músculos se relajan","Coactivación global de cuádriceps, isquiotibiales, gemelos y glúteos para absorber el impacto (5-8x el peso corporal)","Solo trabajan los gemelos","Solo trabajan los abdominales"],
+      en:["All muscles relax","Global coactivation of quadriceps, hamstrings, calves and glutes to absorb the impact (5-8x body weight)","Only the calves work","Only the abdominals work"]
+    }, correct:"B" },
+  { id:16, topic:{ca:"Coactivació - Part 3",es:"Coactivación - Parte 3",en:"Coactivation - Part 3"},
+    q:{ca:"Vertader o Fals: La coactivació és un malbaratament d'energia perquè dos músculs oposats treballen alhora.",
+       es:"Verdadero o Falso: La coactivación es un desperdicio de energía porque dos músculos opuestos trabajan al mismo tiempo.",
+       en:"True or False: Coactivation is a waste of energy because two opposing muscles work at the same time."},
+    opts:{
+      ca:["Vertader","Fals - És essencial per a l'estabilitat articular i el control del moviment"],
+      es:["Verdadero","Falso - Es esencial para la estabilidad articular y el control del movimiento"],
+      en:["True","False - It is essential for joint stability and movement control"]
+    }, correct:"B" },
+  { id:17, topic:{ca:"Coactivació - Part 1",es:"Coactivación - Parte 1",en:"Coactivation - Part 1"},
+    q:{ca:"Quins tipus de fibres musculars es recluten principalment durant una coactivació sostinguda de baixa intensitat (com mantenir un equilibri)?",
+       es:"¿Qué tipos de fibras musculares se reclutan principalmente durante una coactivación sostenida de baja intensidad (como mantener un equilibrio)?",
+       en:"Which muscle fibre types are mainly recruited during sustained low-intensity coactivation (such as maintaining balance)?"},
+    opts:{
+      ca:["Tipus IIx (ràpides glucolítiques)","Tipus I (lentes oxidatives) - resistents a la fatiga","Només fibres tipus II","Cap"],
+      es:["Tipo IIx (rápidas glucolíticas)","Tipo I (lentas oxidativas) - resistentes a la fatiga","Solo fibras tipo II","Ninguna"],
+      en:["Type IIx (fast glycolytic)","Type I (slow oxidative) - fatigue-resistant","Only type II fibres","None"]
+    }, correct:"B" },
+  { id:18, topic:{ca:"Coactivació - Part 2",es:"Coactivación - Parte 2",en:"Coactivation - Part 2"},
+    case:{ca:"<strong>Cas pràctic:</strong> En un plié profund amb rotació externa, en Pere nota que treballa la part interna de la cuixa a més de la part frontal i posterior.",
+          es:"<strong>Caso práctico:</strong> En un plié profundo con rotación externa, Pedro nota que trabaja la parte interna del muslo además de la parte frontal y posterior.",
+          en:"<strong>Practical case:</strong> In a deep plié with external rotation, Pedro notices that the inner thigh works in addition to the front and back."},
+    q:{ca:"Quin tipus de coactivació està ocorrent?",
+       es:"¿Qué tipo de coactivación está ocurriendo?",
+       en:"What type of coactivation is occurring?"},
+    opts:{
+      ca:["Coactivació multiplanar: quàdriceps + isquiotibials + adductors per estabilitat en 3 plans","Només treballen els adductors","És un error de tècnica","No hi ha coactivació"],
+      es:["Coactivación multiplanar: cuádriceps + isquiotibiales + aductores para estabilidad en 3 planos","Solo trabajan los aductores","Es un error de técnica","No hay coactivación"],
+      en:["Multiplanar coactivation: quadriceps + hamstrings + adductors for stability in 3 planes","Only the adductors work","It's a technical error","There is no coactivation"]
+    }, correct:"A" },
+  { id:19, topic:{ca:"Coactivació - Part 3",es:"Coactivación - Parte 3",en:"Coactivation - Part 3"},
+    q:{ca:"Per què és important entrenar la coactivació en ballarins?",
+       es:"¿Por qué es importante entrenar la coactivación en bailarines?",
+       en:"Why is it important to train coactivation in dancers?"},
+    opts:{
+      ca:["No és important","Millora l'estabilitat, prevé lesions i permet un control més precís del moviment","Només millora la força","Només és útil per a esportistes, no ballarins"],
+      es:["No es importante","Mejora la estabilidad, previene lesiones y permite un control más preciso del movimiento","Solo mejora la fuerza","Solo es útil para deportistas, no bailarines"],
+      en:["It is not important","It improves stability, prevents injuries and allows more precise movement control","It only improves strength","It is only useful for athletes, not dancers"]
+    }, correct:"B" },
+  { id:20, topic:{ca:"Coactivació - Part 1",es:"Coactivación - Parte 1",en:"Coactivation - Part 1"},
+    q:{ca:"Què passa a nivell neural durant la coactivació?",
+       es:"¿Qué ocurre a nivel neural durante la coactivación?",
+       en:"What happens at the neural level during coactivation?"},
+    opts:{
+      ca:["El sistema nerviós inhibeix completament l'antagonista","El SNC redueix però no elimina completament la inhibició de l'antagonista, permetent activació simultània","No hi ha control neural","Només treballa el sistema nerviós simpàtic"],
+      es:["El sistema nervioso inhibe completamente al antagonista","El SNC reduce pero no elimina completamente la inhibición del antagonista, permitiendo activación simultánea","No hay control neural","Solo trabaja el sistema nervioso simpático"],
+      en:["The nervous system completely inhibits the antagonist","The CNS reduces but does not completely eliminate antagonist inhibition, allowing simultaneous activation","There is no neural control","Only the sympathetic nervous system works"]
+    }, correct:"B" },
+
+  // ---- TEIXIT OSSI 21-30 ----
+  { id:21, topic:{ca:"Teixit Ossi - Part 1",es:"Tejido Óseo - Parte 1",en:"Bone Tissue - Part 1"},
+    q:{ca:"Què és el periosti i quina és la seva funció principal?",
+       es:"¿Qué es el periostio y cuál es su función principal?",
+       en:"What is the periosteum and what is its main function?"},
+    opts:{
+      ca:["La medul·la òssia interior","La membrana viva que recobreix l'os per fora, amb vasos sanguinis, nervis i cèl·lules reparadores","El cartílag articular","Un lligament"],
+      es:["La médula ósea interior","La membrana viva que recubre el hueso por fuera, con vasos sanguíneos, nervios y células reparadoras","El cartílago articular","Un ligamento"],
+      en:["The inner bone marrow","The living membrane covering the bone on the outside, with blood vessels, nerves and repair cells","The articular cartilage","A ligament"]
+    }, correct:"B" },
+  { id:22, topic:{ca:"Teixit Ossi - Part 1",es:"Tejido Óseo - Parte 1",en:"Bone Tissue - Part 1"},
+    q:{ca:"Per què fa tant de mal quan et colpeges la canyella (tíbia)?",
+       es:"¿Por qué duele tanto cuando te golpeas la espinilla (tibia)?",
+       en:"Why does it hurt so much when you bump your shin (tibia)?"},
+    opts:{
+      ca:["Perquè l'os és molt dur","Perquè el periosti té molts nervis i està gairebé sota la pell en aquesta zona","Perquè es trenca l'os","Perquè hi ha molt múscul"],
+      es:["Porque el hueso es muy duro","Porque el periostio tiene muchos nervios y está casi bajo la piel en esa zona","Porque se rompe el hueso","Porque hay mucho músculo"],
+      en:["Because the bone is very hard","Because the periosteum has many nerves and is almost under the skin in that area","Because the bone breaks","Because there is a lot of muscle"]
+    }, correct:"B" },
+  { id:23, topic:{ca:"Teixit Ossi - Part 2",es:"Tejido Óseo - Parte 2",en:"Bone Tissue - Part 2"},
+    q:{ca:"Per què el cartílag articular NO té vasos sanguinis i com es nodreix?",
+       es:"¿Por qué el cartílago articular NO tiene vasos sanguíneos y cómo se nutre?",
+       en:"Why does articular cartilage NOT have blood vessels and how is it nourished?"},
+    opts:{
+      ca:["Perquè no ho necessita","Es nodreix per difusió del líquid sinovial mitjançant el moviment (compressió-descompressió)","Perquè és teixit mort","Es nodreix de la sang del múscul"],
+      es:["Porque no lo necesita","Se nutre por difusión del líquido sinovial mediante el movimiento (compresión-descompresión)","Porque es tejido muerto","Se nutre de la sangre del músculo"],
+      en:["Because it doesn't need it","It is nourished by diffusion of synovial fluid through movement (compression-decompression)","Because it is dead tissue","It is nourished by the muscle's blood"]
+    }, correct:"B" },
+  { id:24, topic:{ca:"Teixit Ossi - Part 3",es:"Tejido Óseo - Parte 3",en:"Bone Tissue - Part 3"},
+    q:{ca:"Quina és la diferència principal entre l'os compacte i l'os esponjós?",
+       es:"¿Cuál es la diferencia principal entre el hueso compacto y el hueso esponjoso?",
+       en:"What is the main difference between compact bone and spongy bone?"},
+    opts:{
+      ca:["El compacte és tou i l'esponjós és dur","El compacte és dens i resistent (forma la closca); l'esponjós és lleuger amb trabècules que s'adapten a les càrregues","Són el mateix","L'esponjós només està en els nens"],
+      es:["El compacto es blando y el esponjoso es duro","El compacto es denso y resistente (forma la cáscara); el esponjoso es ligero con trabéculas que se adaptan a las cargas","Son lo mismo","El esponjoso solo está en los niños"],
+      en:["Compact is soft and spongy is hard","Compact is dense and resistant (forms the shell); spongy is light with trabeculae that adapt to loads","They are the same","Spongy is only in children"]
+    }, correct:"B" },
+  { id:25, topic:{ca:"Teixit Ossi - Part 4",es:"Tejido Óseo - Parte 4",en:"Bone Tissue - Part 4"},
+    q:{ca:"Quina funció tenen els osteòcits a l'os?",
+       es:"¿Qué función tienen los osteocitos en el hueso?",
+       en:"What is the function of osteocytes in bone?"},
+    opts:{
+      ca:["Construir os nou","Actuar com a sensors que detecten forces mecàniques i dirigeixen la remodelació","Destruir os vell","Produir sang"],
+      es:["Construir hueso nuevo","Actuar como sensores que detectan fuerzas mecánicas y dirigen la remodelación","Destruir hueso viejo","Producir sangre"],
+      en:["Build new bone","Act as sensors that detect mechanical forces and direct remodelling","Destroy old bone","Produce blood"]
+    }, correct:"B" },
+  { id:26, topic:{ca:"Teixit Ossi - Part 4",es:"Tejido Óseo - Parte 4",en:"Bone Tissue - Part 4"},
+    q:{ca:"Quines cèl·lules són responsables de construir os nou?",
+       es:"¿Qué células son responsables de construir hueso nuevo?",
+       en:"Which cells are responsible for building new bone?"},
+    opts:{
+      ca:["Osteoclasts","Osteoblasts","Osteòcits","Condròcits"],
+      es:["Osteoclastos","Osteoblastos","Osteocitos","Condrocitos"],
+      en:["Osteoclasts","Osteoblasts","Osteocytes","Chondrocytes"]
+    }, correct:"B" },
+  { id:27, topic:{ca:"Teixit Ossi - Part 5",es:"Tejido Óseo - Parte 5",en:"Bone Tissue - Part 5"},
+    q:{ca:"Quant temps triga aproximadament a renovar-se tot l'esquelet humà?",
+       es:"¿Cuánto tiempo tarda aproximadamente en renovarse todo el esqueleto humano?",
+       en:"How long does it take approximately to renew the entire human skeleton?"},
+    opts:{
+      ca:["1 any","10 anys","50 anys","Mai es renova"],
+      es:["1 año","10 años","50 años","Nunca se renueva"],
+      en:["1 year","10 years","50 years","It never renews"]
+    }, correct:"B" },
+  { id:28, topic:{ca:"Teixit Ossi - Part 5",es:"Tejido Óseo - Parte 5",en:"Bone Tissue - Part 5"},
+    q:{ca:"Quines són les 4 fases del cicle de remodelació òssia en ordre correcte?",
+       es:"¿Cuáles son las 4 fases del ciclo de remodelación ósea en orden correcto?",
+       en:"What are the 4 phases of the bone remodelling cycle in the correct order?"},
+    opts:{
+      ca:["Formació → Resorció → Activació → Inversió","Activació → Resorció → Inversió → Formació","Resorció → Formació → Activació → Inversió","Inversió → Activació → Formació → Resorció"],
+      es:["Formación → Resorción → Activación → Inversión","Activación → Resorción → Inversión → Formación","Resorción → Formación → Activación → Inversión","Inversión → Activación → Formación → Resorción"],
+      en:["Formation → Resorption → Activation → Reversal","Activation → Resorption → Reversal → Formation","Resorption → Formation → Activation → Reversal","Reversal → Activation → Formation → Resorption"]
+    }, correct:"B" },
+  { id:29, topic:{ca:"Teixit Ossi - Part 6",es:"Tejido Óseo - Parte 6",en:"Bone Tissue - Part 6"},
+    q:{ca:"Què és la mecanotransducció?",
+       es:"¿Qué es la mecanotransducción?",
+       en:"What is mechanotransduction?"},
+    opts:{
+      ca:["La reparació de fractures","El procés pel qual les cèl·lules òssies converteixen una força mecànica (impacte) en un senyal biològic per construir os","La contracció muscular","La digestió del calci"],
+      es:["La reparación de fracturas","El proceso por el cual las células óseas convierten una fuerza mecánica (impacto) en una señal biológica para construir hueso","La contracción muscular","La digestión del calcio"],
+      en:["Fracture repair","The process by which bone cells convert a mechanical force (impact) into a biological signal to build bone","Muscle contraction","Calcium digestion"]
+    }, correct:"B" },
+  { id:30, topic:{ca:"Teixit Ossi - Part 6",es:"Tejido Óseo - Parte 6",en:"Bone Tissue - Part 6"},
+    case:{ca:"<strong>Cas pràctic:</strong> Un astronauta passa 6 mesos a l'espai sense gravetat. En tornar, els seus ossos han perdut densitat.",
+          es:"<strong>Caso práctico:</strong> Un astronauta pasa 6 meses en el espacio sin gravedad. Al volver, sus huesos han perdido densidad.",
+          en:"<strong>Practical case:</strong> An astronaut spends 6 months in space without gravity. Upon return, his bones have lost density."},
+    q:{ca:"Quin principi fisiològic explica això?",
+       es:"¿Qué principio fisiológico explica esto?",
+       en:"Which physiological principle explains this?"},
+    opts:{
+      ca:["A l'espai fa molt fred","Sense gravetat, no hi ha càrrega mecànica, els osteòcits no detecten forces i l'os no rep senyal per mantenir-se fort","Perquè no mengen bé a l'espai","És només temporal, no té explicació fisiològica"],
+      es:["En el espacio hace mucho frío","Sin gravedad, no hay carga mecánica, los osteocitos no detectan fuerzas y el hueso no recibe señal para mantenerse fuerte","Porque no comen bien en el espacio","Es solo temporal, no tiene explicación fisiológica"],
+      en:["It's very cold in space","Without gravity, there is no mechanical load, osteocytes do not detect forces and the bone receives no signal to stay strong","Because they don't eat well in space","It's only temporary, it has no physiological explanation"]
+    }, correct:"B" },
+
+  // ---- TENDONS 31-40 ----
+  { id:31, topic:{ca:"Tendons",es:"Tendones",en:"Tendons"},
+    q:{ca:"Per què les lesions de tendó triguen tant a curar (3-6 mesos) comparat amb les lesions musculars (3-6 setmanes)?",
+       es:"¿Por qué las lesiones de tendón tardan tanto en curar (3-6 meses) comparado con las lesiones musculares (3-6 semanas)?",
+       en:"Why do tendon injuries take so long to heal (3-6 months) compared to muscle injuries (3-6 weeks)?"},
+    opts:{
+      ca:["Perquè els tendons són més llargs","Perquè els tendons tenen 7-8 vegades menys vascularització que el múscul, cosa que limita l'arribada de nutrients i cèl·lules reparadores","Perquè els tendons no tenen cèl·lules vives","Perquè són més durs"],
+      es:["Porque los tendones son más largos","Porque los tendones tienen 7-8 veces menos vascularización que el músculo, lo que limita la llegada de nutrientes y células reparadoras","Porque los tendones no tienen células vivas","Porque son más duros"],
+      en:["Because tendons are longer","Because tendons have 7-8 times less vascularisation than muscle, which limits the arrival of nutrients and repair cells","Because tendons have no living cells","Because they are harder"]
+    }, correct:"B" },
+  { id:32, topic:{ca:"Tendons",es:"Tendones",en:"Tendons"},
+    q:{ca:"Què és el cicle estirament-escurçament (CEE) i com beneficia un ballarí?",
+       es:"¿Qué es el ciclo estiramiento-acortamiento (CEA) y cómo beneficia a un bailarín?",
+       en:"What is the stretch-shortening cycle (SSC) and how does it benefit a dancer?"},
+    opts:{
+      ca:["És un tipus d'estirament","El tendó emmagatzema energia elàstica en estirar-se (aterratge) i l'allibera en escurçar-se (impuls), estalviant energia i millorant el salt","És quan el múscul es contrau sense moure's","No beneficia el ballarí"],
+      es:["Es un tipo de estiramiento","El tendón almacena energía elástica al estirarse (aterrizaje) y la libera al acortarse (impulso), ahorrando energía y mejorando el salto","Es cuando el músculo se contrae sin moverse","No beneficia al bailarín"],
+      en:["It is a type of stretching","The tendon stores elastic energy when stretched (landing) and releases it when shortening (impulse), saving energy and improving the jump","It is when the muscle contracts without moving","It does not benefit the dancer"]
+    }, correct:"B" },
+  { id:33, topic:{ca:"Tendons",es:"Tendones",en:"Tendons"},
+    q:{ca:"Per què els exercicis excèntrics (baixades lentes) són efectius per rehabilitar tendons encara que facin mal al principi?",
+       es:"¿Por qué los ejercicios excéntricos (bajadas lentas) son efectivos para rehabilitar tendones aunque duelan al principio?",
+       en:"Why are eccentric exercises (slow lowering) effective for rehabilitating tendons even though they hurt at first?"},
+    opts:{
+      ca:["Perquè estiren el tendó","Perquè generen alta tensió mecànica que estimula els tenòcits a produir més col·lagen tipus I i reorganitzar les fibres","Perquè relaxen el múscul","No són efectius"],
+      es:["Porque estiran el tendón","Porque generan alta tensión mecánica que estimula a los tenocitos a producir más colágeno tipo I y reorganizar las fibras","Porque relajan el músculo","No son efectivos"],
+      en:["Because they stretch the tendon","Because they generate high mechanical tension that stimulates tenocytes to produce more type I collagen and reorganise the fibres","Because they relax the muscle","They are not effective"]
+    }, correct:"B" },
+  { id:34, topic:{ca:"Tendons",es:"Tendones",en:"Tendons"},
+    q:{ca:"Per què l'escalfament és important per protegir els tendons?",
+       es:"¿Por qué el calentamiento es importante para proteger los tendones?",
+       en:"Why is warming up important to protect tendons?"},
+    opts:{
+      ca:["Només escalfa els músculs","Augmenta la temperatura del tendó, redueix la seva viscositat i augmenta la seva elasticitat, permetent més deformació abans de la ruptura","Fa el tendó més rígid","No és important"],
+      es:["Solo calienta los músculos","Aumenta la temperatura del tendón, reduce su viscosidad y aumenta su elasticidad, permitiendo mayor deformación antes de la rotura","Hace el tendón más rígido","No es importante"],
+      en:["It only warms the muscles","It increases tendon temperature, reduces its viscosity and increases its elasticity, allowing greater deformation before rupture","It makes the tendon more rigid","It is not important"]
+    }, correct:"B" },
+  { id:35, topic:{ca:"Tendons",es:"Tendones",en:"Tendons"},
+    q:{ca:"Quin efecte tenen els corticoides en els tendons?",
+       es:"¿Qué efecto tienen los corticoides en los tendones?",
+       en:"What effect do corticosteroids have on tendons?"},
+    opts:{
+      ca:["Els enforteixen","Inhibeixen la síntesi de col·lagen, augmenten la degradació i poden produir mort de tenòcits → debiliten el tendó","No tenen efecte","Només redueixen el dolor"],
+      es:["Los fortalecen","Inhiben la síntesis de colágeno, aumentan la degradación y pueden producir muerte de tenocitos → debilitan el tendón","No tienen efecto","Solo reducen el dolor"],
+      en:["They strengthen them","They inhibit collagen synthesis, increase degradation and can cause tenocyte death → weaken the tendon","They have no effect","They only reduce pain"]
+    }, correct:"B" },
+  { id:36, topic:{ca:"Tendons",es:"Tendones",en:"Tendons"},
+    q:{ca:"Quina diferència principal hi ha entre un tendó i un lligament?",
+       es:"¿Qué diferencia principal hay entre un tendón y un ligamento?",
+       en:"What is the main difference between a tendon and a ligament?"},
+    opts:{
+      ca:["No hi ha diferència","El tendó connecta múscul-os i és eficient emmagatzemant energia; el lligament connecta os-os i estabilitza articulacions","El tendó és més fort","El lligament és més llarg"],
+      es:["No hay diferencia","El tendón conecta músculo-hueso y es eficiente almacenando energía; el ligamento conecta hueso-hueso y estabiliza articulaciones","El tendón es más fuerte","El ligamento es más largo"],
+      en:["There is no difference","The tendon connects muscle-bone and is efficient at storing energy; the ligament connects bone-bone and stabilises joints","The tendon is stronger","The ligament is longer"]
+    }, correct:"B" },
+  { id:37, topic:{ca:"Tendons",es:"Tendones",en:"Tendons"},
+    q:{ca:"Per què és important la nutrició (vitamina C, proteïnes, col·lagen) per a la salut tendinosa?",
+       es:"¿Por qué es importante la nutrición (vitamina C, proteínas, colágeno) para la salud tendinosa?",
+       en:"Why is nutrition (vitamin C, proteins, collagen) important for tendon health?"},
+    opts:{
+      ca:["No és important","La vitamina C és essencial per a la síntesi de col·lagen; les proteïnes proporcionen aminoàcids; prendre'ls abans de l'exercici maximitza la síntesi","Només importa menjar molt","Només importa el calci"],
+      es:["No es importante","La vitamina C es esencial para la síntesis de colágeno; las proteínas proporcionan aminoácidos; tomarlos antes del ejercicio maximiza la síntesis","Solo importa comer mucho","Solo importa el calcio"],
+      en:["It is not important","Vitamin C is essential for collagen synthesis; proteins provide amino acids; taking them before exercise maximises synthesis","Only eating a lot matters","Only calcium matters"]
+    }, correct:"B" },
+  { id:38, topic:{ca:"Tendons",es:"Tendones",en:"Tendons"},
+    q:{ca:"Què és la unió miotendinosa i per què és vulnerable a lesions?",
+       es:"¿Qué es la unión miotendinosa y por qué es vulnerable a lesiones?",
+       en:"What is the myotendinous junction and why is it vulnerable to injury?"},
+    opts:{
+      ca:["És la unió entre dos músculs","És on el múscul s'uneix al tendó; és vulnerable perquè hi ha un canvi brusc de propietats (múscul bla → tendó rígid) que concentra l'estrès mecànic","És la part més forta","No és vulnerable"],
+      es:["Es la unión entre dos músculos","Es donde el músculo se une al tendón; es vulnerable porque hay un cambio brusco de propiedades (músculo blando → tendón rígido) que concentra el estrés mecánico","Es la parte más fuerte","No es vulnerable"],
+      en:["It is the junction between two muscles","It is where the muscle joins the tendon; it is vulnerable because there is an abrupt change in properties (soft muscle → rigid tendon) that concentrates mechanical stress","It is the strongest part","It is not vulnerable"]
+    }, correct:"B" },
+  { id:39, topic:{ca:"Tendons",es:"Tendones",en:"Tendons"},
+    q:{ca:"Vertader o Fals: Els tendons s'adapten a l'entrenament tan ràpid com els músculs (4-6 setmanes).",
+       es:"Verdadero o Falso: Los tendones se adaptan al entrenamiento tan rápido como los músculos (4-6 semanas).",
+       en:"True or False: Tendons adapt to training as quickly as muscles (4-6 weeks)."},
+    opts:{
+      ca:["Vertader","Fals - Els tendons triguen 3-4 mesos a adaptar-se perquè tenen menor taxa metabòlica"],
+      es:["Verdadero","Falso - Los tendones tardan 3-4 meses en adaptarse porque tienen menor tasa metabólica"],
+      en:["True","False - Tendons take 3-4 months to adapt because they have a lower metabolic rate"]
+    }, correct:"B" },
+  { id:40, topic:{ca:"Tendons",es:"Tendones",en:"Tendons"},
+    q:{ca:"Què és la \"histèresi\" en un tendó?",
+       es:"¿Qué es la \"histéresis\" en un tendón?",
+       en:"What is \"hysteresis\" in a tendon?"},
+    opts:{
+      ca:["Una malaltia del tendó","L'energia perduda (dissipada com a calor) en cada cicle d'estirament-escurçament; menor histèresi = més eficiència","La longitud del tendó","La força del tendó"],
+      es:["Una enfermedad del tendón","La energía perdida (disipada como calor) en cada ciclo de estiramiento-acortamiento; menor histéresis = mayor eficiencia","La longitud del tendón","La fuerza del tendón"],
+      en:["A tendon disease","The energy lost (dissipated as heat) in each stretch-shortening cycle; lower hysteresis = greater efficiency","The length of the tendon","The strength of the tendon"]
+    }, correct:"B" },
+
+  // ---- ARTICULACIONS 41-50 ----
+  { id:41, topic:{ca:"Articulacions - Tipus",es:"Articulaciones - Tipos",en:"Joints - Types"},
+    q:{ca:"Quin tipus d'articulació és el maluc i quina característica té?",
+       es:"¿Qué tipo de articulación es la cadera y qué característica tiene?",
+       en:"What type of joint is the hip and what characteristic does it have?"},
+    opts:{
+      ca:["Frontissa (gínglim) - només permet flexo-extensió","Enartrosi (esfèrica) - permet moviment en els 3 plans de l'espai (multiaxial)","Pivot - només permet rotació","Plana - només permet lliscament"],
+      es:["Bisagra (ginglimo) - solo permite flexo-extensión","Enartrosis (esférica) - permite movimiento en los 3 planos del espacio (multiaxial)","Pivot - solo permite rotación","Plana - solo permite deslizamiento"],
+      en:["Hinge (ginglymus) - only allows flexion-extension","Ball-and-socket (spherical) - allows movement in all 3 planes of space (multiaxial)","Pivot - only allows rotation","Flat - only allows sliding"]
+    }, correct:"B" },
+  { id:42, topic:{ca:"Articulacions - Parts",es:"Articulaciones - Partes",en:"Joints - Parts"},
+    q:{ca:"Quina estructura produeix el líquid sinovial i quina és la seva funció?",
+       es:"¿Qué estructura produce el líquido sinovial y cuál es su función?",
+       en:"Which structure produces synovial fluid and what is its function?"},
+    opts:{
+      ca:["El cartílag - nodreix l'os","La membrana sinovial (capa interna de la càpsula) - lubrica, nodreix el cartílag i esmorteix","Els lligaments - estabilitzen","Els músculs - mouen"],
+      es:["El cartílago - nutre el hueso","La membrana sinovial (capa interna de la cápsula) - lubrica, nutre el cartílago y amortigua","Los ligamentos - estabilizan","Los músculos - mueven"],
+      en:["The cartilage - nourishes the bone","The synovial membrane (inner layer of the capsule) - lubricates, nourishes the cartilage and cushions","The ligaments - stabilise","The muscles - move"]
+    }, correct:"B" },
+  { id:43, topic:{ca:"Articulacions - Cartílag",es:"Articulaciones - Cartílago",en:"Joints - Cartilage"},
+    q:{ca:"Per què el cartílag necessita moviment i càrrega per mantenir-se sa?",
+       es:"¿Por qué el cartílago necesita movimiento y carga para mantenerse sano?",
+       en:"Why does cartilage need movement and load to stay healthy?"},
+    opts:{
+      ca:["Perquè així s'estira","Perquè el moviment crea un cicle de compressió-descompressió que fa circular el líquid sinovial i nodreix els condròcits","Perquè sense moviment s'endureix","No ho necessita"],
+      es:["Porque así se estira","Porque el movimiento crea un ciclo de compresión-descompresión que hace circular el líquido sinovial y nutre los condrocitos","Porque sin movimiento se endurece","No lo necesita"],
+      en:["Because it stretches","Because movement creates a compression-decompression cycle that circulates synovial fluid and nourishes chondrocytes","Because without movement it hardens","It doesn't need it"]
+    }, correct:"B" },
+  { id:44, topic:{ca:"Articulacions - Plans",es:"Articulaciones - Planos",en:"Joints - Planes"},
+    q:{ca:"En quin pla de l'espai ocorre un esquinç de turmell en inversió (peu cap endins)?",
+       es:"¿En qué plano del espacio ocurre un esguince de tobillo en inversión (pie hacia dentro)?",
+       en:"In which plane of space does an ankle sprain in inversion (foot inward) occur?"},
+    opts:{
+      ca:["Pla sagital","Pla frontal","Pla transversal","En tots els plans"],
+      es:["Plano sagital","Plano frontal","Plano transversal","En todos los planos"],
+      en:["Sagittal plane","Frontal plane","Transverse plane","In all planes"]
+    }, correct:"B" },
+  { id:45, topic:{ca:"Articulacions - Plans",es:"Articulaciones - Planos",en:"Joints - Planes"},
+    q:{ca:"Per què el genoll és vulnerable a lesions rotacionals (pla transversal) si és principalment una articulació del pla sagital?",
+       es:"¿Por qué la rodilla es vulnerable a lesiones rotacionales (plano transversal) si es principalmente una articulación del plano sagital?",
+       en:"Why is the knee vulnerable to rotational injuries (transverse plane) if it is mainly a sagittal plane joint?"},
+    opts:{
+      ca:["Perquè és molt fort","Perquè està dissenyada per flexo-extensió; la rotació genera forces de cisallament que danyen LCA i meniscs","Perquè no té lligaments","Perquè és molt mòbil"],
+      es:["Porque es muy fuerte","Porque está diseñada para flexo-extensión; la rotación genera fuerzas de cizallamiento que dañan LCA y meniscos","Porque no tiene ligamentos","Porque es muy móvil"],
+      en:["Because it is very strong","Because it is designed for flexion-extension; rotation generates shear forces that damage the ACL and menisci","Because it has no ligaments","Because it is very mobile"]
+    }, correct:"B" },
+  { id:46, topic:{ca:"Articulacions - Propiocepció",es:"Articulaciones - Propiocepción",en:"Joints - Proprioception"},
+    q:{ca:"Què és la propiocepció?",
+       es:"¿Qué es la propiocepción?",
+       en:"What is proprioception?"},
+    opts:{
+      ca:["La força muscular","La capacitat de sentir la posició i moviment de les articulacions sense mirar","La flexibilitat","La resistència"],
+      es:["La fuerza muscular","La capacidad de sentir la posición y movimiento de las articulaciones sin mirar","La flexibilidad","La resistencia"],
+      en:["Muscle strength","The ability to feel the position and movement of joints without looking","Flexibility","Endurance"]
+    }, correct:"B" },
+  { id:47, topic:{ca:"Articulacions - Propiocepció",es:"Articulaciones - Propiocepción",en:"Joints - Proprioception"},
+    q:{ca:"Per què es perd la propiocepció després d'un esquinç?",
+       es:"¿Por qué se pierde la propiocepción tras un esguince?",
+       en:"Why is proprioception lost after a sprain?"},
+    opts:{
+      ca:["Perquè el múscul s'atrofia","Perquè es danyen els mecanoreceptors en lligaments i càpsula que envien informació de posició al cervell","Perquè el lligament s'escurça","No es perd"],
+      es:["Porque el músculo se atrofia","Porque se dañan los mecanorreceptores en ligamentos y cápsula que envían información de posición al cerebro","Porque el ligamento se acorta","No se pierde"],
+      en:["Because the muscle atrophies","Because the mechanoreceptors in ligaments and capsule that send position information to the brain are damaged","Because the ligament shortens","It is not lost"]
+    }, correct:"B" },
+  { id:48, topic:{ca:"Articulacions - Propiocepció",es:"Articulaciones - Propiocepción",en:"Joints - Proprioception"},
+    q:{ca:"Com millora l'entrenament propioceptiu (equilibri sobre una cama, superfícies inestables) l'estabilitat articular?",
+       es:"¿Cómo mejora el entrenamiento propioceptivo (equilibrio sobre una pierna, superficies inestables) la estabilidad articular?",
+       en:"How does proprioceptive training (balancing on one leg, unstable surfaces) improve joint stability?"},
+    opts:{
+      ca:["Enforteix els músculs","Millora la sensibilitat dels receptors, accelera la conducció nerviosa i optimitza els patrons d'activació muscular (co-contracció, respostes anticipatòries)","Estira els lligaments","No millora res"],
+      es:["Fortalece los músculos","Mejora la sensibilidad de los receptores, acelera la conducción nerviosa y optimiza los patrones de activación muscular (co-contracción, respuestas anticipatorias)","Estira los ligamentos","No mejora nada"],
+      en:["It strengthens the muscles","It improves receptor sensitivity, speeds up nerve conduction and optimises muscle activation patterns (co-contraction, anticipatory responses)","It stretches the ligaments","It doesn't improve anything"]
+    }, correct:"B" },
+  { id:49, topic:{ca:"Articulacions - General",es:"Articulaciones - General",en:"Joints - General"},
+    case:{ca:"<strong>Cas pràctic:</strong> Un ballarí passa 3 mesos immobilitzat per una fractura. En treure-li l'escaiola, nota que les seves articulacions estan rígides i el cartílag s'ha deteriorat.",
+          es:"<strong>Caso práctico:</strong> Un bailarín pasa 3 meses inmovilizado por una fractura. Al quitarle la escayola, nota que sus articulaciones están rígidas y el cartílago se ha deteriorado.",
+          en:"<strong>Practical case:</strong> A dancer is immobilised for 3 months due to a fracture. When the cast is removed, he notices that his joints are stiff and the cartilage has deteriorated."},
+    q:{ca:"Quin principi fisiològic explica això?",
+       es:"¿Qué principio fisiológico explica esto?",
+       en:"Which physiological principle explains this?"},
+    opts:{
+      ca:["La immobilització enforteix les articulacions","Sense moviment, el cartílag no es nodreix (no funciona la \"bomba\" de compressió-descompressió) i es degrada","És només psicològic","L'escaiola danya el cartílag"],
+      es:["La inmovilización fortalece las articulaciones","Sin movimiento, el cartílago no se nutre (no funciona la \"bomba\" de compresión-descompresión) y se degrada","Es solo psicológico","La escayola daña el cartílago"],
+      en:["Immobilisation strengthens joints","Without movement, cartilage is not nourished (the compression-decompression \"pump\" does not work) and it degrades","It's only psychological","The cast damages the cartilage"]
+    }, correct:"B" },
+  { id:50, topic:{ca:"Articulacions - General",es:"Articulaciones - General",en:"Joints - General"},
+    q:{ca:"Per què és important la varietat de moviments en diferents plans per a la salut articular en la dansa?",
+       es:"¿Por qué es importante la variedad de movimientos en diferentes planos para la salud articular en la danza?",
+       en:"Why is variety of movement in different planes important for joint health in dance?"},
+    opts:{
+      ca:["No és important","Perquè estimula el cartílag des de diferents angles, promou una distribució uniforme de la càrrega i prevé el desgast localitzat","Perquè és més divertit","Només és important per a l'estètica"],
+      es:["No es importante","Porque estimula el cartílago desde diferentes ángulos, promueve una distribución uniforme de la carga y previene el desgaste localizado","Porque es más divertido","Solo es importante para la estética"],
+      en:["It is not important","Because it stimulates the cartilage from different angles, promotes uniform load distribution and prevents localised wear","Because it's more fun","It is only important for aesthetics"]
+    }, correct:"B" }
+];
+
+/* Assignar preguntes a cada idioma */
+I18N.ca.questions = QUESTIONS.map(q => ({
+  id: q.id, topic: q.topic.ca,
+  case: q.case ? q.case.ca : null,
+  q: q.q.ca, opts: q.opts.ca, correct: q.correct
+}));
+I18N.es.questions = QUESTIONS.map(q => ({
+  id: q.id, topic: q.topic.es,
+  case: q.case ? q.case.es : null,
+  q: q.q.es, opts: q.opts.es, correct: q.correct
+}));
+I18N.en.questions = QUESTIONS.map(q => ({
+  id: q.id, topic: q.topic.en,
+  case: q.case ? q.case.en : null,
+  q: q.q.en, opts: q.opts.en, correct: q.correct
+}));
+
+/* ============================================================
+   ESTAT
+   ============================================================ */
+let currentLang = 'ca';
+let timerInterval;
+let timeRemaining;
+let startTime;
+let endTime;
+
+/* Init data */
+document.getElementById('testDate').valueAsDate = new Date();
+
+/* ============================================================
+   RENDER PREGUNTES
+   ============================================================ */
+function renderQuestions() {
+  const t = I18N[currentLang];
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = '';
+  t.questions.forEach((item, idx) => {
+    const qnum = idx + 1;
+    let html = `<div class="question" data-topic="${item.topic}">
+      <div class="question-header">
+        <span>${t.qOf(qnum, t.questions.length)}</span>
+        <span class="topic-tag">${item.topic}</span>
+      </div>`;
+    if (item.case) {
+      html += `<div class="case-box">${item.case}</div>`;
+    }
+    html += `<div class="question-text">${item.q}</div><div class="options">`;
+    item.opts.forEach((opt, oi) => {
+      const letter = String.fromCharCode(65 + oi);
+      const id = `q${item.id}${letter.toLowerCase()}`;
+      html += `<div class="option">
+        <input type="radio" name="q${item.id}" id="${id}" value="${letter}">
+        <label for="${id}">${letter}) ${opt}</label>
+      </div>`;
+    });
+    html += `</div></div>`;
+    container.innerHTML += html;
+  });
+}
+
+/* ============================================================
+   CANVI D'IDIOMA
+   ============================================================ */
+function setLang(lang) {
+  currentLang = lang;
+  const t = I18N[lang];
+  
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + lang).classList.add('active');
+  
+  document.getElementById('t-header-title').textContent = t.headerTitle;
+  document.getElementById('t-header-sub').textContent = t.headerSub;
+  document.getElementById('t-student-title').textContent = t.studentTitle;
+  document.getElementById('t-lbl-name').textContent = t.lblName;
+  document.getElementById('t-lbl-email').textContent = t.lblEmail;
+  document.getElementById('t-lbl-date').textContent = t.lblDate;
+  document.getElementById('t-lbl-time').textContent = t.lblTime;
+  document.getElementById('studentName').placeholder = t.placeholderName;
+  document.getElementById('studentEmail').placeholder = t.placeholderEmail;
+  document.getElementById('t-timer-label').textContent = t.timerLabel;
+  document.getElementById('t-instr-title').textContent = t.instrTitle;
+  document.getElementById('t-instr-list').innerHTML = t.instrList.map(x => `<li>${x}</li>`).join('');
+  document.getElementById('t-btn-start').textContent = t.btnStart;
+  document.getElementById('t-btn-save').textContent = t.btnSave;
+  document.getElementById('t-btn-finish').textContent = t.btnFinish;
+  document.getElementById('t-btn-print').textContent = t.btnPrint;
+  document.getElementById('t-btn-print2').textContent = t.btnPrint;
+  document.getElementById('t-results-title').textContent = t.resultsTitle;
+  document.getElementById('t-results-info').textContent = t.resultsInfo;
+  document.getElementById('t-r-name').textContent = t.rName;
+  document.getElementById('t-r-email').textContent = t.rEmail;
+  document.getElementById('t-r-date').textContent = t.rDate;
+  document.getElementById('t-r-start').textContent = t.rStart;
+  document.getElementById('t-r-end').textContent = t.rEnd;
+  document.getElementById('t-r-used').textContent = t.rUsed;
+  document.getElementById('t-r-score').textContent = t.rScore;
+  document.getElementById('t-r-pct').textContent = t.rPct;
+  
+  renderQuestions();
+}
+
+/* ============================================================
+   TEST: INICI, TEMPORITZADOR, GUARDAR, FINALITZAR
+   ============================================================ */
+function startTest() {
+  const t = I18N[currentLang];
+  const studentName = document.getElementById('studentName').value;
+  if (!studentName) {
+    alert(t.alertName);
+    return;
+  }
+  
+  startTime = new Date();
+  const timeLimit = parseInt(document.getElementById('timeLimit').value) * 60;
+  timeRemaining = timeLimit;
+  
+  updateTimer();
+  timerInterval = setInterval(updateTimer, 1000);
+  
+  document.getElementById('t-btn-start').disabled = true;
+  
+  alert(t.alertStarted(document.getElementById('timeLimit').value));
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timeRemaining / 60);
+  const seconds = timeRemaining % 60;
+  document.getElementById('timer').textContent = 
+    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  
+  if (timeRemaining <= 0) {
+    clearInterval(timerInterval);
+    finishTest();
+    alert(I18N[currentLang].alertTimeUp);
+  }
+  timeRemaining--;
+}
+
+function saveProgress() {
+  const t = I18N[currentLang];
+  const formData = new FormData(document.getElementById('testForm'));
+  const answers = {};
+  for (let [key, value] of formData.entries()) {
+    answers[key] = value;
+  }
+  
+  const data = {
+    studentName: document.getElementById('studentName').value,
+    studentEmail: document.getElementById('studentEmail').value,
+    testDate: document.getElementById('testDate').value,
+    answers: answers,
+    timeRemaining: timeRemaining,
+    lang: currentLang
+  };
+  
+  localStorage.setItem('testProgress', JSON.stringify(data));
+  alert(t.alertSaved);
+}
+
+function finishTest() {
+  const t = I18N[currentLang];
+  clearInterval(timerInterval);
+  endTime = new Date();
+  
+  let score = 0;
+  const formData = new FormData(document.getElementById('testForm'));
+  
+  t.questions.forEach(item => {
+    const userAnswer = formData.get('q' + item.id);
+    if (userAnswer === item.correct) score++;
+  });
+  
+  const timeUsed = startTime ? Math.floor((endTime - startTime) / 1000 / 60) : 0;
+  const percentage = Math.round((score / t.questions.length) * 100);
+  
+  document.getElementById('resultName').textContent = document.getElementById('studentName').value;
+  document.getElementById('resultEmail').textContent = document.getElementById('studentEmail').value;
+  document.getElementById('resultDate').textContent = document.getElementById('testDate').value;
+  document.getElementById('resultStartTime').textContent = startTime ? startTime.toLocaleTimeString() : '—';
+  document.getElementById('resultEndTime').textContent = endTime.toLocaleTimeString();
+  document.getElementById('resultTimeUsed').textContent = timeUsed + ' ' + t.minutes;
+  document.getElementById('resultScore').textContent = score;
+  document.getElementById('resultPercentage').textContent = percentage;
+  document.getElementById('scoreDisplay').textContent = `${score}/${t.questions.length}`;
+  
+  document.getElementById('results').classList.add('show');
+  document.querySelector('.controls').style.display = 'none';
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+}
+
+function printResults() {
+  window.print();
+}
+
+/* ============================================================
+   INICIALITZACIÓ
+   ============================================================ */
+window.onload = function() {
+  setLang('ca');
+  
+  const saved = localStorage.getItem('testProgress');
+  if (saved) {
+    const data = JSON.parse(saved);
+    if (data.lang) setLang(data.lang);
+    document.getElementById('studentName').value = data.studentName || '';
+    document.getElementById('studentEmail').value = data.studentEmail || '';
+    document.getElementById('testDate').value = data.testDate || '';
+    
+    if (data.answers) {
+      for (let [key, value] of Object.entries(data.answers)) {
+        const radio = document.querySelector(`input[name="${key}"][value="${value}"]`);
+        if (radio) radio.checked = true;
+      }
+    }
+    
+    if (data.timeRemaining) {
+      timeRemaining = data.timeRemaining;
+    }
+  }
+};
+</script>
+</body>
+</html>

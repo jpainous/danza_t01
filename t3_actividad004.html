@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tauler de la Unitat Motora</title>
+<style>
+  body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; }
+  h1 { text-align: center; color: #f59e0b; }
+  .container { max-width: 1100px; margin: auto; background: #1e293b; padding: 25px; border-radius: 12px; position: relative; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+  .panel { background: #0f172a; padding: 18px; border-radius: 10px; border: 1px solid #334155; }
+  .panel h3 { margin-top: 0; color: #fbbf24; }
+  canvas { background: #0b1220; border-radius: 8px; display: block; width: 100%; }
+  .slider-box { margin: 15px 0; }
+  .slider-box label { display: block; margin-bottom: 6px; font-weight: bold; }
+  input[type=range] { width: 100%; }
+  .info { margin-top: 15px; padding: 12px; background: #334155; border-radius: 6px; border-left: 4px solid #f59e0b; min-height: 80px; font-size: 14px; }
+  .leyenda { display: flex; gap: 15px; margin-top: 10px; flex-wrap: wrap; font-size: 13px; }
+  .dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+  
+  .language-selector {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    gap: 8px;
+  }
+  .language-selector button {
+    background: rgba(245,158,11,0.15);
+    border: 1px solid rgba(245,158,11,0.4);
+    color: #f59e0b;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  .language-selector button:hover { background: rgba(245,158,11,0.3); }
+  .language-selector button.active { background: #f59e0b; color: #0f172a; }
+  
+  @media (max-width: 600px) {
+    .language-selector { position: static; margin-bottom: 15px; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="language-selector">
+    <button class="active" onclick="setLanguage('es', this)">ES</button>
+    <button onclick="setLanguage('ca', this)">CA</button>
+    <button onclick="setLanguage('en', this)">EN</button>
+  </div>
+  <h1 data-i18n="title">🎛️ Tauler de Control de la Unitat Motora</h1>
+  <p style="text-align:center; color:#94a3b8;" data-i18n="subtitle">Controla el reclutamiento y la frecuencia de impulsos nerviosos.</p>
+
+  <div class="grid">
+    <div class="panel">
+      <h3 data-i18n="panel_muscle">Músculo (vista transversal)</h3>
+      <canvas id="muscle" width="450" height="300"></canvas>
+      <div class="leyenda">
+        <span><span class="dot" style="background:#3b82f6"></span><span data-i18n="legend_type1">Tipo I (lentas)</span></span>
+        <span><span class="dot" style="background:#a855f7"></span><span data-i18n="legend_type2a">Tipo IIa (mixtas)</span></span>
+        <span><span class="dot" style="background:#ef4444"></span><span data-i18n="legend_type2x">Tipo IIx (potentes)</span></span>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3 data-i18n="panel_force">Fuerza resultante</h3>
+      <canvas id="fuerza" width="450" height="300"></canvas>
+      <div class="info" id="info"></div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:20px;">
+    <div class="slider-box">
+      <label><span data-i18n="slider_int">🎚️ Intensidad (Reclutamiento): </span><span id="intVal">0</span>%</label>
+      <input type="range" id="int" min="0" max="100" value="0">
+      <small style="color:#94a3b8;" data-i18n="slider_int_hint">Principio del tamaño: se reclutan primero las lentas (I), luego IIa, luego IIx.</small>
+    </div>
+    <div class="slider-box">
+      <label><span data-i18n="slider_freq">⚡ Frecuencia de descarga: </span><span id="freqVal">1</span> <span data-i18n="slider_freq_unit">impulso/s</span></label>
+      <input type="range" id="freq" min="1" max="60" value="1">
+      <small style="color:#94a3b8;" data-i18n="slider_freq_hint">A mayor frecuencia → sumación temporal → tetanus.</small>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentLang = 'es';
+
+const translations = {
+  es: {
+    title: "🎛️ Tauler de Control de la Unitat Motora",
+    subtitle: "Controla el reclutamiento y la frecuencia de impulsos nerviosos.",
+    panel_muscle: "Músculo (vista transversal)",
+    panel_force: "Fuerza resultante",
+    legend_type1: "Tipo I (lentas)",
+    legend_type2a: "Tipo IIa (mixtas)",
+    legend_type2x: "Tipo IIx (potentes)",
+    slider_int: "🎚️ Intensidad (Reclutamiento): ",
+    slider_int_hint: "Principio del tamaño: se reclutan primero las lentas (I), luego IIa, luego IIx.",
+    slider_freq: "⚡ Frecuencia de descarga: ",
+    slider_freq_unit: "impulso/s",
+    slider_freq_hint: "A mayor frecuencia → sumación temporal → tetanus.",
+    axis_force: "Fuerza (%)",
+    axis_time: "Tiempo →",
+    state_rest: "💤 <b>Reposo:</b> ninguna unidad motora activada.",
+    state_twitch: (n) => `⚡ <b>Twitch:</b> ${n} UM activas. Contracciones aisladas (twitch).`,
+    state_summation: (n) => `🔥 <b>Sumación temporal:</b> ${n} UM. Los impulsos se suman → más fuerza.`,
+    state_tetanus: (n) => `💥 <b>TETANUS:</b> ${n} UM. Fusión completa → fuerza máxima sostenida.`,
+    reclut_type1: "solo Tipo I (baja intensidad)",
+    reclut_type2a: "Tipo I + IIa (intensidad media)",
+    reclut_type2x: "TODAS las fibras (máxima intensidad)",
+    reclut_prefix: "📊 Se han reclutado fibras: "
+  },
+  ca: {
+    title: "🎛️ Tauler de Control de la Unitat Motora",
+    subtitle: "Controla el reclutament i la freqüència d'impulsos nerviosos.",
+    panel_muscle: "Múscul (vista transversal)",
+    panel_force: "Força resultant",
+    legend_type1: "Tipus I (lentes)",
+    legend_type2a: "Tipus IIa (mixtes)",
+    legend_type2x: "Tipus IIx (potents)",
+    slider_int: "🎚️ Intensitat (Reclutament): ",
+    slider_int_hint: "Principi de la mida: es recluten primer les lentes (I), després IIa, després IIx.",
+    slider_freq: "⚡ Freqüència de descàrrega: ",
+    slider_freq_unit: "impuls/s",
+    slider_freq_hint: "A major freqüència → sumació temporal → tetanus.",
+    axis_force: "Força (%)",
+    axis_time: "Temps →",
+    state_rest: "💤 <b>Repòs:</b> cap unitat motora activada.",
+    state_twitch: (n) => `⚡ <b>Twitch:</b> ${n} UM actives. Contraccions aïllades (twitch).`,
+    state_summation: (n) => `🔥 <b>Sumació temporal:</b> ${n} UM. Els impulsos se sumen → més força.`,
+    state_tetanus: (n) => `💥 <b>TETANUS:</b> ${n} UM. Fusió completa → força màxima sostinguda.`,
+    reclut_type1: "només Tipus I (baixa intensitat)",
+    reclut_type2a: "Tipus I + IIa (intensitat mitjana)",
+    reclut_type2x: "TOTES les fibres (màxima intensitat)",
+    reclut_prefix: "📊 S'han reclutat fibres: "
+  },
+  en: {
+    title: "🎛️ Motor Unit Control Panel",
+    subtitle: "Control recruitment and nerve impulse frequency.",
+    panel_muscle: "Muscle (cross-section)",
+    panel_force: "Resulting force",
+    legend_type1: "Type I (slow)",
+    legend_type2a: "Type IIa (mixed)",
+    legend_type2x: "Type IIx (powerful)",
+    slider_int: "🎚️ Intensity (Recruitment): ",
+    slider_int_hint: "Size principle: slow fibers (I) are recruited first, then IIa, then IIx.",
+    slider_freq: "⚡ Discharge frequency: ",
+    slider_freq_unit: "impulse/s",
+    slider_freq_hint: "Higher frequency → temporal summation → tetanus.",
+    axis_force: "Force (%)",
+    axis_time: "Time →",
+    state_rest: "💤 <b>Rest:</b> no motor unit activated.",
+    state_twitch: (n) => `⚡ <b>Twitch:</b> ${n} active MUs. Isolated contractions (twitch).`,
+    state_summation: (n) => `🔥 <b>Temporal summation:</b> ${n} MUs. Impulses add up → more force.`,
+    state_tetanus: (n) => `💥 <b>TETANUS:</b> ${n} MUs. Complete fusion → maximum sustained force.`,
+    reclut_type1: "only Type I (low intensity)",
+    reclut_type2a: "Type I + IIa (medium intensity)",
+    reclut_type2x: "ALL fibers (maximum intensity)",
+    reclut_prefix: "📊 Fibers recruited: "
+  }
+};
+
+const muscle = document.getElementById('muscle');
+const mctx = muscle.getContext('2d');
+const fuerza = document.getElementById('fuerza');
+const fctx = fuerza.getContext('2d');
+const intSlider = document.getElementById('int');
+const freqSlider = document.getElementById('freq');
+const info = document.getElementById('info');
+
+const unidades = [
+  {tipo:'I', color:'#3b82f6', x:80, y:80, r:10, umbral:5, fuerza:3},
+  {tipo:'I', color:'#3b82f6', x:130, y:110, r:11, umbral:10, fuerza:3},
+  {tipo:'I', color:'#3b82f6', x:90, y:160, r:10, umbral:15, fuerza:3},
+  {tipo:'I', color:'#3b82f6', x:140, y:200, r:11, umbral:20, fuerza:3},
+  {tipo:'I', color:'#3b82f6', x:100, y:240, r:10, umbral:25, fuerza:3},
+  {tipo:'I', color:'#3b82f6', x:170, y:150, r:12, umbral:30, fuerza:3},
+  {tipo:'IIa', color:'#a855f7', x:240, y:90, r:16, umbral:35, fuerza:8},
+  {tipo:'IIa', color:'#a855f7', x:290, y:140, r:17, umbral:45, fuerza:8},
+  {tipo:'IIa', color:'#a855f7', x:230, y:190, r:16, umbral:55, fuerza:8},
+  {tipo:'IIa', color:'#a855f7', x:280, y:230, r:17, umbral:65, fuerza:8},
+  {tipo:'IIa', color:'#a855f7', x:330, y:180, r:18, umbral:70, fuerza:8},
+  {tipo:'IIx', color:'#ef4444', x:380, y:100, r:22, umbral:75, fuerza:15},
+  {tipo:'IIx', color:'#ef4444', x:400, y:170, r:24, umbral:85, fuerza:15},
+  {tipo:'IIx', color:'#ef4444', x:370, y:230, r:22, umbral:92, fuerza:15},
+  {tipo:'IIx', color:'#ef4444', x:420, y:260, r:23, umbral:97, fuerza:15}
+];
+
+let historial = [];
+
+function setLanguage(lang, btn) {
+  currentLang = lang;
+  document.querySelectorAll('.language-selector button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key]) {
+      el.textContent = translations[lang][key];
+    }
+  });
+  
+  document.documentElement.lang = lang;
+  historial = [];
+}
+
+function draw() {
+  const t = translations[currentLang];
+  const intensidad = parseInt(intSlider.value);
+  const freq = parseInt(freqSlider.value);
+  document.getElementById('intVal').textContent = intensidad;
+  document.getElementById('freqVal').textContent = freq;
+
+  mctx.clearRect(0,0,muscle.width,muscle.height);
+  mctx.fillStyle = '#1e293b';
+  mctx.fillRect(0,0,muscle.width,muscle.height);
+
+  let fuerzaTotal = 0;
+  let activas = 0;
+  let tipoActivo = null;
+
+  unidades.forEach(u => {
+    const activa = intensidad >= u.umbral;
+    if (activa) {
+      activas++;
+      tipoActivo = u.tipo;
+      fuerzaTotal += u.fuerza;
+    }
+    let alpha = activa ? 1 : 0.2;
+    if (activa && freq > 1) {
+      const parpadeo = Math.sin(Date.now()/100 * freq/10) * 0.3 + 0.7;
+      alpha = parpadeo;
+    }
+    mctx.fillStyle = u.color;
+    mctx.globalAlpha = alpha;
+    mctx.beginPath();
+    mctx.arc(u.x, u.y, u.r, 0, Math.PI*2);
+    mctx.fill();
+    if (activa) {
+      mctx.strokeStyle = '#fbbf24';
+      mctx.lineWidth = 2;
+      mctx.stroke();
+    }
+  });
+  mctx.globalAlpha = 1;
+
+  let factorSumacion = 1;
+  if (freq >= 30) factorSumacion = 2.5;
+  else if (freq >= 15) factorSumacion = 1.8;
+  else if (freq >= 8) factorSumacion = 1.3;
+
+  fuerzaTotal *= factorSumacion;
+  const fuerzaMax = 200;
+  const fuerzaPct = Math.min(100, (fuerzaTotal/fuerzaMax)*100);
+
+  historial.push(fuerzaPct);
+  if (historial.length > 100) historial.shift();
+
+  fctx.clearRect(0,0,fuerza.width,fuerza.height);
+  fctx.fillStyle = '#1e293b';
+  fctx.fillRect(0,0,fuerza.width,fuerza.height);
+
+  fctx.strokeStyle = '#475569'; fctx.lineWidth = 1;
+  fctx.beginPath();
+  fctx.moveTo(40,20); fctx.lineTo(40,270); fctx.lineTo(440,270);
+  fctx.stroke();
+  fctx.fillStyle = '#94a3b8'; fctx.font = '12px sans-serif';
+  fctx.fillText(t.axis_force, 10, 15);
+  fctx.fillText(t.axis_time, 380, 288);
+
+  fctx.strokeStyle = '#f59e0b'; fctx.lineWidth = 2;
+  fctx.beginPath();
+  historial.forEach((v,i) => {
+    const x = 40 + i*4;
+    const y = 270 - (v/100)*250;
+    if (i===0) fctx.moveTo(x,y); else fctx.lineTo(x,y);
+  });
+  fctx.stroke();
+
+  let estado = '';
+  if (activas === 0) estado = t.state_rest;
+  else if (freq < 8) estado = t.state_twitch(activas);
+  else if (freq < 30) estado = t.state_summation(activas);
+  else estado = t.state_tetanus(activas);
+
+  let reclutamiento = '';
+  if (intensidad > 0) {
+    let tipoTxt = tipoActivo === 'I' ? t.reclut_type1 : tipoActivo === 'IIa' ? t.reclut_type2a : t.reclut_type2x;
+    reclutamiento = `<br>${t.reclut_prefix}${tipoTxt}`;
+  }
+
+  info.innerHTML = estado + reclutamiento;
+
+  requestAnimationFrame(draw);
+}
+
+intSlider.addEventListener('input', () => {});
+freqSlider.addEventListener('input', () => {});
+
+setLanguage('es', document.querySelector('.language-selector button'));
+draw();
+</script>
+</body>
+</html>

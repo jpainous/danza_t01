@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa Conceptual del Tema 3</title>
+<style>
+  body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; }
+  h1 { text-align: center; color: #f472b6; }
+  .container { max-width: 1200px; margin: auto; position: relative; }
+  .canvas-wrap { background: #1e293b; padding: 20px; border-radius: 12px; position: relative; }
+  #lienzo { background: #0b1220; border-radius: 8px; cursor: crosshair; display: block; width: 100%; height: 500px; }
+  .instrucciones { background: #334155; padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #f472b6; }
+  .controles { margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap; }
+  button { background: #f472b6; color: #0f172a; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+  button:hover { background: #ec4899; }
+  .resultado { margin-top: 15px; padding: 15px; background: #1e293b; border-radius: 8px; min-height: 50px; }
+  .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); background: #1e293b; padding: 25px; border-radius: 12px; border: 2px solid #f472b6; z-index: 100; min-width: 300px; }
+  .modal input { width: 100%; padding: 10px; background: #0f172a; border: 1px solid #475569; border-radius: 6px; color: #e2e8f0; margin: 10px 0; }
+  .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 99; }
+  
+  .language-selector {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    gap: 8px;
+  }
+  .language-selector button {
+    background: rgba(244,114,182,0.15);
+    border: 1px solid rgba(244,114,182,0.4);
+    color: #f472b6;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  .language-selector button:hover { background: rgba(244,114,182,0.3); }
+  .language-selector button.active { background: #f472b6; color: #0f172a; }
+  
+  @media (max-width: 600px) {
+    .language-selector { position: static; margin-bottom: 15px; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="language-selector">
+    <button class="active" onclick="setLanguage('es', this)">ES</button>
+    <button onclick="setLanguage('ca', this)">CA</button>
+    <button onclick="setLanguage('en', this)">EN</button>
+  </div>
+  <h1 data-i18n="title">🧠 Mapa Conceptual del Tema 3</h1>
+  <div class="instrucciones" data-i18n="instructions">
+    <b>Instrucciones:</b> Haz clic en un nodo (origen), luego en otro (destino) para crear una conexión. Escribe la relación (ej: "produce", "activa", "inhibe"). El sistema evaluará tu red.
+  </div>
+  <div class="canvas-wrap">
+    <canvas id="lienzo"></canvas>
+  </div>
+  <div class="controles">
+    <button onclick="validar()" data-i18n="btn_validate">✔ Validar mapa</button>
+    <button onclick="limpiar()" data-i18n="btn_clear">🗑️ Limpiar todo</button>
+    <button onclick="ayuda()" data-i18n="btn_help">💡 Ver solución sugerida</button>
+  </div>
+  <div class="resultado" id="res"></div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<div class="modal" id="modal">
+  <h3 style="margin-top:0; color:#f472b6;" data-i18n="modal_title">Describe la relación</h3>
+  <p id="modalText"></p>
+  <input type="text" id="relInput" data-i18n-placeholder="modal_placeholder" placeholder="Ej: se une a, desplaza, genera...">
+  <button onclick="guardarRel()" data-i18n="btn_save">Guardar</button>
+  <button onclick="cerrarModal()" style="background:#64748b;" data-i18n="btn_cancel">Cancelar</button>
+</div>
+
+<script>
+let currentLang = 'es';
+
+const translations = {
+  es: {
+    title: "🧠 Mapa Conceptual del Tema 3",
+    instructions: "<b>Instrucciones:</b> Haz clic en un nodo (origen), luego en otro (destino) para crear una conexión. Escribe la relación (ej: 'produce', 'activa', 'inhibe'). El sistema evaluará tu red.",
+    btn_validate: "✔ Validar mapa",
+    btn_clear: "🗑️ Limpiar todo",
+    btn_help: "💡 Ver solución sugerida",
+    modal_title: "Describe la relación",
+    modal_placeholder: "Ej: se une a, desplaza, genera...",
+    btn_save: "Guardar",
+    btn_cancel: "Cancelar",
+    initial_res: "Crea al menos 5 conexiones para validar.",
+    cleared_res: "Mapa limpiado. Crea al menos 5 conexiones.",
+    help_res: `<b>💡 Conexiones clave sugeridas:</b><br>
+      • Ca²⁺ → <i>se une a</i> → Troponina<br>
+      • Troponina → <i>desplaza</i> → Tropomiosina<br>
+      • Actina → <i>se une a</i> → Miosina (puentes cruzados)<br>
+      • ATP → <i>desacopla</i> → Miosina<br>
+      • Sarcómero → <i>genera</i> → Fuerza`,
+    need_5: "⚠️ Necesitas al menos 5 conexiones.",
+    result_excellent: (n) => `🎉 <b>¡Excelente!</b> Has identificado ${n} relaciones clave correctamente. Tu mapa conceptual refleja bien el mecanismo contráctil.`,
+    result_partial: (total, good) => `Has hecho ${total} conexiones, pero solo ${good} usan verbos fisiológicos clave (une, desplaza, desacopla, genera...). Revisa los verbos.`
+  },
+  ca: {
+    title: "🧠 Mapa Conceptual del Tema 3",
+    instructions: "<b>Instruccions:</b> Fes clic en un node (origen), després en un altre (destí) per crear una connexió. Escriu la relació (ex: 'produeix', 'activa', 'inhibeix'). El sistema avaluarà la teva xarxa.",
+    btn_validate: "✔ Validar mapa",
+    btn_clear: "🗑️ Netejar tot",
+    btn_help: "💡 Veure solució suggerida",
+    modal_title: "Descriu la relació",
+    modal_placeholder: "Ex: s'uneix a, desplaça, genera...",
+    btn_save: "Desar",
+    btn_cancel: "Cancel·lar",
+    initial_res: "Crea almenys 5 connexions per validar.",
+    cleared_res: "Mapa netejat. Crea almenys 5 connexions.",
+    help_res: `<b>💡 Connexions clau suggerides:</b><br>
+      • Ca²⁺ → <i>s'uneix a</i> → Troponina<br>
+      • Troponina → <i>desplaça</i> → Tropomiosina<br>
+      • Actina → <i>s'uneix a</i> → Miosina (ponts creuats)<br>
+      • ATP → <i>desacobla</i> → Miosina<br>
+      • Sarcòmer → <i>genera</i> → Força`,
+    need_5: "⚠️ Necessites almenys 5 connexions.",
+    result_excellent: (n) => `🎉 <b>Excel·lent!</b> Has identificat ${n} relacions clau correctament. El teu mapa conceptual reflecteix bé el mecanisme contràctil.`,
+    result_partial: (total, good) => `Has fet ${total} connexions, però només ${good} usen verbs fisiològics clau (uneix, desplaça, desacobla, genera...). Revisa els verbs.`
+  },
+  en: {
+    title: "🧠 Concept Map of Topic 3",
+    instructions: "<b>Instructions:</b> Click a node (origin), then another (destination) to create a connection. Write the relationship (e.g. 'produces', 'activates', 'inhibits'). The system will evaluate your network.",
+    btn_validate: "✔ Validate map",
+    btn_clear: "🗑️ Clear all",
+    btn_help: "💡 See suggested solution",
+    modal_title: "Describe the relationship",
+    modal_placeholder: "E.g. binds to, displaces, generates...",
+    btn_save: "Save",
+    btn_cancel: "Cancel",
+    initial_res: "Create at least 5 connections to validate.",
+    cleared_res: "Map cleared. Create at least 5 connections.",
+    help_res: `<b>💡 Suggested key connections:</b><br>
+      • Ca²⁺ → <i>binds to</i> → Troponin<br>
+      • Troponin → <i>displaces</i> → Tropomyosin<br>
+      • Actin → <i>binds to</i> → Myosin (cross-bridges)<br>
+      • ATP → <i>detaches</i> → Myosin<br>
+      • Sarcomere → <i>generates</i> → Force`,
+    need_5: "⚠️ You need at least 5 connections.",
+    result_excellent: (n) => `🎉 <b>Excellent!</b> You identified ${n} key relationships correctly. Your concept map reflects the contractile mechanism well.`,
+    result_partial: (total, good) => `You made ${total} connections, but only ${good} use key physiological verbs (binds, displaces, detaches, generates...). Review the verbs.`
+  }
+};
+
+const canvas = document.getElementById('lienzo');
+const ctx = canvas.getContext('2d');
+
+function resize() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = 500;
+}
+resize();
+window.addEventListener('resize', () => { resize(); draw(); });
+
+const nodos = [
+  {id:'ca', x:0.1, y:0.2, label:'Ca²⁺', color:'#fbbf24'},
+  {id:'trop', x:0.25, y:0.4, label:'Troponina', color:'#a78bfa'},
+  {id:'mio', x:0.4, y:0.2, label:'Tropomiosina', color:'#94a3b8'},
+  {id:'act', x:0.55, y:0.4, label:'Actina', color:'#f472b6'},
+  {id:'mio2', x:0.7, y:0.2, label:'Miosina', color:'#64748b'},
+  {id:'atp', x:0.85, y:0.4, label:'ATP', color:'#38bdf8'},
+  {id:'sar', x:0.5, y:0.75, label:'Sarcómero', color:'#22d3ee'},
+  {id:'fuerza', x:0.8, y:0.75, label:'Fuerza', color:'#34d399'}
+];
+
+let conexiones = [];
+let origen = null;
+let modalData = null;
+
+function getPos(n) {
+  return { x: n.x * canvas.width, y: n.y * canvas.height };
+}
+
+function setLanguage(lang, btn) {
+  currentLang = lang;
+  document.querySelectorAll('.language-selector button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key]) {
+      el.innerHTML = translations[lang][key];
+    }
+  });
+  
+  // Update placeholder for input
+  const relInput = document.getElementById('relInput');
+  if (relInput && translations[lang].modal_placeholder) {
+    relInput.placeholder = translations[lang].modal_placeholder;
+  }
+  
+  document.documentElement.lang = lang;
+  
+  // Update result if empty
+  const res = document.getElementById('res');
+  if (!res.innerHTML.trim() || res.innerHTML.includes('Crea almenys') || res.innerHTML.includes('Create at least') || res.innerHTML.includes('Mapa netejat') || res.innerHTML.includes('Map cleared') || res.innerHTML.includes('Mapa limpiado')) {
+    res.innerHTML = translations[lang].initial_res;
+  }
+}
+
+function draw() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  
+  conexiones.forEach(c => {
+    const a = getPos(nodos.find(n=>n.id===c.a));
+    const b = getPos(nodos.find(n=>n.id===c.b));
+    ctx.strokeStyle = '#f472b6';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(a.x, a.y);
+    ctx.lineTo(b.x, b.y);
+    ctx.stroke();
+    const ang = Math.atan2(b.y-a.y, b.x-a.x);
+    ctx.beginPath();
+    ctx.moveTo(b.x, b.y);
+    ctx.lineTo(b.x-10*Math.cos(ang-0.3), b.y-10*Math.sin(ang-0.3));
+    ctx.lineTo(b.x-10*Math.cos(ang+0.3), b.y-10*Math.sin(ang+0.3));
+    ctx.closePath();
+    ctx.fillStyle = '#f472b6';
+    ctx.fill();
+    const mx = (a.x+b.x)/2, my = (a.y+b.y)/2;
+    ctx.fillStyle = '#0f172a';
+    ctx.fillRect(mx-50, my-10, 100, 20);
+    ctx.fillStyle = '#fbbf24';
+    ctx.font = '12px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(c.rel, mx, my+4);
+  });
+  
+  nodos.forEach(n => {
+    const p = getPos(n);
+    ctx.fillStyle = n.color;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 35, 0, Math.PI*2);
+    ctx.fill();
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.fillStyle = '#0f172a';
+    ctx.font = 'bold 13px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(n.label, p.x, p.y+4);
+  });
+}
+
+canvas.addEventListener('click', e => {
+  const rect = canvas.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  
+  let clicado = null;
+  nodos.forEach(n => {
+    const p = getPos(n);
+    if (Math.hypot(x-p.x, y-p.y) < 35) clicado = n;
+  });
+  
+  if (!clicado) return;
+  
+  if (!origen) {
+    origen = clicado;
+  } else {
+    if (origen.id !== clicado.id) {
+      modalData = {a: origen.id, b: clicado.id};
+      document.getElementById('modalText').innerHTML = 
+        `De <b style="color:${origen.color}">${origen.label}</b> a <b style="color:${clicado.color}">${clicado.label}</b>`;
+      document.getElementById('modal').style.display = 'block';
+      document.getElementById('overlay').style.display = 'block';
+      document.getElementById('relInput').focus();
+    }
+    origen = null;
+  }
+});
+
+function guardarRel() {
+  const rel = document.getElementById('relInput').value.trim();
+  if (rel) {
+    conexiones.push({...modalData, rel});
+    draw();
+  }
+  cerrarModal();
+}
+
+function cerrarModal() {
+  document.getElementById('modal').style.display = 'none';
+  document.getElementById('overlay').style.display = 'none';
+  document.getElementById('relInput').value = '';
+}
+
+function limpiar() {
+  conexiones = [];
+  draw();
+  document.getElementById('res').innerHTML = translations[currentLang].cleared_res;
+}
+
+function ayuda() {
+  document.getElementById('res').innerHTML = translations[currentLang].help_res;
+}
+
+function validar() {
+  if (conexiones.length < 5) {
+    document.getElementById('res').innerHTML = translations[currentLang].need_5;
+    return;
+  }
+  const claves = ['une','desplaza','expone','desacopla','genera','produce','forma','activa'];
+  const clavesCa = ['uneix','desplaça','exposa','desacobla','genera','produeix','forma','activa'];
+  const clavesEn = ['bind','displace','expose','detach','generat','produc','form','activat'];
+  let clavesActual = currentLang === 'ca' ? clavesCa : currentLang === 'en' ? clavesEn : claves;
+  let buenas = conexiones.filter(c => clavesActual.some(k => c.rel.toLowerCase().includes(k))).length;
+  if (buenas >= 3) {
+    document.getElementById('res').innerHTML = translations[currentLang].result_excellent(buenas);
+  } else {
+    document.getElementById('res').innerHTML = translations[currentLang].result_partial(conexiones.length, buenas);
+  }
+}
+
+// Initialize
+setLanguage('es', document.querySelector('.language-selector button'));
+draw();
+</script>
+</body>
+</html>
